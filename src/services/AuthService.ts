@@ -1,4 +1,4 @@
-import ApiService from "../core/services/ApiService";
+import ApiService from "./ApiService";
 import {AxiosResponse} from "axios";
 
 export type LoginUser = {
