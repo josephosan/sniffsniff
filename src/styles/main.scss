@@ -1,7 +1,6 @@
 .layout-container {
-  width: 900px;
+  max-width: 900px;
   height: 500px;
   box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
   border-radius: var(--app-border-radius);
-  padding: 10px;
 }
