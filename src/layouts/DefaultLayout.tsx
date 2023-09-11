@@ -1,31 +1,67 @@
 import React from "react";
+
+import AppConfig from "../config/app.config";
 import {Outlet} from "react-router-dom";
 import {Layout} from "antd";
+import {useApp} from "../store/app.store";
 
-const {Sider, Content} = Layout;
+const {Sider, Content, Footer} = Layout;
 
 export const DefaultLayout: React.FC = () => {
+    const {isMobile} = useApp();
 
-    return (
-        <Layout hasSider className={"layout-container"}>
-            <Sider
-                style={{
-                    overflow: 'auto',
-                    height: '100%',
-                    position: 'relative',
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    borderRadius: '0 30px 30px 0'
-                }}
-            >
-                <h1 className={"text-primary"}> hello there</h1>
-            </Sider>
-            <Layout className="site-layout" style={{marginLeft: 200}}>
-                <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
+    if (isMobile) {
+        return (
+            <Layout className={"layout-container-phone"}>
+                <div
+                    style={{
+                        backgroundColor: AppConfig.defaultLayoutContentBackgroundColor,
+                        width: '100%',
+                        height: '100%'
+                    }}
+                >
                     <Outlet/>
-                </Content>
+                </div>
+                <Footer
+                    style={{
+                        position: 'fixed',
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: AppConfig.sidebarBackgroundColor,
+                        boxShadow: '0 0 20px 5px rgba(0, 0, 0, 0.1)',
+                        minHeight: '60px'
+                    }}
+                >
+
+                </Footer>
             </Layout>
-        </Layout>
-    );
+        );
+    } else {
+        return (
+            <Layout hasSider className={"layout-container-desktop"}>
+                <Sider
+                    style={{
+                        overflow: 'auto',
+                        height: '100%',
+                        position: 'relative',
+                        right: 0,
+                        top: 0,
+                        bottom: 0,
+                        borderRadius: '0 30px 30px 0',
+                        backgroundColor: AppConfig.sidebarBackgroundColor
+                    }}
+                >
+                </Sider>
+                <Layout className="site-layout" style={{
+                    borderRadius: '30px 0 0 30px',
+                    backgroundColor: AppConfig.defaultLayoutContentBackgroundColor
+                }}>
+                    <Content style={{margin: '24px 16px 0', overflow: 'initial'}}>
+                        <Outlet/>
+                    </Content>
+                </Layout>
+            </Layout>
+        );
+    }
 }

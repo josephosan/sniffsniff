@@ -1,16 +1,11 @@
-import React, {ReactNode} from "react";
+import React from "react";
 import { useRoutes, Outlet } from "react-router-dom";
 
 // Import pages
 import { Home } from "../pages/Home";
 import {DefaultLayout} from "../layouts/DefaultLayout";
+import {RouteObject} from "../@types/app";
 
-interface RouteObject {
-  path: string;
-  element: ReactNode;
-  children?: RouteObject[];
-  // ...other properties...
-}
 
 const routes: RouteObject = [
   {
@@ -18,7 +13,7 @@ const routes: RouteObject = [
     element: <DefaultLayout />,
     children: [
       {
-        path: "home",
+        path: "",
         element: <Home />
       }
     ]
