@@ -4,6 +4,7 @@ import AppConfig from "../config/app.config";
 import {Outlet} from "react-router-dom";
 import {Layout} from "antd";
 import {useApp} from "../store/app.store";
+import {PhoneBottombar} from "./sidebar/PhoneBottombar";
 
 const {Sider, Content, Footer} = Layout;
 
@@ -30,10 +31,11 @@ export const DefaultLayout: React.FC = () => {
                         bottom: 0,
                         backgroundColor: AppConfig.sidebarBackgroundColor,
                         boxShadow: '0 0 20px 5px rgba(0, 0, 0, 0.1)',
-                        minHeight: '60px'
+                        padding: '0px',
+                        height: '65px'
                     }}
                 >
-
+                    <PhoneBottombar/>
                 </Footer>
             </Layout>
         );
