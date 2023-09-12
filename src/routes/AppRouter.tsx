@@ -9,6 +9,7 @@ import {Help} from "../pages/Help";
 import {Users} from "../pages/Users";
 import {Messages} from "../pages/Messages";
 import {Requests} from "../pages/Requests";
+import {Settings} from "../pages/Settings";
 
 
 const routes: RouteObject = [
@@ -33,8 +34,12 @@ const routes: RouteObject = [
                 element: <Messages/>
             },
             {
-                path: "/Requests",
+                path: "/requests",
                 element: <Requests/>
+            },
+            {
+                path: "/settings",
+                element: <Settings />
             }
         ]
     },

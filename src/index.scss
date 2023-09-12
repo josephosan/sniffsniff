@@ -3,6 +3,26 @@
   --app-border-radius: 30px;
 }
 
+// will be used in antd layout.
+@font-face {
+  font-family: 'IRAN-sans';
+  src: local("IRAN-sans"),
+  url('../public/fonts/IRANSansWeb.woff2') format('woff2'),
+  url('../public/fonts/IRANSansWeb.woff') format('woff'),
+  url('../public/fonts/IRANSansWeb_Bold.ttf') format('truetype'),
+  url('../public/fonts/IRANSansWeb_2.eot') format('eot');
+  font-weight: normal;
+  font-style: normal;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  direction: rtl !important;
+}
+
 
 body {
   margin: 0;
@@ -11,14 +31,4 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: var(--app-background-color);
-}
-
-#root {
-  width: 100%;
-  //height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  direction: rtl !important;
 }

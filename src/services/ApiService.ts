@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+
+// todo: axios interceptor.
 // Create a new instance of Axios with default headers
 const api = axios.create({
   baseURL: 'base_url_here', // to get from .env

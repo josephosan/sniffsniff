@@ -18,5 +18,6 @@ export interface SidebarLinkItem {
     label: string,
     icon_classname: string,
     icon_classname_selected: string,
-    selected: boolean
+    selected: boolean,
+    desktop?: boolean
 }
