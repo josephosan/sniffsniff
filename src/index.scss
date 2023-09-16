@@ -1,6 +1,6 @@
+
 :root {
-  --app-background-color: #FAFAFA;
-  --app-border-radius: 30px;
+
 }
 
 // will be used in antd layout.
@@ -17,10 +17,7 @@
 
 #root {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  direction: rtl !important;
+  height: 100vh;
 }
 
 
@@ -30,5 +27,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-color: var(--app-background-color);
+}
+
+::-webkit-scrollbar {
+  display: none;
 }

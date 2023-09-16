@@ -9,7 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
     return (
-        <ConfigProvider theme={ config }>
+        <ConfigProvider theme={ config } direction={"rtl"}>
             <Router>
                 <AppRouter/>
             </Router>
