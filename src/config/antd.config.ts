@@ -1,17 +1,23 @@
 import { theme } from "antd";
 import type {ThemeConfig} from "antd";
-import AppConfig from "./app.config";
+import {appConfig, lightConfig} from "./app.config";
 
-const config: ThemeConfig = {
+const lightAntdConfig: ThemeConfig = {
     algorithm: theme.defaultAlgorithm,
     token: {
         motion: true,
-        colorPrimary: AppConfig.primaryColor,
-        fontFamily: "IRAN-sans"
+        colorPrimary: lightConfig.primaryColor,
+        fontFamily: "IRAN-sans",
+        borderRadius: appConfig.defaultBorderRadius,
+        colorBgBase: lightConfig.mainBackgroundColor
     },
     components: {
         // custom styles for each component
     },
 }
 
-export default config;
+const darkAntdConfig: ThemeConfig = {
+
+}
+
+export {lightAntdConfig, darkAntdConfig};
