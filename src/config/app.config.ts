@@ -1,8 +1,10 @@
+
 const appConfig = {
     appBreakPoint: 700,
     sidebarWidth: 256,
     defaultBorderRadius: 10,
-    defaultPadding: 10
+    defaultPadding: 10,
+    defaultIconSize: 23,
 }
 
 const lightConfig = {

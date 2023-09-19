@@ -1,6 +1,6 @@
 
 :root {
-
+  --app-default-text-color: #4D4D4D
 }
 
 // will be used in antd layout.
@@ -28,6 +28,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   direction: rtl;
+  color: var(--app-default-text-color);
 }
 
 ::-webkit-scrollbar {

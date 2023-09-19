@@ -1,6 +1,5 @@
 import React, {createContext, useContext, useState} from "react";
-import {AppStore} from "../@types/app";
-import {appConfig} from "../config/app.config";
+import {AppStore, ColorConfig} from "../@types/app";
 import {darkConfig, lightConfig} from "../config/app.config";
 
 
@@ -16,25 +15,14 @@ export function useApp() {
 
 
 export const AppProvider: React.FC = ({ children }) => {
-
-    // responsive mode
-    const [isMobile, setIsMobile] = useState(() => {
-        return window.innerWidth <= appConfig.appBreakPoint;
-    });
-    const setAppMode = (isMobile: boolean) => {
-        setIsMobile(isMobile);
-    }
-
     // theme config
-    const [theme, setTheme] = useState(lightConfig);
+    const [theme, setTheme] = useState<ColorConfig>(lightConfig);
     const setThemeConfig = (themeConfig) => {
         setTheme(themeConfig);
     }
 
 
     const appStore: AppStore = {
-        isMobile,
-        setAppMode,
         theme,
         setThemeConfig
     }

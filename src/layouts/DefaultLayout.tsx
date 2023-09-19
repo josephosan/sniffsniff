@@ -1,14 +1,18 @@
 import React, {useState} from "react";
 
 import {Outlet} from "react-router-dom";
-import {Button, Drawer, Layout} from "antd";
-import {useApp} from "../store/app.store";
+import {Button, Drawer, Layout, Space} from "antd";
 import {Sidebar} from "../components/primary/Sidebar";
 import {appConfig} from "../config/app.config";
+import {useMediaQuery} from "react-responsive";
+import {useApp} from "../store/app.store";
+import {TopBarIconWrapper} from "../components/secondary/TopBarIconWrapper";
+import {AppHeader} from "../components/primary/AppHeader";
 
 const {Sider, Header, Content} = Layout;
 export const DefaultLayout: React.FC = () => {
-    const {isMobile, theme} = useApp();
+    const isMobile = useMediaQuery({ query: `(max-width: ${appConfig.appBreakPoint}px)` });
+    const { theme } = useApp();
     const [phoneSidebarOpen, setPhoneSidebarOpen] = useState<boolean>(false);
 
     return (
@@ -44,7 +48,7 @@ export const DefaultLayout: React.FC = () => {
                         }}
                     >
                         <div
-                            className={"h-100 w-100 p-3"}
+                            className={"h-100 w-100 p-3 custom-shadow"}
                             style={{
                                 backgroundColor: theme.cardBg,
                                 borderRadius: appConfig.defaultBorderRadius
@@ -56,11 +60,13 @@ export const DefaultLayout: React.FC = () => {
             }
             <Layout>
                 <Header
+                    className={"d-flex align-items-center"}
                     style={{
-                        backgroundColor: "inherit"
+                        backgroundColor: "inherit",
+                        padding: `0 ${appConfig.defaultPadding+15}px 0 ${appConfig.defaultPadding+15}px`
                     }}
                 >
-                    <Button onClick={() => setPhoneSidebarOpen(true)}>sidebarToggle</Button>
+                    <AppHeader />
                 </Header>
                 <Content
                     className={"d-flex justify-content-center"}
@@ -69,7 +75,7 @@ export const DefaultLayout: React.FC = () => {
                     }}
                 >
                     <div
-                        className={"w-100 h-100 p-3"}
+                        className={"w-100 h-100 p-3 custom-shadow"}
                         style={{
                             backgroundColor: theme.cardBg,
                             borderRadius: appConfig.defaultBorderRadius,
