@@ -26,5 +26,5 @@ export interface SidebarLinkItem {
 export interface ColorConfig {
     cardBg: string,
     mainBackgroundColor: string,
-    normalTextColor: string
+    defaultTextColor: string
 }

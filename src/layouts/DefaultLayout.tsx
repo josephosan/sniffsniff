@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 
 import {Outlet} from "react-router-dom";
-import {Button, Drawer, Layout, Space} from "antd";
+import {Drawer, Layout} from "antd";
 import {Sidebar} from "../components/primary/Sidebar";
 import {appConfig} from "../config/app.config";
 import {useMediaQuery} from "react-responsive";
 import {useApp} from "../store/app.store";
-import {TopBarIconWrapper} from "../components/secondary/TopBarIconWrapper";
 import {AppHeader} from "../components/primary/AppHeader";
 
 const {Sider, Header, Content} = Layout;
@@ -44,21 +43,25 @@ export const DefaultLayout: React.FC = () => {
                         trigger={null}
                         style={{
                             padding: isMobile ? 0 : `${appConfig.defaultPadding}px ${appConfig.defaultPadding}px ${appConfig.defaultPadding}px 0`,
-                            backgroundColor: "inherit"
+                            backgroundColor: "inherit",
                         }}
                     >
                         <div
-                            className={"h-100 w-100 p-3 custom-shadow"}
+                            className={"h-100 w-100 p-2 custom-shadow"}
                             style={{
                                 backgroundColor: theme.cardBg,
-                                borderRadius: appConfig.defaultBorderRadius
+                                borderRadius: appConfig.defaultBorderRadius,
                             }}
                         >
                             <Sidebar/>
                         </div>
                     </Sider>
             }
-            <Layout>
+            <Layout
+                style={{
+                    overflowY: "auto",
+                }}
+            >
                 <Header
                     className={"d-flex align-items-center"}
                     style={{
@@ -66,12 +69,13 @@ export const DefaultLayout: React.FC = () => {
                         padding: `0 ${appConfig.defaultPadding+15}px 0 ${appConfig.defaultPadding+15}px`
                     }}
                 >
-                    <AppHeader />
+                    <AppHeader isMobile={isMobile} sidebarClick={() => setPhoneSidebarOpen(true)}/>
                 </Header>
                 <Content
                     className={"d-flex justify-content-center"}
                     style={{
                         padding: appConfig.defaultPadding + "px",
+                        minHeight: "auto"
                     }}
                 >
                     <div
@@ -79,7 +83,8 @@ export const DefaultLayout: React.FC = () => {
                         style={{
                             backgroundColor: theme.cardBg,
                             borderRadius: appConfig.defaultBorderRadius,
-                            maxWidth: "1300px"
+                            maxWidth: "1300px",
+                            height: "auto"
                         }}
                     >
                         <Outlet/>

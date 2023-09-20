@@ -24,7 +24,8 @@ export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = ({iconClasses
                 className={iconClasses}
                 style={{
                     fontSize: (size ? size : appConfig.defaultIconSize) + "px",
-                    marginTop: "7px",
+                    marginTop: "6.5px",
+                    marginRight: "1.5px"
                 }}
             ></i>
         </div>

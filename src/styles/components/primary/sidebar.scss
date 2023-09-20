@@ -1,0 +1,13 @@
+.sidebar {
+  min-width: var(--sidebar-width) !important;
+}
+
+.sidebar-link {
+  transition: all var(--app-default-transition-speed);
+}
+.sidebar-link:hover {
+  background-color: var(--item-hover-color);
+}
+.sidebar-link-selected {
+  background-color: var(--item-hover-color);
+}
