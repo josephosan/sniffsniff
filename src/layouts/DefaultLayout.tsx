@@ -10,14 +10,15 @@ import {AppHeader} from "../components/primary/AppHeader";
 
 const {Sider, Header, Content} = Layout;
 export const DefaultLayout: React.FC = () => {
-    const isMobile = useMediaQuery({ query: `(max-width: ${appConfig.appBreakPoint}px)` });
-    const { theme } = useApp();
+    const isMobile = useMediaQuery({query: `(max-width: ${appConfig.appBreakPoint}px)`});
+    const {theme} = useApp();
     const [phoneSidebarOpen, setPhoneSidebarOpen] = useState<boolean>(false);
 
     return (
         <Layout style={{
             width: "100%",
-            height: "100vh"
+            height: "100vh",
+            backgroundColor: theme.mainBackgroundColor
         }}>
             {
                 isMobile ?
@@ -60,13 +61,14 @@ export const DefaultLayout: React.FC = () => {
             <Layout
                 style={{
                     overflowY: "auto",
+                    backgroundColor: theme.mainBackgroundColor
                 }}
             >
                 <Header
                     className={"d-flex align-items-center"}
                     style={{
                         backgroundColor: "inherit",
-                        padding: `0 ${appConfig.defaultPadding+15}px 0 ${appConfig.defaultPadding+15}px`
+                        padding: `0 ${appConfig.defaultPadding + 15}px 0 ${appConfig.defaultPadding + 15}px`
                     }}
                 >
                     <AppHeader isMobile={isMobile} sidebarClick={() => setPhoneSidebarOpen(true)}/>

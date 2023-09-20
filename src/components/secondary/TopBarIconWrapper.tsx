@@ -4,13 +4,15 @@ import {appConfig} from "../../config/app.config";
 
 interface TopBarIconWrapperProps {
     iconClasses: string,
-    size?: number
+    size?: number,
+    onClick?: () => void
 }
 
-export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = ({iconClasses, size}) => {
+export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = ({iconClasses, size, onClick}) => {
     const {theme} = useApp();
     return (
         <div
+            onClick={onClick}
             className={"d-flex justify-content-center align-items-center custom-shadow"}
             style={{
                 borderRadius: "50%",
@@ -18,6 +20,7 @@ export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = ({iconClasses
                 padding: appConfig.defaultPadding,
                 width: appConfig.defaultIconSize + 15 + "px",
                 height: appConfig.defaultIconSize + 15 + "px",
+                cursor: "pointer"
             }}
         >
             <i

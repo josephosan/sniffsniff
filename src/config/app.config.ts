@@ -1,4 +1,3 @@
-
 const appConfig = {
     // break point
     appBreakPoint: 700,
@@ -22,6 +21,7 @@ const appConfig = {
 }
 
 const lightConfig = {
+    mode: 'light',
     cardBg: '#ffffff',
     mainBackgroundColor: '#F7F8FA',
     defaultTextColor: '#797979',
@@ -31,6 +31,15 @@ const lightConfig = {
     itemHoverColor: '#F6F6F6'
 }
 
-const darkConfig = {}
+const darkConfig = {
+    mode: 'dark',
+    cardBg: '#282E3F',
+    mainBackgroundColor: '#1F1E24',
+    defaultTextColor: '#FFFFFF',
+    fadeTextColor: '#C3C5CA',
+    primaryColor: '#F0B86E',
+
+    itemHoverColor: '#3B435B'
+}
 
 export {appConfig, lightConfig, darkConfig};

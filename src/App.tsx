@@ -27,6 +27,9 @@ function App() {
                 activeBorderColor: theme.primaryColor,
                 hoverBorderColor: theme.primaryColor,
                 colorBorder: theme.primaryColor,
+                colorBgContainer: theme.cardBg,
+                colorTextDescription: theme.fadeTextColor,
+                colorTextPlaceholder: theme.fadeTextColor
             }
         },
     }
