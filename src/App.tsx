@@ -19,7 +19,8 @@ function App() {
             fontFamily: "IRAN-sans",
             borderRadius: appConfig.defaultBorderRadius,
             colorBgBase: lightConfig.mainBackgroundColor,
-            colorText: theme.defaultTextColor
+            colorText: theme.defaultTextColor,
+            colorTextBase: theme.defaultTextColor
         },
         components: {
             Input: {
@@ -29,7 +30,7 @@ function App() {
                 colorBorder: theme.primaryColor,
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
-                colorTextPlaceholder: theme.fadeTextColor
+                colorTextPlaceholder: theme.fadeTextColor,
             }
         },
     }

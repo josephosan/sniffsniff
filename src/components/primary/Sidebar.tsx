@@ -1,8 +1,9 @@
 import React from "react";
 import {Input} from "antd";
 import {appConfig} from "../../config/app.config";
-import {Link} from "react-router-dom";
 import {useApp} from "../../store/app.store";
+import SidebarItem from "../secondary/SidebarItem";
+
 
 interface SidebarItem {
     name: string,
@@ -38,7 +39,9 @@ export const Sidebar: React.FC = () => {
     return (
         <div
             className={"d-flex flex-column"}
-            style={{}}
+            style={{
+                color: theme.defaultTextColor
+            }}
         >
             <div className={"mt-3 mb-4"}>
                 logo here
@@ -55,28 +58,12 @@ export const Sidebar: React.FC = () => {
             <div className={"d-flex flex-column"}>
                 {
                     sideBarItems.map(item => (
-                        <Link
+                        <SidebarItem
                             key={item.name}
-                            className={"sidebar-link my-1"}
-                            to={item.path}
-                            style={{
-                                textDecoration: "none",
-                                color: theme.defaultTextColor,
-                                padding: appConfig.defaultPadding,
-                                borderRadius: appConfig.defaultBorderRadius,
-                                fontSize: appConfig.smallFontSize + 3
-                            }}
-                        >
-                            <div className={"d-flex align-items-center"}>
-                                <i
-                                    className={item.icon + " ms-2"}
-                                    style={{
-                                        fontSize: appConfig.smallIconSize + 5
-                                    }}
-                                ></i>
-                                {item.name}
-                            </div>
-                        </Link>
+                            name={item.name}
+                            icon={item.icon}
+                            path={item.path}
+                        />
                     ))
                 }
             </div>

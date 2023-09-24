@@ -17,7 +17,10 @@ const appConfig = {
 
     // font size
     defaultFontSize: 14,
-    smallFontSize: 10
+    smallFontSize: 10,
+
+    // animation speed
+    defaultAnimationSpeed: 0.15
 }
 
 const lightConfig = {

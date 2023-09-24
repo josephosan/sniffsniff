@@ -33,6 +33,10 @@ export const DefaultLayout: React.FC = () => {
                         }}
                         keyboard={true}
                         onClose={() => setPhoneSidebarOpen(false)}
+                        style={{
+                            backgroundColor: theme.cardBg,
+                            borderRadius: theme.defaultBorderRadius
+                        }}
                     >
                         <Sidebar/>
                     </Drawer>
