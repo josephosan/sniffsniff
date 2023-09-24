@@ -18,6 +18,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile, sidebarClick}) =>
                 isMobile &&
                 <Space onClick={sidebarClick}>
                     <TopBarIconWrapper iconClasses={"bi bi-list"}/>
+                    {/*TODO: here, you should use your wrapper component to open a modal on a click. */}
                 </Space>
             }
             <Space>
