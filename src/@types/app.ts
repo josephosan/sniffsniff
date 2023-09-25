@@ -28,3 +28,14 @@ export interface ColorConfig {
     mainBackgroundColor: string,
     defaultTextColor: string
 }
+
+
+
+// form builder
+type FormBuilderFieldType = "text";
+
+export interface FormBuilderField {
+    placeholder?: string,
+    name: string,
+    type: FormBuilderFieldType,
+}
