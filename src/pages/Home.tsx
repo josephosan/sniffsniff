@@ -9,15 +9,30 @@ export const Home: React.FC = () => {
                     fields={
                         [
                             {
-                                name: "test",
-                                placeholder: "label",
+                                name: "name",
+                                placeholder: "نام",
                                 type: "text"
                             },
                             {
-                                name: "test",
-                                placeholder: "label",
+                                name: "last_name",
+                                placeholder: "نام خانوادگی",
                                 type: "text"
                             },
+                            {
+                                name: "password",
+                                placeholder: "رمز عبور",
+                                type: "password",
+                            },
+                            {
+                                name: "price",
+                                placeholder: "قیمت",
+                                type: "number",
+                            },
+                            {
+                                name: "date",
+                                placeholder: "تاریخ",
+                                type: "date",
+                            }
                         ]
                     }
                 />

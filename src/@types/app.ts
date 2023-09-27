@@ -32,10 +32,12 @@ export interface ColorConfig {
 
 
 // form builder
-type FormBuilderFieldType = "text";
+type FormBuilderFieldType = "text" | "password" | "number" | "date";
 
 export interface FormBuilderField {
     placeholder?: string,
     name: string,
     type: FormBuilderFieldType,
+    label?: string,
+    rules?: never
 }

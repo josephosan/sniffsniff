@@ -1,6 +1,7 @@
 import React from "react";
-import {Button, Col, Form, Input, Row} from "antd"
+import {Button, Col, DatePicker, Form, Input, Row} from "antd"
 import {FormBuilderField} from "../../@types/app";
+import locale from "antd/es/date-picker/locale/fa_IR";
 
 interface FormBuilderProps {
     onFinish?: () => void,
@@ -24,7 +25,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
             <Form
                 name="basic"
                 labelCol={{span: 8}}
-                wrapperCol={{span: 16}}
+                wrapperCol={{span: 24}}
                 initialValues={{remember: true}}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
@@ -38,17 +39,59 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             xl={{span: 8}}
                             key={index}
                         >
-                            <Form.Item
-                                name={el.name}
-                            >
-                                <Input
-                                    placeholder={el.placeholder}
-                                    type={el.type}
-                                />
-                            </Form.Item>
+                            {
+                                (el.type === 'password') ? (
+                                    <Form.Item
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                    >
+                                        <Input.Password
+                                            placeholder={el.placeholder}
+                                            type={el.type}
+                                        />
+                                    </Form.Item>
+                                ) : el.type === 'text' ? (
+                                    <Form.Item
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                    >
+                                        <Input
+                                            placeholder={el.placeholder}
+                                            type={el.type}
+                                        />
+                                    </Form.Item>
+                                ) : el.type === 'date' ? (
+                                    <Form.Item
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                    >
+                                        <DatePicker
+                                            locale={locale}
+                                            className={"w-100"}
+                                            placeholder={el.label}
+                                            type={el.type}
+                                        />
+                                    </Form.Item>
+                                ) : (
+                                    <Form.Item
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                    >
+                                        <Input
+                                            placeholder={el.placeholder}
+                                            type={el.type}
+                                        />
+                                    </Form.Item>
+                                )
+                            }
                         </Col>
                     ))}
                 </Row>
+
 
                 <Col xs={{span: 24}} sm={{span: 24}} xl={{span: 24}}>
                     <Form.Item>
