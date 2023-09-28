@@ -32,6 +32,12 @@ export const Home: React.FC = () => {
                                 name: "date",
                                 placeholder: "تاریخ",
                                 type: "date",
+                            },
+                            {
+                                name: "select",
+                                placeholder: "اتنخاب",
+                                type: "select",
+                                select_url: 'http://localhost:3001/users/select/'
                             }
                         ]
                     }

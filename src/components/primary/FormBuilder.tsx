@@ -4,6 +4,7 @@ import {FormBuilderField} from "../../@types/app";
 import {DatePicker as DatePickerJalali} from "antd-jalali";
 import locale from "antd/es/date-picker/locale/fa_IR";
 import 'moment/locale/fa.js';
+import CustomSelect from "./CustomSelect";
 
 
 interface FormBuilderProps {
@@ -75,6 +76,18 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             className={"w-100"}
                                             locale={locale}
                                             placeholder={el.placeholder}
+                                        />
+                                    </Form.Item>
+                                ) : el.type === 'select' ? (
+                                    <Form.Item
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                    >
+                                        <CustomSelect
+                                            options={el.options}
+                                            placeholder={el.placeholder}
+                                            select_url={el.select_url}
                                         />
                                     </Form.Item>
                                 ) : (
