@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState} from "react";
 import {AppStore, ColorConfig} from "../@types/app";
-import {lightConfig} from "../config/app.config";
+import {lightConfig, darkConfig} from "../config/app.config";
 
 
 const AppContext = createContext<AppStore | undefined>(undefined);

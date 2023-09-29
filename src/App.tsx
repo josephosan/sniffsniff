@@ -51,7 +51,9 @@ function App() {
                 colorTextPlaceholder: theme.fadeTextColor,
             },
             Divider: {
-                colorSplit: theme.primaryColor
+                colorSplit: theme.primaryColor,
+                colorText: theme.fadeTextColor,
+                colorTextHeading: theme.fadeTextColor
             }
         },
     }

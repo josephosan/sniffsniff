@@ -6,7 +6,7 @@ const Login: React.FC = () => {
     const { theme } = useApp();
 
     return (
-        <div className={"d-flex flex-column justify-content-between align-items-center h-100"}>
+        <div className={"d-flex flex-column justify-content-between align-items-center h-100"} style={{ color: theme.fadeTextColor }}>
             <div>
                 logo here
             </div>
