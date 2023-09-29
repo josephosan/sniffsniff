@@ -31,6 +31,27 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+            },
+            DatePicker: {
+                colorText: theme.fadeTextColor,
+                activeBorderColor: theme.primaryColor,
+                hoverBorderColor: theme.primaryColor,
+                colorBorder: theme.primaryColor,
+                colorBgContainer: theme.cardBg,
+                colorTextDescription: theme.fadeTextColor,
+                colorTextPlaceholder: theme.fadeTextColor,
+            },
+            Select: {
+                colorText: theme.fadeTextColor,
+                activeBorderColor: theme.primaryColor,
+                hoverBorderColor: theme.primaryColor,
+                colorBorder: theme.primaryColor,
+                colorBgContainer: theme.cardBg,
+                colorTextDescription: theme.fadeTextColor,
+                colorTextPlaceholder: theme.fadeTextColor,
+            },
+            Divider: {
+                colorSplit: theme.primaryColor
             }
         },
     }

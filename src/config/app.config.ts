@@ -19,6 +19,7 @@ const appConfig = {
     defaultFontSize: 14,
     smallFontSize: 10,
 
+
     // animation speed
     defaultAnimationSpeed: 0.15
 }
