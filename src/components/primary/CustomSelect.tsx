@@ -30,31 +30,27 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         }
     }, []);
 
-    const search = (input: string = '') => {
+    const search = async (input: string = '') => {
         if (!select_url) return;
 
         setLoading(true);
-        setOptions([]);
+        setOptions(() => []);
 
         const url = `${select_url}?search=${input}&page=1`;
 
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok (${response.status})`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setNextPageUrl(data.next);
-                setOptions(data.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                return new Error(`Network response was not ok (${response.status})`);
+            }
+            const data = await response.json();
+            setNextPageUrl(data.next);
+            setOptions(prevOptions => [...prevOptions, ...data.data]);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handlePopupScroll = async (e: React.UIEvent<HTMLDivElement>) => {
