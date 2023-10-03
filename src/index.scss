@@ -1,6 +1,10 @@
 
 :root {
+  --app-default-text-color: #4D4D4D;
+  --sidebar-width: 230px;
+  --item-hover-color: #F6F6F6;
 
+  --app-default-transition-speed: 0.15s
 }
 
 // will be used in antd layout.
@@ -27,6 +31,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  direction: rtl;
 }
 
 ::-webkit-scrollbar {
