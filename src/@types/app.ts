@@ -28,3 +28,25 @@ export interface ColorConfig {
     mainBackgroundColor: string,
     defaultTextColor: string
 }
+
+
+
+// form builder
+type FormBuilderFieldType = "text" | "password" | "number" | "date" | "select";
+
+export interface FormBuilderField {
+    placeholder?: string,
+    name: string,
+    type: FormBuilderFieldType,
+    label?: string,
+    rules?: never,
+    options?: SelectOption[],
+    select_url?: string,
+    required?: boolean
+}
+
+export interface SelectOption {
+    label: string,
+    value: string,
+    disabled?: boolean
+}
