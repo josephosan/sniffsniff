@@ -11,7 +11,9 @@ export const Home: React.FC = () => {
                             {
                                 name: "name",
                                 placeholder: "نام",
-                                type: "text"
+                                type: "text",
+                                label: 'نام',
+                                required: true
                             },
                             {
                                 name: "last_name",

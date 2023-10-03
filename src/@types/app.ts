@@ -41,7 +41,8 @@ export interface FormBuilderField {
     label?: string,
     rules?: never,
     options?: SelectOption[],
-    select_url?: string
+    select_url?: string,
+    required?: boolean
 }
 
 export interface SelectOption {

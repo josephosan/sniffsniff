@@ -34,6 +34,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
+                layout={'vertical'}
             >
                 <Row gutter={16}>
                     {fields.map((el, index) => (
@@ -49,6 +50,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         label={el.label}
                                         name={el.name}
                                         rules={el.rules}
+                                        required={!!el.required}
                                     >
                                         <Input.Password
                                             placeholder={el.placeholder}
@@ -60,6 +62,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         label={el.label}
                                         name={el.name}
                                         rules={el.rules}
+                                        required={!!el.required}
                                     >
                                         <Input
                                             placeholder={el.placeholder}
@@ -71,6 +74,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         label={el.label}
                                         name={el.name}
                                         rules={el.rules}
+                                        required={!!el.required}
                                     >
                                         <DatePickerJalali
                                             className={"w-100"}
@@ -83,6 +87,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         label={el.label}
                                         name={el.name}
                                         rules={el.rules}
+                                        required={!!el.required}
                                     >
                                         <CustomSelect
                                             options={el.options}
@@ -95,6 +100,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         label={el.label}
                                         name={el.name}
                                         rules={el.rules}
+                                        required={!!el.required}
                                     >
                                         <Input
                                             placeholder={el.placeholder}
