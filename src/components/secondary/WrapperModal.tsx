@@ -1,37 +1,64 @@
 import { Modal, Button, Space } from "antd";
 import { appConfig } from "../../config/app.config";
 import React, { useState } from "react";
+
 interface ModalType {
   elements: JSX.Element;
   open: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
+  width?: number | string;
+  title?: string;
+  closable?: boolean;
+  top?: number | string;
+  mask?: boolean;
+  right?: number | string;
+  footer?: any;
+  okText?: string;
+  cancelText?: string;
+  okDisable?: boolean;
+  cancleDisable?: boolean;
 }
 
 export default function ModalWrapper({
   elements,
   open,
   setOpenModal,
+  width,
+  title,
+  closable,
+  top,
+  mask,
+  right,
+  footer,
+  okText,
+  cancelText,
+  okDisable,
+  cancleDisable,
 }: ModalType) {
   return (
-    <>
-      <Modal
-        open={open}
-        onCancel={(e) => {
-          e.stopPropagation();
-          setOpenModal(false);
-        }}
-        closable={false}
-        footer={null}
-        style={{
-          position: "absolute",
-          top: "10%",
-          left: "15%",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
-      >
-        {elements}
-      </Modal>
-    </>
+    <Modal
+      wrapClassName="outside-modal"
+      open={open}
+      onCancel={(e) => {
+        e.stopPropagation();
+        setOpenModal(false);
+      }}
+      title={title}
+      width={width}
+      closable={closable}
+      mask={mask}
+      footer={footer}
+      okText={okText}
+      cancelText={cancelText}
+      okButtonProps={{ disabled: okDisable }}
+      cancelButtonProps={{ disabled: cancleDisable }}
+      bodyStyle={{}}
+      style={{
+        top: top,
+        right: right,
+      }}
+    >
+      {elements}
+    </Modal>
   );
 }

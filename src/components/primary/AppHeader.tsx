@@ -49,6 +49,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
         ) : (
           <>
             <TopBarIconWrapper iconClasses={"bi bi-three-dots-vertical"} />
+
             <WrapperModal
               elements={
                 <div>
@@ -58,6 +59,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
               }
               open={openModal}
               setOpenModal={setOpenModal}
+              width={"30%"}
+              top={"10%"}
+              footer={null}
+              right={"20%"}
+              closable={false}
             ></WrapperModal>
           </>
         )}
