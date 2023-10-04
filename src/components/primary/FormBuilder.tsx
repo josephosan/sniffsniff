@@ -1,8 +1,8 @@
 import React from "react";
 import {Button, Col, Form, Input, Row} from "antd"
 import {FormBuilderField} from "../../@types/app";
-import {DatePicker as DatePickerJalali} from "antd-jalali";
 import locale from "antd/es/date-picker/locale/fa_IR";
+import { DatePicker as DatePickerJalali } from "antd-jalali";
 import 'moment/locale/fa.js';
 import CustomSelect from "./CustomSelect";
 
