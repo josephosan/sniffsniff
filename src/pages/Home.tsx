@@ -12,7 +12,6 @@ export const Home: React.FC = () => {
                                 name: "name",
                                 placeholder: "نام",
                                 type: "text",
-                                label: 'نام',
                                 required: true
                             },
                             {

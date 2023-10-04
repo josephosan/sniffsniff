@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Select, Spin} from "antd";
 import {SelectOption} from "../../@types/app";
-import {appColors} from "../../config/app.config";
+import {useApp} from "../../store/app.store";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -20,6 +20,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         value,
     }
 ) => {
+    const { theme } = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -86,11 +87,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
     // filter options based on user input in client mode.
     const handleFilterOption = (input: string, option?: SelectOption) => {
-        if (option?.value) {
-            return !!option?.value?.toLowerCase().includes(input.toLowerCase());
-        } else {
-            return !!option?.label?.toLowerCase().includes(input.toLowerCase());
-        }
+        if (!option) return false;
+        return !!option.children[2].includes(input.toLowerCase());
     }
 
 
@@ -114,7 +112,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
                         value={el.value}
                     >
                         {el.icon ? <i className={el.icon}
-                                      style={{marginRight: 0, color: appColors.primaryColor}}></i> : null} {el.label}
+                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.label}
                     </Select.Option>
                 ))
             }
