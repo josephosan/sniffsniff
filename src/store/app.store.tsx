@@ -3,6 +3,7 @@ import {AppStore, Theme} from "../@types/app";
 import {lightConfig} from "../config/app.config";
 
 
+
 const AppContext = createContext<AppStore | undefined>(undefined);
 
 export function useApp() {
