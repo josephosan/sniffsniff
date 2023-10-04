@@ -7,10 +7,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {appConfig, lightConfig} from "./config/app.config";
 import {useApp} from "./store/app.store";
 import fa_IR from "antd/es/locale/fa_IR";
+import {useEffect, useState} from "react";
+import Loading from "./components/secondary/Loading";
 
 
 function App() {
     const {theme} = useApp();
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
     const themeConfig: ThemeConfig = {
         algorithm: antdTheme.defaultAlgorithm,
@@ -57,7 +64,15 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig} direction={"rtl"} locale={fa_IR}>
             <Router>
-                <AppRouter/>
+                {
+                    loading ? (
+                        <div className={"w-100 h-100 d-flex justify-content-center align-items-center"}>
+                            <Loading/>
+                        </div>
+                    ) : (
+                        <AppRouter/>
+                    )
+                }
             </Router>
         </ConfigProvider>
     )
