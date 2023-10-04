@@ -19,6 +19,7 @@ const appConfig = {
     defaultFontSize: 14,
     smallFontSize: 10,
 
+
     // animation speed
     defaultAnimationSpeed: 0.15
 }
@@ -31,7 +32,7 @@ const lightConfig = {
     fadeTextColor: '#808080',
     primaryColor: '#F0B86E',
 
-    itemHoverColor: '#F6F6F6'
+    itemHoverColor: '#F6F6F6',
 }
 
 const darkConfig = {

@@ -5,6 +5,8 @@ import {useRoutes, Outlet} from "react-router-dom";
 import {Home} from "../pages/Home";
 import {DefaultLayout} from "../layouts/DefaultLayout";
 import {RouteObject} from "../@types/app";
+import AuthLayout from "../layouts/AuthLayout";
+import Login from "../pages/Login";
 
 
 const routes: RouteObject = [
@@ -18,6 +20,16 @@ const routes: RouteObject = [
             },
         ]
     },
+    {
+        path: "",
+        element: <AuthLayout/>,
+        children: [
+            {
+                path: '/login',
+                element: <Login />
+            }
+        ]
+    }
 ];
 
 export const AppRouter: React.FC = () => {

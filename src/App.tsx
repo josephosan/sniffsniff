@@ -57,6 +57,11 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+            },
+            Divider: {
+                colorSplit: theme.primaryColor,
+                colorText: theme.fadeTextColor,
+                colorTextHeading: theme.fadeTextColor
             }
         },
     }
