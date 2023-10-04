@@ -53,16 +53,40 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
             <WrapperModal
               elements={
                 <div>
-                  <p>item1</p>
-                  <p>item2</p>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: 50,
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: "15px",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TopBarIconWrapper
+                      size={20}
+                      iconClasses={"bi bi-box-arrow-right"}
+                    />
+                    <TopBarIconWrapper size={20} iconClasses={"bi bi-gear"} />
+                    <TopBarIconWrapper size={20} iconClasses={"bi bi-sun"} />
+                    <TopBarIconWrapper size={20} iconClasses={"bi bi-bell"} />
+                    <TopBarIconWrapper
+                      size={20}
+                      iconClasses={"bi bi-person-check"}
+                    />
+                  </div>
                 </div>
               }
               open={openModal}
               setOpenModal={setOpenModal}
-              width={"30%"}
-              top={"10%"}
+              width={270}
+              top={"9%"}
+              right={"10%"}
               footer={null}
-              right={"20%"}
               closable={false}
             ></WrapperModal>
           </>
