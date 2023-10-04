@@ -1,20 +1,26 @@
 import React, {useEffect, useState} from "react";
 import {Select, Spin} from "antd";
 import {SelectOption} from "../../@types/app";
+import {useApp} from "../../store/app.store";
 
 interface CustomSelectProps {
     options?: SelectOption[],
     placeholder?: string,
-    select_url?: string
+    select_url?: string,
+    onInputChange?: (e) => void,
+    value?: string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
     {
         options,
         placeholder = "انتخاب کنید",
-        select_url
+        select_url,
+        onInputChange,
+        value,
     }
 ) => {
+    const { theme } = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -30,27 +36,31 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         }
     }, []);
 
-    const search = async (input: string = '') => {
+    const search = (input: string = '') => {
         if (!select_url) return;
 
         setLoading(true);
-        setOptions(() => []);
+        setOptions([]);
 
         const url = `${select_url}?search=${input}&page=1`;
 
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                return new Error(`Network response was not ok (${response.status})`);
-            }
-            const data = await response.json();
-            setNextPageUrl(data.next);
-            setOptions(prevOptions => [...prevOptions, ...data.data]);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        } finally {
-            setLoading(false);
-        }
+        fetch(url)
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok (${response.status})`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setNextPageUrl(data.next);
+                setOptions(data.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching data:', error);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
 
     const handlePopupScroll = async (e: React.UIEvent<HTMLDivElement>) => {
@@ -76,19 +86,36 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     // filter options based on user input in client mode.
-    const handleFilterOption = (input: string, option?: SelectOption) => (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
+    const handleFilterOption = (input: string, option?: SelectOption) => {
+        if (!option) return false;
+        return !!option.children[2].includes(input.toLowerCase());
+    }
+
 
     return (
         <Select
-            options={_options}
-            placeholder={placeholder}
+            placeholder={placeholder ? placeholder : 'انتخاب کنید'}
             showSearch={true}
             filterOption={select_url ? undefined : handleFilterOption}
             onSearch={search}
             notFoundContent={loading ? <Spin size="small"/> : null}
             virtual={true}
             onPopupScroll={handlePopupScroll}
+            onChange={onInputChange}
+            value={value}
+            optionFilterProp={'children'}
         >
+            {
+                _options?.map(el => (
+                    <Select.Option
+                        key={el.value}
+                        value={el.value}
+                    >
+                        {el.icon ? <i className={el.icon}
+                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.label}
+                    </Select.Option>
+                ))
+            }
         </Select>
     );
 }

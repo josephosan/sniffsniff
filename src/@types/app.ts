@@ -7,10 +7,10 @@ export interface AppStore {
 
 
 export interface RouteObject {
-  path: string;
-  element: ReactNode;
-  children?: RouteObject[];
-  // ...other properties...
+    path: string;
+    element: ReactNode;
+    children?: RouteObject[];
+    // ...other properties...
 }
 
 export interface SidebarLinkItem {
@@ -21,14 +21,6 @@ export interface SidebarLinkItem {
     selected: boolean,
     desktop?: boolean
 }
-
-
-export interface ColorConfig {
-    cardBg: string,
-    mainBackgroundColor: string,
-    defaultTextColor: string
-}
-
 
 
 // form builder
@@ -48,5 +40,19 @@ export interface FormBuilderField {
 export interface SelectOption {
     label: string,
     value: string,
-    disabled?: boolean
+    disabled?: boolean,
+    icon?: string,
+    children?: string[]
+}
+
+
+export interface Theme {
+    mode: string,
+    cardBg: string,
+    mainBackgroundColor: string,
+    defaultTextColor: string,
+    fadeTextColor: string,
+    primaryColor: string,
+
+    itemHoverColor: string
 }
