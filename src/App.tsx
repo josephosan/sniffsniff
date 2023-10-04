@@ -62,6 +62,9 @@ function App() {
                 colorSplit: theme.primaryColor,
                 colorText: theme.fadeTextColor,
                 colorTextHeading: theme.fadeTextColor
+            },
+            Modal: {
+                colorBgElevated: theme.cardBg
             }
         },
     }
