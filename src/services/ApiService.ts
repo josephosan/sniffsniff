@@ -59,4 +59,7 @@ export default class ApiService {
     public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.post(resource, config);
     }
+    public static async patch(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.patch(recourse, config);
+    }
 }
