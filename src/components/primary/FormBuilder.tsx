@@ -1,8 +1,7 @@
 import React from "react";
-import {Button, Col, Form, Input, Row} from "antd"
+import {Button, Col, DatePicker, Form, Input, Row} from "antd"
 import {FormBuilderField} from "../../@types/app";
 import locale from "antd/es/date-picker/locale/fa_IR";
-import { DatePicker as DatePickerJalali } from "antd-jalali";
 import 'moment/locale/fa.js';
 import CustomSelect from "./CustomSelect";
 
@@ -76,7 +75,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                     >
-                                        <DatePickerJalali
+                                        <DatePicker
                                             className={"w-100"}
                                             locale={locale}
                                             placeholder={el.placeholder}
