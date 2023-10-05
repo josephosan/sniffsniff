@@ -59,8 +59,4 @@ export default class ApiService {
     public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.post(resource, config);
     }
-
-    public static patch() {
-        this.notify.showAlert('success', 'hello', 'message');
-    }
 }
