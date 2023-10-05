@@ -52,6 +52,7 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+                colorBgElevated: theme.cardBgLighter
             },
             Select: {
                 colorText: theme.fadeTextColor,
@@ -61,6 +62,12 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+                optionSelectedBg: theme.mainBackgroundColor,
+                optionActiveBg: theme.mainBackgroundColor,
+                optionSelectedColor: theme.defaultTextColor,
+                selectorBg: theme.cardBg,
+                multipleItemBg: theme.cardBg,
+                colorBgElevated: theme.cardBgLighter
             },
             Divider: {
                 colorSplit: theme.primaryColor,
