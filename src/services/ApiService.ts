@@ -1,5 +1,4 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
-import {NotificationStore} from "../@types/notify";
 
 
 // Create a new instance of Axios with default headers
@@ -9,15 +8,12 @@ const api = axios.create({
 
 
 export default class ApiService {
-    private static notify;
-
-    public static init(notifyStore: NotificationStore) {
-        this.notify = notifyStore;
+    constructor() {
         this.initRequestInterceptor();
         this.initResponseInterceptor();
     }
 
-    private static initRequestInterceptor() {
+    private initRequestInterceptor() {
         axios.interceptors.request.use(
             function (config) {
                 config.headers = {
@@ -33,7 +29,7 @@ export default class ApiService {
         );
     }
 
-    private static initResponseInterceptor() {
+    private initResponseInterceptor() {
         axios.interceptors.response.use(
             function (response) {
                 if (response.status > 500) {
@@ -58,9 +54,5 @@ export default class ApiService {
 
     public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.post(resource, config);
-    }
-
-    public static patch() {
-        this.notify.showAlert('success', 'hello', 'message');
     }
 }
