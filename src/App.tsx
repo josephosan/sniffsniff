@@ -9,13 +9,17 @@ import {useApp} from "./store/app.store";
 import fa_IR from "antd/es/locale/fa_IR";
 import {useEffect, useState} from "react";
 import Loading from "./components/secondary/Loading";
+import {useNotify} from "./store/notify.store";
+import ApiService from "./services/ApiService";
 
 
 function App() {
     const {theme} = useApp();
+    const notifyStore = useNotify();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
+        ApiService.init(notifyStore);
         setLoading(false);
     }, []);
 
@@ -48,6 +52,7 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+                colorBgElevated: theme.cardBgLighter
             },
             Select: {
                 colorText: theme.fadeTextColor,
@@ -57,6 +62,12 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+                optionSelectedBg: theme.mainBackgroundColor,
+                optionActiveBg: theme.mainBackgroundColor,
+                optionSelectedColor: theme.defaultTextColor,
+                selectorBg: theme.cardBg,
+                multipleItemBg: theme.cardBg,
+                colorBgElevated: theme.cardBgLighter
             },
             Divider: {
                 colorSplit: theme.primaryColor,
