@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Select, Spin} from "antd";
 import {SelectOption} from "../../@types/app";
 import {useApp} from "../../store/app.store";
+import ApiService from "../../services/ApiService";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -44,12 +45,9 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
         const url = `${select_url}?search=${input}&page=1`;
 
-        fetch(url)
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok (${response.status})`);
-                }
-                return response.json();
+        ApiService.get(url)
+            .then(({data}) => {
+                return data;
             })
             .then((data) => {
                 setNextPageUrl(data.next);
@@ -71,11 +69,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
         if (isAtEndOfScroll && nextPageUrl && !loading) {
             try {
-                const res = await (await fetch(nextPageUrl)).json();
-                setNextPageUrl(res.next);
-                const {data} = res;
+                const {data} = await (await ApiService.get(nextPageUrl));
+                setNextPageUrl(data.next);
                 setOptions((prevState) => {
-                    return [...prevState, ...data];
+                    return [...prevState, ...data.data];
                 });
             } catch (e) {
                 console.log(e);
