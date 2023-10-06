@@ -2,7 +2,6 @@ import React from "react";
 import {Button, Col, DatePicker, Form, Input, Row} from "antd"
 import {FormBuilderField} from "../../@types/app";
 import locale from "antd/es/date-picker/locale/fa_IR";
-import 'moment/locale/fa.js';
 import CustomSelect from "./CustomSelect";
 
 

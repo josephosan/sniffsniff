@@ -62,4 +62,8 @@ export default class ApiService {
     public static async patch(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.patch(recourse, config);
     }
+
+    public static async delete(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.delete(recourse, config);
+    }
 }
