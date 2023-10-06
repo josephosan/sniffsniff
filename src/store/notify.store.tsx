@@ -26,5 +26,10 @@ export const NotifyProvider: React.FC = ({children}) => {
         showAlert
     }
 
-    return <NotifyContext.Provider value={notifyStore}>{contextHolder}{children}</NotifyContext.Provider>
+    return (
+        <NotifyContext.Provider value={notifyStore}>
+            {contextHolder}
+            {children}
+        </NotifyContext.Provider>
+    );
 }
