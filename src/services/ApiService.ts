@@ -9,44 +9,46 @@ const api = axios.create({
 
 
 export default class ApiService {
-    private static notify;
+    public static notify: NotificationStore | null = null;
 
     public static init(notifyStore: NotificationStore) {
         this.notify = notifyStore;
-        this.initRequestInterceptor();
-        this.initResponseInterceptor();
+
+        this.setRequestInterceptors();
+        this.setResponseInterceptors();
     }
 
-    private static initRequestInterceptor() {
-        axios.interceptors.request.use(
-            function (config) {
+    public static setRequestInterceptors() {
+        api.interceptors.request.use(
+            (config) => {
                 config.headers = {
                     'Authorization': 'Bearer ...' // todo: set headers here.
                 }
 
                 return config;
             },
-            function (error) {
+            (error) => {
                 // todo: notify user that an error happened.
                 return Promise.reject(error);
             }
         );
     }
 
-    private static initResponseInterceptor() {
-        axios.interceptors.response.use(
-            function (response) {
-                if (response.status > 500) {
-                    // todo: show server error to the user.
+    public static setResponseInterceptors() {
+        api.interceptors.response.use(
+            (response) => {
+                return response;
+            },
+            (error) => {
+                const { response } = error;
+                if (response.status >= 500) {
+                    this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response.status === 400) {
+                    console.log('bad request');
                     // todo: handle bad request and if needed set FormErrors.
                 } else if (response.status === 403) {
                     // handle refresh token.
                 } // and more.
-                return response;
-            },
-            function (error) {
-                // todo: notify the user that an error happened.
                 return Promise.reject(error);
             }
         )
@@ -59,6 +61,7 @@ export default class ApiService {
     public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.post(resource, config);
     }
+
     public static async patch(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.patch(recourse, config);
     }

@@ -9,13 +9,11 @@ import {NotifyProvider} from "./store/notify.store";
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <AuthProvider>
-            <AppProvider>
-                <NotifyProvider>
-                    <App/>
-                </NotifyProvider>
-            </AppProvider>
-        </AuthProvider>
-    </React.StrictMode>
+    <AuthProvider>
+        <AppProvider>
+            <NotifyProvider>
+                <App/>
+            </NotifyProvider>
+        </AppProvider>
+    </AuthProvider>
 )
