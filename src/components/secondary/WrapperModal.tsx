@@ -1,6 +1,5 @@
-import { Modal, Button, Space } from "antd";
-import { appConfig } from "../../config/app.config";
-import React, { useState } from "react";
+import { Modal } from "antd";
+import React from "react";
 
 interface ModalType {
   elements: JSX.Element;
@@ -12,11 +11,11 @@ interface ModalType {
   top?: number | string;
   mask?: boolean;
   right?: number | string;
-  footer?: any;
+  footer?: never;
   okText?: string;
   cancelText?: string;
   okDisable?: boolean;
-  cancleDisable?: boolean;
+  cancelDisable?: boolean;
 }
 
 export default function ModalWrapper({
@@ -33,7 +32,7 @@ export default function ModalWrapper({
   okText,
   cancelText,
   okDisable,
-  cancleDisable,
+  cancelDisable,
 }: ModalType) {
   return (
     <Modal
@@ -51,7 +50,7 @@ export default function ModalWrapper({
       okText={okText}
       cancelText={cancelText}
       okButtonProps={{ disabled: okDisable }}
-      cancelButtonProps={{ disabled: cancleDisable }}
+      cancelButtonProps={{ disabled: cancelDisable }}
       bodyStyle={{}}
       style={{
         top: top,

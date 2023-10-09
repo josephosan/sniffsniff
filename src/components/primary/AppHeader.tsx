@@ -3,7 +3,7 @@ import { TopBarIconWrapper } from "../secondary/TopBarIconWrapper";
 import { Space } from "antd";
 import { useApp } from "../../store/app.store";
 import { darkConfig, lightConfig } from "../../config/app.config";
-import WrapperModal from "../secondary/WrapperModal";
+import IconHeaderModal from "./IconHeaderModal";
 interface AppHeaderProps {
   isMobile: boolean;
   sidebarClick: () => void;
@@ -26,7 +26,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
       {isMobile && (
         <Space onClick={sidebarClick}>
           <TopBarIconWrapper iconClasses={"bi bi-list"} />
-          {/*TODO: here, you should use your wrapper component to open a modal on a click. */}
         </Space>
       )}
       <Space
@@ -50,21 +49,12 @@ export const AppHeader: React.FC<AppHeaderProps> = ({
           <>
             <TopBarIconWrapper iconClasses={"bi bi-three-dots-vertical"} />
 
-            <WrapperModal
-              elements={
-                <div>
-                  <p>item1</p>
-                  <p>item2</p>
-                </div>
-              }
-              open={openModal}
+            <IconHeaderModal
+              theme={theme}
+              setThemeConfig={setThemeConfig}
+              openModal={openModal}
               setOpenModal={setOpenModal}
-              width={"30%"}
-              top={"10%"}
-              footer={null}
-              right={"20%"}
-              closable={false}
-            ></WrapperModal>
+            />
           </>
         )}
       </Space>
