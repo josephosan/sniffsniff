@@ -7,21 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {appConfig, lightConfig} from "./config/app.config";
 import {useApp} from "./store/app.store";
 import fa_IR from "antd/es/locale/fa_IR";
-import {useEffect, useState} from "react";
-import Loading from "./components/secondary/Loading";
-import {useNotify} from "./store/notify.store";
-import ApiService from "./services/ApiService";
+import {NotifyProvider} from "./store/notify.store";
 
 
 function App() {
     const {theme} = useApp();
-    const notifyStore = useNotify();
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        ApiService.init(notifyStore);
-        setLoading(false);
-    }, []);
 
     const themeConfig: ThemeConfig = {
         algorithm: antdTheme.defaultAlgorithm,
@@ -76,23 +66,23 @@ function App() {
             },
             Modal: {
                 colorBgElevated: theme.cardBg
+            },
+            Message: {
+                contentBg: theme.cardBg
+            },
+            Notification: {
+                colorBgElevated: theme.cardBg
             }
         },
     }
 
     return (
         <ConfigProvider theme={themeConfig} direction={"rtl"} locale={fa_IR}>
-            <Router>
-                {
-                    loading ? (
-                        <div className={"w-100 h-100 d-flex justify-content-center align-items-center"}>
-                            <Loading/>
-                        </div>
-                    ) : (
-                        <AppRouter/>
-                    )
-                }
-            </Router>
+            <NotifyProvider>
+                <Router>
+                    <AppRouter/>
+                </Router>
+            </NotifyProvider>
         </ConfigProvider>
     )
 }
