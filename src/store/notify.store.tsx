@@ -1,5 +1,5 @@
 import React, {createContext, useContext} from "react";
-import {notification} from "antd";
+import {notification, message} from "antd";
 import {AlertPlacement, AlertTypes, NotificationStore} from "../@types/notify";
 
 const NotifyContext = createContext<NotificationStore | undefined>(undefined);
@@ -12,6 +12,7 @@ export function useNotify() {
 
 export const NotifyProvider: React.FC = ({children}) => {
     const [api, contextHolder] = notification.useNotification();
+    const [messageApi, messageApiContextHolder] = message.useMessage();
 
     const showAlert = (type: AlertTypes, title: string, desc: string, placement: AlertPlacement = 'bottomLeft', duration: number = 3) => {
         api[type]({
@@ -22,12 +23,18 @@ export const NotifyProvider: React.FC = ({children}) => {
         });
     }
 
+    const showMessage = (type: AlertTypes, message: string, duration: number = 3) => {
+        messageApi[type](message, [duration]);
+    }
+
     const notifyStore: NotificationStore = {
-        showAlert
+        showAlert,
+        showMessage
     }
 
     return (
         <NotifyContext.Provider value={notifyStore}>
+            {messageApiContextHolder}
             {contextHolder}
             {children}
         </NotifyContext.Provider>

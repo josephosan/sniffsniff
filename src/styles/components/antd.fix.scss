@@ -1,0 +1,10 @@
+
+// antd problem with message elements
+.ant-message-info {
+  display: flex;
+}
+
+// antd notification bottom left fix
+.ant-notification {
+  left: 10px !important;
+}
