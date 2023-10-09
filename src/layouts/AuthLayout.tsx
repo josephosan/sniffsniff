@@ -26,8 +26,8 @@ const AuthLayout: React.FC = () => {
                     </div>
                 ) : (
                     <WrapperCard
-                        width={600}
-                        height={800}
+                        width={500}
+                        height={600}
                     >
                         <Outlet/>
                     </WrapperCard>

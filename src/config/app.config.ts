@@ -16,6 +16,7 @@ const appConfig = {
     smallIconSize: 14,
 
     // font size
+    largeFontSize: 16,
     defaultFontSize: 14,
     smallFontSize: 10,
 
