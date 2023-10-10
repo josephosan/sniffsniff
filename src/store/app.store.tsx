@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from "react";
-import {AppStore, Theme} from "../@types/app";
+import {AppStore, Errors, Theme} from "../@types/app";
 import {lightConfig} from "../config/app.config";
 
 
@@ -22,10 +22,21 @@ export const AppProvider: React.FC = ({ children }) => {
         setTheme(themeConfig);
     }
 
+    // errors
+    const [errors, setErrors] = useState<Errors | null>(null);
+    const handleSetErrors = (errors) => {
+        setErrors(errors);
+    }
+
 
     const appStore: AppStore = {
+        // theme
         theme,
-        setThemeConfig
+        setThemeConfig,
+
+        // errors
+        errors,
+        handleSetErrors
     }
 
     return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>

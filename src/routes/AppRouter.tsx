@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import {useNotify} from "../store/notify.store";
 import ApiService from "../services/ApiService";
 import Loading from "../components/secondary/Loading";
+import {useApp} from "../store/app.store";
 
 
 const routes: RouteObject = [
@@ -38,10 +39,11 @@ const routes: RouteObject = [
 export const AppRouter: React.FC = () => {
     const element = useRoutes(routes);
     const notifyStore = useNotify();
+    const appStore = useApp();
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        ApiService.init(notifyStore);
+        ApiService.init(notifyStore, appStore);
         setLoading(false);
     }, []);
 

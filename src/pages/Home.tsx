@@ -1,11 +1,21 @@
 import React from "react";
 import FormBuilder from "../components/primary/FormBuilder";
+import ApiService from "../services/ApiService";
 
 export const Home: React.FC = () => {
+    const handleSendFakeReq = () => {
+            ApiService.get('http://localhost:3001/tst/')
+                .then(res => {
+                    console.log(res);
+                })
+    }
+
+
     return (
         <>
             <div>
                 <FormBuilder
+                    onFinish={handleSendFakeReq}
                     fields={
                         [
                             {

@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {NotificationStore} from "../@types/notify";
+import {AppStore} from "../@types/app";
 
 
 // Create a new instance of Axios with default headers
@@ -10,9 +11,11 @@ const api = axios.create({
 
 export default class ApiService {
     public static notify: NotificationStore | null = null;
+    public static appStore: AppStore | null = null;
 
-    public static init(notifyStore: NotificationStore) {
+    public static init(notifyStore: NotificationStore, appStore?: AppStore) {
         this.notify = notifyStore;
+        this.appStore = appStore;
 
         this.setRequestInterceptors();
         this.setResponseInterceptors();
@@ -44,8 +47,8 @@ export default class ApiService {
                 if (response.status >= 500) {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response.status === 400) {
-                    console.log('bad request');
-                    // todo: handle bad request and if needed set FormErrors.
+                    // todo: in some cases handle form errors
+                    this.appStore?.handleSetErrors({ formErrors: { name: ['errrorrrrrrr' ] } });
                 } else if (response.status === 403) {
                     // handle refresh token.
                 } // and more.

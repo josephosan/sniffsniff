@@ -2,7 +2,10 @@ import {ReactNode} from "react";
 
 export interface AppStore {
     theme: never,
-    setThemeMode: (theme: never) => void
+    setThemeMode: (theme: never) => void,
+
+    errors: Errors,
+    handleSetErrors: (errors: Errors) => void
 }
 
 
@@ -34,7 +37,8 @@ export interface FormBuilderField {
     rules?: never,
     options?: SelectOption[],
     select_url?: string,
-    required?: boolean
+    required?: boolean,
+    errors?: string[]
 }
 
 export interface SelectOption {
@@ -53,6 +57,10 @@ export interface Theme {
     defaultTextColor: string,
     fadeTextColor: string,
     primaryColor: string,
-
     itemHoverColor: string
+}
+
+
+export interface Errors {
+    formErrors?: never
 }

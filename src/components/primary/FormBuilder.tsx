@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Col, DatePicker, Form, Input, Row} from "antd"
 import {FormBuilderField} from "../../@types/app";
 import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
+import {useApp} from "../../store/app.store";
 
 
 interface FormBuilderProps {
@@ -20,7 +21,16 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         submitButtonLabel = 'ارسال',
     }
 ) => {
+    const {errors} = useApp();
+    const [_fields, setFields] = useState<FormBuilderField | null>(null)
 
+    useEffect(() => {
+        setFields(() => fields);
+    }, [fields]);
+
+    useEffect(() => {
+        // handle setting errors
+    }, [errors]);
 
     return (
         <>
@@ -35,7 +45,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 layout={'vertical'}
             >
                 <Row gutter={16}>
-                    {fields.map((el, index) => (
+                    {_fields && _fields.map((el, index) => (
                         <Col
                             xs={{span: 24}}
                             sm={{span: 12}}
@@ -49,6 +59,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         name={el.name}
                                         rules={el.rules}
                                         required={!!el.required}
+                                        help={el.errors}
                                     >
                                         <Input.Password
                                             placeholder={el.placeholder}
@@ -61,6 +72,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         name={el.name}
                                         rules={el.rules}
                                         required={!!el.required}
+                                        help={el.errors}
                                     >
                                         <Input
                                             placeholder={el.placeholder}
@@ -73,6 +85,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         name={el.name}
                                         rules={el.rules}
                                         required={!!el.required}
+                                        help={el.errors}
                                     >
                                         <DatePicker
                                             className={"w-100"}
@@ -86,6 +99,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         name={el.name}
                                         rules={el.rules}
                                         required={!!el.required}
+                                        help={el.errors}
                                     >
                                         <CustomSelect
                                             options={el.options}
@@ -99,6 +113,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         name={el.name}
                                         rules={el.rules}
                                         required={!!el.required}
+                                        help={el.errors}
                                     >
                                         <Input
                                             placeholder={el.placeholder}
