@@ -15,16 +15,16 @@ const Login: React.FC = () => {
             <div>
                 logo here
             </div>
-            <div>
+            <div className={"mt-5"}>
                 <h3 style={{fontSize: appConfig.largeFontSize}}>به اجوایونت خوش آمدید!</h3>
             </div>
-            <div className={"w-100"}>
+            <div className={"w-100 mt-3"}>
                 <Form>
                     <Form.Item name="email" className={"mb-0"}>
                         <Input size="large" placeholder="ایمیل"/>
                     </Form.Item>
-                    <a style={{ fontSize: appConfig.smallFontSize, color: theme.fadeTextColor }}>رمز عبور خود را فراموش کرده اید؟</a>
-                    <Form.Item className="d-flex justify-content-center" name="button">
+                    <a className={"me-1"} style={{ fontSize: appConfig.smallFontSize, color: theme.fadeTextColor }}>رمز عبور خود را فراموش کرده اید؟</a>
+                    <Form.Item className="d-flex justify-content-center mb-0 mt-4" name="button">
                         <Button className="px-5 mt-5" size="large" type="primary" htmlType="submit"
                                 style={{fontSize: appConfig.defaultFontSize}}>
                             ورود
@@ -35,9 +35,9 @@ const Login: React.FC = () => {
             </div>
 
             <div className={"w-100 px-5"}>
-                <Divider>یا</Divider>
+                <Divider className={"my-0"}>یا</Divider>
             </div>
-            <Button style={{fontSize: appConfig.defaultFontSize}} className="w-25" size="large" type="primary"
+            <Button size="large" style={{ backgroundColor: theme.cardBg }}
                     htmlType="submit">
                 <i className="bi bi-google"></i>
                 <span className="mx-2">

@@ -16,7 +16,7 @@ export function useApp() {
 
 export const AppProvider: React.FC = ({ children }) => {
     // theme config
-    const [theme, setTheme] = useState<ColorConfig>(darkConfig);
+    const [theme, setTheme] = useState<ColorConfig>(lightConfig);
     const setThemeConfig = (themeConfig) => {
         setTheme(themeConfig);
     }
