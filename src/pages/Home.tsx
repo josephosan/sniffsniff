@@ -40,11 +40,14 @@ export const Home: React.FC = () => {
                                 type: "number",
                             },
                             {
+                                label: 'date',
+                                required: true,
                                 name: "date",
                                 placeholder: "تاریخ",
                                 type: "date",
                             },
                             {
+                                label: 'select',
                                 name: "select",
                                 placeholder: "اتنخاب",
                                 type: "select",

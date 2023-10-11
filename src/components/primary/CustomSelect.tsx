@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Select, Spin} from "antd";
-import {SelectOption} from "../../@types/app";
+import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
 
@@ -9,7 +9,8 @@ interface CustomSelectProps {
     placeholder?: string,
     select_url?: string,
     onInputChange?: (e) => void,
-    value?: string
+    value?: string,
+    size?: SizeTypes
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -19,6 +20,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         select_url,
         onInputChange,
         value,
+        size = 'large'
     }
 ) => {
     const { theme } = useApp();
@@ -101,6 +103,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             onChange={onInputChange}
             value={value}
             optionFilterProp={'children'}
+            size={size}
         >
             {
                 _options?.map(el => (
