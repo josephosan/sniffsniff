@@ -27,7 +27,7 @@ const appConfig = {
 const lightConfig = {
     mode: 'light',
     cardBg: '#ffffff',
-    cardBgLighter: '#ffffff',
+    cardBgLighter: '#fbfbfb',
     mainBackgroundColor: '#F7F8FA',
     defaultTextColor: '#797979',
     fadeTextColor: '#808080',
