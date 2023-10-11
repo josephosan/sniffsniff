@@ -21,16 +21,42 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         submitButtonLabel = 'ارسال',
     }
 ) => {
-    const {errors} = useApp();
-    const [_fields, setFields] = useState<FormBuilderField | null>(null)
+    const {errors, handleSetErrors} = useApp();
+    const [_fields, setFields] = useState<FormBuilderField[] | null>(null)
 
     useEffect(() => {
         setFields(() => fields);
     }, [fields]);
 
     useEffect(() => {
-        // handle setting errors
+        if (errors && errors.formErrors) {
+            setFields(prevState => {
+                return prevState?.map(el => {
+                    return {
+                        ...el,
+                        errors: errors.formErrors[el.name]
+                    }
+                })
+            })
+        }
     }, [errors]);
+
+    const handleClearElementErrors = () => {
+        setFields(prevState => {
+            return prevState?.map(el => {
+                return {
+                    ...el,
+                    errors: null
+                }
+            });
+        });
+    }
+
+    const handleSubmit = () => {
+        handleSetErrors(null);
+        handleClearElementErrors();
+        onFinish();
+    }
 
     return (
         <>
@@ -39,7 +65,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 labelCol={{span: 8}}
                 wrapperCol={{span: 24}}
                 initialValues={{remember: true}}
-                onFinish={onFinish}
+                onFinish={handleSubmit}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 layout={'vertical'}
