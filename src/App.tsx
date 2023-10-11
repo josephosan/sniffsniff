@@ -22,7 +22,7 @@ function App() {
             borderRadius: appConfig.defaultBorderRadius,
             colorBgBase: lightConfig.mainBackgroundColor,
             colorText: theme.defaultTextColor,
-            colorTextBase: theme.defaultTextColor
+            colorTextBase: theme.defaultTextColor,
         },
         components: {
             Input: {

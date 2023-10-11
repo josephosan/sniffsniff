@@ -11,6 +11,7 @@ import {useNotify} from "../store/notify.store";
 import ApiService from "../services/ApiService";
 import Loading from "../components/secondary/Loading";
 import {useApp} from "../store/app.store";
+import Events from "../pages/Events";
 
 
 const routes: RouteObject = [
@@ -22,6 +23,10 @@ const routes: RouteObject = [
                 path: "/home",
                 element: <Home/>
             },
+            {
+                path: '/events',
+                element: <Events />
+            }
         ]
     },
     {
