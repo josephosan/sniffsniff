@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {Button, Col, DatePicker, Form, Input, Row} from "antd"
-import {FormBuilderField} from "../../@types/app";
+import {FormBuilderField, SizeTypes} from "../../@types/app";
 import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
-
 
 interface FormBuilderProps {
     onFinish?: () => void,
     onFinishFailed?: () => void,
     fields: FormBuilderField[],
     submitButtonLabel?: string,
+    size?: SizeTypes
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -19,6 +19,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         onFinishFailed,
         fields,
         submitButtonLabel = 'ارسال',
+        size= 'large'
     }
 ) => {
     const {errors, handleSetErrors} = useApp();
@@ -90,6 +91,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         <Input.Password
                                             placeholder={el.placeholder}
                                             type={el.type}
+                                            size={size}
                                         />
                                     </Form.Item>
                                 ) : el.type === 'text' ? (
@@ -103,6 +105,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         <Input
                                             placeholder={el.placeholder}
                                             type={el.type}
+                                            size={size}
                                         />
                                     </Form.Item>
                                 ) : el.type === 'date' ? (
@@ -117,6 +120,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             className={"w-100"}
                                             locale={locale}
                                             placeholder={el.placeholder}
+                                            size={size}
                                         />
                                     </Form.Item>
                                 ) : el.type === 'select' ? (
@@ -131,6 +135,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             options={el.options}
                                             placeholder={el.placeholder}
                                             select_url={el.select_url}
+                                            size={size}
                                         />
                                     </Form.Item>
                                 ) : (
@@ -144,6 +149,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         <Input
                                             placeholder={el.placeholder}
                                             type={el.type}
+                                            size={size}
                                         />
                                     </Form.Item>
                                 )

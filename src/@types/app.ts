@@ -64,3 +64,5 @@ export interface Theme {
 export interface Errors {
     formErrors?: never
 }
+
+export type SizeTypes = 'large' | 'middle' | 'small';
