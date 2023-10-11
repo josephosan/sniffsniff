@@ -72,6 +72,11 @@ function App() {
             },
             Notification: {
                 colorBgElevated: theme.cardBg
+            },
+            Table: {
+                colorBgContainer: theme.cardBgLighter,
+                colorText: theme.fadeTextColor,
+                footerColor: theme.fadeTextColor,
             }
         },
     }
