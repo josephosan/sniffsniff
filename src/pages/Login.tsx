@@ -2,10 +2,28 @@ import React from "react";
 import {Divider, Form, Input, Button} from "antd";
 import {useApp} from "../store/app.store";
 import {appConfig} from "../config/app.config";
+import FormBuilder from "../components/primary/FormBuilder";
+import {FormBuilderField} from "../@types/app";
+import {useNavigate} from "react-router-dom";
 
 
 const Login: React.FC = () => {
     const {theme} = useApp();
+    const navigate = useNavigate();
+    const loginFormFields: FormBuilderField[] = [
+        {
+            placeholder: 'ایمیل',
+            name: 'email',
+            rules: [{required: true, message: 'فیلد ایمیل اجباری است!'}],
+            type: 'text'
+        },
+        {
+            placeholder: 'رمز عبور',
+            name: 'password',
+            type: 'password',
+            rules: [{required: true, message: 'فیلد رمز عبور اجباری است!'}]
+        }
+    ]
 
 
     return (
@@ -18,25 +36,29 @@ const Login: React.FC = () => {
                 <h3 style={{fontSize: appConfig.hugeFontSize}}>به اجوایونت خوش آمدید!</h3>
             </div>
             <div className={"w-100 mt-3"}>
-                <Form>
-                    <Form.Item name="email" className={"mb-0"}>
-                        <Input size="large" placeholder="ایمیل"/>
-                    </Form.Item>
-                    <a className={"me-1"} style={{ fontSize: appConfig.smallFontSize, color: theme.fadeTextColor }}>رمز عبور خود را فراموش کرده اید؟</a>
-                    <Form.Item className="d-flex justify-content-center mb-0 mt-4" name="button">
-                        <Button className="px-5 mt-5" size="large" type="primary" htmlType="submit"
-                                style={{fontSize: appConfig.defaultFontSize}}>
-                            ورود
-                        </Button>
-                    </Form.Item>
-                </Form>
+                <FormBuilder
+                    fields={loginFormFields}
+                    submitButtonFlex={"center"}
+                    submitButtonClasses={"px-5"}
+                    additionalElement={
+                        <a
+                            className={"ms-2 text-decoration-none"}
+                            style={{color: theme.defaultTextColor}}
+                            onClick={() => navigate('/reset-password')}
+                        >رمز عبور خود را فراموش کرده ام</a>
+                    }
+                />
             </div>
 
-            <div className={"w-100 px-5"}>
+            <div className={"w-100 px-5 mb-4"}>
                 <Divider className={"my-0"}>یا</Divider>
             </div>
-            <Button size="large" style={{ backgroundColor: theme.cardBg }}
-                    htmlType="submit">
+            <Button
+                size="large"
+                style={{backgroundColor: theme.cardBg}}
+                htmlType="submit"
+                className={"mb-3"}
+            >
                 <i className="bi bi-google"></i>
                 <span className="mx-2">
                     ورود با گوگل
