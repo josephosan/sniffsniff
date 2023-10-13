@@ -1,16 +1,20 @@
-import React, {useEffect, useState} from "react";
+import React, {ReactNode, useEffect, useState} from "react";
 import {Button, Col, DatePicker, Form, Input, Row} from "antd"
-import {FormBuilderField, SizeTypes} from "../../@types/app";
+import {FlexTypes, FormBuilderField, SizeTypes} from "../../@types/app";
 import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
+import {appConfig} from "../../config/app.config";
 
 interface FormBuilderProps {
     onFinish?: () => void,
     onFinishFailed?: () => void,
     fields: FormBuilderField[],
     submitButtonLabel?: string,
-    size?: SizeTypes
+    size?: SizeTypes,
+    submitButtonFlex?: FlexTypes,
+    submitButtonClasses?: string,
+    additionalElement?: ReactNode
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -19,7 +23,10 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         onFinishFailed,
         fields,
         submitButtonLabel = 'ارسال',
-        size= 'large'
+        size = 'large',
+        submitButtonFlex = 'start',
+        submitButtonClasses,
+        additionalElement
     }
 ) => {
     const {errors, handleSetErrors} = useApp();
@@ -76,7 +83,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                         <Col
                             xs={{span: 24}}
                             sm={{span: 12}}
-                            xl={{span: 8}}
+                            xl={{span: 24}}
                             key={index}
                         >
                             {
@@ -159,9 +166,25 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 </Row>
 
 
+                {
+                    additionalElement && (
+                        <div className={"w-100 mt-3 mb-4 d-flex justify-content-center align-items-center"}>
+                            {additionalElement}
+                        </div>
+                    )
+                }
+
                 <Col xs={{span: 24}} sm={{span: 24}} xl={{span: 24}}>
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
+                    <Form.Item className={"d-flex align-items-center justify-content-" + submitButtonFlex}>
+                        <Button
+                            className={submitButtonClasses}
+                            size={size}
+                            type="primary"
+                            htmlType="submit"
+                            style={{
+                                size: appConfig.defaultFontSize
+                            }}
+                        >
                             {submitButtonLabel}
                         </Button>
                     </Form.Item>
