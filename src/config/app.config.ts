@@ -29,6 +29,7 @@ const appConfig = {
 const lightConfig = {
     mode: 'light',
     cardBg: '#ffffff',
+    cardBgLighter: '#fbfbfb',
     mainBackgroundColor: '#F7F8FA',
     defaultTextColor: '#797979',
     fadeTextColor: '#808080',
@@ -40,12 +41,13 @@ const lightConfig = {
 const darkConfig = {
     mode: 'dark',
     cardBg: '#282E3F',
+    cardBgLighter: '#2d3346',
     mainBackgroundColor: '#1F1E24',
     defaultTextColor: '#FFFFFF',
     fadeTextColor: '#C3C5CA',
     primaryColor: '#F0B86E',
 
-    itemHoverColor: '#3B435B'
+    itemHoverColor: '#3B435B',
 }
 
 export {appConfig, lightConfig, darkConfig};

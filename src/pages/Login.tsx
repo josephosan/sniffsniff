@@ -1,9 +1,10 @@
 import React from "react";
-import {Divider, Form, Input, Button} from "antd";
+import {Divider, Form, Input, Button, Anchor} from "antd";
 import {useApp} from "../store/app.store";
 import {appConfig} from "../config/app.config";
 
 
+<<<<<<< src/pages/Login.tsx
 const Login: React.FC = () => {
     const {theme} = useApp();
 

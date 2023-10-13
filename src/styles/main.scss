@@ -1,4 +1,6 @@
 @import "./components/primary/sidebar.scss";
+@import "./components/antd.fix.scss";
+@import "./components/primary/form-builder.scss";
 
 .sidebar-phone {
   position: fixed !important;

@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState} from "react";
-import {AppStore, ColorConfig} from "../@types/app";
-import {lightConfig, darkConfig} from "../config/app.config";
+import {AppStore, Errors, Theme} from "../@types/app";
+import {lightConfig} from "../config/app.config";
+
 
 
 const AppContext = createContext<AppStore | undefined>(undefined);
@@ -16,15 +17,26 @@ export function useApp() {
 
 export const AppProvider: React.FC = ({ children }) => {
     // theme config
-    const [theme, setTheme] = useState<ColorConfig>(lightConfig);
-    const setThemeConfig = (themeConfig) => {
+    const [theme, setTheme] = useState<Theme>(lightConfig);
+    const setThemeConfig = (themeConfig: Theme) => {
         setTheme(themeConfig);
+    }
+
+    // errors
+    const [errors, setErrors] = useState<Errors | null>(null);
+    const handleSetErrors = (errors) => {
+        setErrors(errors);
     }
 
 
     const appStore: AppStore = {
+        // theme
         theme,
-        setThemeConfig
+        setThemeConfig,
+
+        // errors
+        errors,
+        handleSetErrors
     }
 
     return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>

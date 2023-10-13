@@ -1,32 +1,75 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
+import {NotificationStore} from "../@types/notify";
+import {AppStore} from "../@types/app";
 
 
-// todo: axios interceptor.
 // Create a new instance of Axios with default headers
 const api = axios.create({
-  baseURL: 'base_url_here', // to get from .env
-  headers: {
-    'Authorization': 'Bearer token_here',
-    'Content-Type': 'application/json',
-  },
+    baseURL: 'base_url', // todo: get from env
 });
 
-export default class ApiService {
-  public static async get(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-    try {
-      // Use the Axios instance to make GET requests with common headers
-      return await api.get(resource, config);
-    } catch (error) {
-      throw error;
-    }
-  }
 
-  public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-    try {
-      // Use the Axios instance to make POST requests with common headers
-      return await api.post(resource, config);
-    } catch (error) {
-      throw error;
+export default class ApiService {
+    public static notify: NotificationStore | null = null;
+    public static appStore: AppStore | null = null;
+
+    public static init(notifyStore: NotificationStore, appStore?: AppStore) {
+        this.notify = notifyStore;
+        this.appStore = appStore;
+
+        this.setRequestInterceptors();
+        this.setResponseInterceptors();
     }
-  }
+
+    public static setRequestInterceptors() {
+        api.interceptors.request.use(
+            (config) => {
+                config.headers = {
+                    'Authorization': 'Bearer ...' // todo: set headers here.
+                }
+
+                return config;
+            },
+            (error) => {
+                // todo: notify user that an error happened.
+                return Promise.reject(error);
+            }
+        );
+    }
+
+    public static setResponseInterceptors() {
+        api.interceptors.response.use(
+            (response) => {
+                return response;
+            },
+            (error) => {
+                const { response } = error;
+                if (response.status >= 500) {
+                    this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
+                } else if (response.status === 400) {
+                    // todo: in some cases handle form errors
+                    this.appStore?.handleSetErrors({ formErrors: { name: ['errrorrrrrrr' ] } });
+                } else if (response.status === 403) {
+                    // handle refresh token.
+                } // and more.
+                return Promise.reject(error);
+            }
+        )
+    }
+
+    public static async get(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.get(resource, config);
+    }
+
+    public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.post(resource, config);
+    }
+
+    public static async patch(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.patch(recourse, config);
+    }
+
+    public static async delete(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.delete(recourse, config);
+    }
 }

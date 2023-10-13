@@ -6,13 +6,10 @@ import './styles/main.scss'
 import {AuthProvider} from "./store/auth.store";
 import {AppProvider} from "./store/app.store";
 
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
-    <React.StrictMode>
-        <AuthProvider>
-            <AppProvider>
-                <App/>
-            </AppProvider>
-        </AuthProvider>
-    </React.StrictMode>
+    <AuthProvider>
+        <AppProvider>
+            <App/>
+        </AppProvider>
+    </AuthProvider>
 )
