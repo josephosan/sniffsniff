@@ -47,6 +47,8 @@ const Login: React.FC = () => {
                             onClick={() => navigate('/reset-password')}
                         >رمز عبور خود را فراموش کرده ام</a>
                     }
+                    colXLSpan={24}
+                    colSMSpan={24}
                 />
             </div>
 

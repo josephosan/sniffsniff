@@ -12,6 +12,7 @@ import ApiService from "../services/ApiService";
 import Loading from "../components/secondary/Loading";
 import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
+import ForgotPassword from "../pages/ForgotPassword";
 
 
 const routes: RouteObject = [
@@ -25,8 +26,8 @@ const routes: RouteObject = [
             },
             {
                 path: '/events',
-                element: <Events />
-            }
+                element: <Events/>
+            },
         ]
     },
     {
@@ -36,6 +37,10 @@ const routes: RouteObject = [
             {
                 path: '/login',
                 element: <Login/>
+            },
+            {
+                path: '/forgot-password',
+                element: <ForgotPassword/>
             }
         ]
     }
