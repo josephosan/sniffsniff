@@ -33,6 +33,8 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
+                fontSize: appConfig.defaultFontSize,
+                fontSizeLG: appConfig.defaultFontSize
             },
             DatePicker: {
                 colorText: theme.fadeTextColor,
@@ -62,6 +64,13 @@ function App() {
             Divider: {
                 colorSplit: theme.primaryColor,
                 colorText: theme.fadeTextColor,
+                colorTextHeading: theme.fadeTextColor,
+                fontSize: appConfig.smallFontSize,
+                fontSizeLG: appConfig.smallFontSize
+            },
+            Button: {
+                fontSize: appConfig.defaultFontSize,
+                fontSizeLG: appConfig.defaultFontSize,
                 colorTextHeading: theme.fadeTextColor
             },
             Modal: {
