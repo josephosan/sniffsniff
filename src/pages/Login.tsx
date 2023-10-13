@@ -2,7 +2,6 @@ import React from "react";
 import {Divider, Form, Input, Button} from "antd";
 import {useApp} from "../store/app.store";
 import {appConfig} from "../config/app.config";
-import {Link} from "react-router-dom";
 
 
 const Login: React.FC = () => {
@@ -16,7 +15,7 @@ const Login: React.FC = () => {
                 logo here
             </div>
             <div className={"mt-5"}>
-                <h3 style={{fontSize: appConfig.largeFontSize}}>به اجوایونت خوش آمدید!</h3>
+                <h3 style={{fontSize: appConfig.hugeFontSize}}>به اجوایونت خوش آمدید!</h3>
             </div>
             <div className={"w-100 mt-3"}>
                 <Form>
@@ -31,7 +30,6 @@ const Login: React.FC = () => {
                         </Button>
                     </Form.Item>
                 </Form>
-
             </div>
 
             <div className={"w-100 px-5"}>

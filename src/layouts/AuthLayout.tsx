@@ -16,16 +16,31 @@ const AuthLayout: React.FC = () => {
             style={{
                 width: "100%",
                 height: "100vh",
-                backgroundColor: theme.mainBackgroundColor,
+                backgroundColor: isMobile ? theme.cardBg : theme.mainBackgroundColor,
                 overflowY: "scroll"
             }}
         >
-            <WrapperCard
-                width={500}
-                height={600}
-            >
-                <Outlet/>
-            </WrapperCard>
+            {
+                isMobile ? (
+                    <div
+                        className={"w-100"}
+                        style={{
+                            height: '500px'
+
+                        }}
+                    >
+                        <Outlet/>
+                    </div>
+
+                ) : (
+                    <WrapperCard
+                        width={500}
+                        height={600}
+                    >
+                        <Outlet/>
+                    </WrapperCard>
+                )
+            }
         </Layout>
     );
 }
