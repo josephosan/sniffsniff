@@ -2,6 +2,7 @@ import React from "react";
 import FormBuilder from "../components/primary/FormBuilder";
 import ApiService from "../services/ApiService";
 import {TableBuilder} from "../components/primary/TableBuilder";
+import {WrapperData} from "../components/secondary/WrapperData";
 
 export const Home: React.FC = () => {
     const handleSendFakeReq = () => {
@@ -148,6 +149,12 @@ export const Home: React.FC = () => {
                     ]}
 
                 />
+            </div>
+
+            <div>
+                <WrapperData color={'red'} isMobile={false}>
+                    item
+                </WrapperData>
             </div>
         </>
     );
