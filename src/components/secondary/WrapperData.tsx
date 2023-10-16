@@ -1,32 +1,33 @@
-import React, {ReactNode} from "react"
+import React, { ReactNode } from "react";
+import { useMediaQuery } from "react-responsive";
+import { appConfig } from "../../config/app.config";
+import { useApp } from "../../store/app.store";
+import { lightConfig, darkConfig } from "../../config/app.config";
 
 interface DataProps {
-    children: ReactNode,
-    isMobile?: boolean,
-    color?: never,
+  children: ReactNode;
+  color?: never;
 }
 
-
-export const WrapperData = ({children, isMobile, color}: DataProps) => {
-
-    return (
-        <>
-            {
-                isMobile ? (
-                    <div
-                        className=" shadow-sm mb-4 px-5 py-3 bg-white rounded align-items-center "
-                        style={{borderRight: `6px solid ${color}`}}
-                    >{children}</div>
-                ) : (
-                    <div
-                        className=" shadow-sm mb-4 px-5 py-3 bg-white rounded align-items-center "
-                    >{children}</div>
-                )
-            }
-        </>
-    )
-}
-  
-
-
-
+export const WrapperData = ({ children, color }: DataProps) => {
+  const isMobile = useMediaQuery({
+    query: `(max-width: ${appConfig.appBreakPoint}px)`,
+  });
+  const { theme } = useApp();
+  return (
+    <>
+      {isMobile ? (
+        <div className=" shadow-sm mb-4 px-5 py-3 bg-white rounded align-items-center ">
+          {children}
+        </div>
+      ) : (
+        <div
+          className=" shadow-sm mb-4 px-5 py-3 bg-white rounded align-items-center "
+          style={{ borderRight: `4px solid ${color}` }}
+        >
+          {children}
+        </div>
+      )}
+    </>
+  );
+};

@@ -152,7 +152,7 @@ export const Home: React.FC = () => {
             </div>
 
             <div>
-                <WrapperData color={'red'} isMobile={false}>
+                <WrapperData color={'red'}>
                     item
                 </WrapperData>
             </div>
