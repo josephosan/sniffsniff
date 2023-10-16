@@ -130,7 +130,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             size={size}
                                         />
                                     </Form.Item>
-                                ) : el.type === 'select' ? (
+                                ) : (el.type === 'select' || el.type === 'multi_select') ? (
                                     <Form.Item
                                         label={el.label}
                                         name={el.name}
@@ -143,6 +143,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             placeholder={el.placeholder}
                                             select_url={el.select_url}
                                             size={size}
+                                            multiSelect={el.type === 'multi_select'}
                                         />
                                     </Form.Item>
                                 ) : (
