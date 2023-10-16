@@ -44,7 +44,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
                 ) : (
                     <Breadcrumb
                         style={{
-                            fontSize: appConfig.largeFontSize+5+'px'
+                            fontSize: appConfig.hugeFontSize+'px',
                         }}
                         items={breadcrumpItems}
                     />
