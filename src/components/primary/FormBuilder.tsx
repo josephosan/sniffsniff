@@ -67,10 +67,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         onFinish(data);
     }
 
-    const handleSelectInputChange = (e) => {
-        console.log(e);
-    }
-
     return (
         <>
             <Form
@@ -150,7 +146,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             select_url={el.select_url}
                                             size={size}
                                             multiSelect={el.type === 'multi_select'}
-                                            onInputChange={handleSelectInputChange}
                                             name={el.name}
                                             form={form}
                                         />

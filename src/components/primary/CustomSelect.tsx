@@ -3,6 +3,7 @@ import {Select, Spin} from "antd";
 import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
+import FormInstance from "antd/lib/form";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -13,7 +14,7 @@ interface CustomSelectProps {
     size?: SizeTypes,
     multiSelect?: boolean,
     name?: string,
-    form?: never
+    form?: FormInstance
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
