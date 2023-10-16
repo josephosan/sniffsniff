@@ -70,12 +70,18 @@ const CreateTimeLine: React.FC = () => {
             placeholder: '...',
             rules: [{required: true, message: 'لطفا یک توضیخ درباره این جدول زمانی بنویسید!'}],
         },
-    ]
+    ];
+
+    const handleFormSubmit = (data) => {
+        console.log(data);
+    }
+
     return (
         <>
             <FormBuilder
                 fields={createTimeLineFields}
                 size={"middle"}
+                onFinish={handleFormSubmit}
             />
         </>
     );

@@ -11,7 +11,9 @@ interface CustomSelectProps {
     onInputChange?: (e) => void,
     value?: string,
     size?: SizeTypes,
-    multiSelect?: boolean
+    multiSelect?: boolean,
+    name?: string,
+    form?: never
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -22,10 +24,12 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         onInputChange,
         value,
         size = 'large',
-        multiSelect = false
+        multiSelect = false,
+        name,
+        form
     }
 ) => {
-    const { theme } = useApp();
+    const {theme} = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -92,6 +96,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         return !!option.children[2].includes(input.toLowerCase());
     }
 
+    const handleSelectChange = (e) => {
+        form.setFieldsValue({[name]: e});
+        onInputChange(e);
+    }
 
     return (
         <Select
@@ -102,7 +110,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             notFoundContent={loading ? <Spin size="small"/> : null}
             virtual={true}
             onPopupScroll={handlePopupScroll}
-            onChange={onInputChange}
+            onChange={handleSelectChange}
             value={value}
             optionFilterProp={'children'}
             size={size}

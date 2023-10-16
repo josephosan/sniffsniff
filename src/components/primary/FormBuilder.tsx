@@ -7,7 +7,7 @@ import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
 
 interface FormBuilderProps {
-    onFinish?: () => void,
+    onFinish?: (data: never) => void,
     onFinishFailed?: () => void,
     fields: FormBuilderField[],
     submitButtonLabel?: string,
@@ -29,6 +29,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         additionalElement
     }
 ) => {
+    const [form] = Form.useForm();
     const {errors, handleSetErrors} = useApp();
     const [_fields, setFields] = useState<FormBuilderField[] | null>(null)
 
@@ -60,10 +61,14 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (data) => {
         handleSetErrors(null);
         handleClearElementErrors();
-        onFinish();
+        onFinish(data);
+    }
+
+    const handleSelectInputChange = (e) => {
+        console.log(e);
     }
 
     return (
@@ -77,6 +82,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 layout={'vertical'}
+                form={form}
             >
                 <Row gutter={16}>
                     {_fields && _fields.map((el, index) => (
@@ -144,6 +150,9 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             select_url={el.select_url}
                                             size={size}
                                             multiSelect={el.type === 'multi_select'}
+                                            onInputChange={handleSelectInputChange}
+                                            name={el.name}
+                                            form={form}
                                         />
                                     </Form.Item>
                                 ) : (
