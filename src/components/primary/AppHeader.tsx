@@ -21,7 +21,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
     const location = useLocation();
     const {theme, setThemeConfig} = useApp();
     const [openModal, setOpenModal] = useState(false);
-    const [breadcrupItems, setBreadcrumpItems] = useState<never>(null);
+    const [breadcrumpItems, setBreadcrumpItems] = useState<never>(null);
 
     useEffect(() => {
         setBreadcrumpItems(prevState => {
@@ -46,7 +46,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
                         style={{
                             fontSize: appConfig.largeFontSize+5+'px'
                         }}
-                        items={breadcrupItems}
+                        items={breadcrumpItems}
                     />
                 )
             }
