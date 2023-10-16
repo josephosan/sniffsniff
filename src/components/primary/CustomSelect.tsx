@@ -10,7 +10,8 @@ interface CustomSelectProps {
     select_url?: string,
     onInputChange?: (e) => void,
     value?: string,
-    size?: SizeTypes
+    size?: SizeTypes,
+    multiSelect?: boolean
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -20,7 +21,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         select_url,
         onInputChange,
         value,
-        size = 'large'
+        size = 'large',
+        multiSelect = false
     }
 ) => {
     const { theme } = useApp();
@@ -104,6 +106,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             value={value}
             optionFilterProp={'children'}
             size={size}
+            mode={multiSelect ? 'multiple' : ''}
         >
             {
                 _options?.map(el => (
