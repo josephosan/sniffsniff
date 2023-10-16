@@ -1,13 +1,17 @@
+import {appConfig} from "../config/app.config";
+
 const pathNamesMap = {
     home: 'خانه',
     event: 'رویداد',
-    create: 'جدید'
+    create: 'جدید',
+    timeline: 'تایم لاین'
 }
 
 const pathIconsMap = {
     home: 'bi bi-house-door',
     event: 'bi bi-calendar-event',
-    create: 'bi bi-plus-circle'
+    create: 'bi bi-plus-circle',
+    timeline: 'bi bi-calendar2-range'
 }
 
 
@@ -21,12 +25,12 @@ const handleGetBreadcrump = (path) => {
 
     let basepath = '/';
     return pathNames.map(el => {
-        basepath += el;
+        basepath += el + '/';
         return {
-            href: basepath,
+            href: basepath ,
             title: (
                 <>
-                    <i className={pathIconsMap[el] + " ms-1"}></i>
+                    <i style={{ fontSize: appConfig.defaultFontSize}} className={pathIconsMap[el] + " ms-2"}></i>
                     <span>{pathNamesMap[el]}</span>
                 </>
             )

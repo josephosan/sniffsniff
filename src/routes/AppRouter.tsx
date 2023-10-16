@@ -12,6 +12,7 @@ import ApiService from "../services/ApiService";
 import Loading from "../components/secondary/Loading";
 import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
+import CreateTimeLine from "../pages/timeline/Create";
 
 
 const routes: RouteObject = [
@@ -26,6 +27,10 @@ const routes: RouteObject = [
             {
                 path: '/events',
                 element: <Events />
+            },
+            {
+                path: '/timeline/create',
+                element: <CreateTimeLine />
             }
         ]
     },
