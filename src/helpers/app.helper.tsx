@@ -4,7 +4,7 @@ const pathNamesMap = {
     home: 'خانه',
     event: 'رویداد',
     create: 'جدید',
-    timeline: 'تایم لاین'
+    timeline: 'جدول زمانی'
 }
 
 const pathIconsMap = {
@@ -27,11 +27,11 @@ const handleGetBreadcrump = (path) => {
     return pathNames.map(el => {
         basepath += el + '/';
         return {
-            href: basepath ,
+            // href: basepath ,
             title: (
                 <>
-                    <i style={{ fontSize: appConfig.defaultFontSize}} className={pathIconsMap[el] + " ms-2"}></i>
-                    <span>{pathNamesMap[el]}</span>
+                    <i style={{ fontSize: appConfig.defaultFontSize}} className={pathIconsMap[el] + " ms-2 me-2"}></i>
+                    <span className={"ms-2"}>{pathNamesMap[el]}</span>
                 </>
             )
         }

@@ -23,7 +23,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         onFinishFailed,
         fields,
         submitButtonLabel = 'ارسال',
-        size = 'large',
+        size = 'middle',
         submitButtonFlex = 'start',
         submitButtonClasses,
         additionalElement
@@ -83,7 +83,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                         <Col
                             xs={{span: 24}}
                             sm={{span: 12}}
-                            xl={{span: 24}}
+                            xl={{span: 8}}
                             key={index}
                         >
                             {

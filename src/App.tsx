@@ -86,6 +86,9 @@ function App() {
                 colorBgContainer: theme.cardBgLighter,
                 colorText: theme.fadeTextColor,
                 footerColor: theme.fadeTextColor,
+            },
+            Breadcrumb: {
+                lastItemColor: theme.defaultTextColor
             }
         },
     }
