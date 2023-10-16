@@ -68,3 +68,5 @@ export interface Errors {
 export type SizeTypes = 'large' | 'middle' | 'small';
 
 export type FlexTypes = "center" | "end" | "start";
+
+export type ShapeSizeTypes = 'default' | 'small' | 'large';
