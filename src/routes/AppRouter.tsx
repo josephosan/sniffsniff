@@ -13,6 +13,7 @@ import Loading from "../components/secondary/Loading";
 import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
 import CreateTimeLine from "../pages/timeline/Create";
+import EditTimeLine from "../pages/timeline/Edit";
 
 
 const routes: RouteObject = [
@@ -31,6 +32,10 @@ const routes: RouteObject = [
             {
                 path: '/timeline/create',
                 element: <CreateTimeLine />
+            },
+            {
+                path: '/timeline/edit/:id',
+                element: <EditTimeLine />
             }
         ]
     },

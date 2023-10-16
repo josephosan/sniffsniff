@@ -69,7 +69,7 @@ export const DefaultLayout: React.FC = () => {
                 }}
             >
                 <Header
-                    className={"d-flex align-items-center mb-3"}
+                    className={"d-flex align-items-center mb-2"}
                     style={{
                         backgroundColor: "inherit",
                         padding: `0 ${appConfig.defaultPadding + 15}px 0 ${appConfig.defaultPadding + 15}px`

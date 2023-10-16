@@ -4,14 +4,16 @@ const pathNamesMap = {
     home: 'خانه',
     event: 'رویداد',
     create: 'جدید',
-    timeline: 'جدول زمانی'
+    timeline: 'جدول زمانی',
+    edit: 'ویرایش'
 }
 
 const pathIconsMap = {
     home: 'bi bi-house-door',
     event: 'bi bi-calendar-event',
     create: 'bi bi-plus-circle',
-    timeline: 'bi bi-calendar2-range'
+    timeline: 'bi bi-calendar2-range',
+    edit: 'bi bi-pen'
 }
 
 
@@ -21,7 +23,13 @@ const getPageNameByPath = (route: string) => {
 }
 
 const handleGetBreadcrump = (path) => {
-    const pathNames = path.split('/').filter(el => el !== '');
+    const pathNames =
+        path
+            .split('/')
+            .filter(el => el !== '')
+            .filter(el => {
+                return Object.keys(pathNamesMap).includes(el);
+            });
 
     let basepath = '/';
     return pathNames.map(el => {
@@ -30,7 +38,8 @@ const handleGetBreadcrump = (path) => {
             // href: basepath ,
             title: (
                 <>
-                    <i style={{ fontSize: appConfig.defaultFontSize}} className={pathIconsMap[el] + " ms-2 me-2"}></i>
+                    <i style={{fontSize: appConfig.defaultFontSize}}
+                       className={pathIconsMap[el] + " ms-2 me-2"}></i>
                     <span className={"ms-2"}>{pathNamesMap[el]}</span>
                 </>
             )
