@@ -22,29 +22,29 @@ const routes: RouteObject = [
         element: <DefaultLayout/>,
         children: [
             {
-                path: "/home",
+                path: "home",
                 element: <Home/>
             },
             {
-                path: '/events',
+                path: 'events',
                 element: <Events />
             },
             {
-                path: '/timeline/create',
+                path: 'timeline/create',
                 element: <CreateTimeLine />
             },
             {
-                path: '/timeline/edit/:id',
+                path: 'timeline/edit/:id',
                 element: <EditTimeLine />
             }
         ]
     },
     {
-        path: "",
+        path: "/",
         element: <AuthLayout/>,
         children: [
             {
-                path: '/login',
+                path: 'login',
                 element: <Login/>
             }
         ]
