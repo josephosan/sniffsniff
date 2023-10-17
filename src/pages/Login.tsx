@@ -40,6 +40,9 @@ const Login: React.FC = () => {
                     fields={loginFormFields}
                     submitButtonFlex={"center"}
                     submitButtonClasses={"px-5"}
+                    colXL={24}
+                    colSM={24}
+                    size={'large'}
                     additionalElement={
                         <a
                             className={"ms-2 text-decoration-none"}

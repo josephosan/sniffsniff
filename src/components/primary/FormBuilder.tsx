@@ -14,7 +14,10 @@ interface FormBuilderProps {
     size?: SizeTypes,
     submitButtonFlex?: FlexTypes,
     submitButtonClasses?: string,
-    additionalElement?: ReactNode
+    additionalElement?: ReactNode,
+    colXS?: number,
+    colSM?: number,
+    colXL?: number
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -26,7 +29,10 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         size = 'middle',
         submitButtonFlex = 'start',
         submitButtonClasses,
-        additionalElement
+        additionalElement,
+        colXS = 24,
+        colSM = 12,
+        colXL = 8
     }
 ) => {
     const [form] = Form.useForm();
@@ -83,9 +89,9 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 <Row gutter={16}>
                     {_fields && _fields.map((el, index) => (
                         <Col
-                            xs={{span: 24}}
-                            sm={{span: 12}}
-                            xl={{span: 8}}
+                            xs={{span: colXS}}
+                            sm={{span: colSM}}
+                            xl={{span: colXL}}
                             key={index}
                         >
                             {
