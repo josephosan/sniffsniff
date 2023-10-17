@@ -1,123 +1,119 @@
-import React from "react";
-import FormBuilder from "../components/primary/FormBuilder";
-import ApiService from "../services/ApiService";
-import {TableBuilder} from "../components/primary/TableBuilder";
-
+import React from 'react';
+import FormBuilder from '../components/primary/FormBuilder';
+import ApiService from '../services/ApiService';
+import { TableBuilder } from '../components/primary/TableBuilder';
+import WrapperSteps from '../components/secondary/WrapperSteps';
 export const Home: React.FC = () => {
     const handleSendFakeReq = () => {
-        ApiService.get('http://localhost:3001/tst/')
-            .then(res => {
-                console.log(res);
-            })
-    }
-
+        ApiService.get('http://localhost:3001/tst/').then((res) => {
+            console.log(res);
+        });
+    };
 
     return (
         <>
             <div>
                 <FormBuilder
                     onFinish={handleSendFakeReq}
-                    fields={
-                        [
-                            {
-                                name: "name",
-                                placeholder: "نام",
-                                type: "text",
-                                required: true
-                            },
-                            {
-                                name: "last_name",
-                                placeholder: "نام خانوادگی",
-                                type: "text"
-                            },
-                            {
-                                name: "password",
-                                placeholder: "رمز عبور",
-                                type: "password",
-                            },
-                            {
-                                name: "price",
-                                placeholder: "قیمت",
-                                type: "number",
-                            },
-                            {
-                                label: 'date',
-                                required: true,
-                                name: "date",
-                                placeholder: "تاریخ",
-                                type: "date",
-                            },
-                            {
-                                label: 'select',
-                                name: "select",
-                                placeholder: "اتنخاب",
-                                type: "select",
-                                select_url: 'http://localhost:3001/users/select/'
-                            }
-                        ]
-                    }
+                    fields={[
+                        {
+                            name: 'name',
+                            placeholder: 'نام',
+                            type: 'text',
+                            required: true,
+                        },
+                        {
+                            name: 'last_name',
+                            placeholder: 'نام خانوادگی',
+                            type: 'text',
+                        },
+                        {
+                            name: 'password',
+                            placeholder: 'رمز عبور',
+                            type: 'password',
+                        },
+                        {
+                            name: 'price',
+                            placeholder: 'قیمت',
+                            type: 'number',
+                        },
+                        {
+                            label: 'date',
+                            required: true,
+                            name: 'date',
+                            placeholder: 'تاریخ',
+                            type: 'date',
+                        },
+                        {
+                            label: 'select',
+                            name: 'select',
+                            placeholder: 'اتنخاب',
+                            type: 'select',
+                            select_url: 'http://localhost:3001/users/select/',
+                        },
+                    ]}
                 />
 
                 <TableBuilder
                     scrollable={true}
-                    title={"مساعده ها"}
+                    title={'مساعده ها'}
                     dataSource={[
                         {
                             key: '1',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/4/1403"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/4/1403',
                         },
                         {
                             key: '2',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '3',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '4',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '51',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '6',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '7',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
                         },
                         {
                             key: '8',
                             first_name: 'یوسف',
-                            last_name: "اصانلو",
-                            national_code: "495450338",
-                            date: "3/3/1402"
-                        }
+                            last_name: 'اصانلو',
+                            national_code: '495450338',
+                            date: '3/3/1402',
+                        },
                     ]}
                     columns={[
                         {
@@ -142,13 +138,37 @@ export const Home: React.FC = () => {
                         },
                         {
                             title: 'عملیات',
-                            key: "actions",
-                            dataIndex: "actions",
-                        }
+                            key: 'actions',
+                            dataIndex: 'actions',
+                        },
                     ]}
+                />
+                <WrapperSteps
+                    items={[
+                        {
+                            title: 'عنوان',
+                            description: 'شرح',
+                        },
+                        {
+                            title: 'عنوان',
+                            description: 'شرح',
+                        },
 
+                        {
+                            title: 'عنوان',
+                            description: 'شرح',
+                        },
+                        {
+                            title: 'عنوان',
+                            description: 'شرح',
+                        },
+                        {
+                            title: 'عنوان',
+                            description: 'شرح',
+                        },
+                    ]}
                 />
             </div>
         </>
     );
-}
+};
