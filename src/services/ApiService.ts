@@ -1,6 +1,8 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
+import {getToken} from "../helpers/jwt.helper";
+import {AuthStore} from "../@types/auth";
 
 
 const api = axios.create({
@@ -12,6 +14,7 @@ export default class ApiService {
     public static notify: NotificationStore | null = null;
     public static appStore: AppStore | null = null;
 
+
     public static init(notifyStore: NotificationStore, appStore?: AppStore) {
         this.notify = notifyStore;
         this.appStore = appStore;
@@ -20,12 +23,23 @@ export default class ApiService {
         this.setResponseInterceptors();
     }
 
-    public static setRequestInterceptors() {
+    public static setHeader(key: string, value: string) {
         api.interceptors.request.use(
             (config) => {
                 config.headers = {
-                    'Authorization': 'Bearer ...' // todo: set headers here.
+                    [key]: value
                 }
+                return config;
+            }, (error) => {
+                return Promise.reject(error);
+            }
+        )
+    }
+
+    public static setRequestInterceptors() {
+        api.interceptors.request.use(
+            (config) => {
+                // todo set some headers.
 
                 return config;
             },

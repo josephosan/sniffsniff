@@ -14,6 +14,7 @@ import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
 import CreateTimeLine from "../pages/timeline/Create";
 import EditTimeLine from "../pages/timeline/Edit";
+import {useAuth} from "../store/auth.store";
 
 
 const routes: RouteObject = [
@@ -61,6 +62,10 @@ export const AppRouter: React.FC = () => {
         ApiService.init(notifyStore, appStore);
         setLoading(false);
     }, []);
+
+    useEffect(() => {
+        ApiService.init(notifyStore, appStore);
+    }, [notifyStore, appStore])
 
     return (
         <>
