@@ -1,13 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import {Divider, Form, Input, Button} from "antd";
 import {useApp} from "../store/app.store";
 import {appConfig} from "../config/app.config";
 import FormBuilder from "../components/primary/FormBuilder";
 import {FormBuilderField} from "../@types/app";
 import {useNavigate} from "react-router-dom";
+import AuthService from "../services/AuthService";
 
 
 const Login: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const {theme} = useApp();
     const navigate = useNavigate();
     const loginFormFields: FormBuilderField[] = [
@@ -24,6 +26,18 @@ const Login: React.FC = () => {
             rules: [{required: true, message: 'فیلد رمز عبور اجباری است!'}]
         }
     ]
+
+    const handleLoginSubmit = async (data: {username: string, password: string}) => {
+        setLoading(() => true);
+        try {
+            const res = await AuthService.login(data);
+            console.log(res);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(() => false);
+        }
+    }
 
 
     return (
@@ -46,10 +60,12 @@ const Login: React.FC = () => {
                     additionalElement={
                         <a
                             className={"ms-2 text-decoration-none"}
-                            style={{color: theme.defaultTextColor}}
+                            style={{color: theme.defaultTextColor, fontSize: appConfig.smallFontSize}}
                             onClick={() => navigate('/reset-password')}
                         >رمز عبور خود را فراموش کرده ام</a>
                     }
+                    onFinish={handleLoginSubmit}
+                    submitButtonLoading={loading}
                 />
             </div>
 

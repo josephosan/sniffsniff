@@ -3,9 +3,8 @@ import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
 
 
-// Create a new instance of Axios with default headers
 const api = axios.create({
-    baseURL: 'base_url', // todo: get from env
+    baseURL: 'http://188.121.115.150:5000/v1',
 });
 
 
@@ -44,12 +43,11 @@ export default class ApiService {
             },
             (error) => {
                 const { response } = error;
-                if (response.status >= 500) {
+                if (response?.status >= 500) {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
-                } else if (response.status === 400) {
-                    // todo: in some cases handle form errors
-                    this.appStore?.handleSetErrors({ formErrors: { name: ['errrorrrrrrr' ] } });
-                } else if (response.status === 403) {
+                } else if (response?.status === 400) {
+                    this.notify?.showAlert('error', response.data.error, response.data.message[0])
+                } else if (response?.status === 403) {
                     // handle refresh token.
                 } // and more.
                 return Promise.reject(error);
@@ -61,8 +59,8 @@ export default class ApiService {
         return await api.get(resource, config);
     }
 
-    public static async post(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-        return await api.post(resource, config);
+    public static async post(resource: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.post(resource, data, config);
     }
 
     public static async patch(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {

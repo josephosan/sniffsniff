@@ -5,6 +5,7 @@ import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
+import Loading from "../secondary/Loading";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -17,7 +18,8 @@ interface FormBuilderProps {
     additionalElement?: ReactNode,
     colXS?: number,
     colSM?: number,
-    colXL?: number
+    colXL?: number,
+    submitButtonLoading?: boolean
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -32,7 +34,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         additionalElement,
         colXS = 24,
         colSM = 12,
-        colXL = 8
+        colXL = 8,
+        submitButtonLoading = false
     }
 ) => {
     const [form] = Form.useForm();
@@ -195,8 +198,11 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             style={{
                                 size: appConfig.defaultFontSize
                             }}
+                            disabled={submitButtonLoading}
                         >
-                            {submitButtonLabel}
+                            {
+                                submitButtonLoading ? 'درحال ارسال ...' : submitButtonLabel
+                            }
                         </Button>
                     </Form.Item>
                 </Col>
