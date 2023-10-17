@@ -8,9 +8,9 @@ const getToken = (key: string = AUTH_TOKEN_NAME): string => {
     return window.localStorage.getItem(key);
 }
 
-const destroyToken = (key: string): void => {
+const destroyToken = (key: string = AUTH_TOKEN_NAME): void => {
     window.localStorage.removeItem(key);
 }
 
 
-export default { saveToken, getToken, destroyToken };
+export { saveToken, getToken, destroyToken };

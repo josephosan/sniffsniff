@@ -5,6 +5,7 @@ import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
+import Loading from "../secondary/Loading";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -14,7 +15,11 @@ interface FormBuilderProps {
     size?: SizeTypes,
     submitButtonFlex?: FlexTypes,
     submitButtonClasses?: string,
-    additionalElement?: ReactNode
+    additionalElement?: ReactNode,
+    colXS?: number,
+    colSM?: number,
+    colXL?: number,
+    submitButtonLoading?: boolean
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -26,7 +31,11 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         size = 'middle',
         submitButtonFlex = 'start',
         submitButtonClasses,
-        additionalElement
+        additionalElement,
+        colXS = 24,
+        colSM = 12,
+        colXL = 8,
+        submitButtonLoading = false
     }
 ) => {
     const [form] = Form.useForm();
@@ -83,9 +92,9 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 <Row gutter={16}>
                     {_fields && _fields.map((el, index) => (
                         <Col
-                            xs={{span: 24}}
-                            sm={{span: 12}}
-                            xl={{span: 8}}
+                            xs={{span: colXS}}
+                            sm={{span: colSM}}
+                            xl={{span: colXL}}
                             key={index}
                         >
                             {
@@ -189,8 +198,11 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             style={{
                                 size: appConfig.defaultFontSize
                             }}
+                            disabled={submitButtonLoading}
                         >
-                            {submitButtonLabel}
+                            {
+                                submitButtonLoading ? 'درحال ارسال ...' : submitButtonLabel
+                            }
                         </Button>
                     </Form.Item>
                 </Col>

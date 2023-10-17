@@ -1,15 +1,19 @@
-import React from "react";
-import {Divider, Form, Input, Button} from "antd";
+import React, {useState} from "react";
+import {Divider, Button} from "antd";
 import {useApp} from "../store/app.store";
 import {appConfig} from "../config/app.config";
 import FormBuilder from "../components/primary/FormBuilder";
 import {FormBuilderField} from "../@types/app";
 import {useNavigate} from "react-router-dom";
+import AuthService from "../services/AuthService";
+import {useAuth} from "../store/auth.store";
 
 
 const Login: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const {theme} = useApp();
     const navigate = useNavigate();
+    const authStore = useAuth();
     const loginFormFields: FormBuilderField[] = [
         {
             placeholder: 'ایمیل',
@@ -24,6 +28,23 @@ const Login: React.FC = () => {
             rules: [{required: true, message: 'فیلد رمز عبور اجباری است!'}]
         }
     ]
+
+    const handleLoginSubmit = async (formData: {username: string, password: string}) => {
+        setLoading(() => true);
+        try {
+            const loginRes = await AuthService.login(formData);
+            authStore.handleSetTokens(loginRes.data.data);
+
+            const userRes = await AuthService.who();
+            authStore.handleSetUser(userRes.data.data);
+
+            navigate('/home');
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(() => false);
+        }
+    }
 
 
     return (
@@ -40,13 +61,18 @@ const Login: React.FC = () => {
                     fields={loginFormFields}
                     submitButtonFlex={"center"}
                     submitButtonClasses={"px-5"}
+                    colXL={24}
+                    colSM={24}
+                    size={'large'}
                     additionalElement={
                         <a
                             className={"ms-2 text-decoration-none"}
-                            style={{color: theme.defaultTextColor}}
+                            style={{color: theme.defaultTextColor, fontSize: appConfig.smallFontSize}}
                             onClick={() => navigate('/reset-password')}
                         >رمز عبور خود را فراموش کرده ام</a>
                     }
+                    onFinish={handleLoginSubmit}
+                    submitButtonLoading={loading}
                 />
             </div>
 

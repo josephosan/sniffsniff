@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useState } from "react";
 import {AuthStore, User} from "../@types/auth";
-import AuthService from "../services/AuthService";
+import {destroyToken, saveToken} from "../helpers/jwt.helper";
+import ApiService from "../services/ApiService";
 
 
 
@@ -20,28 +21,30 @@ export function useAuth() {
 export const AuthProvider: React.FC = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const [user, setUser] = useState<User | null>(null);
+    const handleSetUser = (data: User) => {
+        setUser(() => data);
+    }
 
-    // to login the user.
-    const login = async (userData: User) => {
-        const {data} = await AuthService.login(userData);
-        setUser(data);
-        setIsAuthenticated(true);
 
-        // todo: to set token here.
+    const handleSetTokens = (data) => {
+        ApiService.setHeader('Authorization', `Bearer ${data['accessToken']}`);
+        setIsAuthenticated(() => true);
+        saveToken('ID_TOKEN', JSON.stringify(data));
     }
 
     const logout = () => {
         setUser(null);
         setIsAuthenticated(false);
 
-        // todo: remove token here.
+        destroyToken();
     }
 
     const authStore: AuthStore = {
         isAuthenticated,
         user,
-        login,
-        logout
+        handleSetUser,
+        logout,
+        handleSetTokens
     }
 
     return <AuthContext.Provider value={authStore}>{ children }</AuthContext.Provider>;
