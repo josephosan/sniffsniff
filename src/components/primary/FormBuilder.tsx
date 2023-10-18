@@ -182,7 +182,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
 
                 {
                     additionalElement && (
-                        <div className={"w-100 mt-3 mb-4 d-flex justify-content-center align-items-center"}>
+                        <div className={"w-100 mt-3 mb-4 d-flexgit justify-content-center align-items-center"}>
                             {additionalElement}
                         </div>
                     )
