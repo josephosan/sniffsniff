@@ -17,7 +17,7 @@ import EditTimeLine from "../pages/timeline/Edit";
 import _404 from "../pages/_404";
 import {useAuth} from "../store/auth.store";
 import AuthService from "../services/AuthService";
-import {getToken} from "../helpers/jwt.helper";
+import {destroyToken, getToken} from "../helpers/jwt.helper";
 import {User} from "../@types/auth";
 
 
@@ -75,7 +75,7 @@ export const AppRouter: React.FC = () => {
         if (getToken())
             ApiService.setHeader('Authorization', `Bearer ${JSON.parse(getToken())['accessToken']}`);
 
-        if (authStore.user && authStore.isAuthenticated) {
+        if (authStore.user && authStore.isAuthenticated && getToken()) {
             setLoading(false);
         } else {
             AuthService.who()
@@ -85,6 +85,7 @@ export const AppRouter: React.FC = () => {
                 })
                 .catch(err => {
                     authStore.logout();
+                    console.error(err);
                 })
                 .finally(() => {
                     setLoading(() => false);

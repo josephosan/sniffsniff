@@ -2,6 +2,7 @@ import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
 import {NavigateFunction} from "react-router-dom";
+import {destroyToken, getToken, saveToken} from "../helpers/jwt.helper";
 
 
 const api = axios.create({
@@ -40,7 +41,13 @@ export default class ApiService {
     public static setRequestInterceptors() {
         api.interceptors.request.use(
             (config) => {
-                // todo set some headers.
+                if (getToken()) {
+                    const tokens = JSON.parse(getToken());
+                    config.headers = {
+                        ...config.headers,
+                        'Authorization': `Bearer ${tokens['accessToken']}`
+                    }
+                }
 
                 return config;
             },
@@ -56,19 +63,53 @@ export default class ApiService {
             (response) => {
                 return response;
             },
-            (error) => {
+            async (error) => {
                 const {response} = error;
                 if (response?.status >= 500) {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response?.status === 400) {
                     this.notify?.showAlert('error', response.data.error, response.data.message[0])
                 } else if (response?.status === 403) {
-                    this.notify?.showAlert('error', 'خطا', 'لطفا دوباره وارد شوید!');
                     this.navigate('/login');
-                } // and more.
+                } else if (response?.status === 401 && !(error.config.url.indexOf('rotate') > 0)) {
+                    const tokens = await this.refreshToken();
+
+                    if (tokens) {
+                        const config = error.config;
+                        config.headers = {
+                            ...config.headers,
+                            'X-Token-Refresh': 'true',
+                            'Authorization': `Bearer ${tokens['accessToken']}`
+                        }
+                        return axios(config);
+                    }
+                }
                 return Promise.reject(error);
             }
         )
+    }
+
+    public static async refreshToken(): Promise<{ refreshToken: string, accessToken: string } | null> {
+        if (!getToken()) {
+            this.navigate('/login');
+        }
+
+        try {
+            const {data} = await this.post('user/auth/rotate', {
+                refreshToken: JSON.parse(getToken())['refreshToken']
+            });
+
+            const tokens: { refreshToken: string, accessToken: string } = data.data;
+            if (tokens) {
+                this.setHeader('Authorization', `Bearer ${tokens.accessToken}`);
+                saveToken("ID_TOKEN", JSON.stringify(tokens));
+            }
+
+            return tokens;
+        } catch (err) {
+            destroyToken();
+            return null;
+        }
     }
 
     public static async get(resource: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
