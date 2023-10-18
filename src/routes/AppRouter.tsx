@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {useRoutes, Outlet} from "react-router-dom";
+import {useRoutes, Outlet, useNavigate, Navigate} from "react-router-dom";
 
 // Import pages
 import {Home} from "../pages/Home";
@@ -14,57 +14,86 @@ import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
 import CreateTimeLine from "../pages/timeline/Create";
 import EditTimeLine from "../pages/timeline/Edit";
+import _404 from "../pages/_404";
 import {useAuth} from "../store/auth.store";
+import AuthService from "../services/AuthService";
+import {getToken} from "../helpers/jwt.helper";
+import {User} from "../@types/auth";
 
-
-const routes: RouteObject = [
-    {
-        path: "/",
-        element: <DefaultLayout/>,
-        children: [
-            {
-                path: "home",
-                element: <Home/>
-            },
-            {
-                path: 'events',
-                element: <Events />
-            },
-            {
-                path: 'timeline/create',
-                element: <CreateTimeLine />
-            },
-            {
-                path: 'timeline/edit/:id',
-                element: <EditTimeLine />
-            }
-        ]
-    },
-    {
-        path: "/",
-        element: <AuthLayout/>,
-        children: [
-            {
-                path: 'login',
-                element: <Login/>
-            }
-        ]
-    }
-];
 
 export const AppRouter: React.FC = () => {
-    const element = useRoutes(routes);
     const notifyStore = useNotify();
     const appStore = useApp();
+    const authStore = useAuth();
+    const navigate = useNavigate();
+    const routes: RouteObject = [
+        {
+            name: 'default',
+            path: "/",
+            element: authStore.isAuthenticated ? <DefaultLayout/> : <Navigate to={"/login"} />,
+            children: [
+                {
+                    path: "home",
+                    element: <Home/>
+                },
+                {
+                    path: 'events',
+                    element: <Events/>
+                },
+                {
+                    path: 'timeline/create',
+                    element: <CreateTimeLine/>
+                },
+                {
+                    path: 'timeline/edit/:id',
+                    element: <EditTimeLine/>
+                }
+            ]
+        },
+        {
+            name: 'auth',
+            path: "/",
+            element: <AuthLayout/>,
+            children: [
+                {
+                    path: 'login',
+                    element: !authStore.isAuthenticated ? <Login /> : <Navigate to={"/home"} />
+                }
+            ]
+        },
+        {
+            name: 'error',
+            path: '*',
+            element: <_404/>
+        }
+    ];
+    const element = useRoutes(routes);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        ApiService.init(notifyStore, appStore);
-        setLoading(false);
+        ApiService.init(notifyStore, appStore, navigate);
+        if (getToken())
+            ApiService.setHeader('Authorization', `Bearer ${JSON.parse(getToken())['accessToken']}`);
+
+        if (authStore.user && authStore.isAuthenticated) {
+            setLoading(false);
+        } else {
+            AuthService.who()
+                .then(({data}) => {
+                    authStore.handleSetUser(data.data as User);
+                    authStore.handleSetIsAuthenticated(true);
+                })
+                .catch(err => {
+                    authStore.logout();
+                })
+                .finally(() => {
+                    setLoading(() => false);
+                });
+        }
     }, []);
 
     useEffect(() => {
-        ApiService.init(notifyStore, appStore);
+        ApiService.init(notifyStore, appStore, navigate);
     }, [notifyStore, appStore])
 
     return (
