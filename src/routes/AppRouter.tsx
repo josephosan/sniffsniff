@@ -14,11 +14,12 @@ import {useApp} from "../store/app.store";
 import Events from "../pages/Events";
 import CreateTimeLine from "../pages/timeline/Create";
 import EditTimeLine from "../pages/timeline/Edit";
-import {useAuth} from "../store/auth.store";
+import _404 from "../pages/_404";
 
 
 const routes: RouteObject = [
     {
+        name: 'default',
         path: "/",
         element: <DefaultLayout/>,
         children: [
@@ -41,6 +42,7 @@ const routes: RouteObject = [
         ]
     },
     {
+        name: 'auth',
         path: "/",
         element: <AuthLayout/>,
         children: [
@@ -49,6 +51,11 @@ const routes: RouteObject = [
                 element: <Login/>
             }
         ]
+    },
+    {
+        name: 'error',
+        path: '*',
+        element: <_404 />
     }
 ];
 
