@@ -1,8 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse} from 'axios';
 import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
-import {getToken} from "../helpers/jwt.helper";
-import {AuthStore} from "../@types/auth";
+import {NavigateFunction} from "react-router-dom";
 
 
 const api = axios.create({
@@ -13,11 +12,13 @@ const api = axios.create({
 export default class ApiService {
     public static notify: NotificationStore | null = null;
     public static appStore: AppStore | null = null;
+    public static navigate: NavigateFunction | null = null;
 
 
-    public static init(notifyStore: NotificationStore, appStore?: AppStore) {
+    public static init(notifyStore: NotificationStore, appStore?: AppStore, navigate?: NavigateFunction) {
         this.notify = notifyStore;
         this.appStore = appStore;
+        this.navigate = navigate;
 
         this.setRequestInterceptors();
         this.setResponseInterceptors();
@@ -56,13 +57,14 @@ export default class ApiService {
                 return response;
             },
             (error) => {
-                const { response } = error;
+                const {response} = error;
                 if (response?.status >= 500) {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response?.status === 400) {
                     this.notify?.showAlert('error', response.data.error, response.data.message[0])
                 } else if (response?.status === 403) {
-                    // handle refresh token.
+                    this.notify?.showAlert('error', 'خطا', 'لطفا دوباره وارد شوید!');
+                    this.navigate('/login');
                 } // and more.
                 return Promise.reject(error);
             }

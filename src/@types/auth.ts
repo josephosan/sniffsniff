@@ -9,6 +9,7 @@ export interface User {
 
 // to define AuthContext provider type.
 export interface AuthStore {
+    handleSetIsAuthenticated: (value: boolean) => void,
     isAuthenticated: boolean,
     user: User | null,
     handleSetTokens: (data: never) => void,

@@ -20,6 +20,11 @@ export function useAuth() {
 
 export const AuthProvider: React.FC = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+    const handleSetIsAuthenticated = (value: boolean) => {
+        setIsAuthenticated(() => value);
+    }
+
+
     const [user, setUser] = useState<User | null>(null);
     const handleSetUser = (data: User) => {
         setUser(() => data);
@@ -33,13 +38,14 @@ export const AuthProvider: React.FC = ({ children }) => {
     }
 
     const logout = () => {
-        setUser(null);
-        setIsAuthenticated(false);
+        setUser(() => null);
+        setIsAuthenticated(() => false);
 
         destroyToken();
     }
 
     const authStore: AuthStore = {
+        handleSetIsAuthenticated,
         isAuthenticated,
         user,
         handleSetUser,
