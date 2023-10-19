@@ -85,17 +85,12 @@ export const AppRouter: React.FC = () => {
                 })
                 .catch(err => {
                     authStore.logout();
-                    console.error(err);
                 })
                 .finally(() => {
                     setLoading(() => false);
                 });
         }
     }, []);
-
-    useEffect(() => {
-        ApiService.init(notifyStore, appStore, navigate);
-    }, [notifyStore, appStore])
 
     return (
         <>

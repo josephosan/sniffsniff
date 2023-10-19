@@ -23,7 +23,10 @@ const appConfig = {
 
 
     // animation speed
-    defaultAnimationSpeed: 0.15
+    defaultAnimationSpeed: 0.15,
+
+    // ignore names for auth
+    ignoreNamesForAuth: ['login', 'rotate', 'register']
 }
 
 const lightConfig = {
