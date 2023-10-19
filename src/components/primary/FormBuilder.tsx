@@ -1,11 +1,9 @@
 import React, {ReactNode, useEffect, useState} from "react";
 import {Button, Col, DatePicker, Form, Input, Row} from "antd"
 import {FlexTypes, FormBuilderField, SizeTypes} from "../../@types/app";
-import locale from "antd/es/date-picker/locale/fa_IR";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
-import Loading from "../secondary/Loading";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -136,7 +134,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                     >
                                         <DatePicker
                                             className={"w-100"}
-                                            locale={locale}
                                             placeholder={el.placeholder}
                                             size={size}
                                         />

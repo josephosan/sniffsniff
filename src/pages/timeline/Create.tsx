@@ -1,6 +1,7 @@
 import React from "react";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
+import DatePicker from "react-multi-date-picker";
 
 const CreateTimeLine: React.FC = () => {
     const createTimeLineFields: FormBuilderField[] = [
@@ -18,7 +19,7 @@ const CreateTimeLine: React.FC = () => {
             label: 'نوع',
             required: true,
             placeholder: 'نوع جدول زمانی',
-            // rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
+            rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
             options: [
                 {
                     label: 'گروه',
@@ -36,7 +37,7 @@ const CreateTimeLine: React.FC = () => {
             label: 'تگ ها',
             required: true,
             placeholder: 'انتخاب تگ',
-            // rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
+            rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
             options: [
                 {
                     label: 'گروه',
@@ -50,7 +51,7 @@ const CreateTimeLine: React.FC = () => {
         },
         {
             type: 'date',
-            name: 'start_date',
+            name: 'startِِDate',
             label: 'تاریخ شروع',
             required: true,
             placeholder: 'انتخاب تاریخ شروع',
@@ -58,13 +59,13 @@ const CreateTimeLine: React.FC = () => {
         },
         {
             type: 'date',
-            name: 'end_date',
+            name: 'endDate',
             label: 'تاریخ پایان',
             placeholder: 'انتخاب تاریخ پایان',
         },
         {
             type: 'text',
-            name: 'desc',
+            name: 'description',
             label: 'توضیحات',
             required: true,
             placeholder: '...',
@@ -83,6 +84,8 @@ const CreateTimeLine: React.FC = () => {
                 size={"middle"}
                 onFinish={handleFormSubmit}
             />
+
+            <DatePicker />
         </>
     );
 }
