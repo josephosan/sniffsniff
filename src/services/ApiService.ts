@@ -3,6 +3,8 @@ import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
 import {NavigateFunction} from "react-router-dom";
 import {destroyToken, getToken, saveToken} from "../helpers/jwt.helper";
+import {indexOf} from "lodash";
+import {appConfig} from "../config/app.config";
 
 
 const api = axios.create({
@@ -15,6 +17,8 @@ export default class ApiService {
     public static appStore: AppStore | null = null;
     public static navigate: NavigateFunction | null = null;
 
+    private static ignoreNamesForHeaders: string[] = appConfig.ignoreNamesForAuth as string[];
+
 
     public static init(notifyStore: NotificationStore, appStore?: AppStore, navigate?: NavigateFunction) {
         this.notify = notifyStore;
@@ -25,30 +29,21 @@ export default class ApiService {
         this.setResponseInterceptors();
     }
 
-    public static setHeader(key: string, value: string) {
-        api.interceptors.request.use(
-            (config) => {
-                config.headers = {
-                    [key]: value
-                }
-                return config;
-            }, (error) => {
-                return Promise.reject(error);
-            }
-        )
-    }
-
     public static setRequestInterceptors() {
         api.interceptors.request.use(
             (config) => {
-                if (getToken()) {
+                let canSetHeaders = !this.ignoreNamesForHeaders.some(el => config.url.indexOf(el) !== -1);
+                if (getToken() && canSetHeaders) {
                     const tokens = JSON.parse(getToken());
                     config.headers = {
                         ...config.headers,
                         'Authorization': `Bearer ${tokens['accessToken']}`
                     }
+                } else if (!canSetHeaders) {
+                    delete config.headers['Authorization'];
                 }
 
+                canSetHeaders = true;
                 return config;
             },
             (error) => {
@@ -89,12 +84,39 @@ export default class ApiService {
         )
     }
 
+    public static setHeader(key: string, value: string) {
+        api.interceptors.request.use(
+            (config) => {
+                config.headers = {
+                    ...config.headers,
+                    [key]: value
+                }
+                return config;
+            }, (error) => {
+                return Promise.reject(error);
+            }
+        )
+    }
+
+    public static removeHeader(key: string) {
+        api.interceptors.request.use(
+            (config) => {
+                delete config.headers[key];
+
+                return config;
+            }, (error) => {
+                return Promise.reject(error);
+            }
+        )
+    }
+
     public static async refreshToken(): Promise<{ refreshToken: string, accessToken: string } | null> {
         if (!getToken()) {
             this.navigate('/login');
         }
 
         try {
+            this.removeHeader('Authorization');
             const {data} = await this.post('user/auth/rotate', {
                 refreshToken: JSON.parse(getToken())['refreshToken']
             });
@@ -108,6 +130,7 @@ export default class ApiService {
             return tokens;
         } catch (err) {
             destroyToken();
+            this.notify?.showAlert('warning', 'ورود دوباره', 'توکن شما باطل شده, لطفا دوباره وارد شوید!');
             return null;
         }
     }

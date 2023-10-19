@@ -85,7 +85,6 @@ export const AppRouter: React.FC = () => {
                 })
                 .catch(err => {
                     authStore.logout();
-                    console.error(err);
                 })
                 .finally(() => {
                     setLoading(() => false);
