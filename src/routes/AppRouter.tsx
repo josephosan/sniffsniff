@@ -92,10 +92,6 @@ export const AppRouter: React.FC = () => {
         }
     }, []);
 
-    useEffect(() => {
-        ApiService.init(notifyStore, appStore, navigate);
-    }, [notifyStore, appStore])
-
     return (
         <>
             {

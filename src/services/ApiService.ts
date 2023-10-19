@@ -3,7 +3,7 @@ import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
 import {NavigateFunction} from "react-router-dom";
 import {destroyToken, getToken, saveToken} from "../helpers/jwt.helper";
-import {indexOf} from "lodash";
+import {indexOf, isArray} from "lodash";
 import {appConfig} from "../config/app.config";
 
 
@@ -63,7 +63,7 @@ export default class ApiService {
                 if (response?.status >= 500) {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response?.status === 400) {
-                    this.notify?.showAlert('error', response.data.error, response.data.message[0])
+                    this.notify?.showAlert('error', response.data.error, isArray(response.data.message) ? response.data.message[0] : response.data.message);
                 } else if (response?.status === 403) {
                     this.navigate('/login');
                 } else if (response?.status === 401 && !(error.config.url.indexOf('rotate') > 0)) {
