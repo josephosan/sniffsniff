@@ -76,7 +76,7 @@ export default class ApiService {
                             'X-Token-Refresh': 'true',
                             'Authorization': `Bearer ${tokens['accessToken']}`
                         }
-                        return axios(config);
+                        return api(config);
                     }
                 }
                 return Promise.reject(error);

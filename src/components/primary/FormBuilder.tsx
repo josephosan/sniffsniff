@@ -1,9 +1,20 @@
 import React, {ReactNode, useEffect, useState} from "react";
-import {Button, Col, DatePicker, Form, Input, Row} from "antd"
+import {Button, Col, Form, Input, Row} from "antd"
 import {FlexTypes, FormBuilderField, SizeTypes} from "../../@types/app";
 import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
+import DatePicker, {DateObject} from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
+import transition from "react-element-popper/animations/transition"
+import opacity from "react-element-popper/animations/opacity"
+
+// theme
+import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
+import "react-multi-date-picker/styles/colors/yellow.css"
+import Loading from "../secondary/Loading";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -17,7 +28,8 @@ interface FormBuilderProps {
     colXS?: number,
     colSM?: number,
     colXL?: number,
-    submitButtonLoading?: boolean
+    submitButtonLoading?: boolean,
+    loading?: boolean
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -33,12 +45,14 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         colXS = 24,
         colSM = 12,
         colXL = 8,
-        submitButtonLoading = false
+        submitButtonLoading = false,
+        loading = false
     }
 ) => {
+    const {theme} = useApp();
     const [form] = Form.useForm();
     const {errors, handleSetErrors} = useApp();
-    const [_fields, setFields] = useState<FormBuilderField[] | null>(null)
+    const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
 
     useEffect(() => {
         setFields(() => fields);
@@ -71,6 +85,11 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const handleSubmit = (data) => {
         handleSetErrors(null);
         handleClearElementErrors();
+
+        Object.keys(data).forEach((key) => {
+            if (data[key] instanceof DateObject) data[key] = data[key].format();
+        })
+
         onFinish(data);
     }
 
@@ -86,7 +105,38 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 autoComplete="off"
                 layout={'vertical'}
                 form={form}
+                className={"position-relative"}
             >
+                {
+                    loading && (
+                        <div
+                            className={"d-flex justify-content-center align-items-center"}
+                            style={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                zIndex: 100,
+                                backdropFilter: "blur(1px)"
+                            }}
+                        >
+                            <div
+                                className={"d-flex justify-content-center align-items-center"}
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    zIndex: 101,
+                                }}
+                            >
+                                <Loading />
+                            </div>
+                        </div>
+                    )
+                }
                 <Row gutter={16}>
                     {_fields && _fields.map((el, index) => (
                         <Col
@@ -124,7 +174,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                             size={size}
                                         />
                                     </Form.Item>
-                                ) : el.type === 'date' ? (
+                                ) : (el.type === 'date' || el.type === 'date_time') ? (
                                     <Form.Item
                                         label={el.label}
                                         name={el.name}
@@ -133,9 +183,33 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         help={el.errors}
                                     >
                                         <DatePicker
-                                            className={"w-100"}
+                                            className={"yellow " + (theme.mode === 'dark' ? "bg-dark" : "")}
+                                            containerClassName={"w-100"}
+                                            inputClass={"w-100 "}
                                             placeholder={el.placeholder}
-                                            size={size}
+                                            locale={persian_fa}
+                                            calendar={persian}
+                                            plugins={[
+                                                (el.type === 'date_time') ? <TimePicker position={"bottom"}/> : <></>
+                                            ]}
+                                            format={(el.type === 'date') ? 'MM/DD/YYYY ' : 'MM/DD/YYYY HH:mm:ss'}
+                                            animations={[
+                                                opacity(),
+                                                transition({
+                                                    from: 40,
+                                                    transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
+                                                }),
+                                            ]}
+                                            style={{
+                                                color: theme.fadeTextColor,
+                                                backgroundColor: theme.cardBg,
+                                                borderRadius: appConfig.defaultBorderRadius,
+                                                border: `1px solid ${theme.primaryColor}`,
+                                                padding: (size === "large" ? '10px' : ((size === "middle") ? '4px 11px 4px 11px' : '6px')),
+                                                marginTop: '1.2px',
+                                                outline: 'none'
+                                            }}
+                                            calendarPosition={"bottom-left"}
                                         />
                                     </Form.Item>
                                 ) : (el.type === 'select' || el.type === 'multi_select') ? (
@@ -205,7 +279,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 </Col>
             </Form>
         </>
-    );
+    )
+        ;
 }
 
 export default FormBuilder;

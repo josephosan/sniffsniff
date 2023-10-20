@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
-import DatePicker from "react-multi-date-picker";
+import TimelineService from "../../services/TimelineService";
 
 const CreateTimeLine: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const createTimeLineFields: FormBuilderField[] = [
         {
             type: 'text',
@@ -23,11 +24,11 @@ const CreateTimeLine: React.FC = () => {
             options: [
                 {
                     label: 'گروه',
-                    value: 'group'
+                    value: 'GROUP'
                 },
                 {
                     label: 'خصوصی',
-                    value: 'private'
+                    value: 'PRIVATE'
                 }
             ]
         },
@@ -50,8 +51,8 @@ const CreateTimeLine: React.FC = () => {
             ]
         },
         {
-            type: 'date',
-            name: 'startِِDate',
+            type: 'date_time',
+            name: 'startDate',
             label: 'تاریخ شروع',
             required: true,
             placeholder: 'انتخاب تاریخ شروع',
@@ -73,8 +74,16 @@ const CreateTimeLine: React.FC = () => {
         },
     ];
 
-    const handleFormSubmit = (data) => {
-        console.log(data);
+    const handleFormSubmit = async (formData) => {
+        setLoading( () => true);
+        try {
+            const res = await TimelineService.createTimeline(formData);
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        } finally {
+            setLoading(() => false);
+        }
     }
 
     return (
@@ -83,9 +92,8 @@ const CreateTimeLine: React.FC = () => {
                 fields={createTimeLineFields}
                 size={"middle"}
                 onFinish={handleFormSubmit}
+                loading={loading}
             />
-
-            <DatePicker />
         </>
     );
 }
