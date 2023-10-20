@@ -42,11 +42,11 @@ const CreateTimeLine: React.FC = () => {
             options: [
                 {
                     label: 'گروه',
-                    value: 'group'
+                    value: 'GROUP'
                 },
                 {
                     label: 'خصوصی',
-                    value: 'private'
+                    value: 'PRIVATE'
                 }
             ]
         },

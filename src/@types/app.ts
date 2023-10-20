@@ -38,7 +38,8 @@ export interface FormBuilderField {
     options?: SelectOption[],
     select_url?: string,
     required?: boolean,
-    errors?: string[]
+    errors?: string[],
+    initialValue?: string
 }
 
 export interface SelectOption {

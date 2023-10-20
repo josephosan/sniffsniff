@@ -153,6 +153,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                         help={el.errors}
+                                        initialValue={el.initialValue}
                                     >
                                         <Input.Password
                                             placeholder={el.placeholder}
@@ -167,6 +168,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                         help={el.errors}
+                                        initialValue={el.initialValue}
                                     >
                                         <Input
                                             placeholder={el.placeholder}
@@ -181,6 +183,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                         help={el.errors}
+                                        initialValue={el.initialValue}
                                     >
                                         <DatePicker
                                             className={"yellow " + (theme.mode === 'dark' ? "bg-dark" : "")}
@@ -219,6 +222,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                         help={el.errors}
+                                        initialValue={el.initialValue}
                                     >
                                         <CustomSelect
                                             options={el.options}
@@ -237,6 +241,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         rules={el.rules}
                                         required={!!el.required}
                                         help={el.errors}
+                                        initialValue={el.initialValue}
                                     >
                                         <Input
                                             placeholder={el.placeholder}

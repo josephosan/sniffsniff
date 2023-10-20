@@ -64,6 +64,8 @@ export default class ApiService {
                     this.notify?.showAlert('error', 'خطا!', 'خطایی در اتصال به سرور رخ داد.');
                 } else if (response?.status === 400) {
                     this.notify?.showAlert('error', response.data.error, isArray(response.data.message) ? response.data.message[0] : response.data.message);
+                } else if (response?.status === 404) {
+                    this.notify?.showAlert('error','خطا!', 'یافت نشد.')
                 } else if (response?.status === 403) {
                     this.navigate('/login');
                 } else if (response?.status === 401 && !(error.config.url.indexOf('rotate') > 0)) {
