@@ -9,7 +9,7 @@ const _404: React.FC = () => {
     return (
         <div style={{ fontFamily: 'IRAN-sans' }} className={"w-100 h-100 d-flex justify-content-center align-items-center flex-column"}>
             <CustomImage
-                src={"src/assets/global/_404.svg"}
+                src={"/src/assets/global/_404.svg"}
                 width={'80%'}
             />
             <Button className={"mt-5"} onClick={() => navigate('/home')}>
