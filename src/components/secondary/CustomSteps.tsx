@@ -1,25 +1,34 @@
-import React, { ReactNode } from 'react';
-import { Steps, Divider } from 'antd';
-import { appConfig } from '../../config/app.config';
+import React from 'react';
+import {Steps} from 'antd';
+import {appConfig} from '../../config/app.config';
+import {StepsStatusType} from "../../@types/app";
 
 interface StepsProps {
     items: {
         title: string;
         description: string;
-    }[];
+    }[],
+    currentStepIndex?: number,
+    status?: StepsStatusType
 }
 
-const CustomSteps: React.FC<StepsProps> = ({ items }) => {
+const CustomSteps: React.FC<StepsProps> = (
+    {
+        items,
+        currentStepIndex,
+        status = 'process'
+    }
+) => {
     return (
         <>
-            <Divider />
             <Steps
-                current={3}
+                current={currentStepIndex}
+                status={status}
                 items={items.map((item) => {
                     return {
                         ...item,
                         description: (
-                            <div style={{ fontSize: appConfig.smallFontSize }}>
+                            <div style={{fontSize: appConfig.smallFontSize}}>
                                 {item.description}
                             </div>
                         ),

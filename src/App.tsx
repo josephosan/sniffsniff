@@ -91,7 +91,7 @@ function App() {
                 lastItemColor: theme.defaultTextColor,
             },
             Steps: {
-                colorSplit: theme.cardBgLighter,
+                colorSplit: theme.fadeTextColor,
             },
         },
     };
