@@ -27,7 +27,7 @@ export interface SidebarLinkItem {
 
 
 // form builder
-type FormBuilderFieldType = "text" | "password" | "number" | "date" | "select";
+type FormBuilderFieldType = "text" | "password" | "number" | "date" | "date_time" | "select" | 'multi_select';
 
 export interface FormBuilderField {
     placeholder?: string,
@@ -38,7 +38,8 @@ export interface FormBuilderField {
     options?: SelectOption[],
     select_url?: string,
     required?: boolean,
-    errors?: string[]
+    errors?: string[],
+    initialValue?: string
 }
 
 export interface SelectOption {
@@ -68,3 +69,7 @@ export interface Errors {
 export type SizeTypes = 'large' | 'middle' | 'small';
 
 export type FlexTypes = "center" | "end" | "start";
+
+export type ShapeSizeTypes = 'default' | 'small' | 'large';
+
+export type StepsStatusType = 'finish' | 'process' | 'wait' | 'error';

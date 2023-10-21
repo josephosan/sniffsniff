@@ -3,6 +3,7 @@ import {Select, Spin} from "antd";
 import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
+import FormInstance from "antd/lib/form";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -10,7 +11,10 @@ interface CustomSelectProps {
     select_url?: string,
     onInputChange?: (e) => void,
     value?: string,
-    size?: SizeTypes
+    size?: SizeTypes,
+    multiSelect?: boolean,
+    name?: string,
+    form?: FormInstance
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -20,10 +24,13 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         select_url,
         onInputChange,
         value,
-        size = 'large'
+        size = 'large',
+        multiSelect = false,
+        name,
+        form
     }
 ) => {
-    const { theme } = useApp();
+    const {theme} = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
@@ -90,6 +97,9 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         return !!option.children[2].includes(input.toLowerCase());
     }
 
+    const handleSelectChange = (e) => {
+        form.setFieldsValue({[name]: e});
+    }
 
     return (
         <Select
@@ -100,10 +110,11 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             notFoundContent={loading ? <Spin size="small"/> : null}
             virtual={true}
             onPopupScroll={handlePopupScroll}
-            onChange={onInputChange}
+            onChange={handleSelectChange}
             value={value}
             optionFilterProp={'children'}
             size={size}
+            mode={multiSelect ? 'multiple' : ''}
         >
             {
                 _options?.map(el => (

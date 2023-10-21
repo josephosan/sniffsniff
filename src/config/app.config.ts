@@ -21,9 +21,11 @@ const appConfig = {
     defaultFontSize: 14,
     smallFontSize: 10,
 
-
     // animation speed
-    defaultAnimationSpeed: 0.15
+    defaultAnimationSpeed: 0.15,
+
+    // ignore names for auth
+    ignoreNamesForAuth: ['login', 'rotate', 'register']
 }
 
 const lightConfig = {
@@ -36,7 +38,7 @@ const lightConfig = {
     primaryColor: '#F0B86E',
 
     itemHoverColor: '#F6F6F6',
-}
+};
 
 const darkConfig = {
     mode: 'dark',
@@ -48,6 +50,6 @@ const darkConfig = {
     primaryColor: '#F0B86E',
 
     itemHoverColor: '#3B435B',
-}
+};
 
-export {appConfig, lightConfig, darkConfig};
+export { appConfig, lightConfig, darkConfig };
