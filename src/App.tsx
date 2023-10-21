@@ -4,11 +4,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { appConfig, lightConfig } from './config/app.config';
-import { useApp } from './store/app.store';
-import fa_IR from 'antd/es/locale/fa_IR';
-import { NotifyProvider } from './store/notify.store';
-import { after } from 'lodash';
+import {appConfig, lightConfig} from "./config/app.config";
+import {useApp} from "./store/app.store";
+import {NotifyProvider} from "./store/notify.store";
+
 
 function App() {
     const { theme } = useApp();
@@ -97,7 +96,7 @@ function App() {
     };
 
     return (
-        <ConfigProvider theme={themeConfig} direction={'rtl'} locale={fa_IR}>
+        <ConfigProvider theme={themeConfig} direction={"rtl"}>
             <NotifyProvider>
                 <Router>
                     <AppRouter />

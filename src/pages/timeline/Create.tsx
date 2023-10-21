@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
+import TimelineService from "../../services/TimelineService";
 
 const CreateTimeLine: React.FC = () => {
+    const [loading, setLoading] = useState<boolean>(false);
     const createTimeLineFields: FormBuilderField[] = [
         {
             type: 'text',
@@ -18,15 +20,15 @@ const CreateTimeLine: React.FC = () => {
             label: 'نوع',
             required: true,
             placeholder: 'نوع جدول زمانی',
-            // rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
+            rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
             options: [
                 {
                     label: 'گروه',
-                    value: 'group'
+                    value: 'GROUP'
                 },
                 {
                     label: 'خصوصی',
-                    value: 'private'
+                    value: 'PRIVATE'
                 }
             ]
         },
@@ -36,21 +38,21 @@ const CreateTimeLine: React.FC = () => {
             label: 'تگ ها',
             required: true,
             placeholder: 'انتخاب تگ',
-            // rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
+            rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
             options: [
                 {
                     label: 'گروه',
-                    value: 'group'
+                    value: 'GROUP'
                 },
                 {
                     label: 'خصوصی',
-                    value: 'private'
+                    value: 'PRIVATE'
                 }
             ]
         },
         {
-            type: 'date',
-            name: 'start_date',
+            type: 'date_time',
+            name: 'startDate',
             label: 'تاریخ شروع',
             required: true,
             placeholder: 'انتخاب تاریخ شروع',
@@ -58,13 +60,13 @@ const CreateTimeLine: React.FC = () => {
         },
         {
             type: 'date',
-            name: 'end_date',
+            name: 'endDate',
             label: 'تاریخ پایان',
             placeholder: 'انتخاب تاریخ پایان',
         },
         {
             type: 'text',
-            name: 'desc',
+            name: 'description',
             label: 'توضیحات',
             required: true,
             placeholder: '...',
@@ -72,8 +74,16 @@ const CreateTimeLine: React.FC = () => {
         },
     ];
 
-    const handleFormSubmit = (data) => {
-        console.log(data);
+    const handleFormSubmit = async (formData) => {
+        setLoading( () => true);
+        try {
+            const res = await TimelineService.createTimeline(formData);
+            console.log(res);
+        } catch(err) {
+            console.log(err);
+        } finally {
+            setLoading(() => false);
+        }
     }
 
     return (
@@ -82,6 +92,7 @@ const CreateTimeLine: React.FC = () => {
                 fields={createTimeLineFields}
                 size={"middle"}
                 onFinish={handleFormSubmit}
+                loading={loading}
             />
         </>
     );
