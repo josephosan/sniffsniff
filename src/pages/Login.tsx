@@ -7,6 +7,7 @@ import {FormBuilderField} from "../@types/app";
 import {useNavigate} from "react-router-dom";
 import AuthService from "../services/AuthService";
 import {useAuth} from "../store/auth.store";
+import UnderlinedLink from "../components/secondary/UnderlinedLink";
 
 
 const Login: React.FC = () => {
@@ -29,7 +30,7 @@ const Login: React.FC = () => {
         }
     ]
 
-    const handleLoginSubmit = async (formData: {username: string, password: string}) => {
+    const handleLoginSubmit = async (formData: { username: string, password: string }) => {
         setLoading(() => true);
         try {
             const loginRes = await AuthService.login(formData);
@@ -68,7 +69,7 @@ const Login: React.FC = () => {
                         <a
                             className={"ms-2 text-decoration-none"}
                             style={{color: theme.defaultTextColor, fontSize: appConfig.smallFontSize}}
-                            onClick={() => navigate('/reset-password')}
+                            onClick={() => navigate('/forgot-password')}
                         >رمز عبور خود را فراموش کرده ام</a>
                     }
                     onFinish={handleLoginSubmit}
@@ -91,17 +92,10 @@ const Login: React.FC = () => {
                 </span>
             </Button>
 
-            <div>
-                حساب کاربری ندارید؟ <span
-                style={{
-                    textDecoration: "underline",
-                    paddingBottom: '3px',
-                    textDecorationSkipInk: 'none',
-                    textDecorationColor: theme.primaryColor,
-                    cursor: 'pointer'
-                }}
-            >ایجاد</span>
-            </div>
+            <UnderlinedLink
+                text={'ایجاد حساب کاربری'}
+                onElementClick={() => navigate('/sign-up')}
+            />
         </div>
     );
 }
