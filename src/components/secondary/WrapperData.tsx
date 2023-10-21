@@ -1,19 +1,19 @@
-import React, {ReactNode} from "react";
-import {useMediaQuery} from "react-responsive";
-import {appConfig} from "../../config/app.config";
-import {useApp} from "../../store/app.store";
-import {lightConfig, darkConfig} from "../../config/app.config";
+import React, { ReactNode } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { appConfig } from '../../config/app.config';
+import { useApp } from '../../store/app.store';
+import { lightConfig, darkConfig } from '../../config/app.config';
 
 interface DataProps {
     children: ReactNode;
     color?: never;
 }
 
-export const WrapperData = ({children, color}: DataProps) => {
+const WrapperData: React.FC<DataProps> = ({ children, color }) => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
-    const {theme} = useApp();
+    const { theme } = useApp();
     return (
         <>
             {isMobile ? (
@@ -21,7 +21,7 @@ export const WrapperData = ({children, color}: DataProps) => {
                     className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
                     style={{
                         backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor
+                        color: theme.defaultTextColor,
                     }}
                 >
                     {children}
@@ -32,7 +32,7 @@ export const WrapperData = ({children, color}: DataProps) => {
                     style={{
                         borderRight: `4px solid ${color}`,
                         backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor
+                        color: theme.defaultTextColor,
                     }}
                 >
                     {children}
@@ -41,3 +41,5 @@ export const WrapperData = ({children, color}: DataProps) => {
         </>
     );
 };
+
+export default WrapperData;

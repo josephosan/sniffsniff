@@ -1,7 +1,7 @@
 import './App.scss';
-import {AppRouter} from "./routes/AppRouter";
-import {BrowserRouter as Router} from "react-router-dom";
-import {ConfigProvider, theme as antdTheme, ThemeConfig} from "antd";
+import { AppRouter } from './routes/AppRouter';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {appConfig, lightConfig} from "./config/app.config";
@@ -10,14 +10,14 @@ import {NotifyProvider} from "./store/notify.store";
 
 
 function App() {
-    const {theme} = useApp();
+    const { theme } = useApp();
 
     const themeConfig: ThemeConfig = {
         algorithm: antdTheme.defaultAlgorithm,
         token: {
             motion: true,
             colorPrimary: lightConfig.primaryColor,
-            fontFamily: "IRAN-sans",
+            fontFamily: 'IRAN-sans',
             borderRadius: appConfig.defaultBorderRadius,
             colorBgBase: lightConfig.mainBackgroundColor,
             colorText: theme.defaultTextColor,
@@ -33,7 +33,7 @@ function App() {
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
                 fontSize: appConfig.defaultFontSize,
-                fontSizeLG: appConfig.defaultFontSize
+                fontSizeLG: appConfig.defaultFontSize,
             },
             DatePicker: {
                 colorText: theme.fadeTextColor,
@@ -43,7 +43,7 @@ function App() {
                 colorBgContainer: theme.cardBg,
                 colorTextDescription: theme.fadeTextColor,
                 colorTextPlaceholder: theme.fadeTextColor,
-                colorBgElevated: theme.cardBgLighter
+                colorBgElevated: theme.cardBgLighter,
             },
             Select: {
                 colorText: theme.fadeTextColor,
@@ -65,21 +65,21 @@ function App() {
                 colorText: theme.fadeTextColor,
                 colorTextHeading: theme.fadeTextColor,
                 fontSize: appConfig.smallFontSize,
-                fontSizeLG: appConfig.smallFontSize
+                fontSizeLG: appConfig.smallFontSize,
             },
             Button: {
                 fontSize: appConfig.defaultFontSize,
                 fontSizeLG: appConfig.defaultFontSize,
-                colorTextHeading: theme.fadeTextColor
+                colorTextHeading: theme.fadeTextColor,
             },
             Modal: {
-                colorBgElevated: theme.cardBg
+                colorBgElevated: theme.cardBg,
             },
             Message: {
-                contentBg: theme.cardBg
+                contentBg: theme.cardBg,
             },
             Notification: {
-                colorBgElevated: theme.cardBg
+                colorBgElevated: theme.cardBg,
             },
             Table: {
                 colorBgContainer: theme.cardBgLighter,
@@ -87,20 +87,23 @@ function App() {
                 footerColor: theme.fadeTextColor,
             },
             Breadcrumb: {
-                lastItemColor: theme.defaultTextColor
-            }
+                lastItemColor: theme.defaultTextColor,
+            },
+            Steps: {
+                colorSplit: theme.fadeTextColor,
+            },
         },
-    }
+    };
 
     return (
         <ConfigProvider theme={themeConfig} direction={"rtl"}>
             <NotifyProvider>
                 <Router>
-                    <AppRouter/>
+                    <AppRouter />
                 </Router>
             </NotifyProvider>
         </ConfigProvider>
-    )
+    );
 }
 
-export default App
+export default App;
