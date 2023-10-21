@@ -19,6 +19,7 @@ import {useAuth} from "../store/auth.store";
 import AuthService from "../services/AuthService";
 import {destroyToken, getToken} from "../helpers/jwt.helper";
 import {User} from "../@types/auth";
+import ForgotPassword from "../pages/ForgotPassword";
 
 
 export const AppRouter: React.FC = () => {
@@ -58,6 +59,10 @@ export const AppRouter: React.FC = () => {
                 {
                     path: 'login',
                     element: !authStore.isAuthenticated ? <Login /> : <Navigate to={"/home"} />
+                },
+                {
+                    path: 'forgot-password',
+                    element: !authStore.isAuthenticated ? <ForgotPassword /> : <Navigate to={"/home"} />
                 }
             ]
         },
