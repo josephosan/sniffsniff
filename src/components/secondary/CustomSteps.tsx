@@ -1,14 +1,20 @@
-import React from 'react';
-import { Steps } from 'antd';
+import React, { ReactNode } from 'react';
+import { Steps, Divider } from 'antd';
 import { appConfig } from '../../config/app.config';
+
 interface StepsProps {
-    items: { title: string; description: string }[];
+    items: {
+        title: string;
+        description: string;
+    }[];
 }
 
-export default function WrapperSteps({ items }: StepsProps) {
+const CustomSteps: React.FC<StepsProps> = ({ items }) => {
     return (
-        <div>
+        <>
+            <Divider />
             <Steps
+                current={3}
                 items={items.map((item) => {
                     return {
                         ...item,
@@ -20,6 +26,8 @@ export default function WrapperSteps({ items }: StepsProps) {
                     };
                 })}
             />
-        </div>
+        </>
     );
-}
+};
+
+export default CustomSteps;

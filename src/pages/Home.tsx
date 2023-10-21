@@ -1,9 +1,9 @@
-import React from "react";
-import FormBuilder from "../components/primary/FormBuilder";
-import ApiService from "../services/ApiService";
-import {TableBuilder} from "../components/primary/TableBuilder";
-import {WrapperData} from "../components/secondary/WrapperData";
-import WrapperSteps from '../components/secondary/WrapperSteps';
+import React from 'react';
+import FormBuilder from '../components/primary/FormBuilder';
+import ApiService from '../services/ApiService';
+import { TableBuilder } from '../components/primary/TableBuilder';
+import WrapperData from '../components/secondary/WrapperData';
+import CustomSteps from '../components/secondary/CustomSteps';
 
 export const Home: React.FC = () => {
     return (
@@ -49,8 +49,7 @@ export const Home: React.FC = () => {
                     ]}
                 />
 
-
-                <WrapperSteps
+                <CustomSteps
                     items={[
                         {
                             title: 'عنوان',
@@ -78,9 +77,7 @@ export const Home: React.FC = () => {
             </div>
 
             <div>
-                <WrapperData color={'red'}>
-                    item
-                </WrapperData>
+                <WrapperData color={'red'}>item</WrapperData>
             </div>
         </>
     );
