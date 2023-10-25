@@ -59,7 +59,7 @@ const CreateTimeLine: React.FC = () => {
             rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
         },
         {
-            type: 'date',
+            type: 'date_time',
             name: 'endDate',
             label: 'تاریخ پایان',
             placeholder: 'انتخاب تاریخ پایان',
