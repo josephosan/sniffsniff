@@ -152,4 +152,8 @@ export default class ApiService {
     public static async delete(recourse: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.delete(recourse, config);
     }
+
+    public static async put(recourse: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return await api.put(recourse, data, config);
+    }
 }

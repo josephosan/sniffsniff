@@ -11,4 +11,8 @@ export default class TimelineService extends ApiService {
     public static getATimeline(id) {
         return this.get(`${this.baseUrl}/${id}`);
     }
+
+    public static editTimelineById(id, data) {
+        return this.patch(`${this.baseUrl}/${id}`, data);
+    }
 }

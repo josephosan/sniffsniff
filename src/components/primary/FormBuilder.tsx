@@ -29,7 +29,8 @@ interface FormBuilderProps {
     colSM?: number,
     colXL?: number,
     submitButtonLoading?: boolean,
-    loading?: boolean
+    loading?: boolean,
+    initialValues?: never
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -46,7 +47,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         colSM = 12,
         colXL = 8,
         submitButtonLoading = false,
-        loading = false
+        loading = false,
+        initialValues
     }
 ) => {
     const {theme} = useApp();
@@ -112,7 +114,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 name="basic"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 24}}
-                initialValues={{remember: true}}
+                initialValues={{remember: true, ...initialValues}}
                 onFinish={handleSubmit}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
