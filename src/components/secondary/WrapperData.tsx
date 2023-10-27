@@ -1,22 +1,29 @@
-import React, { ReactNode } from 'react';
-import { useMediaQuery } from 'react-responsive';
-import { appConfig } from '../../config/app.config';
-import { useApp } from '../../store/app.store';
-import { lightConfig, darkConfig } from '../../config/app.config';
+import React, {ReactNode} from 'react';
+import {useMediaQuery} from 'react-responsive';
+import {appConfig} from '../../config/app.config';
+import {useApp} from '../../store/app.store';
 
 interface DataProps {
     children: ReactNode;
     color?: never;
+
+    forceMobile?: boolean
 }
 
-const WrapperData: React.FC<DataProps> = ({ children, color }) => {
+const WrapperData: React.FC<DataProps> = (
+    {
+        children,
+        color,
+        forceMobile
+    }
+) => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
-    const { theme } = useApp();
+    const {theme} = useApp();
     return (
         <>
-            {isMobile ? (
+            {(isMobile || forceMobile) ? (
                 <div
                     className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
                     style={{
