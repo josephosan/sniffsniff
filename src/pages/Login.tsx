@@ -19,14 +19,14 @@ const Login: React.FC = () => {
         {
             placeholder: 'ایمیل',
             name: 'email',
-            rules: [{required: true, message: 'فیلد ایمیل اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن ایمیل اجباری است!'}],
             type: 'text'
         },
         {
             placeholder: 'رمز عبور',
             name: 'password',
             type: 'password',
-            rules: [{required: true, message: 'فیلد رمز عبور اجباری است!'}]
+            rules: [{required: true, message: 'پرکردن رمز عبور اجباری است!'}]
         }
     ]
 

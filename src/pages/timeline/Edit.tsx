@@ -20,7 +20,7 @@ const EditTimeLine: React.FC = () => {
             label: 'نام',
             required: true,
             placeholder: 'نام جدول زمانی',
-            rules: [{required: true, message: 'فیلد نام اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن نام اجباری است!'}],
         },
         {
             type: 'select',
@@ -28,7 +28,7 @@ const EditTimeLine: React.FC = () => {
             label: 'نوع',
             required: true,
             placeholder: 'نوع جدول زمانی',
-            rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن نوع تجدول زمانی اجباری است!'}],
             options: [
                 {
                     label: 'گروه',
@@ -78,7 +78,7 @@ const EditTimeLine: React.FC = () => {
             label: 'توضیحات',
             required: true,
             placeholder: '...',
-            rules: [{required: true, message: 'لطفا یک توضیخ درباره این جدول زمانی بنویسید!'}],
+            rules: [{required: true, message: 'لطفا یک توضیح درباره این جدول زمانی بنویسید!'}],
         },
     ];
 

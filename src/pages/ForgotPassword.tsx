@@ -14,7 +14,7 @@ const ForgotPassword: React.FC = () => {
         {
             placeholder: 'ایمیل',
             name: 'email',
-            rules: [{required: true, message: 'فیلد ایمیل اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن ایمیل اجباری است!'}],
             type: 'text'
         }
     ]
