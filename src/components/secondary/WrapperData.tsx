@@ -6,15 +6,16 @@ import {useApp} from '../../store/app.store';
 interface DataProps {
     children: ReactNode;
     color?: never;
-
-    forceMobile?: boolean
+    forceMobile?: boolean,
+    displayBorder?: boolean
 }
 
 const WrapperData: React.FC<DataProps> = (
     {
         children,
         color,
-        forceMobile
+        forceMobile,
+        displayBorder = true
     }
 ) => {
     const isMobile = useMediaQuery({
@@ -37,7 +38,7 @@ const WrapperData: React.FC<DataProps> = (
                 <div
                     className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
                     style={{
-                        borderRight: `4px solid ${color}`,
+                        borderRight: displayBorder ? `4px solid ${color}` : '',
                         backgroundColor: theme.cardBgLighter,
                         color: theme.defaultTextColor,
                     }}
