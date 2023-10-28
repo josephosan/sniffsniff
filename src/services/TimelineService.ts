@@ -1,5 +1,4 @@
-import ApiService from "./ApiService";
-
+import ApiService from './ApiService';
 
 export default class TimelineService extends ApiService {
     public static baseUrl = '/user/timeline';
