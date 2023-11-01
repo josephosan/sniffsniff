@@ -21,7 +21,7 @@ export const Sidebar: React.FC = () => {
         },
         {
             name: "جداول زمانی",
-            path: "/timelines",
+            path: "/timeline",
             icon: "bi bi-calendar-range"
         },
         {

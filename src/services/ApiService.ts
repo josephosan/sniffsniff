@@ -3,7 +3,7 @@ import {NotificationStore} from "../@types/notify";
 import {AppStore} from "../@types/app";
 import {NavigateFunction} from "react-router-dom";
 import {destroyToken, getToken, saveToken} from "../helpers/jwt.helper";
-import {indexOf, isArray} from "lodash";
+import {isArray} from "lodash";
 import {appConfig} from "../config/app.config";
 
 
@@ -13,6 +13,7 @@ const api = axios.create({
 
 
 export default class ApiService {
+    public static baseUrl = '';
     public static notify: NotificationStore | null = null;
     public static appStore: AppStore | null = null;
     public static navigate: NavigateFunction | null = null;
@@ -155,5 +156,15 @@ export default class ApiService {
 
     public static async put(recourse: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.put(recourse, data, config);
+    }
+
+
+    // helper methods
+    public static async getAll(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return this.get(this.baseUrl, config);
+    }
+
+    public static async paginateAll(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return this.get(this.baseUrl + "/paginate", config);
     }
 }

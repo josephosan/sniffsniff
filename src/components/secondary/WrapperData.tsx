@@ -6,7 +6,7 @@ import {useApp} from '../../store/app.store';
 interface DataProps {
     children: ReactNode;
     color?: never;
-    forceMobile?: boolean,
+    forceDesktop?: boolean,
     displayBorder?: boolean
 }
 
@@ -14,7 +14,6 @@ const WrapperData: React.FC<DataProps> = (
     {
         children,
         color,
-        forceMobile,
         displayBorder = true
     }
 ) => {
@@ -24,7 +23,7 @@ const WrapperData: React.FC<DataProps> = (
     const {theme} = useApp();
     return (
         <>
-            {(isMobile || forceMobile) ? (
+            {(isMobile) ? (
                 <div
                     className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
                     style={{
@@ -38,9 +37,10 @@ const WrapperData: React.FC<DataProps> = (
                 <div
                     className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
                     style={{
-                        borderRight: displayBorder ? `4px solid ${color}` : '',
+                        borderRadius: appConfig.defaultBorderRadius,
                         backgroundColor: theme.cardBgLighter,
                         color: theme.defaultTextColor,
+                        borderRight: displayBorder ? `4px solid ${color}` : ''
                     }}
                 >
                     {children}

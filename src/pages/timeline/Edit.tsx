@@ -160,6 +160,7 @@ const EditTimeLine: React.FC = () => {
                                             </Button>
                                         </div>
                                     </div>
+
                                 </BorderedDataWrapper>
                             </div>
                             <div className={"col-sm d-flex justify-content-center align-items-center"}>
