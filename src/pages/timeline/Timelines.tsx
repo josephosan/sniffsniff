@@ -72,7 +72,14 @@ const Timelines: React.FC = () => {
                 timelineList && timelineList.map(el => {
                     return (
                         <WrapperData key={el.id} color={getRandomColor()}>
-                            <p className={"mb-0"}>{el.name}</p>
+                            <div className="d-flex justify-content-between">
+                                <span>{el.title}</span>
+                                <span>{el.type}</span>
+                                <span>{el.tags}</span>
+                                <span>{el.startDate}</span>
+                                <span>{el.endDate}</span>
+                                <span>{el.description}</span>
+                            </div>
                         </WrapperData>
                     );
                 })
