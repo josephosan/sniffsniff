@@ -5,11 +5,17 @@ import BigBoxSkeletonLoading from "../../components/secondary/BigBoxSkeletonLoad
 import TimelineService from "../../services/TimelineService";
 import {FormBuilderField} from "../../@types/app";
 import FormBuilder from "../../components/primary/FormBuilder";
+import BorderedDataWrapper from "../../components/secondary/BorderedDataWrapper";
+import CustomSearch from "../../components/primary/CustomSearch";
+import {Button} from "antd";
+import {useNotify} from "../../store/notify.store";
 
 const EditTimeLine: React.FC = () => {
+    const notifyStore = useNotify();
     const {id} = useParams();
     const [fetching, setFetching] = useState<boolean>(true);
-    const [editSubmitLoading, setEditSubmitLoading] = useState<boolean>(false);
+    const [editSubmitLoading, setEditSubmitLoading] = useState<boolean>(false)
+    const [editFormInitialValues, setEditFormInitialValues] = useState<never>(null);
     const editTimelineFields: FormBuilderField[] = [
         {
             type: 'text',
@@ -17,7 +23,7 @@ const EditTimeLine: React.FC = () => {
             label: 'نام',
             required: true,
             placeholder: 'نام جدول زمانی',
-            rules: [{required: true, message: 'فیلد نام اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن نام اجباری است!'}],
         },
         {
             type: 'select',
@@ -25,7 +31,7 @@ const EditTimeLine: React.FC = () => {
             label: 'نوع',
             required: true,
             placeholder: 'نوع جدول زمانی',
-            rules: [{required: true, message: 'فیلد نوع تجدول زمانی اجباری است!'}],
+            rules: [{required: true, message: 'پرکردن نوع تجدول زمانی اجباری است!'}],
             options: [
                 {
                     label: 'گروه',
@@ -75,16 +81,19 @@ const EditTimeLine: React.FC = () => {
             label: 'توضیحات',
             required: true,
             placeholder: '...',
-            rules: [{required: true, message: 'لطفا یک توضیخ درباره این جدول زمانی بنویسید!'}],
+            rules: [{required: true, message: 'لطفا یک توضیح درباره این جدول زمانی بنویسید!'}],
         },
     ];
 
     useEffect(() => {
         if (!id) return;
+
         async function fetchData() {
             try {
-                const res = await TimelineService.getATimeline(id);
-                // todo: handle set initial values
+                const {data} = await TimelineService.getATimeline(id);
+                setEditFormInitialValues(() => {
+                    return data.data;
+                })
             } catch (e) {
                 console.log(e);
             } finally {
@@ -95,8 +104,16 @@ const EditTimeLine: React.FC = () => {
         fetchData();
     }, [id]);
 
-    const handleEditFormSubmit = (data) => {
-        console.log('edit', data);
+    const handleEditFormSubmit = async (formData) => {
+        setEditSubmitLoading(() => true);
+        try {
+            const response = await TimelineService.editTimelineById(id, formData);
+            if (response.status === 200) notifyStore.showAlert("success", "موفق!", "با موفقیت ویرایش شد.");
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setEditSubmitLoading(() => false);
+        }
     }
 
     return (
@@ -114,12 +131,60 @@ const EditTimeLine: React.FC = () => {
                 ) : (
                     <div>
                         <FormBuilder
+                            initialValues={editFormInitialValues}
                             fields={editTimelineFields}
                             size={"middle"}
                             onFinish={handleEditFormSubmit}
                             loading={editSubmitLoading}
                             submitButtonLabel={"ویرایش"}
                         />
+
+                        <div className={"row mt-5"}>
+                            <div className={"col-sm d-flex justify-content-center align-items-center"}>
+                                <BorderedDataWrapper
+                                    title={"اعضا"}
+                                    required={true}
+                                >
+                                    <div className={"row"}>
+                                        <div className={"col-sm-8 col-md-6 col-xl-6 col-7"}>
+                                            <CustomSearch
+                                                inputMode={true}
+                                            />
+                                        </div>
+                                        <div className={"col-sm-4 col-md-6 col-xl-6 col-5 d-flex justify-content-end"}>
+                                            <Button
+                                                type={"primary"}
+                                                icon={<i className={"bi bi-plus"}></i>}
+                                            >
+                                                افزودن
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </BorderedDataWrapper>
+                            </div>
+                            <div className={"col-sm d-flex justify-content-center align-items-center"}>
+                                <BorderedDataWrapper
+                                    title={"رویداد ها"}
+                                    required={true}
+                                >
+                                    <div className={"row"}>
+                                        <div className={"col-sm-8 col-md-6 col-xl-6 col-7"}>
+                                            <CustomSearch
+                                                inputMode={true}
+                                            />
+                                        </div>
+                                        <div className={"col-sm-4 col-md-6 col-xl-6 col-5 d-flex justify-content-end"}>
+                                            <Button
+                                                type={"primary"}
+                                                icon={<i className={"bi bi-plus"}></i>}
+                                            >
+                                                افزودن
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </BorderedDataWrapper>
+                            </div>
+                        </div>
                     </div>
                 )
             }

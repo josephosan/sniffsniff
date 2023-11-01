@@ -9,7 +9,7 @@ import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 import transition from "react-element-popper/animations/transition"
-import opacity from "react-element-popper/animations/opacity"
+import opacity from "react-element-popper/animations/opacity";
 
 // theme
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
@@ -29,7 +29,8 @@ interface FormBuilderProps {
     colSM?: number,
     colXL?: number,
     submitButtonLoading?: boolean,
-    loading?: boolean
+    loading?: boolean,
+    initialValues?: never
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -46,7 +47,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         colSM = 12,
         colXL = 8,
         submitButtonLoading = false,
-        loading = false
+        loading = false,
+        initialValues
     }
 ) => {
     const {theme} = useApp();
@@ -82,12 +84,25 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         });
     }
 
+    const convertToLatinDigits = (str) => {
+        const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+        const latinDigits = '0123456789';
+
+        for (let i = 0; i < 10; i++) {
+            str = str.replace(new RegExp(persianDigits[i], 'g'), latinDigits[i]);
+        }
+        return str;
+    };
+
     const handleSubmit = (data) => {
         handleSetErrors(null);
         handleClearElementErrors();
 
         Object.keys(data).forEach((key) => {
-            if (data[key] instanceof DateObject) data[key] = data[key].format();
+            if (data[key] instanceof DateObject) {
+                data[key] = convertToLatinDigits(data[key].format());
+                console.log(data[key])
+            }
         })
 
         onFinish(data);
@@ -99,7 +114,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 name="basic"
                 labelCol={{span: 8}}
                 wrapperCol={{span: 24}}
-                initialValues={{remember: true}}
+                initialValues={{remember: true, ...initialValues}}
                 onFinish={handleSubmit}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
@@ -132,7 +147,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                     zIndex: 101,
                                 }}
                             >
-                                <Loading />
+                                <Loading/>
                             </div>
                         </div>
                     )
@@ -188,14 +203,14 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                         <DatePicker
                                             className={"yellow " + (theme.mode === 'dark' ? "bg-dark" : "")}
                                             containerClassName={"w-100"}
-                                            inputClass={"w-100 "}
+                                            inputClass={"w-100"}
                                             placeholder={el.placeholder}
                                             locale={persian_fa}
                                             calendar={persian}
                                             plugins={[
                                                 (el.type === 'date_time') ? <TimePicker position={"bottom"}/> : <></>
                                             ]}
-                                            format={(el.type === 'date') ? 'MM/DD/YYYY ' : 'MM/DD/YYYY HH:mm:ss'}
+                                            format={(el.type === 'date') ? 'YYYY/MM/DD' : 'YYYY/MM/DD HH:mm:ss'}
                                             animations={[
                                                 opacity(),
                                                 transition({
@@ -210,7 +225,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                                 border: `1px solid ${theme.primaryColor}`,
                                                 padding: (size === "large" ? '10px' : ((size === "middle") ? '4px 11px 4px 11px' : '6px')),
                                                 marginTop: '1.2px',
-                                                outline: 'none'
+                                                outline: 'none',
                                             }}
                                             calendarPosition={"bottom-left"}
                                         />

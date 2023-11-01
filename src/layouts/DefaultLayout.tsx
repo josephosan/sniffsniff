@@ -23,6 +23,7 @@ export const DefaultLayout: React.FC = () => {
                 width: "100%",
                 height: "100vh",
                 backgroundColor: theme.mainBackgroundColor,
+                color: theme.defaultTextColor
             }}
         >
             {isMobile ? (
