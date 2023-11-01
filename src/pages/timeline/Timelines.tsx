@@ -11,6 +11,7 @@ const Timelines: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
+    const [cursor, setCursor] = useState<number>(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -22,6 +23,7 @@ const Timelines: React.FC = () => {
                     }
                 });
                 setTimelineList(() => res.data.data.items);
+                setCursor(() => res.data.data.cursor);
             } catch (e) {
                 console.log(e);
             } finally {
@@ -32,7 +34,7 @@ const Timelines: React.FC = () => {
         fetchData();
     }, []);
 
-    const handleFetchMore = async (cursor: number) => {
+    const handleFetchMore = async () => {
         setFetchMoreLoading(() => true);
         try {
             const res = await TimelineService.paginateAll({
@@ -45,6 +47,7 @@ const Timelines: React.FC = () => {
             setTimelineList((prevState) => {
                 return [...prevState, res.data.data.items];
             });
+            setCursor(() => res.data.data.cursor);
         } catch (e) {
             console.log(e);
         } finally {
@@ -52,9 +55,10 @@ const Timelines: React.FC = () => {
         }
     }
 
-    const handleReachedBottom = () => {
+    const handleReachedBottom = async () => {
         if (fetchMoreLoading && pageFirstLoading) return;
-
+        console.log(timelineList.length, cursor);
+        await handleFetchMore();
     }
 
     return (
