@@ -1,4 +1,4 @@
-import {appConfig} from "../config/app.config";
+import {appConfig, colors} from "../config/app.config";
 
 const pathNamesMap = {
     home: 'خانه',
@@ -15,7 +15,6 @@ const pathIconsMap = {
     timeline: 'bi bi-calendar2-range',
     edit: 'bi bi-pen'
 }
-
 
 const getPageNameByPath = (route: string) => {
     // return fist name after /.
@@ -47,4 +46,15 @@ const handleGetBreadcrump = (path) => {
     });
 }
 
-export {getPageNameByPath, handleGetBreadcrump};
+const getRandomNumber = (upTo: number) => {
+    return Math.floor(Math.random() * upTo);
+}
+
+const getRandomColor = () => {
+    const colorsLength = colors.length;
+    const randomIndex = getRandomNumber(colorsLength);
+    return colors[randomIndex];
+
+}
+
+export {getPageNameByPath, handleGetBreadcrump, getRandomColor};

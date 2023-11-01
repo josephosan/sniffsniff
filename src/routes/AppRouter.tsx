@@ -33,6 +33,7 @@ import Loading from "../components/secondary/Loading";
 
 // others
 import {getToken} from "../helpers/jwt.helper";
+import Timelines from "../pages/timeline/Timelines";
 
 
 export const AppRouter: React.FC = () => {
@@ -65,6 +66,10 @@ export const AppRouter: React.FC = () => {
                 {
                     path: 'timeline/:id',
                     element: <ViewTimeline/>
+                },
+                {
+                    path: 'timeline',
+                    element: <Timelines/>
                 }
             ]
         },

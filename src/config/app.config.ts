@@ -25,7 +25,10 @@ const appConfig = {
     defaultAnimationSpeed: 0.15,
 
     // ignore names for auth
-    ignoreNamesForAuth: ['login', 'rotate', 'register']
+    ignoreNamesForAuth: ['login', 'rotate', 'register'],
+
+    // server config
+    paginationLimit: 10
 }
 
 const lightConfig = {
@@ -52,4 +55,16 @@ const darkConfig = {
     itemHoverColor: '#3B435B',
 };
 
-export { appConfig, lightConfig, darkConfig };
+const colors = [
+    '#61A3BA',
+    '#C70039',
+    '#748E63',
+    '#FFCD4B',
+    '#CDFAD5',
+    '#141E46',
+    '#CE5A67',
+    '#B931FC',
+    '#FFA33C'
+]
+
+export { appConfig, lightConfig, darkConfig, colors };

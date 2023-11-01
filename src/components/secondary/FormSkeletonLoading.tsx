@@ -5,14 +5,16 @@ import {ShapeSizeTypes} from "../../@types/app";
 interface FormSkeletonLoadingProps {
     size?: ShapeSizeTypes,
     active?: boolean,
-    count?: number
+    count?: number,
+    fillRow?: boolean
 }
 
 const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = (
     {
         size = 'large',
         active = true,
-        count = 10
+        count = 10,
+        fillRow = false
     }
 ) => {
     const skeletonArray = Array.from({length: count}, (_, index) => index)
@@ -22,7 +24,7 @@ const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = (
             {
                 skeletonArray.map(el => {
                     return (
-                        <Skeleton.Input className={"col-sm w-100 m-2"} key={el} active={active} size={size}/>
+                        <Skeleton.Input className={"w-100 m-2 " + (fillRow ? '' : 'col-sm')} key={el} active={active} size={size}/>
                     )
                 })
             }
