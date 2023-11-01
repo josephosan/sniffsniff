@@ -48,7 +48,6 @@ export default class ApiService {
                 return config;
             },
             (error) => {
-                // todo: notify user that an error happened.
                 return Promise.reject(error);
             }
         );
