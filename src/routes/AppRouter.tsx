@@ -17,7 +17,7 @@ import EditTimeLine from "../pages/timeline/Edit";
 import _404 from "../pages/_404";
 import {useAuth} from "../store/auth.store";
 import AuthService from "../services/AuthService";
-import {destroyToken, getToken} from "../helpers/jwt.helper";
+import {getToken} from "../helpers/jwt.helper";
 import {User} from "../@types/auth";
 import ForgotPassword from "../pages/ForgotPassword";
 
