@@ -35,7 +35,7 @@ const WrapperData: React.FC<DataProps> = (
                 </div>
             ) : (
                 <div
-                    className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
+                    className="shadow-sm mb-4 px-3 py-3 rounded align-items-center"
                     style={{
                         borderRadius: appConfig.defaultBorderRadius,
                         backgroundColor: theme.cardBgLighter,
