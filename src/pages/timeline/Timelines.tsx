@@ -5,12 +5,17 @@ import FormSkeletonLoading from "../../components/secondary/FormSkeletonLoading"
 import WrapperData from "../../components/secondary/WrapperData";
 import Loading from "../../components/secondary/Loading";
 import {appConfig} from "../../config/app.config";
-import {getRandomColor} from "../../helpers/app.helper";
+import {getPersianDateAsText, getRandomColor} from "../../helpers/app.helper";
+import {Divider, Popover, Space} from "antd";
+import ActionIconWrapper from "../../components/secondary/ActionIconWrapper";
+import {useMediaQuery} from "react-responsive";
+import TextItemWrapper from "../../components/tiny/TextItemWrapper";
 
 const Timelines: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
+    const isMobile = useMediaQuery({query: `(max-width: ${appConfig.appBreakPoint}px)`});
     const [cursor, setCursor] = useState<number>(null);
 
     useEffect(() => {
@@ -76,14 +81,35 @@ const Timelines: React.FC = () => {
                 timelineList && timelineList.map(el => {
                     return (
                         <WrapperData key={el.id} color={getRandomColor()}>
-                            <div className="d-flex justify-content-between">
-                                <span>{el.title}</span>
-                                <span>{el.type}</span>
-                                <span>{el.tags}</span>
-                                <span>{el.startDate}</span>
-                                <span>{el.endDate}</span>
-                                <span>{el.description}</span>
-                            </div>
+                            {
+                                isMobile ? (
+                                    <div> hello </div>
+                                ) : (
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <TextItemWrapper fontSize={appConfig.defaultFontSize} text={el.name} />
+                                        <TextItemWrapper text={(el.type === 'PRIVATE') ? "خصوصی" : "گروه"}/>
+                                        <TextItemWrapper text={el.tags}/>
+                                        <TextItemWrapper text={getPersianDateAsText(el.startDate)}/>
+                                        <TextItemWrapper text={el.endDate}/>
+
+                                        <span style={{fontSize: appConfig.smallFontSize + "px"}}>{el.endDate}</span>
+                                        <Popover content={el.description}>
+                                            <span style={{fontSize: appConfig.smallFontSize + "px"}}>
+                                                {el.description?.split(' ')[0]} &nbsp;
+                                                {el.description?.split(' ')[0]} &nbsp;
+                                                ...
+                                            </span>
+                                        </Popover>
+                                        <Space className={"mt-1 float-left"}>
+                                            <ActionIconWrapper icon={"bi bi-share"}/>
+                                            <Divider type={'vertical'}/>
+                                            <ActionIconWrapper icon={"bi bi-binoculars"}/>
+                                            <Divider type={'vertical'}/>
+                                            <ActionIconWrapper icon={"bi bi-trash"}/>
+                                        </Space>
+                                    </div>
+                                )
+                            }
                         </WrapperData>
                     );
                 })
@@ -99,4 +125,4 @@ const Timelines: React.FC = () => {
     );
 }
 
-export default Timelines;
+    export default Timelines;

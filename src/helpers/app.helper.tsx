@@ -1,4 +1,5 @@
 import {appConfig, colors} from "../config/app.config";
+import moment from "jalali-moment";
 
 const pathNamesMap = {
     home: 'خانه',
@@ -54,7 +55,13 @@ const getRandomColor = () => {
     const colorsLength = colors.length;
     const randomIndex = getRandomNumber(colorsLength);
     return colors[randomIndex];
-
 }
 
-export {getPageNameByPath, handleGetBreadcrump, getRandomColor};
+const getPersianDateAsText = (date?: string) => {
+    if (!date) return '';
+
+    const convertedDate = moment(date);
+    return convertedDate.fromNow();
+}
+
+export {getPageNameByPath, handleGetBreadcrump, getRandomColor, getPersianDateAsText};

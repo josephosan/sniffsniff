@@ -92,6 +92,9 @@ function App() {
             Steps: {
                 colorSplit: theme.fadeTextColor,
             },
+            Popover: {
+                colorBgElevated: theme.mainBackgroundColor
+            }
         },
     };
 
