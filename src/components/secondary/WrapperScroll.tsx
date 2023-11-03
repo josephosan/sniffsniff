@@ -18,7 +18,7 @@ const WrapperScroll: React.FC<ScrollWrapperProps> = (
     const handleScroll = () => {
         const container: ReactNode = scrollWrapperRef.current;
         if (container) {
-            const isAtEnd = container.scrollTop + container.clientHeight >= container.scrollHeight;
+            const isAtEnd = container.scrollTop + container.clientHeight >= (container.scrollHeight-10);
             if (isAtEnd) reachedBottom();
         }
     }

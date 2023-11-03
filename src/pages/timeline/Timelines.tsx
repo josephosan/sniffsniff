@@ -50,7 +50,7 @@ const Timelines: React.FC = () => {
                 }
             });
             setTimelineList((prevState) => {
-                return [...prevState, res.data.data.items];
+                return [...prevState, ...res.data.data.items];
             });
             setCursor(() => res.data.data.cursor);
         } catch (e) {
@@ -61,9 +61,10 @@ const Timelines: React.FC = () => {
     }
 
     const handleReachedBottom = async () => {
-        if (fetchMoreLoading && pageFirstLoading) return;
-        console.log(timelineList.length, cursor);
-        await handleFetchMore();
+        if (!pageFirstLoading && !fetchMoreLoading && cursor) {
+            console.log(timelineList.length, cursor);
+            await handleFetchMore();
+        }
     }
 
     return (
@@ -86,7 +87,7 @@ const Timelines: React.FC = () => {
                                     <div> hello </div>
                                 ) : (
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <TextItemWrapper fontSize={appConfig.defaultFontSize} text={el.name} />
+                                        <TextItemWrapper fontSize={appConfig.defaultFontSize} text={el.name}/>
                                         <TextItemWrapper text={(el.type === 'PRIVATE') ? "خصوصی" : "گروه"}/>
                                         <TextItemWrapper text={el.tags}/>
                                         <TextItemWrapper text={getPersianDateAsText(el.startDate)}/>
@@ -125,4 +126,4 @@ const Timelines: React.FC = () => {
     );
 }
 
-    export default Timelines;
+export default Timelines;

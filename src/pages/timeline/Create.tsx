@@ -2,8 +2,12 @@ import React, {useState} from "react";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 import TimelineService from "../../services/TimelineService";
+import {useNavigate} from "react-router-dom";
+import {useNotify} from "../../store/notify.store";
 
 const CreateTimeLine: React.FC = () => {
+    const navigate = useNavigate();
+    const notifyStore = useNotify();
     const [loading, setLoading] = useState<boolean>(false);
     const createTimeLineFields: FormBuilderField[] = [
         {
@@ -78,7 +82,8 @@ const CreateTimeLine: React.FC = () => {
         setLoading( () => true);
         try {
             const res = await TimelineService.createTimeline(formData);
-            console.log(res);
+            notifyStore.showAlert('success', 'موفق!', 'جدول زمانی با موقفیت ایجاد شد!')
+            navigate(`/timeline/edit/${res.data.data.id}`);
         } catch(err) {
             console.log(err);
         } finally {
