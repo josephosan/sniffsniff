@@ -12,7 +12,7 @@ const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
     {
         icon,
         size = appConfig.smallIconSize,
-        iconClicked
+        iconClicked,
     }
 ) => {
     return (
@@ -22,7 +22,7 @@ const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
                 className={icon}
                 style={{
                     fontSize: size,
-                    cursor: "pointer"
+                    cursor: "pointer",
                 }}
             ></i>
         </>
