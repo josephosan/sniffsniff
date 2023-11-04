@@ -28,6 +28,10 @@ export const AppProvider: React.FC = ({ children }) => {
         setErrors(errors);
     }
 
+    const [filterMode, setFilterMode] = useState<boolean>(false);
+    const handleSetFilterMode = (mode: boolean) => {
+        setFilterMode(() => mode);
+    }
 
     const appStore: AppStore = {
         // theme
@@ -36,7 +40,11 @@ export const AppProvider: React.FC = ({ children }) => {
 
         // errors
         errors,
-        handleSetErrors
+        handleSetErrors,
+
+        // filter mode
+        filterMode,
+        handleSetFilterMode
     }
 
     return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>

@@ -3,6 +3,7 @@ import {Input} from "antd";
 import {appConfig} from "../../config/app.config";
 import {useApp} from "../../store/app.store";
 import SidebarItem from "../secondary/SidebarItem";
+import ActionIconWrapper from "../secondary/ActionIconWrapper";
 
 
 interface SidebarItem {
@@ -12,7 +13,7 @@ interface SidebarItem {
 }
 
 export const Sidebar: React.FC = () => {
-    const {theme} = useApp();
+    const {theme, filterMode, handleSetFilterMode} = useApp();
     const sideBarItems: SidebarItem[] = [
         {
             name: "داشبورد",
@@ -43,30 +44,66 @@ export const Sidebar: React.FC = () => {
                 color: theme.defaultTextColor
             }}
         >
-            <div className={"mt-3 mb-4"}>
-                logo here
-            </div>
+            {
+                filterMode ? (
+                    <>
+                        <div className={"d-flex justify-content-between align-items-center mx-2 mt-5"}>
+                            <div
+                                className={"d-flex"}
+                            >
+                                <ActionIconWrapper
+                                    icon={"bi bi-filter ms-1"}
+                                    clickable={false}
+                                    size={appConfig.defaultIconSize}
+                                />
+                                <h5
+                                    style={{
+                                        fontWeight: "bold"
+                                    }}
+                                >فیلتر ها</h5>
+                            </div>
 
-            <div className={"mb-3"}>
-                <Input
-                    placeholder={'جستجو ...'}
-                    prefix={<i style={{fontSize: appConfig.smallIconSize + "px"}} className={"bi bi-search"}></i>}
-                    size={"middle"}
-                />
-            </div>
+                            <ActionIconWrapper
+                                icon={"bi bi-arrow-left"}
+                                clickable={true}
+                                size={appConfig.defaultIconSize}
+                                iconClicked={() => handleSetFilterMode(false)}
+                            />
+                        </div>
+                        <div>
 
-            <div className={"d-flex flex-column"}>
-                {
-                    sideBarItems.map(item => (
-                        <SidebarItem
-                            key={item.name}
-                            name={item.name}
-                            icon={item.icon}
-                            path={item.path}
-                        />
-                    ))
-                }
-            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <div className={"mt-3 mb-4"}>
+                            logo here
+                        </div>
+
+                        <div className={"mb-3"}>
+                            <Input
+                                placeholder={'جستجو ...'}
+                                prefix={<i style={{fontSize: appConfig.smallIconSize + "px"}}
+                                           className={"bi bi-search"}></i>}
+                                size={"middle"}
+                            />
+                        </div>
+
+                        <div className={"d-flex flex-column"}>
+                            {
+                                sideBarItems.map(item => (
+                                    <SidebarItem
+                                        key={item.name}
+                                        name={item.name}
+                                        icon={item.icon}
+                                        path={item.path}
+                                    />
+                                ))
+                            }
+                        </div>
+                    </>
+                )
+            }
         </div>
     );
 }

@@ -19,7 +19,7 @@ const Timelines: React.FC = () => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
     const navigate = useNavigate();
-    const { theme } = useApp();
+    const { theme, handleSetFilterMode, filterMode } = useApp();
     const isMobile = useMediaQuery({query: `(max-width: ${appConfig.appBreakPoint}px)`});
     const [cursor, setCursor] = useState<number>(null);
 
@@ -92,6 +92,7 @@ const Timelines: React.FC = () => {
                             <ActionIconWrapper
                                 icon={"bi bi-funnel d-flex justify-content-center align-items-center"}
                                 size={appConfig.defaultIconSize}
+                                iconClicked={() => handleSetFilterMode(!filterMode)}
                             />
                         </div>
                     </div>
