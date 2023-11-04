@@ -6,15 +6,20 @@ import WrapperData from "../../components/secondary/WrapperData";
 import Loading from "../../components/secondary/Loading";
 import {appConfig} from "../../config/app.config";
 import {getPersianDateAsText, getRandomColor} from "../../helpers/app.helper";
-import {Divider, Popover, Space} from "antd";
+import {Button, Divider, Popover, Space} from "antd";
 import ActionIconWrapper from "../../components/secondary/ActionIconWrapper";
 import {useMediaQuery} from "react-responsive";
 import TextItemWrapper from "../../components/tiny/TextItemWrapper";
+import CustomSearch from "../../components/primary/CustomSearch";
+import {useNavigate} from "react-router-dom";
+import {useApp} from "../../store/app.store";
 
 const Timelines: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
+    const navigate = useNavigate();
+    const { theme } = useApp();
     const isMobile = useMediaQuery({query: `(max-width: ${appConfig.appBreakPoint}px)`});
     const [cursor, setCursor] = useState<number>(null);
 
@@ -62,7 +67,6 @@ const Timelines: React.FC = () => {
 
     const handleReachedBottom = async () => {
         if (!pageFirstLoading && !fetchMoreLoading && cursor) {
-            console.log(timelineList.length, cursor);
             await handleFetchMore();
         }
     }
@@ -71,10 +75,41 @@ const Timelines: React.FC = () => {
         <WrapperScroll
             reachedBottom={handleReachedBottom}
         >
+            <div className={"row mb-3"}>
+                <div className={"col-sm-7 col-md-4 col-xl-4 col-7"}>
+                    <div className={"d-flex justify-content-between align-items-center"}>
+                        <CustomSearch
+                            inputMode={true}
+                        />
+                        <div
+                            className={"h-100 me-2"}
+                            style={{
+                                border: '1.5px solid ' + theme.primaryColor,
+                                borderRadius: appConfig.defaultBorderRadius,
+                                padding: '3px'
+                            }}
+                        >
+                            <ActionIconWrapper
+                                icon={"bi bi-funnel d-flex justify-content-center align-items-center"}
+                                size={appConfig.defaultIconSize}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={"col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end"}>
+                    <Button
+                        type={"primary"}
+                        icon={<i className={"bi bi-plus"}></i>}
+                        onClick={() => navigate(`/timeline/create/`)}
+                    >
+                        افزودن
+                    </Button>
+                </div>
+            </div>
             {
                 pageFirstLoading && (
                     <div className={"w-100"}>
-                        <FormSkeletonLoading fillRow={true} count={7}/>
+                        <FormSkeletonLoading fillRow={true} count={10}/>
                     </div>
                 )
             }
