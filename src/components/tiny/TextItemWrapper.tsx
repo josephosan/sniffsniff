@@ -1,12 +1,12 @@
 import React from "react";
 import {appConfig} from "../../config/app.config";
 
-interface ActionIconWrapperProps {
+interface TextItemWrapper {
     fontSize?: number,
     text: string
 }
 
-const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
+const TextItemWrapper: React.FC<TextItemWrapper> = (
     {
         fontSize = appConfig.smallFontSize,
         text
@@ -24,4 +24,4 @@ const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
     );
 }
 
-export default ActionIconWrapper;
+export default TextItemWrapper;

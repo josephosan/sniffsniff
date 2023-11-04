@@ -5,7 +5,11 @@ export interface AppStore {
     setThemeMode: (theme: never) => void,
 
     errors: Errors,
-    handleSetErrors: (errors: Errors) => void
+    handleSetErrors: (errors: Errors) => void,
+
+    // filter mode
+    filterMode: boolean,
+    handleSetFilterMode: (mode: boolean) => void
 }
 
 
