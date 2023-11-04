@@ -19,7 +19,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
     }
 ) => {
     const location = useLocation();
-    const {theme, setThemeConfig} = useApp();
+    const {theme, setThemeMode} = useApp();
     const [openModal, setOpenModal] = useState(false);
     const [breadcrumpItems, setBreadcrumpItems] = useState<never>(null);
 
@@ -61,7 +61,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
                             iconClasses={"bi bi-" + (theme.mode === "dark" ? "moon" : "sun")}
                             size={theme.mode === "dark" ? 20 : null}
                             onClick={() =>
-                                setThemeConfig(theme === lightConfig ? darkConfig : lightConfig)
+                                setThemeMode(theme === lightConfig ? darkConfig : lightConfig)
                             }
                         />
                         <TopBarIconWrapper size={20} iconClasses={"bi bi-bell"}/>
@@ -73,7 +73,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
 
                         <IconHeaderModal
                             theme={theme}
-                            setThemeConfig={setThemeConfig}
+                            setThemeConfig={setThemeMode}
                             openModal={openModal}
                             setOpenModal={setOpenModal}
                         />

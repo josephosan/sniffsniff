@@ -7,10 +7,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {appConfig, lightConfig} from "./config/app.config";
 import {useApp} from "./store/app.store";
 import {NotifyProvider} from "./store/notify.store";
+import {useEffect} from "react";
+import {getToken} from "./helpers/jwt.helper";
 
 
 function App() {
-    const { theme } = useApp();
+    const { theme, setThemeMode } = useApp();
+
+    useEffect(() => {
+        const themeConfig = getToken('themeConfig');
+        if (themeConfig)
+            setThemeMode(JSON.parse(themeConfig))
+    }, [])
 
     const themeConfig: ThemeConfig = {
         algorithm: antdTheme.defaultAlgorithm,
