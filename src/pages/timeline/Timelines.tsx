@@ -75,7 +75,7 @@ const Timelines: React.FC = () => {
         <WrapperScroll
             reachedBottom={handleReachedBottom}
         >
-            <div className={"row mb-3"}>
+            <div className={"row mb-3 mt-2"}>
                 <div className={"col-sm-7 col-md-4 col-xl-4 col-7"}>
                     <div className={"d-flex justify-content-between align-items-center"}>
                         <CustomSearch

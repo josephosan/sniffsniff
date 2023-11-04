@@ -9,7 +9,7 @@ interface ScrollWrapperProps {
 const WrapperScroll: React.FC<ScrollWrapperProps> = (
     {
         children,
-        height = "83vh",
+        height = "85vh",
         reachedBottom
     }
 ) => {
