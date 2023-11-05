@@ -99,7 +99,7 @@ export const Sidebar: React.FC = () => {
                                 />
                                 <CustomSelect 
         options={selectChooseOptions}
-        placeholder="by tag"
+        placeholder="تگ"
                                 />
                                 <CustomSelect 
         options={selectTypeOptions}
