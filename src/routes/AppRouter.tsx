@@ -4,7 +4,7 @@ import {useRoutes, Outlet, useNavigate, Navigate} from "react-router-dom";
 // Import pages
 import {Home} from "../pages/Home";
 import Login from "../pages/Login";
-import Events from "../pages/event/Events";
+import Events from "../pages/timeline/event/Events";
 import CreateTimeLine from "../pages/timeline/Create";
 import EditTimeLine from "../pages/timeline/Edit";
 import _404 from "../pages/_404";
@@ -72,7 +72,7 @@ export const AppRouter: React.FC = () => {
 
                 // todo: events shall be here
                 {
-                    path: 'events',
+                    path: 'timeline/event/:timelineId',
                     element: <Events/>
                 },
             ]
