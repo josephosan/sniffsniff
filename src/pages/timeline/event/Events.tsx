@@ -1,5 +1,5 @@
 import React from "react";
-import WrapperScroll from "../../components/secondary/WrapperScroll";
+import WrapperScroll from "../../../components/secondary/WrapperScroll";
 
 const Events: React.FC = () => {
     const handleReachedBottom = () => {
