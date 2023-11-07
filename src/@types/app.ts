@@ -9,7 +9,10 @@ export interface AppStore {
 
     // filter mode
     filterMode: boolean,
-    handleSetFilterMode: (mode: boolean) => void
+    handleSetFilterMode: (mode: boolean) => void,
+
+    filters: never,
+    handleSetFilters: (value: never) => void
 }
 
 

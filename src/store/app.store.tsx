@@ -33,6 +33,11 @@ export const AppProvider: React.FC = ({ children }) => {
         setFilterMode(() => mode);
     }
 
+    const [filters, setFilters] = useState(null);
+    const handleSetFilters = (value) => {
+        setFilters(() => value);
+    }
+
     const appStore: AppStore = {
         // theme
         theme,
@@ -44,7 +49,11 @@ export const AppProvider: React.FC = ({ children }) => {
 
         // filter mode
         filterMode,
-        handleSetFilterMode
+        handleSetFilterMode,
+
+        // filters data
+        filters,
+        handleSetFilters
     }
 
     return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>
