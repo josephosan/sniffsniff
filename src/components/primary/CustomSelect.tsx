@@ -13,7 +13,8 @@ interface CustomSelectProps {
     size?: SizeTypes,
     multiSelect?: boolean,
     name?: string,
-    form?: FormInstance
+    form?: FormInstance,
+    change?: (value: string) => string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -25,7 +26,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         size = 'large',
         multiSelect = false,
         name,
-        form
+        form,
+        change
     }
 ) => {
     const {theme} = useApp();
@@ -96,7 +98,11 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     const handleSelectChange = (e) => {
-        form.setFieldsValue({[name]: e});
+        if (form) {
+            form.setFieldsValue({[name]: e});
+        } else if (change){
+            change(e);
+        }
     }
 
     return (

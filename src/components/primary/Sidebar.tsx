@@ -4,6 +4,7 @@ import {appConfig} from "../../config/app.config";
 import {useApp} from "../../store/app.store";
 import SidebarItem from "../secondary/SidebarItem";
 import ActionIconWrapper from "../secondary/ActionIconWrapper";
+import Filters from "./Filters";
 
 
 interface SidebarItem {
@@ -13,7 +14,7 @@ interface SidebarItem {
 }
 
 export const Sidebar: React.FC = () => {
-    const {theme, filterMode, handleSetFilterMode} = useApp();
+    const {theme, filterMode, handleSetFilterMode, handleSetFilters} = useApp();
     const sideBarItems: SidebarItem[] = [
         {
             name: "داشبورد",
@@ -37,6 +38,10 @@ export const Sidebar: React.FC = () => {
         },
     ]
 
+    const handleFiltersChanged = (filters) => {
+        handleSetFilters(filters);
+    }
+
     return (
         <div
             className={"d-flex flex-column"}
@@ -47,31 +52,35 @@ export const Sidebar: React.FC = () => {
             {
                 filterMode ? (
                     <>
-                        <div className={"d-flex justify-content-between align-items-center mx-2 mt-5"}>
+                        <div className={"d-flex justify-content-between align-items-center mx-2 mt-5 vh-100"}>
                             <div
-                                className={"d-flex"}
+                                className="d-flex flex-column w-100 vh-100"
+
                             >
-                                <ActionIconWrapper
-                                    icon={"bi bi-filter ms-1"}
-                                    clickable={false}
-                                    size={appConfig.defaultIconSize}
+                                <div className="d-flex flex-row justify-content-between">
+                                    <div className="d-flex flex-row">
+                                        <ActionIconWrapper
+                                            icon={"bi bi-filter ms-1"}
+                                            clickable={false}
+                                            size={appConfig.defaultIconSize}
+                                        />
+                                        <h5
+                                            style={{
+                                                fontWeight: "bold"
+                                            }}
+                                        >فیلتر ها</h5>
+                                    </div>
+                                    <ActionIconWrapper
+                                        icon={"bi bi-arrow-left"}
+                                        clickable={true}
+                                        size={appConfig.defaultIconSize}
+                                        iconClicked={() => handleSetFilterMode(false)}
+                                    />
+                                </div>
+                                <Filters
+                                    filterChanged={handleFiltersChanged}
                                 />
-                                <h5
-                                    style={{
-                                        fontWeight: "bold"
-                                    }}
-                                >فیلتر ها</h5>
                             </div>
-
-                            <ActionIconWrapper
-                                icon={"bi bi-arrow-left"}
-                                clickable={true}
-                                size={appConfig.defaultIconSize}
-                                iconClicked={() => handleSetFilterMode(false)}
-                            />
-                        </div>
-                        <div>
-
                         </div>
                     </>
                 ) : (

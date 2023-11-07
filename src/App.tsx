@@ -1,7 +1,7 @@
 import './App.scss';
-import { AppRouter } from './routes/AppRouter';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
+import {AppRouter} from './routes/AppRouter';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {ConfigProvider, theme as antdTheme, ThemeConfig} from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {appConfig, lightConfig} from "./config/app.config";
@@ -102,6 +102,13 @@ function App() {
             },
             Popover: {
                 colorBgElevated: theme.mainBackgroundColor
+            },
+            ColorPicker: {
+                colorText: theme.fadeTextColor,
+                activeBorderColor: theme.primaryColor,
+                hoverBorderColor: theme.primaryColor,
+                colorBorder: theme.primaryColor,
+                colorBgElevated: theme.cardBg
             }
         },
     };
@@ -110,7 +117,7 @@ function App() {
         <ConfigProvider theme={themeConfig} direction={"rtl"}>
             <NotifyProvider>
                 <Router>
-                    <AppRouter />
+                    <AppRouter/>
                 </Router>
             </NotifyProvider>
         </ConfigProvider>
