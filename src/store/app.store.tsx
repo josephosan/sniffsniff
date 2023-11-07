@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useState} from "react";
 import {AppStore, Errors, Theme} from "../@types/app";
 import {lightConfig} from "../config/app.config";
+import {saveToken} from "../helpers/jwt.helper";
 
 
 
@@ -18,8 +19,9 @@ export function useApp() {
 export const AppProvider: React.FC = ({ children }) => {
     // theme config
     const [theme, setTheme] = useState<Theme>(lightConfig);
-    const setThemeConfig = (themeConfig: Theme) => {
+    const setThemeMode = (themeConfig: Theme) => {
         setTheme(themeConfig);
+        saveToken('themeConfig', JSON.stringify(themeConfig));
     }
 
     // errors
@@ -41,7 +43,7 @@ export const AppProvider: React.FC = ({ children }) => {
     const appStore: AppStore = {
         // theme
         theme,
-        setThemeConfig,
+        setThemeMode,
 
         // errors
         errors,

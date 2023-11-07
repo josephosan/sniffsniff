@@ -60,8 +60,17 @@ const getRandomColor = () => {
 const getPersianDateAsText = (date?: string) => {
     if (!date) return '';
 
+    date = toEnDigit(date.split(',')[0]);
     const convertedDate = moment(date);
     return convertedDate.fromNow();
+}
+
+function toEnDigit(s) {
+    return s.replace(/[\u0660-\u0669\u06f0-\u06f9]/g,
+        function (a) {
+            return a.charCodeAt(0) & 0xf
+        }
+    )
 }
 
 export {getPageNameByPath, handleGetBreadcrump, getRandomColor, getPersianDateAsText};

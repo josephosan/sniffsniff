@@ -6,7 +6,7 @@ import WrapperData from "../../components/secondary/WrapperData";
 import Loading from "../../components/secondary/Loading";
 import {appConfig} from "../../config/app.config";
 import {getPersianDateAsText, getRandomColor} from "../../helpers/app.helper";
-import {Button, Divider, Popover, Space} from "antd";
+import {Button, Divider, Popover, Space, Tag} from "antd";
 import ActionIconWrapper from "../../components/secondary/ActionIconWrapper";
 import {useMediaQuery} from "react-responsive";
 import TextItemWrapper from "../../components/tiny/TextItemWrapper";
@@ -19,7 +19,7 @@ const Timelines: React.FC = () => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
     const navigate = useNavigate();
-    const { theme, handleSetFilterMode, filterMode } = useApp();
+    const {theme, handleSetFilterMode, filterMode} = useApp();
     const isMobile = useMediaQuery({query: `(max-width: ${appConfig.appBreakPoint}px)`});
     const [cursor, setCursor] = useState<number>(null);
 
@@ -124,16 +124,23 @@ const Timelines: React.FC = () => {
                                 ) : (
                                     <div className="d-flex justify-content-between align-items-center">
                                         <TextItemWrapper fontSize={appConfig.defaultFontSize} text={el.name}/>
-                                        <TextItemWrapper text={(el.type === 'PRIVATE') ? "خصوصی" : "گروه"}/>
+                                        <div>
+                                            {
+                                                el.type === 'PRIVATE' ? (
+                                                    <Tag color={"red"}>خصوصی</Tag>
+                                                ) : (
+                                                    <Tag color={"green"}>گروه</Tag>
+                                                )
+                                            }
+                                        </div>
                                         <TextItemWrapper text={el.tags}/>
                                         <TextItemWrapper text={getPersianDateAsText(el.startDate)}/>
-                                        <TextItemWrapper text={el.endDate}/>
+                                        <TextItemWrapper text={getPersianDateAsText(el.endDate)}/>
 
-                                        <span style={{fontSize: appConfig.smallFontSize + "px"}}>{el.endDate}</span>
                                         <Popover content={el.description}>
                                             <span style={{fontSize: appConfig.smallFontSize + "px"}}>
                                                 {el.description?.split(' ')[0]} &nbsp;
-                                                {el.description?.split(' ')[0]} &nbsp;
+                                                {el.description?.split(' ')[1]} &nbsp;
                                                 ...
                                             </span>
                                         </Popover>
@@ -141,6 +148,11 @@ const Timelines: React.FC = () => {
                                             <ActionIconWrapper icon={"bi bi-share"}/>
                                             <Divider type={'vertical'}/>
                                             <ActionIconWrapper icon={"bi bi-binoculars"}/>
+                                            <Divider type={'vertical'}/>
+                                            <ActionIconWrapper
+                                                icon={"bi bi-pencil-square"}
+                                                iconClicked={() => navigate(`/timeline/edit/${el.id}`)}
+                                            />
                                             <Divider type={'vertical'}/>
                                             <ActionIconWrapper icon={"bi bi-trash"}/>
                                         </Space>
@@ -162,4 +174,4 @@ const Timelines: React.FC = () => {
     );
 }
 
-export default Timelines;
+    export default Timelines;

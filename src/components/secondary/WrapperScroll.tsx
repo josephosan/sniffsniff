@@ -29,6 +29,7 @@ const WrapperScroll: React.FC<ScrollWrapperProps> = (
             className={"w-100"}
             style={{
                 overflowY: "auto",
+                overflowX: "hidden",
                 height: height ? height : '88vh'
             }}
             onScroll={handleScroll}
