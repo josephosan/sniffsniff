@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import FormBuilder from "../../../components/primary/FormBuilder";
-import {FormBuilderField} from "../../../@types/app";
+import FormBuilder from '../../../components/primary/FormBuilder';
+import { FormBuilderField } from '../../../@types/app';
+import TimelineService from "../../../services/TimelineService";
+import {useNavigate, useParams} from "react-router-dom";
+import {AxiosResponse} from "axios";
+import {useNotify} from "../../../store/notify.store";
 
 const CreateEvent: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
+    const { timelineId } = useParams();
+    const notifyStore = useNotify();
+    const navigate = useNavigate();
 
     const createEventFields: FormBuilderField[] = [
         {
             type: 'text',
-            name: 'name',
+            name: 'title',
             label: 'نام',
             placeholder: 'نام رویداد',
             required: true,
@@ -28,12 +35,8 @@ const CreateEvent: React.FC = () => {
             ],
             options: [
                 {
-                    label: 'گروه',
-                    value: 'GROUP',
-                },
-                {
-                    label: 'خصوصی',
-                    value: 'PRIVATE',
+                    label: 'امتحان',
+                    value: 'EXAM',
                 },
             ],
         },
@@ -68,13 +71,25 @@ const CreateEvent: React.FC = () => {
         },
     ];
 
+    const handleCreateEvent = async (formData) => {
+        try {
+            const res: AxiosResponse = await TimelineService.createEventForTimeline(timelineId, formData);
+            notifyStore.showAlert('success', 'موفق!', 'رویداد با موفقیت به جدول زمانی اضافه شد.');
+            navigate(`timeline/edit/${timelineId}`);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(() => false);
+        }
+    }
+
     return (
         <>
             <FormBuilder
                 fields={createEventFields}
                 size={'middle'}
                 loading={loading}
-                // onFinish={}
+                onFinish={handleCreateEvent}
             />
         </>
     );

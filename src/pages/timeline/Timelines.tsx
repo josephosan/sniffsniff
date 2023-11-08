@@ -13,6 +13,7 @@ import TextItemWrapper from "../../components/tiny/TextItemWrapper";
 import CustomSearch from "../../components/primary/CustomSearch";
 import {useNavigate} from "react-router-dom";
 import {useApp} from "../../store/app.store";
+import NoData from "../../components/tiny/NoData";
 
 const Timelines: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -115,7 +116,7 @@ const Timelines: React.FC = () => {
                 )
             }
             {
-                timelineList && timelineList.map(el => {
+                timelineList ? timelineList.map(el => {
                     return (
                         <WrapperData key={el.id} color={getRandomColor()}>
                             {
@@ -147,6 +148,11 @@ const Timelines: React.FC = () => {
                                         <Space className={"mt-1 float-left"}>
                                             <ActionIconWrapper icon={"bi bi-share"}/>
                                             <Divider type={'vertical'}/>
+                                            <ActionIconWrapper
+                                                icon={"bi bi-calendar-event"}
+                                                iconClicked={() => navigate(`/timeline/${el.id}/event`)}
+                                            />
+                                            <Divider type={'vertical'}/>
                                             <ActionIconWrapper icon={"bi bi-binoculars"}/>
                                             <Divider type={'vertical'}/>
                                             <ActionIconWrapper
@@ -161,7 +167,9 @@ const Timelines: React.FC = () => {
                             }
                         </WrapperData>
                     );
-                })
+                }) : (
+                    <NoData />
+                )
             }
             {
                 fetchMoreLoading && (
