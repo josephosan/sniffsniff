@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
 import CustomSearch from '../../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
@@ -7,37 +7,41 @@ import WrapperData from '../../../components/secondary/WrapperData';
 import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import Loading from '../../../components/secondary/Loading';
 import TimelineService from '../../../services/TimelineService';
-import { appConfig } from '../../../config/app.config';
-import { useApp } from '../../../store/app.store';
-import { useMediaQuery } from 'react-responsive';
-import { useNavigate } from 'react-router-dom';
-import { Button, Divider, Popover, Space, Tag } from 'antd';
+import {appConfig} from '../../../config/app.config';
+import {useApp} from '../../../store/app.store';
+import {useMediaQuery} from 'react-responsive';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Button, Divider, Popover, Space, Tag} from 'antd';
 import {
     getRandomColor,
     getPersianDateAsText,
 } from '../../../helpers/app.helper';
+import NoData from "../../../components/tiny/NoData";
+import timelines from "../Timelines";
 
 const Events: React.FC = () => {
     const navigate = useNavigate();
+    const {timelineId} = useParams();
     const [eventList, setEventList] = useState<never[]>(null);
     const [cursor, setCursor] = useState<number>(null);
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-    const { theme, handleSetFilterMode, filterMode } = useApp();
+    const {theme, handleSetFilterMode, filterMode} = useApp();
 
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
 
     useEffect(() => {
+        if (!timelineId) return;
         async function fetchData() {
             try {
-                // const res = await TimelineService.paginateAll({
-                //     params: {
-                //         limit: appConfig.paginationLimit,
-                //         order: 'ASC',
-                //     },
-                // });
+                const res = await TimelineService.getTimelineEvents(timelineId, {
+                    params: {
+                        limit: appConfig.paginationLimit,
+                        order: 'ASC',
+                    },
+                });
                 setEventList(() => res.data.data.items);
                 setCursor(() => res.data.data.cursor);
             } catch (e) {
@@ -51,15 +55,16 @@ const Events: React.FC = () => {
     }, []);
 
     const handleFetchMore = async () => {
+        if (!timelineId) return;
         setFetchMoreLoading(() => true);
         try {
-            // const res = await TimelineService.paginateAll({
-            //     params: {
-            //         limit: appConfig.paginationLimit,
-            //         order: 'ASC',
-            //         cursor: cursor,
-            //     },
-            // });
+            const res = await TimelineService.getTimelineEvents(timelineId, {
+                params: {
+                    limit: appConfig.paginationLimit,
+                    order: 'ASC',
+                    cursor: cursor,
+                },
+            });
             setEventList((prevState) => {
                 return [...prevState, ...res.data.data.items];
             });
@@ -86,7 +91,7 @@ const Events: React.FC = () => {
                             'd-flex justify-content-between align-items-center'
                         }
                     >
-                        <CustomSearch inputMode={true} />
+                        <CustomSearch inputMode={true}/>
                         <div
                             className={'h-100 me-2'}
                             style={{
@@ -115,20 +120,22 @@ const Events: React.FC = () => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/timeline/create/`)}
+                        onClick={() => navigate(`/timeline/${timelineId}/event/create/`)}
                     >
                         افزودن
                     </Button>
                 </div>
             </div>
 
-            {pageFirstLoading && (
-                <div className={'w-100'}>
-                    <FormSkeletonLoading fillRow={true} count={10} />
-                </div>
-            )}
-            {eventList &&
-                eventList.map((el) => {
+            {
+                pageFirstLoading && (
+                    <div className={'w-100'}>
+                        <FormSkeletonLoading fillRow={true} count={10}/>
+                    </div>
+                )
+            }
+            {
+                eventList ? eventList.map((el) => {
                     return (
                         <WrapperData key={el.id} color={getRandomColor()}>
                             {isMobile ? (
@@ -172,18 +179,18 @@ const Events: React.FC = () => {
                                         <ActionIconWrapper
                                             icon={'bi bi-share'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-binoculars'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-pencil-square'}
                                             // iconClicked={() =>
                                             //     navigate()
                                             // }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-trash'}
                                         />
@@ -192,16 +199,21 @@ const Events: React.FC = () => {
                             )}
                         </WrapperData>
                     );
-                })}
-            {fetchMoreLoading && (
-                <div
-                    className={
-                        'w-100 d-flex justify-content-center align-items-center'
-                    }
-                >
-                    <Loading />
-                </div>
-            )}
+                }) : (
+                    <NoData />
+                )
+            }
+            {
+                fetchMoreLoading && (
+                    <div
+                        className={
+                            'w-100 d-flex justify-content-center align-items-center'
+                        }
+                    >
+                        <Loading/>
+                    </div>
+                )
+            }
         </WrapperScroll>
     );
 };

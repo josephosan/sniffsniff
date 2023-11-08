@@ -74,18 +74,14 @@ export const AppRouter: React.FC = () => {
                     element: <EditTimeLine />,
                 },
 
-                // todo: events shall be here
+                // events
                 {
-                    path: 'timeline/event/:timelineId',
+                    path: 'timeline/:timelineId/event',
                     element: <Events />,
                 },
                 {
-                    path: 'timeline/event/create',
+                    path: 'timeline/:timelineId/event/create',
                     element: <CreateEvent />,
-                },
-                {
-                    path: 'timeline/event/events',
-                    element: <Events />,
                 },
             ],
         },
