@@ -1,20 +1,15 @@
 import React, {ReactNode, useEffect, useState} from "react";
-import {Button, Col, Form, Input, Row} from "antd"
+import {Button, Col, Form, Row} from "antd"
 import {FlexTypes, FormBuilderField, SizeTypes} from "../../@types/app";
-import CustomSelect from "./CustomSelect";
 import {useApp} from "../../store/app.store";
 import {appConfig} from "../../config/app.config";
-import DatePicker, {DateObject} from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import persian from "react-date-object/calendars/persian"
-import persian_fa from "react-date-object/locales/persian_fa"
-import transition from "react-element-popper/animations/transition"
-import opacity from "react-element-popper/animations/opacity";
+import {DateObject} from "react-multi-date-picker";
 
 // theme
 import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import "react-multi-date-picker/styles/colors/yellow.css"
 import Loading from "../secondary/Loading";
+import FieldComponent from "./FieldComponent";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -30,7 +25,9 @@ interface FormBuilderProps {
     colXL?: number,
     submitButtonLoading?: boolean,
     loading?: boolean,
-    initialValues?: never
+    initialValues?: never,
+    showSubmitButton?: boolean,
+    additionalFields?: never
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -48,10 +45,11 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         colXL = 8,
         submitButtonLoading = false,
         loading = false,
-        initialValues
+        initialValues,
+        showSubmitButton = true,
+        additionalFields
     }
 ) => {
-    const {theme} = useApp();
     const [form] = Form.useForm();
     const {errors, handleSetErrors} = useApp();
     const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
@@ -101,7 +99,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         Object.keys(data).forEach((key) => {
             if (data[key] instanceof DateObject) {
                 data[key] = convertToLatinDigits(data[key].format());
-                console.log(data[key])
             }
         })
 
@@ -160,116 +157,27 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             xl={{span: colXL}}
                             key={index}
                         >
+                            <FieldComponent
+                                label={el.label}
+                                name={el.name}
+                                rules={el.rules}
+                                required={!!el.required}
+                                help={el.errors}
+                                initialValue={el.initialValue}
+                                type={el.type}
+                                select_url={el.select_url}
+                                options={el.options}
+                                placeholder={el.placeholder}
+                                size={size}
+                                form={form}
+                            />
+
                             {
-                                (el.type === 'password') ? (
-                                    <Form.Item
-                                        label={el.label}
-                                        name={el.name}
-                                        rules={el.rules}
-                                        required={!!el.required}
-                                        help={el.errors}
-                                        initialValue={el.initialValue}
-                                    >
-                                        <Input.Password
-                                            placeholder={el.placeholder}
-                                            type={el.type}
-                                            size={size}
-                                        />
-                                    </Form.Item>
-                                ) : el.type === 'text' ? (
-                                    <Form.Item
-                                        label={el.label}
-                                        name={el.name}
-                                        rules={el.rules}
-                                        required={!!el.required}
-                                        help={el.errors}
-                                        initialValue={el.initialValue}
-                                    >
-                                        <Input
-                                            placeholder={el.placeholder}
-                                            type={el.type}
-                                            size={size}
-                                        />
-                                    </Form.Item>
-                                ) : (el.type === 'date' || el.type === 'date_time') ? (
-                                    <Form.Item
-                                        label={el.label}
-                                        name={el.name}
-                                        rules={el.rules}
-                                        required={!!el.required}
-                                        help={el.errors}
-                                        initialValue={el.initialValue}
-                                    >
-                                        <DatePicker
-                                            className={"yellow " + (theme.mode === 'dark' ? "bg-dark" : "")}
-                                            containerClassName={"w-100"}
-                                            inputClass={"w-100"}
-                                            placeholder={el.placeholder}
-                                            locale={persian_fa}
-                                            calendar={persian}
-                                            plugins={[
-                                                (el.type === 'date_time') ? <TimePicker position={"bottom"}/> : <></>
-                                            ]}
-                                            format={(el.type === 'date') ? 'YYYY/MM/DD' : 'YYYY/MM/DD HH:mm:ss'}
-                                            animations={[
-                                                opacity(),
-                                                transition({
-                                                    from: 40,
-                                                    transition: "all 400ms cubic-bezier(0.335, 0.010, 0.030, 1.360)",
-                                                }),
-                                            ]}
-                                            style={{
-                                                color: theme.fadeTextColor,
-                                                backgroundColor: theme.cardBg,
-                                                borderRadius: appConfig.defaultBorderRadius,
-                                                border: `1px solid ${theme.primaryColor}`,
-                                                padding: (size === "large" ? '10px' : ((size === "middle") ? '4px 11px 4px 11px' : '6px')),
-                                                marginTop: '1.2px',
-                                                outline: 'none',
-                                            }}
-                                            calendarPosition={"bottom-left"}
-                                        />
-                                    </Form.Item>
-                                ) : (el.type === 'select' || el.type === 'multi_select') ? (
-                                    <Form.Item
-                                        label={el.label}
-                                        name={el.name}
-                                        rules={el.rules}
-                                        required={!!el.required}
-                                        help={el.errors}
-                                        initialValue={el.initialValue}
-                                    >
-                                        <CustomSelect
-                                            options={el.options}
-                                            placeholder={el.placeholder}
-                                            select_url={el.select_url}
-                                            size={size}
-                                            multiSelect={el.type === 'multi_select'}
-                                            name={el.name}
-                                            form={form}
-                                        />
-                                    </Form.Item>
-                                ) : (
-                                    <Form.Item
-                                        label={el.label}
-                                        name={el.name}
-                                        rules={el.rules}
-                                        required={!!el.required}
-                                        help={el.errors}
-                                        initialValue={el.initialValue}
-                                    >
-                                        <Input
-                                            placeholder={el.placeholder}
-                                            type={el.type}
-                                            size={size}
-                                        />
-                                    </Form.Item>
-                                )
+                                additionalFields
                             }
                         </Col>
                     ))}
                 </Row>
-
 
                 {
                     additionalElement && (
@@ -279,24 +187,28 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                     )
                 }
 
-                <Col xs={{span: 24}} sm={{span: 24}} xl={{span: 24}}>
-                    <Form.Item className={"d-flex align-items-center justify-content-" + submitButtonFlex}>
-                        <Button
-                            className={submitButtonClasses}
-                            size={size}
-                            type="primary"
-                            htmlType="submit"
-                            style={{
-                                size: appConfig.defaultFontSize
-                            }}
-                            disabled={submitButtonLoading}
-                        >
-                            {
-                                submitButtonLoading ? 'درحال ارسال ...' : submitButtonLabel
-                            }
-                        </Button>
-                    </Form.Item>
-                </Col>
+                {
+                    showSubmitButton && (
+                        <Col xs={{span: 24}} sm={{span: 24}} xl={{span: 24}}>
+                            <Form.Item className={"d-flex align-items-center justify-content-" + submitButtonFlex}>
+                                <Button
+                                    className={submitButtonClasses}
+                                    size={size}
+                                    type="primary"
+                                    htmlType="submit"
+                                    style={{
+                                        size: appConfig.defaultFontSize
+                                    }}
+                                    disabled={submitButtonLoading}
+                                >
+                                    {
+                                        submitButtonLoading ? 'درحال ارسال ...' : submitButtonLabel
+                                    }
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    )
+                }
             </Form>
         </>
     )
