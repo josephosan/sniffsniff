@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 import {Outlet} from "react-router-dom";
 import {Drawer, Layout} from "antd";
@@ -13,8 +13,7 @@ export const DefaultLayout: React.FC = () => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
-    const {theme} = useApp();
-    const [phoneSidebarOpen, setPhoneSidebarOpen] = useState<boolean>(false);
+    const {theme, sidebarCollapsed, handleSetSidebarCollapsed} = useApp();
 
 
     return (
@@ -29,7 +28,7 @@ export const DefaultLayout: React.FC = () => {
             {isMobile ? (
                 <Drawer
                     placement="right"
-                    open={phoneSidebarOpen}
+                    open={sidebarCollapsed}
                     closable={false}
                     width={appConfig.sidebarWidth}
                     maskClosable={true}
@@ -37,7 +36,7 @@ export const DefaultLayout: React.FC = () => {
                         opacity: "0",
                     }}
                     keyboard={true}
-                    onClose={() => setPhoneSidebarOpen(false)}
+                    onClose={() => handleSetSidebarCollapsed(false)}
                     style={{
                         backgroundColor: theme.cardBg,
                         borderRadius: theme.defaultBorderRadius,
@@ -86,7 +85,6 @@ export const DefaultLayout: React.FC = () => {
                 >
                     <AppHeader
                         isMobile={isMobile}
-                        sidebarClick={() => setPhoneSidebarOpen(true)}
                     />
                 </Header>
                 <Content

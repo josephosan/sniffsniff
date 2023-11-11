@@ -52,7 +52,7 @@ export const Sidebar: React.FC = () => {
             {
                 filterMode ? (
                     <>
-                        <div className={"d-flex justify-content-between align-items-center mx-2 mt-5 vh-100"}>
+                        <div className={"d-flex justify-content-between align-items-center mx-2 mt-5"}>
                             <div
                                 className="d-flex flex-column w-100 vh-100"
 

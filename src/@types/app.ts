@@ -12,7 +12,10 @@ export interface AppStore {
     handleSetFilterMode: (mode: boolean) => void,
 
     filters: never,
-    handleSetFilters: (value: never) => void
+    handleSetFilters: (value: never) => void,
+
+    sidebarCollapsed: boolean,
+    handleSetSidebarCollapsed: (collapsed: boolean) => void
 }
 
 

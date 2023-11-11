@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ColorPicker} from "antd";
 import CustomSelect from "./CustomSelect";
-import {useApp} from "../../store/app.store";
 
 type SortTypes = 'start_date' | 'end_date' | 'name' | 'explanation';
 
@@ -13,10 +11,7 @@ const Filters: React.FC<FiltersOptions> = (
         filterChanged
     }
 ) => {
-    const { theme } = useApp();
-
     const [order, setOrder] = useState<'ASC' | 'DES' | null>(null);
-    const [color, setColor] = useState<string | null>(theme.primaryColor);
     const [sortType, setSortType] = useState<SortTypes | null>(null);
     const [dataType, setDataType] = useState<string | null>(null);
 
@@ -24,14 +19,12 @@ const Filters: React.FC<FiltersOptions> = (
         if (filterChanged) {
             filterChanged({
                 order,
-                color: (color === theme.primaryColor) ? null : color,
                 sortType,
                 dataType
             });
         }
     }, [
         order,
-        color,
         sortType,
         dataType
     ])
@@ -53,16 +46,6 @@ const Filters: React.FC<FiltersOptions> = (
 
     return (
         <div className="d-flex flex-column h-25 justify-content-between mt-5">
-            <ColorPicker
-                showText={() => <span>رنگ </span>}
-                size={'middle'}
-                allowClear={true}
-                format={'hex'}
-                defaultFormat={'hex'}
-                disabledAlpha={true}
-                value={color}
-                onChange={({hex}) => setColor(() => hex)}
-            />
             <CustomSelect
                 options={selectChooseOptions}
                 placeholder="بر اساس نوع"

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import TimelineService from '../../services/TimelineService';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
-import { appConfig } from '../../config/app.config';
-import { getPersianDateAsText, getRandomColor } from '../../helpers/app.helper';
-import { Button, Divider, Popover, Space, Tag } from 'antd';
+import {appConfig} from '../../config/app.config';
+import {getPersianDateAsText, getRandomColor} from '../../helpers/app.helper';
+import {Button, Divider, Popover, Space, Tag} from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import { useMediaQuery } from 'react-responsive';
+import {useMediaQuery} from 'react-responsive';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
 import CustomSearch from '../../components/primary/CustomSearch';
-import { useNavigate } from 'react-router-dom';
-import { useApp } from '../../store/app.store';
+import {useNavigate} from 'react-router-dom';
+import {useApp} from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
 
 const Timelines: React.FC = () => {
@@ -20,7 +20,7 @@ const Timelines: React.FC = () => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [timelineList, setTimelineList] = useState<never[]>(null);
     const navigate = useNavigate();
-    const { theme, handleSetFilterMode, filterMode } = useApp();
+    const {theme, handleSetFilterMode, filterMode, handleSetSidebarCollapsed} = useApp();
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
@@ -74,6 +74,11 @@ const Timelines: React.FC = () => {
         }
     };
 
+    const handleFilterButtonClick = () => {
+        handleSetFilterMode(!filterMode);
+        handleSetSidebarCollapsed(true);
+    }
+
     return (
         <WrapperScroll reachedBottom={handleReachedBottom}>
             <div className={'row mb-3 mt-2'}>
@@ -83,7 +88,7 @@ const Timelines: React.FC = () => {
                             'd-flex justify-content-between align-items-center'
                         }
                     >
-                        <CustomSearch inputMode={true} />
+                        <CustomSearch inputMode={true}/>
                         <div
                             className={'h-100 me-2'}
                             style={{
@@ -97,9 +102,7 @@ const Timelines: React.FC = () => {
                                     'bi bi-funnel d-flex justify-content-center align-items-center'
                                 }
                                 size={appConfig.defaultIconSize}
-                                iconClicked={() =>
-                                    handleSetFilterMode(!filterMode)
-                                }
+                                iconClicked={handleFilterButtonClick}
                             />
                         </div>
                     </div>
@@ -120,7 +123,7 @@ const Timelines: React.FC = () => {
             </div>
             {pageFirstLoading && (
                 <div className={'w-100'}>
-                    <FormSkeletonLoading fillRow={true} count={10} />
+                    <FormSkeletonLoading fillRow={true} count={10}/>
                 </div>
             )}
             {timelineList ? (
@@ -153,7 +156,7 @@ const Timelines: React.FC = () => {
                                     </div>
                                     <div className="d-flex flex-column ">
                                         {el.description}
-                                        <TextItemWrapper text={el.tags} />
+                                        <TextItemWrapper text={el.tags}/>
                                     </div>
                                     <Space
                                         className={
@@ -163,7 +166,7 @@ const Timelines: React.FC = () => {
                                         <ActionIconWrapper
                                             icon={'bi bi-share'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-calendar-event'}
                                             iconClicked={() =>
@@ -172,11 +175,11 @@ const Timelines: React.FC = () => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-binoculars'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-pencil-square'}
                                             iconClicked={() =>
@@ -185,7 +188,7 @@ const Timelines: React.FC = () => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-trash'}
                                         />
@@ -204,7 +207,7 @@ const Timelines: React.FC = () => {
                                             <Tag color={'green'}>گروه</Tag>
                                         )}
                                     </div>
-                                    <TextItemWrapper text={el.tags} />
+                                    <TextItemWrapper text={el.tags}/>
                                     <TextItemWrapper
                                         text={getPersianDateAsText(
                                             el.startDate,
@@ -232,7 +235,7 @@ const Timelines: React.FC = () => {
                                         <ActionIconWrapper
                                             icon={'bi bi-share'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-calendar-event'}
                                             iconClicked={() =>
@@ -241,11 +244,11 @@ const Timelines: React.FC = () => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-binoculars'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-pencil-square'}
                                             iconClicked={() =>
@@ -254,7 +257,7 @@ const Timelines: React.FC = () => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-trash'}
                                         />
@@ -265,7 +268,7 @@ const Timelines: React.FC = () => {
                     );
                 })
             ) : (
-                <NoData />
+                <NoData/>
             )}
             {fetchMoreLoading && (
                 <div
@@ -273,7 +276,7 @@ const Timelines: React.FC = () => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading />
+                    <Loading/>
                 </div>
             )}
         </WrapperScroll>
