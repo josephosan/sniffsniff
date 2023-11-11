@@ -1,0 +1,80 @@
+:root {
+  --rmdp-primary-theme-date-picker: #F0B86E;
+  --rmdp-secondary-theme-date-picker: #F0B86E;
+  --rmdp-shadow-theme-date-picker: #F0B86E;
+  --rmdp-today-theme-date-picker: #F0B86E;
+  --rmdp-hover-theme-date-picker: #F0B86E;
+  --rmdp-deselect-theme-date-picker: #F0B86E;
+}
+
+.theme-date-picker .rmdp-wrapper {
+  border: 1px solid var(--rmdp-secondary-theme-date-picker);
+  box-shadow: 0 0 5px var(--rmdp-secondary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-panel-body li {
+  background-color: var(--rmdp-primary-theme-date-picker);
+  box-shadow: 0 0 2px var(--rmdp-secondary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-week-day {
+  color: var(--rmdp-primary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-day.rmdp-deactive {
+  color: var(--rmdp-secondary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-range {
+  background-color: var(--rmdp-primary-theme-date-picker);
+  box-shadow: 0 0 3px var(--rmdp-shadow-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-arrow {
+  border: solid var(--rmdp-primary-theme-date-picker);
+  border-width: 0 2px 2px 0;
+}
+
+.theme-date-picker .rmdp-arrow-container:hover {
+  background-color: var(--rmdp-primary-theme-date-picker);
+  box-shadow: 0 0 3px var(--rmdp-secondary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-panel-body::-webkit-scrollbar-thumb {
+  background: var(--rmdp-primary-theme-date-picker) !important;
+}
+
+.theme-date-picker .rmdp-day.rmdp-today span {
+  background-color: var(--rmdp-today-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-rtl .rmdp-panel {
+  border-left: unset;
+  border-right: 1px solid var(--rmdp-secondary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-day.rmdp-selected span:not(.highlight) {
+  background-color: var(--rmdp-primary-theme-date-picker);
+  box-shadow: 0 0 3px var(--rmdp-shadow-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-day:not(.rmdp-day-hidden) span:hover {
+  background-color: var(--rmdp-hover-theme-date-picker) !important;
+}
+
+.theme-date-picker .b-deselect {
+  color: var(--rmdp-deselect-theme-date-picker);
+  background-color: white;
+}
+
+.theme-date-picker .rmdp-action-button {
+  color: var(--rmdp-primary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-button:not(.rmdp-action-button) {
+  background-color: var(--rmdp-primary-theme-date-picker);
+}
+
+.theme-date-picker .rmdp-button:not(.rmdp-action-button):hover {
+  background-color: var(--rmdp-deselect-theme-date-picker);
+}
