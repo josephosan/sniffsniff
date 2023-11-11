@@ -25,7 +25,7 @@ const WrapperData: React.FC<DataProps> = (
         <>
             {(isMobile) ? (
                 <div
-                    className="shadow-sm mb-4 px-5 py-3 rounded align-items-center"
+                    className="shadow-sm mb-4 px-4 py-3 rounded align-items-center"
                     style={{
                         backgroundColor: theme.cardBgLighter,
                         color: theme.defaultTextColor,

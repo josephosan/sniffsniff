@@ -142,11 +142,6 @@ const Timelines: React.FC = () => {
                                                     el.startDate,
                                                 )}
                                             />{' '}
-                                            <TextItemWrapper
-                                                text={getPersianDateAsText(
-                                                    el.endDate,
-                                                )}
-                                            />
                                         </div>
                                         <div>
                                             {el.type === 'PRIVATE' ? (
@@ -157,29 +152,12 @@ const Timelines: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="d-flex flex-column ">
-                                        <Popover content={el.description}>
-                                            <span
-                                                style={{
-                                                    fontSize:
-                                                        appConfig.smallFontSize +
-                                                        'px',
-                                                }}
-                                            >
-                                                {el.description?.split(' ')[0]}{' '}
-                                                &nbsp;
-                                                {
-                                                    el.description?.split(
-                                                        ' ',
-                                                    )[1]
-                                                }{' '}
-                                                &nbsp; ...
-                                            </span>
-                                        </Popover>
+                                        {el.description}
                                         <TextItemWrapper text={el.tags} />
                                     </div>
                                     <Space
                                         className={
-                                            'd-flex align-items-center justify-content-center'
+                                            'd-flex align-items-center justify-content-between'
                                         }
                                     >
                                         <ActionIconWrapper
