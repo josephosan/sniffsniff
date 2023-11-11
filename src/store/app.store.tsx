@@ -40,6 +40,11 @@ export const AppProvider: React.FC = ({ children }) => {
         setFilters(() => value);
     }
 
+    const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
+    const handleSetSidebarCollapsed = (collapsed: boolean) => {
+        setSidebarCollapsed(() => collapsed);
+    }
+
     const appStore: AppStore = {
         // theme
         theme,
@@ -55,7 +60,11 @@ export const AppProvider: React.FC = ({ children }) => {
 
         // filters data
         filters,
-        handleSetFilters
+        handleSetFilters,
+
+        // sidebar
+        sidebarCollapsed,
+        handleSetSidebarCollapsed
     }
 
     return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>

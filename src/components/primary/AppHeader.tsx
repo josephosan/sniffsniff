@@ -9,17 +9,15 @@ import {useLocation} from "react-router-dom";
 
 interface AppHeaderProps {
     isMobile: boolean;
-    sidebarClick: () => void;
 }
 
 export const AppHeader: React.FC<AppHeaderProps> = (
     {
         isMobile,
-        sidebarClick,
     }
 ) => {
     const location = useLocation();
-    const {theme, setThemeMode} = useApp();
+    const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
     const [breadcrumpItems, setBreadcrumpItems] = useState<never>(null);
 
@@ -38,7 +36,7 @@ export const AppHeader: React.FC<AppHeaderProps> = (
         >
             {
                 isMobile ? (
-                    <Space onClick={sidebarClick}>
+                    <Space onClick={() => handleSetSidebarCollapsed(true)}>
                         <TopBarIconWrapper iconClasses={"bi bi-list"}/>
                     </Space>
                 ) : (
