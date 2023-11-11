@@ -1,0 +1,44 @@
+.theme-date-picker-dark.rmdp-wrapper,
+.theme-date-picker-dark .rmdp-month-picker,
+.theme-date-picker-dark .rmdp-year-picker,
+.theme-date-picker-dark .rmdp-time-picker div input,
+.rmdp-container .theme-date-picker-dark.ep-arrow::after {
+  background-color: #2d3346;
+  color: #c4c7ca;
+}
+
+.theme-date-picker-dark .rmdp-day:not(.rmdp-deactive),
+.theme-date-picker-dark .rmdp-time-picker div .rmdp-am,
+.theme-date-picker-dark .rmdp-header-values,
+.theme-date-picker-dark .rmdp-panel-header {
+  color: #c4c7ca;
+}
+
+.theme-date-picker-dark .rmdp-day.rmdp-range {
+  color: white;
+}
+
+.theme-date-picker-dark .rmdp-panel-body li {
+  color: #f5f5f5;
+}
+
+.theme-date-picker-dark .rmdp-day.rmdp-deactive,
+.theme-date-picker-dark .rmdp-day.rmdp-disabled {
+  color: #87898b;
+}
+
+.rmdp-container .theme-date-picker-dark.ep-arrow[direction="top"] {
+  border-bottom: 1px solid #2d3346;
+}
+
+.rmdp-container .theme-date-picker-dark.ep-arrow[direction="left"] {
+  border-right: 1px solid #2d3346;
+}
+
+.rmdp-container .theme-date-picker-dark.ep-arrow[direction="right"] {
+  border-left: 1px solid #2d3346;
+}
+
+.rmdp-container .theme-date-picker-dark.ep-arrow[direction="bottom"] {
+  border-top: 1px solid #2d3346;
+}
