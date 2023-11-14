@@ -79,6 +79,10 @@ const Timelines: React.FC = () => {
         handleSetSidebarCollapsed(true);
     }
 
+    const handleSearch = (value) => {
+        console.log(value);
+    }
+
     return (
         <WrapperScroll reachedBottom={handleReachedBottom}>
             <div className={'row mb-3 mt-2'}>
@@ -88,7 +92,10 @@ const Timelines: React.FC = () => {
                             'd-flex justify-content-between align-items-center'
                         }
                     >
-                        <CustomSearch inputMode={true}/>
+                        <CustomSearch
+                            inputMode={true}
+                            onSearch={handleSearch}
+                        />
                         <div
                             className={'h-100 me-2'}
                             style={{
@@ -129,7 +136,7 @@ const Timelines: React.FC = () => {
             {timelineList ? (
                 timelineList.map((el) => {
                     return (
-                        <WrapperData key={el.id} color={el.color}>
+                        <WrapperData key={el.id} color={el.color ? el.color : 'red'}>
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-5">
                                     <div className="d-flex justify-content-between align-items-center ">
