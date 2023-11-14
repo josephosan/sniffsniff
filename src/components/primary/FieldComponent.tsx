@@ -1,5 +1,5 @@
 import React from "react";
-import {Form, Input} from "antd";
+import {ColorPicker, Form, Input} from "antd";
 import DatePicker from "react-multi-date-picker";
 import persian_fa from "react-date-object/locales/persian_fa";
 import persian from "react-date-object/calendars/persian";
@@ -29,7 +29,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
         select_url
     }
 ) => {
-    const { theme } = useApp();
+    const {theme} = useApp();
 
     return (
         <>
@@ -120,6 +120,24 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             multiSelect={type === 'multi_select'}
                             name={name}
                             form={form}
+                        />
+                    </Form.Item>
+                ) : (type === 'color') ? (
+                    <Form.Item
+                        label={label}
+                        name={name}
+                        rules={rules}
+                        required={!!required}
+                        help={errors}
+                        initialValue={initialValue}
+                    >
+                        <ColorPicker
+                            size={size}
+                            format={"hex"}
+                            defaultFormat={"hex"}
+                            trigger={"click"}
+                            disabledAlpha={true}
+                            allowClear={false}
                         />
                     </Form.Item>
                 ) : (

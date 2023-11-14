@@ -10,6 +10,7 @@ import "react-multi-date-picker/styles/backgrounds/bg-dark.css";
 import "react-multi-date-picker/styles/colors/yellow.css"
 import Loading from "../secondary/Loading";
 import FieldComponent from "./FieldComponent";
+import {hsvToHex} from "../../helpers/app.helper";
 
 interface FormBuilderProps {
     onFinish?: (data: never) => void,
@@ -95,12 +96,18 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const handleSubmit = (data) => {
         handleSetErrors(null);
         handleClearElementErrors();
+        console.log(data);
 
+        if (data['color']) data['color'] = hsvToHex(data['color']['metaColor']['originalInput']);
+
+        // for changing every date with Persian digits
         Object.keys(data).forEach((key) => {
             if (data[key] instanceof DateObject) {
                 data[key] = convertToLatinDigits(data[key].format());
             }
-        })
+        });
+
+        console.log(data);
 
         onFinish(data);
     }
