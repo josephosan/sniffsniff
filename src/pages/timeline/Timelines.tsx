@@ -5,7 +5,7 @@ import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading'
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
 import {appConfig} from '../../config/app.config';
-import {getPersianDateAsText, getRandomColor} from '../../helpers/app.helper';
+import {getPersianDateAsText} from '../../helpers/app.helper';
 import {Button, Divider, Popover, Space, Tag} from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
 import {useMediaQuery} from 'react-responsive';
@@ -129,7 +129,7 @@ const Timelines: React.FC = () => {
             {timelineList ? (
                 timelineList.map((el) => {
                     return (
-                        <WrapperData key={el.id} color={getRandomColor()}>
+                        <WrapperData key={el.id} color={el.color}>
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-5">
                                     <div className="d-flex justify-content-between align-items-center ">

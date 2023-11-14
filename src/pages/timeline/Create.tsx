@@ -76,15 +76,23 @@ const CreateTimeLine: React.FC = () => {
             placeholder: '...',
             rules: [{required: true, message: 'لطفا یک توضیح درباره این جدول زمانی بنویسید!'}],
         },
+        {
+            type: 'color',
+            name: 'color',
+            label: 'رنگ',
+            required: true,
+            placeholder: '',
+            rules: [{required: true, message: 'انتخاب رنگ اجباری است!'}],
+        },
     ];
 
     const handleFormSubmit = async (formData) => {
-        setLoading( () => true);
+        setLoading(() => true);
         try {
             const res = await TimelineService.createTimeline(formData);
             notifyStore.showAlert('success', 'موفق!', 'جدول زمانی با موقفیت ایجاد شد!')
             navigate(`/timeline/edit/${res.data.data.id}`);
-        } catch(err) {
+        } catch (err) {
             console.log(err);
         } finally {
             setLoading(() => false);

@@ -83,6 +83,14 @@ const EditTimeLine: React.FC = () => {
             placeholder: '...',
             rules: [{required: true, message: 'لطفا یک توضیح درباره این جدول زمانی بنویسید!'}],
         },
+        {
+            type: 'color',
+            name: 'color',
+            label: 'رنگ',
+            required: true,
+            placeholder: '',
+            rules: [{required: true, message: 'انتخاب رنگ اجباری است!'}],
+        },
     ];
 
     useEffect(() => {

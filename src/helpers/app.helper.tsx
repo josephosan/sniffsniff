@@ -73,4 +73,39 @@ function toEnDigit(s) {
     )
 }
 
-export {getPageNameByPath, handleGetBreadcrump, getRandomColor, getPersianDateAsText};
+function hsvToHex(original) {
+    let {h, s, v} = original;
+    // Ensure h is between 0 and 360, and s and v are between 0 and 1
+    h = Math.max(0, Math.min(360, h));
+    s = Math.max(0, Math.min(1, s));
+    v = Math.max(0, Math.min(1, v));
+
+    // Convert HSV to RGB
+    let c = v * s;
+    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
+    let m = v - c;
+
+    let r, g, b;
+    if (h >= 0 && h < 60) {
+        [r, g, b] = [c, x, 0];
+    } else if (h >= 60 && h < 120) {
+        [r, g, b] = [x, c, 0];
+    } else if (h >= 120 && h < 180) {
+        [r, g, b] = [0, c, x];
+    } else if (h >= 180 && h < 240) {
+        [r, g, b] = [0, x, c];
+    } else if (h >= 240 && h < 300) {
+        [r, g, b] = [x, 0, c];
+    } else {
+        [r, g, b] = [c, 0, x];
+    }
+
+    // Convert RGB to HEX
+    r = Math.round((r + m) * 255);
+    g = Math.round((g + m) * 255);
+    b = Math.round((b + m) * 255);
+
+    return `#${(1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1)}`;
+}
+
+export {getPageNameByPath, handleGetBreadcrump, getRandomColor, getPersianDateAsText, hsvToHex};
