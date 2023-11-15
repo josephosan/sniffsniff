@@ -70,7 +70,7 @@ const EditTimeLine: React.FC = () => {
             rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
         },
         {
-            type: 'date',
+            type: 'date_time',
             name: 'endDate',
             label: 'تاریخ پایان',
             placeholder: 'انتخاب تاریخ پایان',
@@ -116,7 +116,7 @@ const EditTimeLine: React.FC = () => {
         setEditSubmitLoading(() => true);
         try {
             const response = await TimelineService.editTimelineById(id, formData);
-            if (response.status === 200) notifyStore.showAlert("success", "موفق!", "با موفقیت ویرایش شد.");
+            notifyStore.showAlert("success", "موفق!", "با موفقیت ویرایش شد.");
         } catch (e) {
             console.log(e);
         } finally {

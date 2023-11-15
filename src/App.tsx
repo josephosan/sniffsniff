@@ -12,7 +12,7 @@ import {getToken} from "./helpers/jwt.helper";
 
 
 function App() {
-    const { theme, setThemeMode } = useApp();
+    const {theme, setThemeMode} = useApp();
 
     useEffect(() => {
         const themeConfig = getToken('themeConfig');
@@ -109,7 +109,7 @@ function App() {
                 hoverBorderColor: theme.primaryColor,
                 colorBorder: theme.primaryColor,
                 colorBgElevated: theme.cardBg
-            }
+            },
         },
     };
 

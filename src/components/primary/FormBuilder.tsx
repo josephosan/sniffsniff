@@ -96,7 +96,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const handleSubmit = (data) => {
         handleSetErrors(null);
         handleClearElementErrors();
-        console.log(data);
 
         if (data['color']) data['color'] = hsvToHex(data['color']['metaColor']['originalInput']);
 
@@ -106,8 +105,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 data[key] = convertToLatinDigits(data[key].format());
             }
         });
-
-        console.log(data);
 
         onFinish(data);
     }
