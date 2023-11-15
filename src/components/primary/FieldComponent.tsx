@@ -10,6 +10,8 @@ import {appConfig} from "../../config/app.config";
 import CustomSelect from "./CustomSelect";
 import {FormBuilderField} from "../../@types/app";
 import {useApp} from "../../store/app.store";
+import "../../styles/components/secondary/date-picker-color.scss";
+import "../../styles/components/secondary/date-picker-background.scss";
 
 const FieldComponent: React.FC<FormBuilderField> = (
     {
@@ -72,7 +74,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                         initialValue={initialValue}
                     >
                         <DatePicker
-                            className={"yellow " + (theme.mode === 'dark' ? "bg-dark" : "")}
+                            className={"theme-date-picker " + (theme.mode === 'dark' ? "theme-date-picker-dark" : "")}
                             containerClassName={"w-100"}
                             inputClass={"w-100"}
                             placeholder={placeholder}
