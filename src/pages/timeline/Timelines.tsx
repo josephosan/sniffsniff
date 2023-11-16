@@ -21,7 +21,7 @@ const Timelines: React.FC = () => {
         const [timelineList, setTimelineList] = useState<never[]>(null);
         const [page, setPage] = useState<number>(null);
         const navigate = useNavigate();
-        const {theme, handleSetFilterMode, filterMode, handleSetSidebarCollapsed} = useApp();
+        const {theme, handleSetFilterMode, filterMode, handleSetSidebarCollapsed, filters} = useApp();
         const isMobile = useMediaQuery({
             query: `(max-width: ${appConfig.appBreakPoint}px)`,
         });
@@ -34,16 +34,26 @@ const Timelines: React.FC = () => {
             fetchData();
         }, []);
 
+        useEffect(() => {
+            async function fetchData() {
+                await handleFetchMore();
+            }
+
+            setTimelineList(() => []);
+            fetchData();
+        }, [filters]);
+
         const handleFetchMore = async (page: number = 1, order: string = 'ASC', s: string = '') => {
             if (timelineList) setFetchMoreLoading(() => true);
             else setPageFirstLoading(() => true);
 
-            const params = {
+            let params = {
                 limit: appConfig.paginationLimit,
                 order: order,
                 page: page,
             }
             if (s !== '') params['s'] = s;
+            if (filters) params = {...params, ...filters};
 
             try {
                 const res = await TimelineService.paginateAll({params});
@@ -134,9 +144,9 @@ const Timelines: React.FC = () => {
                     </div>
                 )}
                 {timelineList ? (
-                    timelineList.map((el) => {
+                    timelineList.map((el, index) => {
                         return (
-                            <WrapperData key={el.id} color={el.color}>
+                            <WrapperData key={index} color={el.color}>
                                 {isMobile ? (
                                     <div className="d-flex flex-column gap-5">
                                         <div className="d-flex justify-content-between align-items-center ">

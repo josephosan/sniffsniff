@@ -50,7 +50,7 @@ export interface FormBuilderField {
     required?: boolean,
     errors?: string[],
     initialValue?: string,
-    color?: string
+    color?: string,
 }
 
 export interface SelectOption {

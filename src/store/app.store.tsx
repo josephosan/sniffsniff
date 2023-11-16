@@ -32,6 +32,7 @@ export const AppProvider: React.FC = ({ children }) => {
 
     const [filterMode, setFilterMode] = useState<boolean>(false);
     const handleSetFilterMode = (mode: boolean) => {
+        if (!mode) handleSetFilters(null);
         setFilterMode(() => mode);
     }
 
