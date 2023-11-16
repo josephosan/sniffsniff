@@ -1,5 +1,5 @@
 import { styled, keyframes } from 'styled-components';
-import { ReactElement } from 'react';
+import React, { ReactElement, memo } from 'react';
 
 interface GlowProps {
     children: ReactElement;
@@ -10,7 +10,7 @@ interface GlowProps {
     value2?: string;
 }
 
-const WrapperGlow: React.FC<GlowProps> = ({
+const WrapperGlow: React.FC<GlowProps> = memo(({
     children,
     time = '3s',
     key = 'filter',
@@ -33,6 +33,6 @@ const WrapperGlow: React.FC<GlowProps> = ({
     `;
 
     return <Bar>{children}</Bar>;
-};
+});
 
 export default WrapperGlow;
