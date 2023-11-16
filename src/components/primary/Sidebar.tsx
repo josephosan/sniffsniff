@@ -14,7 +14,7 @@ interface SidebarItem {
 }
 
 export const Sidebar: React.FC = () => {
-    const {theme, filterMode, handleSetFilterMode, handleSetFilters} = useApp();
+    const {theme, filterMode, handleSetFilterMode} = useApp();
     const sideBarItems: SidebarItem[] = [
         {
             name: "داشبورد",
@@ -37,10 +37,6 @@ export const Sidebar: React.FC = () => {
             icon: "bi bi-app-indicator"
         },
     ]
-
-    const handleFiltersChanged = (filters) => {
-        handleSetFilters(filters);
-    }
 
     return (
         <div
@@ -77,9 +73,7 @@ export const Sidebar: React.FC = () => {
                                         iconClicked={() => handleSetFilterMode(false)}
                                     />
                                 </div>
-                                <Filters
-                                    filterChanged={handleFiltersChanged}
-                                />
+                                <Filters />
                             </div>
                         </div>
                     </>

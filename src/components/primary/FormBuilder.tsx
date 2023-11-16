@@ -28,7 +28,8 @@ interface FormBuilderProps {
     loading?: boolean,
     initialValues?: never,
     showSubmitButton?: boolean,
-    additionalFields?: never
+    additionalFields?: never,
+    valuesChange?: (data: never) => never
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -48,7 +49,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         loading = false,
         initialValues,
         showSubmitButton = true,
-        additionalFields
+        additionalFields,
+        valuesChange
     }
 ) => {
     const [form] = Form.useForm();
@@ -109,6 +111,18 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         onFinish(data);
     }
 
+    const handleValuesChange = (data) => {
+        if (valuesChange) {
+            // for changing every date with Persian digits
+            Object.keys(data).forEach((key) => {
+                if (data[key] instanceof DateObject) {
+                    data[key] = convertToLatinDigits(data[key].format());
+                }
+            });
+            valuesChange(data);
+        }
+    }
+
     return (
         <>
             <Form
@@ -122,6 +136,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 layout={'vertical'}
                 form={form}
                 className={"position-relative"}
+                onValuesChange={handleValuesChange}
             >
                 {
                     loading && (

@@ -26,7 +26,8 @@ const FieldComponent: React.FC<FormBuilderField> = (
         size,
         form,
         options,
-        select_url
+        select_url,
+        value
     }
 ) => {
     const {theme} = useApp();
