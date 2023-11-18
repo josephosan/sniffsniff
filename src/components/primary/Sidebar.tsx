@@ -5,7 +5,6 @@ import {useApp} from "../../store/app.store";
 import SidebarItem from "../secondary/SidebarItem";
 import ActionIconWrapper from "../secondary/ActionIconWrapper";
 import Filters from "./Filters";
-import WrapperGlow from "../secondary/WrapperGlow";
 
 
 interface SidebarItem {

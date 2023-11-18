@@ -1,34 +1,23 @@
-import React, {ReactNode} from 'react';
-import {useMediaQuery} from 'react-responsive';
-import {appConfig} from '../../config/app.config';
-import {useApp} from '../../store/app.store';
-import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import TextItemWrapper from '../../components/tiny/TextItemWrapper';
-import WrapperData from '../../components/secondary/WrapperData';
-import TextItemWrapper from '../../components/tiny/TextItemWrapper';
+import React from "react";
+import WrapperData from "./WrapperData";
+import WrapperUserImage from "../tiny/WrapperUserImage";
 
-interface UserDataProps {
-    children: ReactNode;
-    image?: string;
-    title?: string;
-    desc?: string;
+interface WrapperUserDataProps {
+    url: string
 }
 
-const WrapperUserData: React.FC<UserDataProps> = (
+const WrapperUserData: React.FC<WrapperUserDataProps> = (
     {
-        children,
-        image,
-        title,
-        desc
+        url
     }
 ) => {
-    const isMobile = useMediaQuery({
-        query: `(max-width: ${appConfig.appBreakPoint}px)`,
-    });
-    const { theme } = useApp();
-     return (
-        <>
-         
-        </>
+    return (
+        <WrapperData>
+            <WrapperUserImage
+                url={url}
+            />
+        </WrapperData>
     );
-};
+}
+
+export default WrapperUserData;
