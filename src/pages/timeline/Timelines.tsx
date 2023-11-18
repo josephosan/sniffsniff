@@ -138,31 +138,106 @@ const Timelines: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-                {pageFirstLoading && (
-                    <div className={'w-100'}>
-                        <FormSkeletonLoading fillRow={true} count={10}/>
-                    </div>
-                )}
-                {timelineList ? (
-                    timelineList.map((el, index) => {
-                        return (
-                            <WrapperData key={index} color={el.color}>
-                                {isMobile ? (
-                                    <div className="d-flex flex-column gap-5">
-                                        <div className="d-flex justify-content-between align-items-center ">
-                                            <div className="d-flex flex-column">
-                                                <TextItemWrapper
-                                                    fontSize={
-                                                        appConfig.defaultFontSize
-                                                    }
-                                                    text={el.name}
-                                                />
-                                                <TextItemWrapper
-                                                    text={getPersianDateAsText(
-                                                        el.startDate,
+                {
+                    pageFirstLoading && (
+                        <div className={'w-100'}>
+                            <FormSkeletonLoading fillRow={true} count={10}/>
+                        </div>
+                    )
+                }
+                {
+                    (timelineList && timelineList.length > 0) || fetchMoreLoading ? (
+                        timelineList.map((el, index) => {
+                            return (
+                                <WrapperData key={index} color={el.color}>
+                                    {isMobile ? (
+                                        <div className="d-flex flex-column gap-5">
+                                            <div className="d-flex justify-content-between align-items-center ">
+                                                <div className="d-flex flex-column">
+                                                    <TextItemWrapper
+                                                        fontSize={
+                                                            appConfig.defaultFontSize
+                                                        }
+                                                        text={el.name}
+                                                    />
+                                                    <TextItemWrapper
+                                                        text={getPersianDateAsText(
+                                                            el.startDate,
+                                                        )}
+                                                    />{' '}
+                                                </div>
+                                                <div>
+                                                    {el.type === 'PRIVATE' ? (
+                                                        <Tag color={'red'}>خصوصی</Tag>
+                                                    ) : (
+                                                        <Tag color={'green'}>گروه</Tag>
                                                     )}
-                                                />{' '}
+                                                </div>
                                             </div>
+                                            <div className="d-flex flex-column ">
+                                                {el.description}
+                                                <TextItemWrapper text={el.tags}/>
+                                            </div>
+                                            <Space
+                                                className={
+                                                    'd-flex align-items-center justify-content-between'
+                                                }
+                                            >
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-share'}
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-calendar-event'}
+                                                    iconClicked={() =>
+                                                        navigate(
+                                                            `/timeline/${el.id}/event`,
+                                                        )
+                                                    }
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-binoculars'}
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-pencil-square'}
+                                                    iconClicked={() =>
+                                                        navigate(
+                                                            `/timeline/edit/${el.id}`,
+                                                        )
+                                                    }
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <Popconfirm
+                                                    title={`حذف ${el.name}`}
+                                                    description={"آیا از حذف اطمینان دارید؟"}
+                                                    onConfirm={() => handleTimelineDelete(el)}
+                                                    okText={"تایید"}
+                                                    placement={"right"}
+                                                    showCancel={false}
+                                                >
+                                                    <Button
+                                                        style={{
+                                                            border: "none",
+                                                            backgroundColor: "inherit"
+                                                        }}
+                                                        className={"p-0"}
+                                                        key={el.id}
+                                                    >
+                                                        <ActionIconWrapper
+                                                            icon={'bi bi-trash'}
+                                                        />
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Space>
+                                        </div>
+                                    ) : (
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <TextItemWrapper
+                                                fontSize={appConfig.defaultFontSize}
+                                                text={el.name}
+                                            />
                                             <div>
                                                 {el.type === 'PRIVATE' ? (
                                                     <Tag color={'red'}>خصوصی</Tag>
@@ -170,89 +245,17 @@ const Timelines: React.FC = () => {
                                                     <Tag color={'green'}>گروه</Tag>
                                                 )}
                                             </div>
-                                        </div>
-                                        <div className="d-flex flex-column ">
-                                            {el.description}
                                             <TextItemWrapper text={el.tags}/>
-                                        </div>
-                                        <Space
-                                            className={
-                                                'd-flex align-items-center justify-content-between'
-                                            }
-                                        >
-                                            <ActionIconWrapper
-                                                icon={'bi bi-share'}
+                                            <TextItemWrapper
+                                                text={getPersianDateAsText(
+                                                    el.startDate,
+                                                )}
                                             />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-calendar-event'}
-                                                iconClicked={() =>
-                                                    navigate(
-                                                        `/timeline/${el.id}/event`,
-                                                    )
-                                                }
+                                            <TextItemWrapper
+                                                text={getPersianDateAsText(el.endDate)}
                                             />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-binoculars'}
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-pencil-square'}
-                                                iconClicked={() =>
-                                                    navigate(
-                                                        `/timeline/edit/${el.id}`,
-                                                    )
-                                                }
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <Popconfirm
-                                                title={`حذف ${el.name}`}
-                                                description={"آیا از حذف اطمینان دارید؟"}
-                                                onConfirm={() => handleTimelineDelete(el)}
-                                                okText={"تایید"}
-                                                placement={"right"}
-                                                showCancel={false}
-                                            >
-                                                <Button
-                                                    style={{
-                                                        border: "none",
-                                                        backgroundColor: "inherit"
-                                                    }}
-                                                    className={"p-0"}
-                                                    key={el.id}
-                                                >
-                                                    <ActionIconWrapper
-                                                        icon={'bi bi-trash'}
-                                                    />
-                                                </Button>
-                                            </Popconfirm>
-                                        </Space>
-                                    </div>
-                                ) : (
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <TextItemWrapper
-                                            fontSize={appConfig.defaultFontSize}
-                                            text={el.name}
-                                        />
-                                        <div>
-                                            {el.type === 'PRIVATE' ? (
-                                                <Tag color={'red'}>خصوصی</Tag>
-                                            ) : (
-                                                <Tag color={'green'}>گروه</Tag>
-                                            )}
-                                        </div>
-                                        <TextItemWrapper text={el.tags}/>
-                                        <TextItemWrapper
-                                            text={getPersianDateAsText(
-                                                el.startDate,
-                                            )}
-                                        />
-                                        <TextItemWrapper
-                                            text={getPersianDateAsText(el.endDate)}
-                                        />
 
-                                        <Popover content={el.description}>
+                                            <Popover content={el.description}>
                                         <span
                                             style={{
                                                 fontSize:
@@ -265,73 +268,76 @@ const Timelines: React.FC = () => {
                                             {el.description?.split(' ')[1]}{' '}
                                             &nbsp; ...
                                         </span>
-                                        </Popover>
-                                        <Space className={'mt-1 float-left'}>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-share'}
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-calendar-event'}
-                                                iconClicked={() =>
-                                                    navigate(
-                                                        `/timeline/${el.id}/event`,
-                                                    )
-                                                }
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-binoculars'}
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <ActionIconWrapper
-                                                icon={'bi bi-pencil-square'}
-                                                iconClicked={() =>
-                                                    navigate(
-                                                        `/timeline/edit/${el.id}`,
-                                                    )
-                                                }
-                                            />
-                                            <Divider type={'vertical'}/>
-                                            <Popconfirm
-                                                title={`حذف ${el.name}`}
-                                                description={"آیا از حذف اطمینان دارید؟"}
-                                                onConfirm={() => handleTimelineDelete(el)}
-                                                okText={"تایید"}
-                                                showCancel={false}
-                                                placement={"right"}
-                                            >
-                                                <Button
-                                                    style={{
-                                                        border: "none",
-                                                        backgroundColor: "inherit"
-                                                    }}
-                                                    className={"p-0"}
-                                                    key={el.id}
+                                            </Popover>
+                                            <Space className={'mt-1 float-left'}>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-share'}
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-calendar-event'}
+                                                    iconClicked={() =>
+                                                        navigate(
+                                                            `/timeline/${el.id}/event`,
+                                                        )
+                                                    }
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-binoculars'}
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <ActionIconWrapper
+                                                    icon={'bi bi-pencil-square'}
+                                                    iconClicked={() =>
+                                                        navigate(
+                                                            `/timeline/edit/${el.id}`,
+                                                        )
+                                                    }
+                                                />
+                                                <Divider type={'vertical'}/>
+                                                <Popconfirm
+                                                    title={`حذف ${el.name}`}
+                                                    description={"آیا از حذف اطمینان دارید؟"}
+                                                    onConfirm={() => handleTimelineDelete(el)}
+                                                    okText={"تایید"}
+                                                    showCancel={false}
+                                                    placement={"right"}
                                                 >
-                                                    <ActionIconWrapper
-                                                        icon={'bi bi-trash'}
-                                                    />
-                                                </Button>
-                                            </Popconfirm>
-                                        </Space>
-                                    </div>
-                                )}
-                            </WrapperData>
-                        );
-                    })
-                ) : (
-                    <NoData/>
-                )}
-                {fetchMoreLoading && (
-                    <div
-                        className={
-                            'w-100 d-flex justify-content-center align-items-center'
-                        }
-                    >
-                        <Loading/>
-                    </div>
-                )}
+                                                    <Button
+                                                        style={{
+                                                            border: "none",
+                                                            backgroundColor: "inherit"
+                                                        }}
+                                                        className={"p-0"}
+                                                        key={el.id}
+                                                    >
+                                                        <ActionIconWrapper
+                                                            icon={'bi bi-trash'}
+                                                        />
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Space>
+                                        </div>
+                                    )}
+                                </WrapperData>
+                            );
+                        })
+                    ) : (
+                        <NoData/>
+                    )
+                }
+                {
+                    fetchMoreLoading && (
+                        <div
+                            className={
+                                'w-100 d-flex justify-content-center align-items-center'
+                            }
+                        >
+                            <Loading/>
+                        </div>
+                    )
+                }
             </WrapperScroll>
         );
     }
