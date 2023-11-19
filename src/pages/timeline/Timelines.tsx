@@ -43,7 +43,7 @@ const Timelines: React.FC = () => {
             fetchData();
         }, [filters]);
 
-        const handleFetchMore = async (page: number = 1, order: string = 'ASC', s: string = '') => {
+        const handleFetchMore = async (page: number = 1, order: string = 'DESC', s: string = '') => {
             if (timelineList) setFetchMoreLoading(() => true);
             else setPageFirstLoading(() => true);
 

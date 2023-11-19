@@ -40,9 +40,7 @@ const CreateTimeLine: React.FC = () => {
             type: 'multi_select',
             name: 'tags',
             label: 'تگ ها',
-            required: true,
             placeholder: 'انتخاب تگ',
-            rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
             options: [
                 {
                     label: 'گروه',
@@ -69,20 +67,21 @@ const CreateTimeLine: React.FC = () => {
             placeholder: 'انتخاب تاریخ پایان',
         },
         {
-            type: 'text',
+            type: 'textarea',
             name: 'description',
             label: 'توضیحات',
             required: true,
             placeholder: '...',
             rules: [{required: true, message: 'لطفا یک توضیح درباره این جدول زمانی بنویسید!'}],
+            rows: 10,
+            maxLength: 3,
+            no_resize: true
         },
         {
             type: 'color',
             name: 'color',
             label: 'رنگ',
-            required: true,
             placeholder: '',
-            rules: [{required: true, message: 'انتخاب رنگ اجباری است!'}],
         },
     ];
 

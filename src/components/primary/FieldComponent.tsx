@@ -27,7 +27,9 @@ const FieldComponent: React.FC<FormBuilderField> = (
         form,
         options,
         select_url,
-        value
+        rows,
+        maxLength,
+        no_resize
     }
 ) => {
     const {theme} = useApp();
@@ -50,7 +52,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             size={size}
                         />
                     </Form.Item>
-                ) : type === 'text' ? (
+                ) : (type === 'text') ? (
                     <Form.Item
                         label={label}
                         name={name}
@@ -63,6 +65,24 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             placeholder={placeholder}
                             type={type}
                             size={size}
+                        />
+                    </Form.Item>
+                ) : (type === 'textarea') ? (
+                    <Form.Item
+                        label={label}
+                        name={name}
+                        rules={rules}
+                        required={!!required}
+                        help={errors}
+                        initialValue={initialValue}
+                    >
+                        <Input.TextArea
+                            placeholder={placeholder}
+                            type={type}
+                            size={size}
+                            rows={rows}
+                            maxLength={maxLength}
+                            style={{resize: no_resize ? 'none' : ''}}
                         />
                     </Form.Item>
                 ) : (type === 'date' || type === 'date_time') ? (
@@ -81,6 +101,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             placeholder={placeholder}
                             locale={persian_fa}
                             calendar={persian}
+                            autoFocus={false}
                             plugins={[
                                 (type === 'date_time') ? <TimePicker position={"bottom"}/> : <></>
                             ]}
