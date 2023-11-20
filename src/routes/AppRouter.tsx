@@ -10,6 +10,7 @@ import _404 from '../pages/_404';
 import ForgotPassword from '../pages/ForgotPassword';
 import ViewTimeline from '../pages/timeline/ViewTimeline';
 import CreateEvent from '../pages/timeline/event/Create';
+import EditEvent from '../pages/timeline/event/Edit';
 import Events from '../pages/timeline/event/Events';
 
 // Import layouts
@@ -83,7 +84,13 @@ export const AppRouter: React.FC = () => {
                     path: 'timeline/:timelineId/event/create',
                     element: <CreateEvent />,
                 },
+                {
+                    path: 'timeline/:id/event/edit',
+                    element: <EditEvent />,
+                },
             ],
+
+            //should change path to timeline/:timelineId/event/edit
         },
         {
             name: 'auth',
