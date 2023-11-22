@@ -29,7 +29,10 @@ const FieldComponent: React.FC<FormBuilderField> = (
         select_url,
         rows,
         maxLength,
-        no_resize
+        no_resize,
+        minDate,
+        maxDate,
+        colorPresets
     }
 ) => {
     const {theme} = useApp();
@@ -102,6 +105,8 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             locale={persian_fa}
                             calendar={persian}
                             autoFocus={false}
+                            minDate={minDate}
+                            maxDate={maxDate}
                             plugins={[
                                 (type === 'date_time') ? <TimePicker position={"bottom"}/> : <></>
                             ]}
@@ -160,6 +165,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             trigger={"click"}
                             disabledAlpha={true}
                             allowClear={false}
+                            presets={colorPresets}
                         />
                     </Form.Item>
                 ) : (

@@ -53,7 +53,15 @@ export interface FormBuilderField {
     color?: string,
     rows?: number,
     maxLength?: number,
-    no_resize?: boolean
+    no_resize?: boolean,
+    minDate?: Date,
+    maxDate?: Date,
+    colorPresets?: colorPreset[]
+}
+
+export interface colorPreset {
+    label: string,
+    colors: string[]
 }
 
 export interface SelectOption {
