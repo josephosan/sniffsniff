@@ -5,7 +5,7 @@ import {useApp} from "../../store/app.store";
 import {appConfig, darkConfig, lightConfig} from "../../config/app.config";
 import IconHeaderModal from "./IconHeaderModal";
 import {handleGetBreadcrump} from "../../helpers/app.helper";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 interface AppHeaderProps {
     isMobile: boolean;
@@ -17,12 +17,13 @@ export const AppHeader: React.FC<AppHeaderProps> = (
     }
 ) => {
     const location = useLocation();
+    const navigate = useNavigate();
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
-    const [breadcrumpItems, setBreadcrumpItems] = useState<never>(null);
+    const [breadcrumbItems, setBreadcrumbItems] = useState<{ href: string, title: string }[] | null>(null);
 
     useEffect(() => {
-        setBreadcrumpItems(prevState => {
+        setBreadcrumbItems(prevState => {
             return handleGetBreadcrump(location.pathname);
         })
     }, [location.pathname]);
@@ -42,10 +43,21 @@ export const AppHeader: React.FC<AppHeaderProps> = (
                 ) : (
                     <Breadcrumb
                         style={{
-                            fontSize: appConfig.largeFontSize+'px',
+                            fontSize: appConfig.largeFontSize + 'px',
+                            cursor: "pointer"
                         }}
-                        items={breadcrumpItems}
-                    />
+                    >
+                        {
+                            breadcrumbItems && breadcrumbItems.map(el => {
+                                return (
+                                    <Breadcrumb.Item
+                                        onClick={() => navigate(el.href)}
+                                        key={el.title}
+                                    >{el.title}</Breadcrumb.Item>
+                                )
+                            })
+                        }
+                    </Breadcrumb>
                 )
             }
             <Space

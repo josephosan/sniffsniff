@@ -35,14 +35,8 @@ const handleGetBreadcrump = (path) => {
     return pathNames.map(el => {
         basepath += el + '/';
         return {
-            // href: basepath ,
-            title: (
-                <>
-                    <i style={{fontSize: appConfig.defaultFontSize}}
-                       className={pathIconsMap[el] + " ms-2 me-2"}></i>
-                    <span className={"ms-2"}>{pathNamesMap[el]}</span>
-                </>
-            )
+            href: basepath,
+            title: pathNamesMap[el]
         }
     });
 }
