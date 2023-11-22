@@ -57,14 +57,16 @@ const CreateTimeLine: React.FC = () => {
             name: 'startDate',
             label: 'تاریخ شروع',
             required: true,
-            placeholder: 'انتخاب تاریخ شروع',
+            // placeholder: 'انتخاب تاریخ شروع',
             rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
+            minDate: (new Date()).setMinutes(new Date().getMinutes() + 5)
         },
         {
             type: 'date_time',
             name: 'endDate',
             label: 'تاریخ پایان',
-            placeholder: 'انتخاب تاریخ پایان',
+            // placeholder: 'انتخاب تاریخ پایان',
+            minDate: (new Date()).setHours(new Date().getHours() + 24)
         },
         {
             type: 'textarea',
@@ -81,7 +83,23 @@ const CreateTimeLine: React.FC = () => {
             type: 'color',
             name: 'color',
             label: 'رنگ',
-            placeholder: '',
+            colorPresets: [
+                {
+                    label: 'رنگ های پیشفرض',
+                    colors: [
+                        '#61A3BA',
+                        '#C70039',
+                        '#748E63',
+                        '#FFCD4B',
+                        '#CDFAD5',
+                        '#141E46',
+                        '#CE5A67',
+                        '#B931FC',
+                        '#FFA33C',
+                        '#2d2a2e',
+                    ]
+                }
+            ]
         },
     ];
 
