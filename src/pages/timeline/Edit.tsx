@@ -148,7 +148,10 @@ const EditTimeLine: React.FC = () => {
                         />
 
                         <div className={"row mt-5"}>
-                            <div className={"col-sm d-flex justify-content-center align-items-center"}>
+                            <div className={
+                                "col-sm d-flex justify-content-center align-items-center" +
+                                (editFormInitialValues['type'] === 'PRIVATE' ? " d-none" : "")
+                            }>
                                 <BorderedDataWrapper
                                     title={"اعضا"}
                                     required={true}

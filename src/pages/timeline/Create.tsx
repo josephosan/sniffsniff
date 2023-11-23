@@ -53,22 +53,6 @@ const CreateTimeLine: React.FC = () => {
             ]
         },
         {
-            type: 'date_time',
-            name: 'startDate',
-            label: 'تاریخ شروع',
-            required: true,
-            // placeholder: 'انتخاب تاریخ شروع',
-            rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
-            minDate: (new Date()).setMinutes(new Date().getMinutes() + 5)
-        },
-        {
-            type: 'date_time',
-            name: 'endDate',
-            label: 'تاریخ پایان',
-            // placeholder: 'انتخاب تاریخ پایان',
-            minDate: (new Date()).setHours(new Date().getHours() + 24)
-        },
-        {
             type: 'textarea',
             name: 'description',
             label: 'توضیحات',
@@ -101,6 +85,13 @@ const CreateTimeLine: React.FC = () => {
                 }
             ]
         },
+        {
+            name: "show_date",
+            type: "checkbox",
+            label: "تاریخ ها",
+            placeholder: "نمایش تاریخ",
+            checked: false
+        }
     ];
 
     const handleFormSubmit = async (formData) => {
