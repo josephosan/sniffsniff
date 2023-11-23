@@ -189,6 +189,9 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 placeholder={el.placeholder}
                                 size={size}
                                 form={form}
+                                minDate={el.minDate}
+                                maxDate={el.maxDate}
+                                colorPresets={el.colorPresets}
                             />
 
                             {
