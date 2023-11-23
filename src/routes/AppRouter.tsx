@@ -85,12 +85,10 @@ export const AppRouter: React.FC = () => {
                     element: <CreateEvent />,
                 },
                 {
-                    path: 'timeline/:id/event/edit',
+                    path: 'timeline/:eventId/event/edit',
                     element: <EditEvent />,
                 },
             ],
-
-            //should change path to timeline/:timelineId/event/edit
         },
         {
             name: 'auth',

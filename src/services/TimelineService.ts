@@ -16,10 +16,7 @@ export default class TimelineService extends ApiService {
     }
 
     public static createEventForTimeline(timelineId: string, formData: never) {
-        return this.post(
-            `${this.baseUrl}/event/create/${timelineId}`,
-            formData,
-        );
+        return this.post(`${this.baseUrl}/event/${timelineId}`, formData);
     }
 
     public static getTimelineEvents(timelineId: string) {
@@ -30,7 +27,7 @@ export default class TimelineService extends ApiService {
         return this.get(`${this.baseUrl}/event/${eventId}`);
     }
 
-    public static editEventById(id, data) {
-        return this.patch(`${this.baseUrl}/event/${id}`, data);
+    public static editEventById(eventId: string, data) {
+        return this.patch(`${this.baseUrl}/event/${eventId}`, data);
     }
 }

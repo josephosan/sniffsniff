@@ -3,7 +3,7 @@ import FormBuilder from '../../../components/primary/FormBuilder';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import BigBoxSkeletonLoading from '../../../components/secondary/BigBoxSkeletonLoading';
 import TimelineService from '../../../services/TimelineService';
-import { json, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useNotify } from '../../../store/notify.store';
 import { useState, useEffect } from 'react';
 
@@ -14,7 +14,7 @@ const EditEvent: React.FC = () => {
         useState<never>(null);
     const notifyStore = useNotify();
 
-    const { id } = useParams();
+    const { eventId } = useParams();
 
     const editEventFields: FormBuilderField[] = [
         {
@@ -76,11 +76,13 @@ const EditEvent: React.FC = () => {
     ];
 
     useEffect(() => {
-        if (!id) return;
+        if (!eventId) return;
 
         async function fetchData() {
             try {
-                const { data } = await TimelineService.getTimelineEvent(id);
+                const { data } = await TimelineService.getTimelineEvent(
+                    eventId,
+                );
                 setEditFormInitialValues(() => {
                     return data.data;
                 });
@@ -92,12 +94,15 @@ const EditEvent: React.FC = () => {
         }
 
         fetchData();
-    }, [id]);
+    }, [eventId]);
 
     const handleEditFormSubmit = async (formData) => {
         setEditSubmitLoading(() => true);
         try {
-            const response = await TimelineService.editEventById(id, formData);
+            const response = await TimelineService.editEventById(
+                eventId,
+                formData,
+            );
             notifyStore.showAlert('success', 'موفق!', 'با موفقیت ویرایش شد.');
         } catch (e) {
             console.log(e);
@@ -110,16 +115,7 @@ const EditEvent: React.FC = () => {
         <>
             {fetching ? (
                 <>
-                    <FormSkeletonLoading />
-                    <br />
-                    <div className={'w-100 row'}>
-                        <div className={'col-sm d-flex justify-content-center'}>
-                            <BigBoxSkeletonLoading />
-                        </div>
-                        <div className={'col-sm d-flex justify-content-center'}>
-                            <BigBoxSkeletonLoading />
-                        </div>
-                    </div>
+                    <FormSkeletonLoading count={6} />
                 </>
             ) : (
                 <FormBuilder
@@ -136,5 +132,3 @@ const EditEvent: React.FC = () => {
 };
 
 export default EditEvent;
-
-//skeleton should change
