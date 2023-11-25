@@ -37,27 +37,20 @@ const CreateTimeLine: React.FC = () => {
             ]
         },
         {
-            type: 'tags',
+            type: 'multi_select',
             name: 'tags',
             label: 'تگ ها',
             placeholder: 'انتخاب تگ',
-            select_url: TimelineService.baseUrl + "tag/paginate"
-        },
-        {
-            type: 'date_time',
-            name: 'startDate',
-            label: 'تاریخ شروع',
-            required: true,
-            // placeholder: 'انتخاب تاریخ شروع',
-            rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
-            minDate: (new Date()).setMinutes(new Date().getMinutes() + 5)
-        },
-        {
-            type: 'date_time',
-            name: 'endDate',
-            label: 'تاریخ پایان',
-            // placeholder: 'انتخاب تاریخ پایان',
-            minDate: (new Date()).setHours(new Date().getHours() + 24)
+            options: [
+                {
+                    label: 'گروه',
+                    value: 'GROUP'
+                },
+                {
+                    label: 'خصوصی',
+                    value: 'PRIVATE'
+                }
+            ]
         },
         {
             type: 'textarea',
@@ -92,6 +85,13 @@ const CreateTimeLine: React.FC = () => {
                 }
             ]
         },
+        {
+            name: "show_date",
+            type: "checkbox",
+            label: "تاریخ ها",
+            placeholder: "نمایش تاریخ",
+            checked: false
+        }
     ];
 
     const handleFormSubmit = async (formData) => {
@@ -107,10 +107,6 @@ const CreateTimeLine: React.FC = () => {
         }
     }
 
-    const handleFormChange = (data) => {
-        console.log(data);
-    }
-
     return (
         <>
             <FormBuilder
@@ -118,7 +114,6 @@ const CreateTimeLine: React.FC = () => {
                 size={"middle"}
                 onFinish={handleFormSubmit}
                 loading={loading}
-                valuesChange={handleFormChange}
             />
         </>
     );
