@@ -193,12 +193,18 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
                             />
-
-                            {
-                                additionalFields
-                            }
                         </Col>
                     ))}
+
+                    <Col
+                        xs={{span: colXS}}
+                        sm={{span: colSM}}
+                        xl={{span: colXL}}
+                    >
+                        {
+                            additionalFields
+                        }
+                    </Col>
                 </Row>
 
                 {

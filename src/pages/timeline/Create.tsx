@@ -37,20 +37,11 @@ const CreateTimeLine: React.FC = () => {
             ]
         },
         {
-            type: 'multi_select',
+            type: 'tags',
             name: 'tags',
             label: 'تگ ها',
             placeholder: 'انتخاب تگ',
-            options: [
-                {
-                    label: 'گروه',
-                    value: 'GROUP'
-                },
-                {
-                    label: 'خصوصی',
-                    value: 'PRIVATE'
-                }
-            ]
+            select_url: TimelineService.baseUrl + "tag/paginate"
         },
         {
             type: 'date_time',
@@ -116,6 +107,10 @@ const CreateTimeLine: React.FC = () => {
         }
     }
 
+    const handleFormChange = (data) => {
+        console.log(data);
+    }
+
     return (
         <>
             <FormBuilder
@@ -123,6 +118,7 @@ const CreateTimeLine: React.FC = () => {
                 size={"middle"}
                 onFinish={handleFormSubmit}
                 loading={loading}
+                valuesChange={handleFormChange}
             />
         </>
     );

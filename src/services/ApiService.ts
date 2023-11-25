@@ -164,6 +164,10 @@ export default class ApiService {
     }
 
     public static async paginateAll(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-        return this.get(this.baseUrl + "/paginate", config);
+        return this.get(this.baseUrl + "paginate", config);
+    }
+
+    public static async createOne(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return this.post(this.baseUrl, config);
     }
 }
