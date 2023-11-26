@@ -107,6 +107,10 @@ const CreateTimeLine: React.FC = () => {
         }
     }
 
+    const onFormChange = (data) => {
+        console.log(data);
+    }
+
     return (
         <>
             <FormBuilder
@@ -114,6 +118,7 @@ const CreateTimeLine: React.FC = () => {
                 size={"middle"}
                 onFinish={handleFormSubmit}
                 loading={loading}
+                valuesChange={onFormChange}
             />
         </>
     );
