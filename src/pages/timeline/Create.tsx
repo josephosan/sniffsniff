@@ -4,10 +4,13 @@ import {FormBuilderField} from "../../@types/app";
 import TimelineService from "../../services/TimelineService";
 import {useNavigate} from "react-router-dom";
 import {useNotify} from "../../store/notify.store";
+import {colors} from "../../config/app.config";
+import FieldComponent from "../../components/primary/FieldComponent";
 
 const CreateTimeLine: React.FC = () => {
     const navigate = useNavigate();
     const notifyStore = useNotify();
+    const [showDate, setShowDate] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const createTimeLineFields: FormBuilderField[] = [
         {
@@ -53,22 +56,6 @@ const CreateTimeLine: React.FC = () => {
             ]
         },
         {
-            type: 'date_time',
-            name: 'startDate',
-            label: 'تاریخ شروع',
-            required: true,
-            // placeholder: 'انتخاب تاریخ شروع',
-            rules: [{required: true, message: 'انتخاب تاریخ شروع اجباری است!'}],
-            minDate: (new Date()).setMinutes(new Date().getMinutes() + 5)
-        },
-        {
-            type: 'date_time',
-            name: 'endDate',
-            label: 'تاریخ پایان',
-            // placeholder: 'انتخاب تاریخ پایان',
-            minDate: (new Date()).setHours(new Date().getHours() + 24)
-        },
-        {
             type: 'textarea',
             name: 'description',
             label: 'توضیحات',
@@ -86,21 +73,33 @@ const CreateTimeLine: React.FC = () => {
             colorPresets: [
                 {
                     label: 'رنگ های پیشفرض',
-                    colors: [
-                        '#61A3BA',
-                        '#C70039',
-                        '#748E63',
-                        '#FFCD4B',
-                        '#CDFAD5',
-                        '#141E46',
-                        '#CE5A67',
-                        '#B931FC',
-                        '#FFA33C',
-                        '#2d2a2e',
-                    ]
+                    colors
                 }
             ]
         },
+        {
+            name: "show_date",
+            type: "checkbox",
+            label: "تاریخ ها",
+            placeholder: "نمایش تاریخ",
+            initialValue: false
+        }
+    ];
+    const dateFields = [
+        <FieldComponent
+            name={"start_date"}
+            type={"date_time"}
+            minDate={new Date().setMinutes(new Date().getMinutes() + 5)}
+            key={"start_date"}
+            label={"تاریخ شروع"}
+        />,
+        <FieldComponent
+            name={"end_date"}
+            type={"date_time"}
+            minDate={new Date().setMinutes(new Date().getMinutes() + 5)}
+            key={"end_date"}
+            label={"تاریخ پایان "}
+        />
     ];
 
     const handleFormSubmit = async (formData) => {
@@ -116,6 +115,13 @@ const CreateTimeLine: React.FC = () => {
         }
     }
 
+    const onFormChange = (data) => {
+        setShowDate(() => {
+            if (data['show_date'] === true) return true;
+            else if (data['show_date'] === false) return false;
+        });
+    }
+
     return (
         <>
             <FormBuilder
@@ -123,6 +129,10 @@ const CreateTimeLine: React.FC = () => {
                 size={"middle"}
                 onFinish={handleFormSubmit}
                 loading={loading}
+                valuesChange={onFormChange}
+                additionalFields={
+                    showDate && dateFields.map(el => el)
+                }
             />
         </>
     );

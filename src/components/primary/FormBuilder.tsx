@@ -28,7 +28,7 @@ interface FormBuilderProps {
     loading?: boolean,
     initialValues?: never,
     showSubmitButton?: boolean,
-    additionalFields?: never,
+    additionalFields?: never[],
     valuesChange?: (data: never) => never
 }
 
@@ -193,17 +193,30 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
                             />
-
-                            {
-                                additionalFields
-                            }
                         </Col>
                     ))}
+
+                    {
+                        additionalFields && additionalFields.map(el => {
+                            return (
+                                <Col
+                                    xs={{span: colXS}}
+                                    sm={{span: colSM}}
+                                    xl={{span: colXL}}
+                                >
+                                    {
+                                        el
+                                    }
+                                </Col>
+                            );
+                        })
+                    }
+
                 </Row>
 
                 {
                     additionalElement && (
-                        <div className={"w-100 mt-3 mb-4 d-flexgit justify-content-center align-items-center"}>
+                        <div className={"w-100 mt-3 mb-4 d-flex justify-content-center align-items-center"}>
                             {additionalElement}
                         </div>
                     )

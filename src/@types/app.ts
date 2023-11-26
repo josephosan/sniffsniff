@@ -37,7 +37,7 @@ export interface SidebarLinkItem {
 
 
 // form builder
-type FormBuilderFieldType = "text" | "password" | "number" | "date" | "date_time" | "select" | 'multi_select' | "textarea";
+type FormBuilderFieldType = "text" | "password" | "number" | "date" | "date_time" | "select" | 'multi_select' | "textarea" | "checkbox" | "custom_tags";
 
 export interface FormBuilderField {
     placeholder?: string,
