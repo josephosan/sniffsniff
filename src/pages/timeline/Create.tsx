@@ -100,7 +100,6 @@ const CreateTimeLine: React.FC = () => {
             key={"end_date"}
             label={"تاریخ پایان "}
         />
->>>>>>> master
     ];
 
     const handleFormSubmit = async (formData) => {
