@@ -37,7 +37,7 @@ export interface SidebarLinkItem {
 
 
 // form builder
-type FormBuilderFieldType = "text" | "password" | "number" | "date" | "date_time" | "select" | 'multi_select' | "textarea" | "checkbox" | "custom_tags";
+type FormBuilderFieldType = "text" | "password" | "number" | "date" | "date_time" | "select" | 'multi_select' | "textarea" | "checkbox";
 
 export interface FormBuilderField {
     placeholder?: string,
@@ -56,7 +56,9 @@ export interface FormBuilderField {
     no_resize?: boolean,
     minDate?: Date,
     maxDate?: Date,
-    colorPresets?: colorPreset[]
+    colorPresets?: colorPreset[],
+    defaultChecked?: boolean,
+    checked?: boolean
 }
 
 export interface colorPreset {

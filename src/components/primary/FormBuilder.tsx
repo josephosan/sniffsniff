@@ -192,6 +192,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 minDate={el.minDate}
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
+                                checked={el.checked}
+                                defaultChecked={el.defaultChecked}
                             />
                         </Col>
                     ))}
