@@ -1,8 +1,16 @@
 import React from "react";
 
-const NoData: React.FC = () => {
+interface NoDataProps {
+    direction: 'end' | 'start' | 'center'
+}
+
+const NoData: React.FC<NoDataProps> = (
+    {
+        direction = 'center'
+    }
+) => {
     return (
-        <div className={"w-100 h-100 d-flex justify-content-center align-items-center"}>
+        <div className={"w-100 h-100 p-1 d-flex align-items-center justify-content-" + direction}>
             داده ای موجود نیست.
         </div>
     );

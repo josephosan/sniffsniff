@@ -64,7 +64,8 @@ const colors = [
     '#141E46',
     '#CE5A67',
     '#B931FC',
-    '#FFA33C'
+    '#FFA33C',
+    '#2d2a2e',
 ]
 
-export { appConfig, lightConfig, darkConfig, colors };
+export {appConfig, lightConfig, darkConfig, colors};

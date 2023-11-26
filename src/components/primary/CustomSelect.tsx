@@ -4,6 +4,9 @@ import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
 import FormInstance from "antd/lib/form";
+import NoData from "../tiny/NoData";
+import TagApiService from "../../services/TagApiService";
+import {useParams} from "react-router-dom";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -11,29 +14,30 @@ interface CustomSelectProps {
     select_url?: string,
     value?: string,
     size?: SizeTypes,
-    multiSelect?: boolean,
     name?: string,
     form?: FormInstance,
-    change?: (value: string) => string
+    change?: (value: string) => string,
+    mode?: '' | 'tags' | 'multiple'
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
     {
-        options,
+        options = [],
         placeholder = "انتخاب کنید",
         select_url,
         value,
         size = 'large',
-        multiSelect = false,
         name,
         form,
-        change
+        change,
+        mode = ''
     }
 ) => {
     const {theme} = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
     const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const params = useParams();
 
     useEffect(() => {
         if (select_url) {
@@ -56,11 +60,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
         ApiService.get(url)
             .then(({data}) => {
-                return data;
-            })
-            .then((data) => {
-                setNextPageUrl(data.next);
-                setOptions(data.data);
+                setNextPageUrl(data.data.next);
+                setOptions(data.data.items);
             })
             .catch((error) => {
                 console.error('Error fetching data:', error);
@@ -79,9 +80,9 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         if (isAtEndOfScroll && nextPageUrl && !loading) {
             try {
                 const {data} = await (await ApiService.get(nextPageUrl));
-                setNextPageUrl(data.next);
+                setNextPageUrl(data.data.next);
                 setOptions((prevState) => {
-                    return [...prevState, ...data.data];
+                    return [...prevState, ...data.data.items];
                 });
             } catch (e) {
                 console.log(e);
@@ -98,9 +99,24 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     const handleSelectChange = (e) => {
+        // handle tags mode, creating a tag here.
+        if (mode === 'custom_tags' && !loading && !nextPageUrl) {
+            const lastEl = e[e?.length - 1];
+            TagApiService.createOne({
+                timelineId: params.timelineId,
+                title: lastEl
+            })
+                .then(res => {
+                    search();
+                })
+                .catch(err => {
+                    console.log(lastEl, _options);
+                })
+        }
+
         if (form) {
             form.setFieldsValue({[name]: e});
-        } else if (change){
+        } else if (change) {
             change(e);
         }
     }
@@ -111,17 +127,17 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             showSearch={true}
             filterOption={select_url ? undefined : handleFilterOption}
             onSearch={search}
-            notFoundContent={loading ? <Spin size="small"/> : null}
+            notFoundContent={loading ? <Spin size="small"/> : <NoData direction={"start"}/>}
             virtual={true}
             onPopupScroll={handlePopupScroll}
             onChange={handleSelectChange}
             value={value}
             optionFilterProp={'children'}
             size={size}
-            mode={multiSelect ? 'multiple' : ''}
+            mode={mode}
         >
             {
-                _options?.map(el => (
+                (_options?.length > 0) && _options?.map(el => (
                     <Select.Option
                         key={el.value}
                         value={el.value}

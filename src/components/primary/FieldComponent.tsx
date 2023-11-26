@@ -72,6 +72,21 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             size={size}
                         />
                     </Form.Item>
+                ) : (type === 'checkbox') ? (
+                    <Form.Item
+                        label={label}
+                        name={name}
+                        rules={rules}
+                        required={!!required}
+                        help={errors}
+                        valuePropName={"checked"}
+                    >
+                        <Checkbox
+                            defaultChecked={initialValue}
+                        >
+                            {placeholder}
+                        </Checkbox>
+                    </Form.Item>
                 ) : (type === 'text') ? (
                     <Form.Item
                         label={label}
@@ -147,7 +162,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             calendarPosition={"bottom-left"}
                         />
                     </Form.Item>
-                ) : (type === 'select' || type === 'multi_select') ? (
+                ) : (type === 'select' || type === 'multi_select' || type === 'tags') ? (
                     <Form.Item
                         label={label}
                         name={name}
@@ -161,9 +176,11 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             placeholder={placeholder}
                             select_url={select_url}
                             size={size}
-                            multiSelect={type === 'multi_select'}
                             name={name}
                             form={form}
+                            mode={
+                                (type === 'multi_select') ? 'multiple' : ((type === 'custom_tags') ? 'custom_tags' : '')
+                            }
                         />
                     </Form.Item>
                 ) : (type === 'color') ? (
