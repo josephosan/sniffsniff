@@ -62,7 +62,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                         rules={rules}
                         required={!!required}
                         help={errors}
-                        valuePropName={name}
+                        valuePropName={"checked"}
                     >
                         <Checkbox
                             defaultChecked={initialValue}
