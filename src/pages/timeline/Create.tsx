@@ -44,6 +44,8 @@ const CreateTimeLine: React.FC = () => {
             name: 'tags',
             label: 'تگ ها',
             placeholder: 'انتخاب تگ',
+            rules: [{required: true, message: 'انتخاب یک تگ اجباری است!'}],
+            required: true,
             options: [
                 {
                     label: 'گروه',
