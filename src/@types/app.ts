@@ -57,8 +57,6 @@ export interface FormBuilderField {
     minDate?: Date,
     maxDate?: Date,
     colorPresets?: colorPreset[],
-    defaultChecked?: boolean,
-    checked?: boolean
 }
 
 export interface colorPreset {

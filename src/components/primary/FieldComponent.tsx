@@ -33,8 +33,6 @@ const FieldComponent: React.FC<FormBuilderField> = (
         minDate,
         maxDate,
         colorPresets,
-        defaultChecked,
-        checked
     }
 ) => {
     const {theme} = useApp();
@@ -49,12 +47,10 @@ const FieldComponent: React.FC<FormBuilderField> = (
                         rules={rules}
                         required={!!required}
                         help={errors}
-                        initialValue={initialValue}
+                        valuePropName={"checked"}
                     >
                         <Checkbox
-                            type={type}
-                            size={size}
-                            defaultChecked={defaultChecked}
+                            defaultChecked={initialValue}
                         >{ placeholder }</Checkbox>
                     </Form.Item>
                 ) : (type === 'password') ? (
@@ -71,21 +67,6 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             type={type}
                             size={size}
                         />
-                    </Form.Item>
-                ) : (type === 'checkbox') ? (
-                    <Form.Item
-                        label={label}
-                        name={name}
-                        rules={rules}
-                        required={!!required}
-                        help={errors}
-                        valuePropName={"checked"}
-                    >
-                        <Checkbox
-                            defaultChecked={initialValue}
-                        >
-                            {placeholder}
-                        </Checkbox>
                     </Form.Item>
                 ) : (type === 'text') ? (
                     <Form.Item
