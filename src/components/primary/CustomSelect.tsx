@@ -17,7 +17,7 @@ interface CustomSelectProps {
     name?: string,
     form?: FormInstance,
     change?: (value: string) => string,
-    mode?: '' | 'tags' | 'multiple'
+    mode?: '' | 'multiple' | 'tags'
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -134,7 +134,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             value={value}
             optionFilterProp={'children'}
             size={size}
-            mode={mode}
+            mode={(mode === 'tags' || mode === 'multiple') ? 'multiple' : ''}
         >
             {
                 (_options?.length > 0) && _options?.map(el => (
