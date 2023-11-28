@@ -5,7 +5,14 @@ export const Home: React.FC = () => {
     return (
         <>
             <WrapperUserData
-                url={'/src/assets/react.svg'}
+                iconClicked={(v) => console.log(v)}
+                imageUrl={'/src/assets/react.svg'}
+                actionIcons={[
+                    {
+                        icon: "bi bi-trash",
+                        event: "delete"
+                    }
+                ]}
             />
         </>
     );
