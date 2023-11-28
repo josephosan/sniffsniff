@@ -1,18 +1,14 @@
 import React from 'react';
-import WrapperUserData from "../components/secondary/WrapperUserData";
+import CustomSelect from "../components/primary/CustomSelect";
+import TagApiService from "../services/TagApiService";
 
 export const Home: React.FC = () => {
     return (
         <>
-            <WrapperUserData
-                iconClicked={(v) => console.log(v)}
-                imageUrl={'/src/assets/react.svg'}
-                actionIcons={[
-                    {
-                        icon: "bi bi-trash",
-                        event: "delete"
-                    }
-                ]}
+            <CustomSelect
+                className={"w-100"}
+                select_url={TagApiService.selectUrl}
+                mode={"multiple"}
             />
         </>
     );

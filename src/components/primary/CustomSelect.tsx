@@ -5,8 +5,7 @@ import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
 import FormInstance from "antd/lib/form";
 import NoData from "../tiny/NoData";
-import TagApiService from "../../services/TagApiService";
-import {useParams} from "react-router-dom";
+import {appConfig} from "../../config/app.config";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -17,7 +16,8 @@ interface CustomSelectProps {
     name?: string,
     form?: FormInstance,
     change?: (value: string) => string,
-    mode?: '' | 'multiple' | 'tags'
+    mode?: '' | 'multiple' | 'tags',
+    className?: string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -30,65 +30,72 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         name,
         form,
         change,
-        mode = ''
+        mode = '',
+        className = ''
     }
 ) => {
     const {theme} = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
-    const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+    const [nextPage, setNextPage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const params = useParams();
+    const [fetchMoreLoading, setFetchMoreLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (select_url) {
             search()
         } else if (options && !select_url) {
-            setOptions(options);
+            setOptions(() => options);
         } else {
             // todo: notify user, that this component needs at least one of options || select_url.
             console.log("specify data. SELECT");
         }
     }, []);
 
-    const search = (input: string = '') => {
+    const search = (input: string = '', page: number = 1, scroll: boolean = false) => {
         if (!select_url) return;
 
-        setLoading(true);
-        setOptions([]);
+        if (scroll) {
+            setFetchMoreLoading(() => true);
+        } else {
+            setLoading(true);
+            setOptions([]);
+        }
 
-        const url = `${select_url}?search=${input}&page=1`;
+        const url = `${select_url}?search=${input}&page=${page}`;
 
-        ApiService.get(url)
-            .then(({data}) => {
-                setNextPageUrl(data.data.next);
-                setOptions(data.data.items);
+        return new Promise((resolve, reject) => {
+            ApiService.get(url, {
+                params: {
+                    limit: appConfig.paginationLimit
+                }
             })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+                .then(({data}) => {
+                    setNextPage(() => data.data.next);
+                    setOptions((prevState) => [...prevState, ...data.data.items]);
+
+                    return resolve(data);
+                })
+                .catch((error) => {
+                    return reject(error);
+                })
+                .finally(() => {
+                    if (scroll) {
+                        setFetchMoreLoading(() => false);
+                    } else {
+                        setLoading(false);
+                    }
+                });
+        })
     };
 
-    const handlePopupScroll = async (e: React.UIEvent<HTMLDivElement>) => {
+    const handlePopupScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (!select_url) return;
 
         const popupContainer = e.currentTarget;
         const isAtEndOfScroll = popupContainer.scrollTop + popupContainer.clientHeight === popupContainer.scrollHeight;
 
-        if (isAtEndOfScroll && nextPageUrl && !loading) {
-            try {
-                const {data} = await (await ApiService.get(nextPageUrl));
-                setNextPageUrl(data.data.next);
-                setOptions((prevState) => {
-                    return [...prevState, ...data.data.items];
-                });
-            } catch (e) {
-                console.log(e);
-            } finally {
-                setLoading(false);
-            }
+        if (isAtEndOfScroll && nextPage && !loading) {
+            search('', nextPage, true);
         }
     }
 
@@ -100,19 +107,19 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
     const handleSelectChange = (e) => {
         // handle tags mode, creating a tag here.
-        if (mode === 'custom_tags' && !loading && !nextPageUrl) {
-            const lastEl = e[e?.length - 1];
-            TagApiService.createOne({
-                timelineId: params.timelineId,
-                title: lastEl
-            })
-                .then(res => {
-                    search();
-                })
-                .catch(err => {
-                    console.log(lastEl, _options);
-                })
-        }
+        // if (mode === 'tags' && !loading && !nextPage) {
+        //     const lastEl = e[e?.length - 1];
+        //     TagApiService.createOne({
+        //         timelineId: params.timelineId,
+        //         title: lastEl
+        //     })
+        //         .then(res => {
+        //             search();
+        //         })
+        //         .catch(err => {
+        //             console.log(lastEl, _options);
+        //         })
+        // }
 
         if (form) {
             form.setFieldsValue({[name]: e});
@@ -135,15 +142,16 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             optionFilterProp={'children'}
             size={size}
             mode={(mode === 'tags' || mode === 'multiple') ? 'multiple' : ''}
+            className={className}
         >
             {
                 (_options?.length > 0) && _options?.map(el => (
                     <Select.Option
-                        key={el.value}
-                        value={el.value}
+                        key={el.id}
+                        value={el.id}
                     >
                         {el.icon ? <i className={el.icon}
-                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.label}
+                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.title}
                     </Select.Option>
                 ))
             }
