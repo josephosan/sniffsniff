@@ -8,7 +8,7 @@ export const Home: React.FC = () => {
             <CustomSelect
                 className={"w-100"}
                 select_url={TagApiService.selectUrl}
-                mode={"multiple"}
+                mode={"tags"}
             />
         </>
     );

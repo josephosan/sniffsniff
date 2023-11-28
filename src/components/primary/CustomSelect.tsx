@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Select, Spin} from "antd";
+import {Button, Select, Spin} from "antd";
 import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
 import FormInstance from "antd/lib/form";
 import NoData from "../tiny/NoData";
 import {appConfig} from "../../config/app.config";
+import {debounce} from "lodash";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -39,6 +40,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     const [nextPage, setNextPage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [fetchMoreLoading, setFetchMoreLoading] = useState<boolean>(false);
+    const [cTagReady, setCTagReady] = useState<boolean>(false);
 
     useEffect(() => {
         if (select_url) {
@@ -52,7 +54,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }, []);
 
     const search = (input: string = '', page: number = 1, scroll: boolean = false) => {
-        if (!select_url) return;
+        setCTagReady(() => false);
 
         if (scroll) {
             setFetchMoreLoading(() => true);
@@ -72,6 +74,13 @@ const CustomSelect: React.FC<CustomSelectProps> = (
                 .then(({data}) => {
                     setNextPage(() => data.data.next);
                     setOptions((prevState) => [...prevState, ...data.data.items]);
+
+                    // handle tags mode
+                    if (mode === 'tags' && _options?.length === 0) {
+                        setCTagReady(() => true);
+                    } else {
+                        setCTagReady(() => false);
+                    }
 
                     return resolve(data);
                 })
@@ -94,33 +103,19 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         const popupContainer = e.currentTarget;
         const isAtEndOfScroll = popupContainer.scrollTop + popupContainer.clientHeight === popupContainer.scrollHeight;
 
-        if (isAtEndOfScroll && nextPage && !loading) {
+        if (isAtEndOfScroll && nextPage && !loading && !fetchMoreLoading && _options?.length > 0) {
             search('', nextPage, true);
         }
     }
 
     // filter options based on user input in client mode.
     const handleFilterOption = (input: string, option?: SelectOption) => {
+        if (select_url) return;
         if (!option) return false;
         return !!option.children[2].includes(input.toLowerCase());
     }
 
     const handleSelectChange = (e) => {
-        // handle tags mode, creating a tag here.
-        // if (mode === 'tags' && !loading && !nextPage) {
-        //     const lastEl = e[e?.length - 1];
-        //     TagApiService.createOne({
-        //         timelineId: params.timelineId,
-        //         title: lastEl
-        //     })
-        //         .then(res => {
-        //             search();
-        //         })
-        //         .catch(err => {
-        //             console.log(lastEl, _options);
-        //         })
-        // }
-
         if (form) {
             form.setFieldsValue({[name]: e});
         } else if (change) {
@@ -132,7 +127,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         <Select
             placeholder={placeholder ? placeholder : 'انتخاب کنید'}
             showSearch={true}
-            filterOption={select_url ? undefined : handleFilterOption}
+            filterOption={handleFilterOption}
             onSearch={search}
             notFoundContent={loading ? <Spin size="small"/> : <NoData direction={"start"}/>}
             virtual={true}
@@ -143,6 +138,12 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             size={size}
             mode={(mode === 'tags' || mode === 'multiple') ? 'multiple' : ''}
             className={className}
+            suffixIcon={
+                cTagReady ? (
+                        <Button size={"small"} type={"primary"}>افزودن تگ</Button>
+                    )
+                    : undefined
+            }
         >
             {
                 (_options?.length > 0) && _options?.map(el => (
