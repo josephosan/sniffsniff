@@ -69,7 +69,9 @@ export interface SelectOption {
     value: string,
     disabled?: boolean,
     icon?: string,
-    children?: string[]
+    children?: string[],
+    title?: string,
+    id?: string | number
 }
 
 
