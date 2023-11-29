@@ -52,7 +52,7 @@ export const AppRouter: React.FC = () => {
             ),
             children: [
                 {
-                    path: 'home',
+                    path: 'dashboard',
                     element: <Home />,
                 },
 
