@@ -113,6 +113,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     const handleSelectChange = (e) => {
+        console.log(e);
         if (form) {
             form.setFieldsValue({[name]: e});
         } else if (change) {
@@ -126,9 +127,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         ApiService.post(tag_create_url, {
             title: cTagReady
         })
-            .then(res => {
+            .then(({data}) => {
                 // haha done
                 setCTagReady(() => false);
+                setOptions(() => [data.data]);
             })
             .catch(err => {
                 // remove the added element
