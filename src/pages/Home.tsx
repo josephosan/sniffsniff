@@ -8,6 +8,7 @@ export const Home: React.FC = () => {
             <CustomSelect
                 className={"w-100"}
                 select_url={TagApiService.selectUrl}
+                tag_create_url={TagApiService.baseUrl}
                 mode={"tags"}
             />
         </>

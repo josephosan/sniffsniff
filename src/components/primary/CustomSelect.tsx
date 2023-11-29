@@ -18,7 +18,8 @@ interface CustomSelectProps {
     form?: FormInstance,
     change?: (value: string) => string,
     mode?: '' | 'multiple' | 'tags',
-    className?: string
+    className?: string,
+    tag_create_url?: string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -32,7 +33,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         form,
         change,
         mode = '',
-        className = ''
+        className = '',
+        tag_create_url
     }
 ) => {
     const {theme} = useApp();
@@ -40,7 +42,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     const [nextPage, setNextPage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [fetchMoreLoading, setFetchMoreLoading] = useState<boolean>(false);
-    const [cTagReady, setCTagReady] = useState<boolean>(false);
+    const [addTagLoading, setAddTagLoading] = useState<boolean>(false);
+    const [cTagReady, setCTagReady] = useState<boolean | string>(false);
 
     useEffect(() => {
         if (select_url) {
@@ -54,47 +57,42 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }, []);
 
     const search = (input: string = '', page: number = 1, scroll: boolean = false) => {
-        setCTagReady(() => false);
+        if (mode === 'tags') setCTagReady(() => false);
 
         if (scroll) {
             setFetchMoreLoading(() => true);
         } else {
-            setLoading(true);
-            setOptions([]);
+            setLoading(() => true);
+            setOptions(() => []);
         }
 
-        const url = `${select_url}?search=${input}&page=${page}`;
+        const params = {
+            limit: appConfig.paginationLimit,
+            page,
+        }
+        if (input !== '') params['s'] = input;
 
-        return new Promise((resolve, reject) => {
-            ApiService.get(url, {
-                params: {
-                    limit: appConfig.paginationLimit
-                }
-            })
-                .then(({data}) => {
-                    setNextPage(() => data.data.next);
-                    setOptions((prevState) => [...prevState, ...data.data.items]);
-
-                    // handle tags mode
-                    if (mode === 'tags' && _options?.length === 0) {
-                        setCTagReady(() => true);
-                    } else {
-                        setCTagReady(() => false);
-                    }
-
-                    return resolve(data);
-                })
-                .catch((error) => {
-                    return reject(error);
-                })
-                .finally(() => {
-                    if (scroll) {
-                        setFetchMoreLoading(() => false);
-                    } else {
-                        setLoading(false);
-                    }
-                });
+        ApiService.get(select_url, {
+            params
         })
+            .then(({data}) => {
+                setNextPage(() => data.data.next);
+                if (scroll) setOptions((prevState) => [...prevState, ...data.data.items]);
+                else setOptions(() => data.data.items);
+
+                if (data.data.items.length === 0 && mode === 'tags') setCTagReady(() => input);
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                if (scroll) {
+                    setFetchMoreLoading(() => false);
+                } else {
+                    setLoading(false);
+                }
+            });
     };
 
     const handlePopupScroll = (e: React.UIEvent<HTMLDivElement>) => {
@@ -110,7 +108,6 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
     // filter options based on user input in client mode.
     const handleFilterOption = (input: string, option?: SelectOption) => {
-        if (select_url) return;
         if (!option) return false;
         return !!option.children[2].includes(input.toLowerCase());
     }
@@ -123,11 +120,32 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         }
     }
 
+    const handleAddTagClick = () => {
+        if (!tag_create_url) throw new Error("To create a tag, please provide tag_create_url!");
+        setAddTagLoading(() => true);
+        ApiService.post(tag_create_url, {
+            title: cTagReady
+        })
+            .then(res => {
+                // haha done
+                setCTagReady(() => false);
+            })
+            .catch(err => {
+                // remove the added element
+            })
+            .finally(() => setAddTagLoading(() => false));
+    }
+
+    const handleKeyDown = (e) => {
+        // handle enter with keycode 13
+        if (e.code === "Enter" && cTagReady) handleAddTagClick();
+    }
+
     return (
         <Select
             placeholder={placeholder ? placeholder : 'انتخاب کنید'}
             showSearch={true}
-            filterOption={handleFilterOption}
+            filterOption={select_url ? undefined : handleFilterOption}
             onSearch={search}
             notFoundContent={loading ? <Spin size="small"/> : <NoData direction={"start"}/>}
             virtual={true}
@@ -138,9 +156,27 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             size={size}
             mode={(mode === 'tags' || mode === 'multiple') ? 'multiple' : ''}
             className={className}
+            onKeyDown={handleKeyDown}
             suffixIcon={
                 cTagReady ? (
-                        <Button size={"small"} type={"primary"}>افزودن تگ</Button>
+                        <>
+                            {
+                                addTagLoading ? (
+                                    <Spin size={"small"}/>
+                                ) : (
+                                    <Button
+                                        size={"small"}
+                                        type={"primary"}
+                                        onClick={handleAddTagClick}
+                                        style={{
+                                            zIndex: 9999
+                                        }}
+                                    >
+                                        افزودن تگ
+                                    </Button>
+                                )
+                            }
+                        </>
                     )
                     : undefined
             }
