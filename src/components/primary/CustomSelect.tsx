@@ -113,7 +113,6 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     const handleSelectChange = (e) => {
-        console.log(e);
         if (form) {
             form.setFieldsValue({[name]: e});
         } else if (change) {
