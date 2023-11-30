@@ -199,12 +199,13 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                     ))}
 
                     {
-                        additionalFields && additionalFields.map(el => {
+                        additionalFields && additionalFields.map((el, index) => {
                             return (
                                 <Col
                                     xs={{span: colXS}}
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
+                                    key={index * 100}
                                 >
                                     {
                                         el
