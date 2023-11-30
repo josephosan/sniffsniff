@@ -26,4 +26,8 @@ export default class TimelineService extends ApiService {
     public static getTimelineEvent(eventId: string) {
         return this.get(`${this.baseUrl}event/${eventId}`);
     }
+
+    public static editEventById(eventId: string, data) {
+        return this.patch(`${this.baseUrl}/event/${eventId}`, data);
+    }
 }
