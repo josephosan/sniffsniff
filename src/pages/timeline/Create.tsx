@@ -118,10 +118,7 @@ const CreateTimeLine: React.FC = () => {
     }
 
     const onFormChange = (data) => {
-        setShowDate(() => {
-            if (data['show_date'] === true) return true;
-            else if (data['show_date'] === false) return false;
-        });
+        if (Object.keys(data).indexOf("show_date") > -1) setShowDate(() => data['show_date']);
     }
 
     return (

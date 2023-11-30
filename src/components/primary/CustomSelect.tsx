@@ -147,7 +147,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             placeholder={placeholder ? placeholder : 'انتخاب کنید'}
             showSearch={true}
             filterOption={select_url ? undefined : handleFilterOption}
-            onSearch={search}
+            onSearch={select_url ? search : undefined}
             notFoundContent={loading ? <Spin size="small"/> : <NoData direction={"start"}/>}
             virtual={true}
             onPopupScroll={handlePopupScroll}
@@ -189,7 +189,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (
                         value={el.id || el.value}
                     >
                         {el.icon ? <i className={el.icon}
-                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.title || el.label}
+                                      style={{
+                                          marginRight: 0,
+                                          color: theme.primaryColor
+                                      }}></i> : null} {el.title || el.label}
                     </Select.Option>
                 ))
             }
