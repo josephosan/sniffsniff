@@ -58,6 +58,10 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
 
     useEffect(() => {
+        console.log(additionalFields)
+    })
+
+    useEffect(() => {
         setFields(() => fields);
     }, [fields]);
 
@@ -192,20 +196,18 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 minDate={el.minDate}
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
-                                checked={el.checked}
-                                defaultChecked={el.defaultChecked}
                             />
                         </Col>
                     ))}
 
                     {
-                        additionalFields && additionalFields.map((el, index) => {
+                        additionalFields && additionalFields?.map((el, index) => {
                             return (
                                 <Col
                                     xs={{span: colXS}}
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
-                                    key={index * 100}
+                                    key={index * Math.random()}
                                 >
                                     {
                                         el

@@ -97,7 +97,7 @@ const CreateTimeLine: React.FC = () => {
             type: 'checkbox',
             label: 'تاریخ ها',
             placeholder: 'نمایش تاریخ',
-            initialValue: false,
+            initialValue: true,
         },
     ];
     const dateFields = [
@@ -169,7 +169,7 @@ const CreateTimeLine: React.FC = () => {
                 loading={loading}
                 valuesChange={onFormChange}
                 additionalFields={[
-                    showDate && dateFields.map((el) => el),
+                    showDate && dateFields,
                     //joinUser && joinUserField.map((el) => el),
                 ]}
             />
