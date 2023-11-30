@@ -185,11 +185,11 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             {
                 (_options?.length > 0) && _options?.map(el => (
                     <Select.Option
-                        key={el.id}
-                        value={el.id}
+                        key={el.id || el.value}
+                        value={el.id || el.value}
                     >
                         {el.icon ? <i className={el.icon}
-                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.title}
+                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.title || el.label}
                     </Select.Option>
                 ))
             }
