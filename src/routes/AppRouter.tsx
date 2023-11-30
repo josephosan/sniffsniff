@@ -52,7 +52,7 @@ export const AppRouter: React.FC = () => {
             ),
             children: [
                 {
-                    path: 'home',
+                    path: 'dashboard',
                     element: <Home />,
                 },
 
@@ -95,7 +95,7 @@ export const AppRouter: React.FC = () => {
                     element: !authStore.isAuthenticated ? (
                         <Login />
                     ) : (
-                        <Navigate to={'/home'} />
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
                 {
@@ -103,7 +103,7 @@ export const AppRouter: React.FC = () => {
                     element: !authStore.isAuthenticated ? (
                         <ForgotPassword />
                     ) : (
-                        <Navigate to={'/home'} />
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
             ],

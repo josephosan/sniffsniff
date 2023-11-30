@@ -6,9 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useNotify } from '../../store/notify.store';
 import { colors } from '../../config/app.config';
 import FieldComponent from '../../components/primary/FieldComponent';
-import BorderedDataWrapper from '../../components/secondary/BorderedDataWrapper';
-import CustomSearch from '../../components/primary/CustomSearch';
-import { Button } from 'antd';
 
 const CreateTimeLine: React.FC = () => {
     const navigate = useNavigate();
@@ -160,17 +157,8 @@ const CreateTimeLine: React.FC = () => {
     };
 
     const onFormChange = (data) => {
-        console.log('here', data);
-        setShowDate(() => {
-            if (data['show_date'] === true) return true;
-            else if (data['show_date'] === false) return false;
-        });
-
-        // setJoin(() => {
-        //     if (data['type'] === 'PRIVATE') return true;
-        //     else if (data['type'] === 'GROUP') return false;
-        // });
-    };
+        if (Object.keys(data).indexOf("show_date") > -1) setShowDate(() => data['show_date']);
+    }
 
     return (
         <>

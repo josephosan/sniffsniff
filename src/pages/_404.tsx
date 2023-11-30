@@ -23,7 +23,7 @@ const _404: React.FC = () => {
             />
             <Button
                 className={"mt-5"}
-                onClick={() => navigate('/home')}
+                onClick={() => navigate('/dashboard')}
                 style={{
                     backgroundColor: theme.cardBgLighter,
                     color: theme.defaultTextColor

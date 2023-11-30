@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {Select, Spin} from "antd";
+import {Button, Select, Spin} from "antd";
 import {SelectOption, SizeTypes} from "../../@types/app";
 import {useApp} from "../../store/app.store";
 import ApiService from "../../services/ApiService";
 import FormInstance from "antd/lib/form";
 import NoData from "../tiny/NoData";
-import TagApiService from "../../services/TagApiService";
-import {useParams} from "react-router-dom";
+import {appConfig} from "../../config/app.config";
+import {debounce} from "lodash";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -17,7 +17,9 @@ interface CustomSelectProps {
     name?: string,
     form?: FormInstance,
     change?: (value: string) => string,
-    mode?: '' | 'multiple' | 'tags'
+    mode?: '' | 'multiple' | 'tags',
+    className?: string,
+    tag_create_url?: string
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -30,65 +32,77 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         name,
         form,
         change,
-        mode = ''
+        mode = '',
+        className = '',
+        tag_create_url
     }
 ) => {
     const {theme} = useApp();
     const [_options, setOptions] = useState<undefined | SelectOption[]>(options);
-    const [nextPageUrl, setNextPageUrl] = useState<string | null>(null);
+    const [nextPage, setNextPage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const params = useParams();
+    const [fetchMoreLoading, setFetchMoreLoading] = useState<boolean>(false);
+    const [addTagLoading, setAddTagLoading] = useState<boolean>(false);
+    const [cTagReady, setCTagReady] = useState<boolean | string>(false);
 
     useEffect(() => {
         if (select_url) {
             search()
         } else if (options && !select_url) {
-            setOptions(options);
+            setOptions(() => options);
         } else {
             // todo: notify user, that this component needs at least one of options || select_url.
             console.log("specify data. SELECT");
         }
     }, []);
 
-    const search = (input: string = '') => {
-        if (!select_url) return;
+    const search = (input: string = '', page: number = 1, scroll: boolean = false) => {
+        if (mode === 'tags') setCTagReady(() => false);
 
-        setLoading(true);
-        setOptions([]);
+        if (scroll) {
+            setFetchMoreLoading(() => true);
+        } else {
+            setLoading(() => true);
+            setOptions(() => []);
+        }
 
-        const url = `${select_url}?search=${input}&page=1`;
+        const params = {
+            limit: appConfig.paginationLimit,
+            page,
+        }
+        if (input !== '') params['s'] = input;
 
-        ApiService.get(url)
+        ApiService.get(select_url, {
+            params
+        })
             .then(({data}) => {
-                setNextPageUrl(data.data.next);
-                setOptions(data.data.items);
+                setNextPage(() => data.data.next);
+                if (scroll) setOptions((prevState) => [...prevState, ...data.data.items]);
+                else setOptions(() => data.data.items);
+
+                if (data.data.items.length === 0 && mode === 'tags') setCTagReady(() => input);
+
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
+                console.log(error);
             })
             .finally(() => {
-                setLoading(false);
+                if (scroll) {
+                    setFetchMoreLoading(() => false);
+                } else {
+                    setLoading(false);
+                }
             });
     };
 
-    const handlePopupScroll = async (e: React.UIEvent<HTMLDivElement>) => {
+    const handlePopupScroll = (e: React.UIEvent<HTMLDivElement>) => {
         if (!select_url) return;
 
         const popupContainer = e.currentTarget;
         const isAtEndOfScroll = popupContainer.scrollTop + popupContainer.clientHeight === popupContainer.scrollHeight;
 
-        if (isAtEndOfScroll && nextPageUrl && !loading) {
-            try {
-                const {data} = await (await ApiService.get(nextPageUrl));
-                setNextPageUrl(data.data.next);
-                setOptions((prevState) => {
-                    return [...prevState, ...data.data.items];
-                });
-            } catch (e) {
-                console.log(e);
-            } finally {
-                setLoading(false);
-            }
+        if (isAtEndOfScroll && nextPage && !loading && !fetchMoreLoading && _options?.length > 0) {
+            search('', nextPage, true);
         }
     }
 
@@ -99,21 +113,6 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }
 
     const handleSelectChange = (e) => {
-        // handle tags mode, creating a tag here.
-        if (mode === 'custom_tags' && !loading && !nextPageUrl) {
-            const lastEl = e[e?.length - 1];
-            TagApiService.createOne({
-                timelineId: params.timelineId,
-                title: lastEl
-            })
-                .then(res => {
-                    search();
-                })
-                .catch(err => {
-                    console.log(lastEl, _options);
-                })
-        }
-
         if (form) {
             form.setFieldsValue({[name]: e});
         } else if (change) {
@@ -121,12 +120,34 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         }
     }
 
+    const handleAddTagClick = () => {
+        if (!tag_create_url) throw new Error("To create a tag, please provide tag_create_url!");
+        setAddTagLoading(() => true);
+        ApiService.post(tag_create_url, {
+            title: cTagReady
+        })
+            .then(({data}) => {
+                // haha done
+                setCTagReady(() => false);
+                setOptions(() => [data.data]);
+            })
+            .catch(err => {
+                // remove the added element
+            })
+            .finally(() => setAddTagLoading(() => false));
+    }
+
+    const handleKeyDown = (e) => {
+        // handle enter with keycode 13
+        if (e.code === "Enter" && cTagReady) handleAddTagClick();
+    }
+
     return (
         <Select
             placeholder={placeholder ? placeholder : 'انتخاب کنید'}
             showSearch={true}
             filterOption={select_url ? undefined : handleFilterOption}
-            onSearch={search}
+            onSearch={select_url ? search : undefined}
             notFoundContent={loading ? <Spin size="small"/> : <NoData direction={"start"}/>}
             virtual={true}
             onPopupScroll={handlePopupScroll}
@@ -135,15 +156,43 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             optionFilterProp={'children'}
             size={size}
             mode={(mode === 'tags' || mode === 'multiple') ? 'multiple' : ''}
+            className={className}
+            onKeyDown={handleKeyDown}
+            suffixIcon={
+                cTagReady ? (
+                        <>
+                            {
+                                addTagLoading ? (
+                                    <Spin size={"small"}/>
+                                ) : (
+                                    <Button
+                                        size={"small"}
+                                        type={"primary"}
+                                        onClick={handleAddTagClick}
+                                        style={{
+                                            zIndex: 9999
+                                        }}
+                                    >
+                                        افزودن تگ
+                                    </Button>
+                                )
+                            }
+                        </>
+                    )
+                    : undefined
+            }
         >
             {
                 (_options?.length > 0) && _options?.map(el => (
                     <Select.Option
-                        key={el.value}
-                        value={el.value}
+                        key={el.id || el.value}
+                        value={el.id || el.value}
                     >
                         {el.icon ? <i className={el.icon}
-                                      style={{marginRight: 0, color: theme.primaryColor}}></i> : null} {el.label}
+                                      style={{
+                                          marginRight: 0,
+                                          color: theme.primaryColor
+                                      }}></i> : null} {el.title || el.label}
                     </Select.Option>
                 ))
             }
