@@ -152,8 +152,67 @@ const EditTimeLine: React.FC = () => {
                         <div className={'col-sm d-flex justify-content-center'}>
                             <BigBoxSkeletonLoading />
                         </div>
-                        <div className={'col-sm d-flex justify-content-center'}>
-                            <BigBoxSkeletonLoading />
+                    </>
+                ) : (
+                    <div>
+                        <FormBuilder
+                            initialValues={editFormInitialValues}
+                            fields={editTimelineFields}
+                            size={"middle"}
+                            onFinish={handleEditFormSubmit}
+                            loading={editSubmitLoading}
+                            submitButtonLabel={"ویرایش"}
+                        />
+
+                        <div className={"row mt-5"}>
+                            <div className={
+                                "col-sm d-flex justify-content-center align-items-center" +
+                                (editFormInitialValues['type'] === 'PRIVATE' ? " d-none" : "")
+                            }>
+                                <BorderedDataWrapper
+                                    title={"اعضا"}
+                                    required={true}
+                                >
+                                    <div className={"row"}>
+                                        <div className={"col-sm-8 col-md-6 col-xl-6 col-7"}>
+                                            <CustomSearch
+                                                inputMode={true}
+                                            />
+                                        </div>
+                                        <div className={"col-sm-4 col-md-6 col-xl-6 col-5 d-flex justify-content-end"}>
+                                            <Button
+                                                type={"primary"}
+                                                icon={<i className={"bi bi-plus"}></i>}
+                                            >
+                                                افزودن
+                                            </Button>
+                                        </div>
+                                    </div>
+
+                                </BorderedDataWrapper>
+                            </div>
+                            <div className={"col-sm d-flex justify-content-center align-items-center"}>
+                                <BorderedDataWrapper
+                                    title={"رویداد ها"}
+                                    required={true}
+                                >
+                                    <div className={"row"}>
+                                        <div className={"col-sm-8 col-md-6 col-xl-6 col-7"}>
+                                            <CustomSearch
+                                                inputMode={true}
+                                            />
+                                        </div>
+                                        <div className={"col-sm-4 col-md-6 col-xl-6 col-5 d-flex justify-content-end"}>
+                                            <Button
+                                                type={"primary"}
+                                                icon={<i className={"bi bi-plus"}></i>}
+                                            >
+                                                افزودن
+                                            </Button>
+                                        </div>
+                                    </div>
+                                </BorderedDataWrapper>
+                            </div>
                         </div>
                     </div>
                 </>

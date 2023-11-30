@@ -64,7 +64,12 @@ const colors = [
     '#141E46',
     '#CE5A67',
     '#B931FC',
-    '#FFA33C'
-]
+    '#FFA33C',
+    '#2d2a2e',
+];
 
-export { appConfig, lightConfig, darkConfig, colors };
+const apiConfig = {
+    API_BASE_URL: 'http://188.121.115.150:5000/v1'
+}
+
+export {appConfig, lightConfig, darkConfig, colors, apiConfig};

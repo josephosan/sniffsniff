@@ -4,11 +4,11 @@ import {AppStore} from "../@types/app";
 import {NavigateFunction} from "react-router-dom";
 import {destroyToken, getToken, saveToken} from "../helpers/jwt.helper";
 import {isArray} from "lodash";
-import {appConfig} from "../config/app.config";
+import {appConfig, apiConfig} from "../config/app.config";
 
 
 const api = axios.create({
-    baseURL: 'http://188.121.115.150:5000/v1',
+    baseURL: apiConfig.API_BASE_URL,
 });
 
 
@@ -164,6 +164,15 @@ export default class ApiService {
     }
 
     public static async paginateAll(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-        return this.get(this.baseUrl + "/paginate", config);
+        return this.get(this.baseUrl + "paginate", config);
+    }
+
+    public static async createOne(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return this.post(this.baseUrl, config);
+    }
+
+    // basic urls
+    public static get selectUrl() {
+        return `${apiConfig.API_BASE_URL}/${this.baseUrl}paginate/`;
     }
 }
