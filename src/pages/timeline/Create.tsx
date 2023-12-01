@@ -95,14 +95,14 @@ const CreateTimeLine: React.FC = () => {
     ];
     const dateFields = [
         <FieldComponent
-            name={'start_date'}
+            name={'startDate'}
             type={'date_time'}
             minDate={new Date().setMinutes(new Date().getMinutes() + 5)}
             key={'start_date'}
             label={'تاریخ شروع'}
         />,
         <FieldComponent
-            name={'end_date'}
+            name={'endDate'}
             type={'date_time'}
             minDate={new Date().setMinutes(new Date().getMinutes() + 5)}
             key={'end_date'}
