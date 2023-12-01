@@ -39,12 +39,12 @@ const CreateTimeLine: React.FC = () => {
             ],
             options: [
                 {
-                    label: 'گروه',
-                    value: 'GROUP',
-                },
-                {
                     label: 'خصوصی',
                     value: 'PRIVATE',
+                },
+                {
+                    label: 'گروه',
+                    value: 'GROUP',
                 },
             ],
         },
@@ -110,27 +110,14 @@ const CreateTimeLine: React.FC = () => {
         />,
     ];
 
-    // const joinUserField = [
-    //     <BorderedDataWrapper title={'اعضا'} required={true}>
-    //         <div className={'row'}>
-    //             <div className={'col-sm-8 col-md-6 col-xl-6 col-7'}>
-    //                 <CustomSearch inputMode={true} />
-    //             </div>
-    //             <div
-    //                 className={
-    //                     'col-sm-4 col-md-6 col-xl-6 col-5 d-flex justify-content-end'
-    //                 }
-    //             >
-    //                 <Button
-    //                     type={'primary'}
-    //                     icon={<i className={'bi bi-plus'}></i>}
-    //                 >
-    //                     افزودن
-    //                 </Button>
-    //             </div>
-    //         </div>
-    //     </BorderedDataWrapper>,
-    // ];
+    const groupFields = [
+        <FieldComponent
+            name={"permitJoinRequest"}
+            type={"checkbox"}
+            label={"درخواست عضویت"}
+            placeholder={"دیگر کاربران اجازه ارسال درخواست عضویت را دارند"}
+        />
+    ];
 
     const handleFormSubmit = async (formData) => {
         setLoading(() => true);
@@ -150,7 +137,7 @@ const CreateTimeLine: React.FC = () => {
     };
 
     const onFormChange = (data) => {
-        console.log(data);
+        if (data['type']) setShowGroupFields(() => data.type === 'GROUP');
         if (Object.keys(data).indexOf("show_date") > -1) setShowDate(() => data['show_date']);
     }
 
@@ -162,7 +149,11 @@ const CreateTimeLine: React.FC = () => {
                 onFinish={handleFormSubmit}
                 loading={loading}
                 valuesChange={onFormChange}
-                additionalFields={showDate && dateFields}
+                additionalFields={
+                    showDate && showGroupFields ? [...groupFields, ...dateFields] :
+                        showDate ? dateFields :
+                            showGroupFields ? groupFields : undefined
+                }
             />
         </>
     );

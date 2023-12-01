@@ -180,6 +180,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             sm={{span: colSM}}
                             xl={{span: colXL}}
                             key={index}
+                            className={"p-3"}
                         >
                             <FieldComponent
                                 label={el.label}
@@ -211,6 +212,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
                                     key={index * Math.random()}
+                                    className={"p-3"}
                                 >
                                     {
                                         el
