@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FormBuilder from '../../components/primary/FormBuilder';
-import { FormBuilderField } from '../../@types/app';
+import {FormBuilderField} from '../../@types/app';
 import TimelineService from '../../services/TimelineService';
-import { useNavigate } from 'react-router-dom';
-import { useNotify } from '../../store/notify.store';
-import { colors } from '../../config/app.config';
+import {useNavigate} from 'react-router-dom';
+import {useNotify} from '../../store/notify.store';
+import {colors} from '../../config/app.config';
 import FieldComponent from '../../components/primary/FieldComponent';
+import TagApiService from "../../services/TagApiService";
 
 const CreateTimeLine: React.FC = () => {
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const CreateTimeLine: React.FC = () => {
             label: 'نام',
             required: true,
             placeholder: 'نام جدول زمانی',
-            rules: [{ required: true, message: 'پرکردن نام اجباری است!' }],
+            rules: [{required: true, message: 'پرکردن نام اجباری است!'}],
         },
         {
             type: 'select',
@@ -48,22 +49,14 @@ const CreateTimeLine: React.FC = () => {
             ],
         },
         {
-            type: 'multi_select',
+            type: 'tags',
             name: 'tags',
             label: 'تگ ها',
             placeholder: 'انتخاب تگ',
-            rules: [{ required: true, message: 'انتخاب یک تگ اجباری است!' }],
+            rules: [{required: true, message: 'انتخاب یک تگ اجباری است!'}],
             required: true,
-            options: [
-                {
-                    label: 'گروه',
-                    value: 'GROUP',
-                },
-                {
-                    label: 'خصوصی',
-                    value: 'PRIVATE',
-                },
-            ],
+            select_url: TagApiService.selectUrl,
+            tag_create_url: TagApiService.baseUrl
         },
         {
             type: 'textarea',
@@ -168,10 +161,7 @@ const CreateTimeLine: React.FC = () => {
                 onFinish={handleFormSubmit}
                 loading={loading}
                 valuesChange={onFormChange}
-                additionalFields={[
-                    showDate && dateFields.map((el) => el),
-                    //joinUser && joinUserField.map((el) => el),
-                ]}
+                additionalFields={showDate && dateFields}
             />
         </>
     );

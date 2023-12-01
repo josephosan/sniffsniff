@@ -56,10 +56,15 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const [form] = Form.useForm();
     const {errors, handleSetErrors} = useApp();
     const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
+    const [_loading, setLoading] = useState(true);
 
     useEffect(() => {
         setFields(() => fields);
     }, [fields]);
+
+    useEffect(() => {
+        setLoading(() => loading);
+    }, [loading]);
 
     useEffect(() => {
         if (errors && errors.formErrors) {
@@ -139,7 +144,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                 onValuesChange={handleValuesChange}
             >
                 {
-                    loading && (
+                    _loading && (
                         <div
                             className={"d-flex justify-content-center align-items-center"}
                             style={{
@@ -192,20 +197,19 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 minDate={el.minDate}
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
-                                checked={el.checked}
-                                defaultChecked={el.defaultChecked}
+                                tag_create_url={el.tag_create_url}
                             />
                         </Col>
                     ))}
 
                     {
-                        additionalFields && additionalFields.map((el, index) => {
+                        additionalFields && additionalFields?.map((el, index) => {
                             return (
                                 <Col
                                     xs={{span: colXS}}
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
-                                    key={index * 100}
+                                    key={index * Math.random()}
                                 >
                                     {
                                         el

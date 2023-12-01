@@ -33,6 +33,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
         minDate,
         maxDate,
         colorPresets,
+        tag_create_url
     }
 ) => {
     const {theme} = useApp();
@@ -160,8 +161,9 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             name={name}
                             form={form}
                             mode={
-                                (type === 'multi_select') ? 'multiple' : ((type === 'custom_tags') ? 'custom_tags' : '')
+                                (type === 'multi_select') ? 'multiple' : ((type === 'tags') ? 'tags' : '')
                             }
+                            tag_create_url={tag_create_url}
                         />
                     </Form.Item>
                 ) : (type === 'color') ? (
