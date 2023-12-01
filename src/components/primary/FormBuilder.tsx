@@ -104,7 +104,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         handleSetErrors(null);
         handleClearElementErrors();
 
-        if (data['color']) data['color'] = hsvToHex(data['color']['metaColor']['originalInput']);
+        if (data['color']) data['color'] = hsvToHex(data?.color?.metaColor?.originalInput);
 
         // for changing every date with Persian digits
         Object.keys(data).forEach((key) => {
@@ -180,6 +180,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             sm={{span: colSM}}
                             xl={{span: colXL}}
                             key={index}
+                            className={"p-3"}
                         >
                             <FieldComponent
                                 label={el.label}
@@ -198,6 +199,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
                                 tag_create_url={el.tag_create_url}
+                                onChange={(e) => handleValuesChange({[el.name]: e})}
                             />
                         </Col>
                     ))}
@@ -210,6 +212,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
                                     key={index * Math.random()}
+                                    className={"p-3"}
                                 >
                                     {
                                         el
