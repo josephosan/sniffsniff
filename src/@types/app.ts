@@ -57,7 +57,8 @@ export interface FormBuilderField {
     minDate?: Date,
     maxDate?: Date,
     colorPresets?: colorPreset[],
-    tag_create_url?: string
+    tag_create_url?: string,
+    onChange?: () => void
 }
 
 export interface colorPreset {

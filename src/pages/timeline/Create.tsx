@@ -12,7 +12,7 @@ const CreateTimeLine: React.FC = () => {
     const navigate = useNavigate();
     const notifyStore = useNotify();
     const [showDate, setShowDate] = useState<boolean>(false);
-    // const [joinUser, setJoinUser] = useState<boolean>(false);
+    const [showGroupFields, setShowGroupFields] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -150,6 +150,7 @@ const CreateTimeLine: React.FC = () => {
     };
 
     const onFormChange = (data) => {
+        console.log(data);
         if (Object.keys(data).indexOf("show_date") > -1) setShowDate(() => data['show_date']);
     }
 
