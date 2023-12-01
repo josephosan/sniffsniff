@@ -1,10 +1,8 @@
-import { ReactNode } from 'react';
-import { Dropdown, Space } from 'antd';
-import type { MenuProps } from 'antd';
+import React, { ReactNode } from 'react';
+import {Dropdown, MenuProps} from 'antd';
 
 interface WrapperDropDownProps {
-    children: ReactNode;
-    listItems: ReactNode[];
+    items: MenuProps['items'][],
     placement?:
         | 'bottomLeft'
         | 'topLeft'
@@ -13,25 +11,17 @@ interface WrapperDropDownProps {
         | 'bottomCenter'
         | 'bottomRight'
         | 'top'
-        | 'bottom';
-
-    trigger?: 'hover' | 'click';
+        | 'bottom',
+    trigger?: 'hover' | 'click',
+    children: ReactNode
 }
 
 const WrapperDropDown: React.FC<WrapperDropDownProps> = ({
-    children,
-    listItems,
+    items,
     placement = 'bottomLeft',
     trigger = 'click',
+    children
 }) => {
-    const renderedListItems = listItems.map((el, key) => {
-        return {
-            key: key + 1,
-            label: el,
-        };
-    });
-
-    const items: MenuProps['items'] = renderedListItems;
     return (
         <Dropdown
             menu={{ items }}
@@ -41,7 +31,7 @@ const WrapperDropDown: React.FC<WrapperDropDownProps> = ({
             overlayClassName="row-dropdown"
             overlayStyle={{}}
         >
-            <Space className="d-flex align-items-center ">{children}</Space>
+            {children}
         </Dropdown>
     );
 };

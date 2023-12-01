@@ -85,19 +85,11 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ isMobile }) => {
                             iconClasses={'bi bi-bell'}
                         />
                         <WrapperDropDown
-                            listItems={[
-                                <TopBarIconWrapper
-                                    size={20}
-                                    iconClasses={'bi bi-person-check'}
-                                />,
-                                <TopBarIconWrapper
-                                    size={20}
-                                    iconClasses={'bi bi-gear'}
-                                />,
-                                <TopBarIconWrapper
-                                    size={20}
-                                    iconClasses={'bi bi-box-arrow-right'}
-                                />,
+                            items={[
+                                {
+                                    key: '1',
+                                    label: 'پروفایل'
+                                },
                             ]}
                         >
                             <TopBarIconWrapper iconClasses={'bi bi-person'} />
