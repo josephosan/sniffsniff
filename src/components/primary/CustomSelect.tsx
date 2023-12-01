@@ -43,7 +43,10 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     const [loading, setLoading] = useState<boolean>(false);
     const [fetchMoreLoading, setFetchMoreLoading] = useState<boolean>(false);
     const [addTagLoading, setAddTagLoading] = useState<boolean>(false);
-    const [cTagReady, setCTagReady] = useState<boolean | string>(false);
+    const [cTagReady, setCTagReady] = useState<{ state: boolean, value: string | null }>({
+        state: false,
+        value: null
+    });
 
     useEffect(() => {
         if (select_url) {
@@ -57,7 +60,12 @@ const CustomSelect: React.FC<CustomSelectProps> = (
     }, []);
 
     const search = (input: string = '', page: number = 1, scroll: boolean = false) => {
-        if (mode === 'tags') setCTagReady(() => false);
+        if (mode === 'tags') setCTagReady(() => {
+            return {
+                state: false,
+                value: input
+            }
+        });
 
         if (scroll) {
             setFetchMoreLoading(() => true);
@@ -80,7 +88,12 @@ const CustomSelect: React.FC<CustomSelectProps> = (
                 if (scroll) setOptions((prevState) => [...prevState, ...data.data.items]);
                 else setOptions(() => data.data.items);
 
-                if (data.data.items.length === 0 && mode === 'tags') setCTagReady(() => input);
+                if (data.data.items.length === 0 && mode === 'tags') setCTagReady((prevState) => {
+                    return {
+                        state: true,
+                        value: prevState.value
+                    }
+                });
 
             })
             .catch((error) => {
@@ -124,11 +137,16 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         if (!tag_create_url) throw new Error("To create a tag, please provide tag_create_url!");
         setAddTagLoading(() => true);
         ApiService.post(tag_create_url, {
-            title: cTagReady
+            title: cTagReady.value
         })
             .then(({data}) => {
                 // haha done
-                setCTagReady(() => false);
+                setCTagReady(() => {
+                    return {
+                        state: false,
+                        value: null
+                    }
+                });
                 setOptions(() => [data.data]);
             })
             .catch(err => {
@@ -139,7 +157,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
 
     const handleKeyDown = (e) => {
         // handle enter with keycode 13
-        if (e.code === "Enter" && cTagReady) handleAddTagClick();
+        if (e.code === "Enter" && cTagReady.value && cTagReady.state && !fetchMoreLoading && !loading) handleAddTagClick();
     }
 
     return (
@@ -159,7 +177,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             className={className}
             onKeyDown={handleKeyDown}
             suffixIcon={
-                cTagReady ? (
+                cTagReady.state ? (
                         <>
                             {
                                 addTagLoading ? (

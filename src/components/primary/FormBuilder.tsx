@@ -58,10 +58,6 @@ const FormBuilder: React.FC<FormBuilderProps> = (
     const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
 
     useEffect(() => {
-        console.log(additionalFields)
-    })
-
-    useEffect(() => {
         setFields(() => fields);
     }, [fields]);
 
@@ -196,6 +192,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                 minDate={el.minDate}
                                 maxDate={el.maxDate}
                                 colorPresets={el.colorPresets}
+                                tag_create_url={el.tag_create_url}
                             />
                         </Col>
                     ))}
