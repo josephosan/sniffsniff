@@ -110,6 +110,9 @@ function App() {
                 colorBorder: theme.primaryColor,
                 colorBgElevated: theme.cardBg
             },
+            Dropdown: {
+                colorBgElevated: theme.mainBackgroundColor
+            }
         },
     };
 

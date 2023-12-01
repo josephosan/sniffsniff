@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { TopBarIconWrapper } from '../secondary/TopBarIconWrapper';
-import { Breadcrumb, Space } from 'antd';
-import { useApp } from '../../store/app.store';
-import { appConfig, darkConfig, lightConfig } from '../../config/app.config';
+import React, {useEffect, useState} from 'react';
+import {TopBarIconWrapper} from '../secondary/TopBarIconWrapper';
+import {Breadcrumb, Space} from 'antd';
+import {useApp} from '../../store/app.store';
+import {appConfig, darkConfig, lightConfig} from '../../config/app.config';
 import IconHeaderModal from './IconHeaderModal';
-import { handleGetBreadcrump } from '../../helpers/app.helper';
-import { useLocation, useNavigate } from 'react-router-dom';
+import {handleGetBreadcrump} from '../../helpers/app.helper';
+import {useLocation, useNavigate} from 'react-router-dom';
 
 import WrapperDropDown from '../secondary/WrapperDropDown';
 
@@ -13,10 +13,10 @@ interface AppHeaderProps {
     isMobile: boolean;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({ isMobile }) => {
+export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { theme, setThemeMode, handleSetSidebarCollapsed } = useApp();
+    const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
     const [breadcrumbItems, setBreadcrumbItems] = useState<
         { href: string; title: string }[] | null
@@ -37,7 +37,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ isMobile }) => {
         >
             {isMobile ? (
                 <Space onClick={() => handleSetSidebarCollapsed(true)}>
-                    <TopBarIconWrapper iconClasses={'bi bi-list'} />
+                    <TopBarIconWrapper iconClasses={'bi bi-list'}/>
                 </Space>
             ) : (
                 <Breadcrumb
@@ -88,11 +88,35 @@ export const AppHeader: React.FC<AppHeaderProps> = ({ isMobile }) => {
                             items={[
                                 {
                                     key: '1',
-                                    label: 'پروفایل'
+                                    label: (
+                                        <div>
+                                            <i className={"bi bi-person-check ms-1"}></i>
+                                            <span>پروفایل</span>
+                                        </div>
+                                    ),
                                 },
+                                {
+                                    key: '2',
+                                    label: (
+                                        <div>
+                                            <i className={"bi bi-gear ms-1"}></i>
+                                            <span>تنظیمات</span>
+                                        </div>
+                                    ),
+                                },
+                                {
+                                    key: '3',
+                                    label: (
+                                        <div>
+                                            <i className={"bi bi-box-arrow-right ms-1"}></i>
+                                            <span>خروج</span>
+                                        </div>
+                                    ),
+                                    danger: true
+                                }
                             ]}
                         >
-                            <TopBarIconWrapper iconClasses={'bi bi-person'} />
+                            <TopBarIconWrapper iconClasses={'bi bi-person'}/>
                         </WrapperDropDown>
                     </Space>
                 ) : (
