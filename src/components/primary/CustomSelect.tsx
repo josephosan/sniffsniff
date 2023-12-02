@@ -19,7 +19,8 @@ interface CustomSelectProps {
     change?: (value: string) => string,
     mode?: '' | 'multiple' | 'tags',
     className?: string,
-    tag_create_url?: string
+    tag_create_url?: string,
+    initialValue?: never[]
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -34,7 +35,8 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         change,
         mode = '',
         className = '',
-        tag_create_url
+        tag_create_url,
+        initialValue = []
     }
 ) => {
     const {theme} = useApp();
@@ -71,7 +73,7 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             setFetchMoreLoading(() => true);
         } else {
             setLoading(() => true);
-            setOptions(() => []);
+            if (input !== '') setOptions(() => []);
         }
 
         const params = {

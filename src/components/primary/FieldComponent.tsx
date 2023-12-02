@@ -34,7 +34,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
         maxDate,
         colorPresets,
         tag_create_url,
-        onChange
+        onChange,
     }
 ) => {
     const {theme} = useApp();
