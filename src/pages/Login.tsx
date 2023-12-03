@@ -74,6 +74,7 @@ const Login: React.FC = () => {
                     }
                     onFinish={handleLoginSubmit}
                     submitButtonLoading={loading}
+                    fieldsPaddingLevel={"0"}
                 />
             </div>
 

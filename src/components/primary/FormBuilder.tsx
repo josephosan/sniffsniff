@@ -29,7 +29,8 @@ interface FormBuilderProps {
     initialValues?: never,
     showSubmitButton?: boolean,
     additionalFields?: never[],
-    valuesChange?: (data: never) => never
+    valuesChange?: (data: never) => never,
+    fieldsPaddingLevel?: string
 }
 
 const FormBuilder: React.FC<FormBuilderProps> = (
@@ -50,7 +51,8 @@ const FormBuilder: React.FC<FormBuilderProps> = (
         initialValues,
         showSubmitButton = true,
         additionalFields,
-        valuesChange
+        valuesChange,
+        fieldsPaddingLevel = 3
     }
 ) => {
     const [form] = Form.useForm();
@@ -180,7 +182,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                             sm={{span: colSM}}
                             xl={{span: colXL}}
                             key={index}
-                            className={"p-3"}
+                            className={"p-" + fieldsPaddingLevel}
                         >
                             <FieldComponent
                                 label={el.label}
@@ -212,7 +214,7 @@ const FormBuilder: React.FC<FormBuilderProps> = (
                                     sm={{span: colSM}}
                                     xl={{span: colXL}}
                                     key={index * Math.random()}
-                                    className={"p-3"}
+                                    className={"p-" + fieldsPaddingLevel}
                                 >
                                     {
                                         el
