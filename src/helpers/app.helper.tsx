@@ -69,10 +69,6 @@ function hsvToHex(original) {
         return original;
     } else {
         let { h, s, v } = original;
-        // Ensure h is between 0 and 360, and s and v are between 0 and 1
-        h = Math.max(0, Math.min(1, h));
-        s = Math.max(0, Math.min(1, s));
-        v = Math.max(0, Math.min(1, v));
 
         // Convert HSV to RGB
         let c = v * s;
