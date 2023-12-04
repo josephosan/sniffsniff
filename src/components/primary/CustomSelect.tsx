@@ -6,7 +6,6 @@ import ApiService from "../../services/ApiService";
 import FormInstance from "antd/lib/form";
 import NoData from "../tiny/NoData";
 import {appConfig} from "../../config/app.config";
-import {debounce} from "lodash";
 
 interface CustomSelectProps {
     options?: SelectOption[],
@@ -20,7 +19,6 @@ interface CustomSelectProps {
     mode?: '' | 'multiple' | 'tags',
     className?: string,
     tag_create_url?: string,
-    initialValue?: never[]
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = (
@@ -36,7 +34,6 @@ const CustomSelect: React.FC<CustomSelectProps> = (
         mode = '',
         className = '',
         tag_create_url,
-        initialValue = []
     }
 ) => {
     const {theme} = useApp();

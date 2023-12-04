@@ -93,8 +93,17 @@ const EditTimeLine: React.FC = () => {
             try {
                 const {data} = await TimelineService.getATimeline(id);
                 setEditFormInitialValues(() => {
-                    return data.data;
+                    return {
+                        ...data.data,
+                        tags: data.data.tags?.map(el => {
+                            return {
+                                label: el.title,
+                                value: el.id
+                            }
+                        })
+                    };
                 });
+                console.log(data.data);
             } catch (e) {
                 console.log(e);
             } finally {
