@@ -39,7 +39,7 @@ const Login: React.FC = () => {
             const userRes = await AuthService.who();
             authStore.handleSetUser(userRes.data.data);
 
-            navigate('/home');
+            navigate('/dashboard');
         } catch (err) {
             console.error(err);
         } finally {
