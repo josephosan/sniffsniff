@@ -34,7 +34,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
         maxDate,
         colorPresets,
         tag_create_url,
-        onChange
+        onChange,
     }
 ) => {
     const {theme} = useApp();
@@ -152,7 +152,6 @@ const FieldComponent: React.FC<FormBuilderField> = (
                         rules={rules}
                         required={!!required}
                         help={errors}
-                        initialValue={initialValue}
                     >
                         <CustomSelect
                             options={options}
@@ -166,6 +165,7 @@ const FieldComponent: React.FC<FormBuilderField> = (
                             }
                             tag_create_url={tag_create_url}
                             change={onChange}
+                            value={initialValue}
                         />
                     </Form.Item>
                 ) : (type === 'color') ? (

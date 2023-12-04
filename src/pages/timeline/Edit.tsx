@@ -9,6 +9,7 @@ import BorderedDataWrapper from "../../components/secondary/BorderedDataWrapper"
 import CustomSearch from "../../components/primary/CustomSearch";
 import {Button} from "antd";
 import {useNotify} from "../../store/notify.store";
+import TagApiService from "../../services/TagApiService";
 
 const EditTimeLine: React.FC = () => {
     const notifyStore = useNotify();
@@ -50,16 +51,8 @@ const EditTimeLine: React.FC = () => {
             required: true,
             placeholder: 'انتخاب تگ',
             rules: [{required: true, message: 'لطفا حداقل یک تگ انتخاب کنید'}],
-            options: [
-                {
-                    label: 'گروه',
-                    value: 'GROUP'
-                },
-                {
-                    label: 'خصوصی',
-                    value: 'PRIVATE'
-                }
-            ]
+            select_url: TagApiService.selectUrl,
+            tag_create_url: TagApiService.baseUrl
         },
         {
             type: 'date_time',
@@ -100,8 +93,17 @@ const EditTimeLine: React.FC = () => {
             try {
                 const {data} = await TimelineService.getATimeline(id);
                 setEditFormInitialValues(() => {
-                    return data.data;
-                })
+                    return {
+                        ...data.data,
+                        tags: data.data.tags?.map(el => {
+                            return {
+                                label: el.title,
+                                value: el.id
+                            }
+                        })
+                    };
+                });
+                console.log(data.data);
             } catch (e) {
                 console.log(e);
             } finally {
