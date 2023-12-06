@@ -103,7 +103,6 @@ const EditTimeLine: React.FC = () => {
                         })
                     };
                 });
-                console.log(data.data);
             } catch (e) {
                 console.log(e);
             } finally {
