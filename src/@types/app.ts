@@ -93,6 +93,15 @@ export interface Errors {
     formErrors?: never
 }
 
+export interface TabItemProps {
+    label?: string,
+    icon?: string,
+    children: ReactNode,
+    closable?: boolean,
+    key?: string,
+    disabled?: boolean
+}
+
 export type SizeTypes = 'large' | 'middle' | 'small';
 
 export type FlexTypes = "center" | "end" | "start";
