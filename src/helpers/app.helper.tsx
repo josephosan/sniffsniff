@@ -36,6 +36,7 @@ const handleGetBreadcrump = (path) => {
         return {
             href: basepath,
             title: pathNamesMap[el],
+            icon: pathIconsMap[el]
         };
     });
 };
