@@ -20,7 +20,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
     const [breadcrumbItems, setBreadcrumbItems] = useState<
-        { href: string; title: string }[] | null
+        { href: string; title: string, icon: string }[] | null
     >(null);
 
     const authStore = useAuth();
@@ -38,7 +38,6 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
             navigate('/login');
         } catch (err) {
             console.log(err);
-        } finally {
         }
     };
 
@@ -67,7 +66,10 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
                                     onClick={() => navigate(el.href)}
                                     key={el.title}
                                 >
-                                    {el.title}
+                                    <Space>
+                                        <i className={el.icon}></i>
+                                        <span>{el.title}</span>
+                                    </Space>
                                 </Breadcrumb.Item>
                             );
                         })}
