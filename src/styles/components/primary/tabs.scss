@@ -1,0 +1,12 @@
+.ant-tabs-top > .ant-tabs-nav::before {
+  display: none;
+}
+
+.ant-tabs-nav-list {
+  column-gap: 10px;
+}
+
+// for removing the border bottom
+.ant-tabs-card.ant-tabs-top >.ant-tabs-nav .ant-tabs-tab {
+  border-radius: 10px;
+}

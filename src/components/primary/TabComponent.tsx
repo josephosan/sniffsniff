@@ -1,6 +1,7 @@
 import React from "react";
 import {Tabs} from "antd";
 import {TabItemProps} from "../../@types/app";
+import "../../styles/components/primary/tabs.scss";
 
 interface TabComponentProps {
     onChange?: () => void,
@@ -22,10 +23,22 @@ const TabComponent: React.FC<TabComponentProps> = (
     return (
         <Tabs
             onChange={handleTabsChange}
-            type={type}
-            items={items}
-        >
-        </Tabs>
+            type={"card"}
+            items={
+                [
+                    {
+                        key: '1',
+                        label: 'Tab 1',
+                        children: <h1>hello</h1>
+                    },
+                    {
+                        key: '2',
+                        label: 'Tab 1',
+                        children: <h1>hello</h1>
+                    },
+                ]
+            }
+        />
     );
 }
 
