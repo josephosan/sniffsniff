@@ -112,6 +112,10 @@ function App() {
             },
             Dropdown: {
                 colorBgElevated: theme.mainBackgroundColor
+            },
+            Tabs: {
+                cardBg: theme.cardBg,
+                itemSelectedColor: theme.mode === 'dark' ? theme.mainBackgroundColor : theme.fadeTextColor
             }
         },
     };

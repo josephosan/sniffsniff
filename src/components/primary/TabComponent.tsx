@@ -5,7 +5,7 @@ import "../../styles/components/primary/tabs.scss";
 
 interface TabComponentProps {
     onChange?: () => void,
-    type: "line" | "card" | "editable-card",
+    type?: "line" | "card" | "editable-card",
     items: TabItemProps[]
 }
 
@@ -23,21 +23,8 @@ const TabComponent: React.FC<TabComponentProps> = (
     return (
         <Tabs
             onChange={handleTabsChange}
-            type={"card"}
-            items={
-                [
-                    {
-                        key: '1',
-                        label: 'Tab 1',
-                        children: <h1>hello</h1>
-                    },
-                    {
-                        key: '2',
-                        label: 'Tab 1',
-                        children: <h1>hello</h1>
-                    },
-                ]
-            }
+            type={type}
+            items={items}
         />
     );
 }
