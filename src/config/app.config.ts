@@ -69,7 +69,7 @@ const colors = [
 ];
 
 const apiConfig = {
-    API_BASE_URL: 'http://188.121.115.150:5000/v1'
+    API_BASE_URL: 'http://46.102.143.25:5000/v1'
 }
 
 export {appConfig, lightConfig, darkConfig, colors, apiConfig};
