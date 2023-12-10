@@ -13,6 +13,7 @@ const OrganizationView: React.FC = () => {
 
     useEffect(() => {
         const tab = location.pathname.split('/')[location.pathname.split('/').length - 1];
+        console.log(tab);
         setActiveTab(() => tab);
     }, [location.pathname]);
 
