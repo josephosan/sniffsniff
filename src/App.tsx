@@ -115,7 +115,8 @@ function App() {
             },
             Tabs: {
                 cardBg: theme.cardBg,
-                itemSelectedColor: theme.mode === 'dark' ? theme.mainBackgroundColor : theme.fadeTextColor
+                itemSelectedColor: theme.mode === 'dark' ? theme.mainBackgroundColor : theme.fadeTextColor,
+                colorBgTextActive: theme.primaryColor
             }
         },
     };

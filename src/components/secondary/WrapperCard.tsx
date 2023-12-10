@@ -6,14 +6,18 @@ import {useApp} from "../../store/app.store";
 interface WrapperCardProps {
     width?: number,
     height?: number,
-    children: ReactNode
+    children: ReactNode,
+    shadowed?: boolean,
+    backgroundColor?: string
 }
 
 const WrapperCard: React.FC<WrapperCardProps> = (
     {
         width = 200,
         height = 200,
-        children
+        children,
+        shadowed = true,
+        backgroundColor
     }
 ) => {
     const { theme } = useApp();
@@ -21,12 +25,12 @@ const WrapperCard: React.FC<WrapperCardProps> = (
       width: ${width}px;
       height: ${height}px;
       border-radius: ${appConfig.defaultBorderRadius}px;
-      background-color: ${theme.cardBg};
+      background-color: ${backgroundColor ? backgroundColor : theme.cardBg};
     `;
 
     return (
         <StyledDiv
-            className={"custom-shadow p-3"}
+            className={`${shadowed ? 'custom-shadow' : ''} p-3`}
         >
             { children }
         </StyledDiv>

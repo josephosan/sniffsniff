@@ -12,6 +12,9 @@ import ViewTimeline from '../pages/timeline/ViewTimeline';
 import CreateEvent from '../pages/timeline/event/Create';
 import EditEvent from '../pages/timeline/event/Edit';
 import Events from '../pages/timeline/event/Events';
+import OrganizationView from '../pages/organization/View';
+import OrganizationSettings from "../pages/organization/Settings";
+import OrganizationProjects from "../pages/organization/Projects";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -88,6 +91,22 @@ export const AppRouter: React.FC = () => {
                     path: 'timeline/:eventId/event/edit',
                     element: <EditEvent />,
                 },
+
+                // organizations
+                {
+                    path: 'organization/:id',
+                    element: <OrganizationView />,
+                    children: [
+                        {
+                            path: 'settings',
+                            element: <OrganizationSettings />
+                        },
+                        {
+                            path: 'projects',
+                            element: <OrganizationProjects />
+                        }
+                    ]
+                }
             ],
         },
         {
