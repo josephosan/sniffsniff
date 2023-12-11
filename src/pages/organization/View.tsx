@@ -52,6 +52,8 @@ const OrganizationView: React.FC = () => {
                             <WrapperCard
                                 shadowed={false}
                                 backgroundColor={theme.cardBgLighter}
+                                width={"100%"}
+                                height={"auto"}
                             >
                                 <Outlet />
                             </WrapperCard>
