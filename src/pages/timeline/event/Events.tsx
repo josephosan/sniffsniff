@@ -17,7 +17,6 @@ import {
     getPersianDateAsText,
 } from '../../../helpers/app.helper';
 import NoData from "../../../components/tiny/NoData";
-import timelines from "../Timelines";
 
 const Events: React.FC = () => {
     const navigate = useNavigate();

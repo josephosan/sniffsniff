@@ -27,6 +27,11 @@ export const Sidebar: React.FC = () => {
             icon: "bi bi-calendar-range"
         },
         {
+            name: "سازمان ها",
+            path: "/organization",
+            icon: "bi bi-building"
+        },
+        {
             name: "کلاس ها",
             path: "/classes",
             icon: "bi bi-person-video3"

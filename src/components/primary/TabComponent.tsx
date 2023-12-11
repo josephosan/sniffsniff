@@ -6,14 +6,21 @@ import "../../styles/components/primary/tabs.scss";
 interface TabComponentProps {
     onChange?: () => void,
     type?: "line" | "card" | "editable-card",
-    items: TabItemProps[]
+    items: TabItemProps[],
+    activeKey?: string,
+    animation?: { inkBar: boolean, tabPane: boolean }
 }
 
 const TabComponent: React.FC<TabComponentProps> = (
     {
         onChange,
         type = "card",
-        items
+        items,
+        activeKey,
+        animation = {
+            inkBar: true,
+            tabPage: false
+        }
     }
 ) => {
     const handleTabsChange = (e) => {
@@ -25,6 +32,8 @@ const TabComponent: React.FC<TabComponentProps> = (
             onChange={handleTabsChange}
             type={type}
             items={items}
+            activeKey={activeKey}
+            animated={animation}
         />
     );
 }

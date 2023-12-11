@@ -1,24 +1,22 @@
 import './App.scss';
-import {AppRouter} from './routes/AppRouter';
-import {BrowserRouter as Router} from 'react-router-dom';
-import {ConfigProvider, theme as antdTheme, ThemeConfig} from 'antd';
+import { AppRouter } from './routes/AppRouter';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {appConfig, lightConfig} from "./config/app.config";
-import {useApp} from "./store/app.store";
-import {NotifyProvider} from "./store/notify.store";
-import {useEffect} from "react";
-import {getToken} from "./helpers/jwt.helper";
-
+import { appConfig, lightConfig } from './config/app.config';
+import { useApp } from './store/app.store';
+import { NotifyProvider } from './store/notify.store';
+import { useEffect } from 'react';
+import { getToken } from './helpers/jwt.helper';
 
 function App() {
-    const {theme, setThemeMode} = useApp();
+    const { theme, setThemeMode } = useApp();
 
     useEffect(() => {
         const themeConfig = getToken('themeConfig');
-        if (themeConfig)
-            setThemeMode(JSON.parse(themeConfig))
-    }, [])
+        if (themeConfig) setThemeMode(JSON.parse(themeConfig));
+    }, []);
 
     const themeConfig: ThemeConfig = {
         algorithm: antdTheme.defaultAlgorithm,
@@ -101,30 +99,32 @@ function App() {
                 colorSplit: theme.fadeTextColor,
             },
             Popover: {
-                colorBgElevated: theme.mainBackgroundColor
+                colorBgElevated: theme.mainBackgroundColor,
             },
             ColorPicker: {
                 colorText: theme.fadeTextColor,
                 activeBorderColor: theme.primaryColor,
                 hoverBorderColor: theme.primaryColor,
                 colorBorder: theme.primaryColor,
-                colorBgElevated: theme.cardBg
+                colorBgElevated: theme.cardBg,
             },
             Dropdown: {
-                colorBgElevated: theme.mainBackgroundColor
+                colorBgElevated: theme.mainBackgroundColor,
             },
             Tabs: {
                 cardBg: theme.cardBg,
-                itemSelectedColor: theme.mode === 'dark' ? theme.mainBackgroundColor : theme.fadeTextColor
-            }
+                itemSelectedColor: lightConfig.itemHoverColor,
+                colorBgTextActive: theme.primaryColor,
+                colorBgContainer: theme.primaryColor,
+            },
         },
     };
 
     return (
-        <ConfigProvider theme={themeConfig} direction={"rtl"}>
+        <ConfigProvider theme={themeConfig} direction={'rtl'}>
             <NotifyProvider>
                 <Router>
-                    <AppRouter/>
+                    <AppRouter />
                 </Router>
             </NotifyProvider>
         </ConfigProvider>
