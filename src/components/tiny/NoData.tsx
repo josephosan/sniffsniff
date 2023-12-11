@@ -1,7 +1,7 @@
 import React from "react";
 
 interface NoDataProps {
-    direction: 'end' | 'start' | 'center'
+    direction?: 'end' | 'start' | 'center'
 }
 
 const NoData: React.FC<NoDataProps> = (

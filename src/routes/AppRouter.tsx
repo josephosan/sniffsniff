@@ -16,7 +16,6 @@ import OrganizationView from '../pages/organization/View';
 import OrganizationSettings from '../pages/organization/Settings';
 import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
-import EditOrganization from '../pages/organization/Edit';
 import Organizations from '../pages/organization/List';
 
 // Import layouts
@@ -113,10 +112,6 @@ export const AppRouter: React.FC = () => {
                 {
                     path: 'organization/create',
                     element: <CreateOrganization />,
-                },
-                {
-                    path: 'organization/edit/:id',
-                    element: <EditOrganization />,
                 },
                 {
                     path: 'organization',

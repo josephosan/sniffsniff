@@ -3,7 +3,6 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
 import { useApp } from '../../store/app.store';
-import { compileString } from 'sass';
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
@@ -21,13 +20,7 @@ const OrganizationView: React.FC = () => {
     }, [location.pathname]);
 
     const handleTabItemClick = (e) => {
-        console.log(e);
-
         navigate(`/organization/${params.id}/${e}`);
-    };
-
-    const handleonTabClick = () => {
-        console.log('heh');
     };
 
     return (
@@ -37,7 +30,6 @@ const OrganizationView: React.FC = () => {
                 animation={{ inkBar: true, tabPane: true }}
                 activeKey={activeTab}
                 onChange={handleTabItemClick}
-                onTabClick={handleonTabClick}
                 items={[
                     {
                         key: 'projects',
