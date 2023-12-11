@@ -5,15 +5,23 @@ import {appConfig} from "../../config/app.config";
 interface TopBarIconWrapperProps {
     iconClasses: string,
     size?: number,
-    onClick?: () => void
+    onClick?: () => void,
+    shadow?: boolean
 }
 
-export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = ({iconClasses, size, onClick}) => {
+export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = (
+    {
+        iconClasses,
+        size,
+        onClick,
+        shadow = true
+    }
+) => {
     const {theme} = useApp();
     return (
         <div
             onClick={onClick}
-            className={"d-flex justify-content-center align-items-center custom-shadow"}
+            className={"d-flex justify-content-center align-items-center " + (shadow ? "custom-shadow" : '')}
             style={{
                 borderRadius: "50%",
                 backgroundColor: theme.cardBg,
