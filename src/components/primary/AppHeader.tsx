@@ -19,6 +19,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
     const navigate = useNavigate();
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
+    const [scrolled, setScrolled] = useState(true); // todo: make this dynamic
     const [breadcrumbItems, setBreadcrumbItems] = useState<
         { href: string; title: string, icon: string }[] | null
     >(null);
@@ -44,12 +45,21 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
     return (
         <div
             className={
-                'mt-3 w-100 d-flex align-items-center justify-content-' +
-                (isMobile ? 'between' : 'between')
+                'px-3 mt-3 d-flex align-items-center justify-content-' +
+                (isMobile ? 'between ' : 'between ') +
+                (scrolled ? 'custom-shadow' : '')
             }
+            style={{
+                position: "fixed",
+                top: 0,
+                left: appConfig.defaultPadding,
+                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
+                backgroundColor: scrolled ? theme.cardBg : undefined,
+                borderRadius: appConfig.defaultBorderRadius
+            }}
         >
             {isMobile ? (
-                <Space onClick={() => handleSetSidebarCollapsed(true)}>
+                <Space className={"p-2"} onClick={() => handleSetSidebarCollapsed(true)}>
                     <TopBarIconWrapper iconClasses={'bi bi-list'}/>
                 </Space>
             ) : (
@@ -81,7 +91,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
                 }}
             >
                 {!isMobile ? (
-                    <Space>
+                    <Space className={"d-flex align-items-center py-2"}>
                         <TopBarIconWrapper
                             iconClasses={
                                 'bi bi-' +
