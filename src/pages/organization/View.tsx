@@ -13,7 +13,6 @@ const OrganizationView: React.FC = () => {
 
     useEffect(() => {
         const tab = location.pathname.split('/')[location.pathname.split('/').length - 1];
-        console.log(tab);
         setActiveTab(() => tab);
     }, [location.pathname]);
 
@@ -34,12 +33,14 @@ const OrganizationView: React.FC = () => {
                         {
                             key: 'projects',
                             label: 'پروژه ها',
-                            children: <WrapperCard shadowed={false} backgroundColor={theme.cardBgLighter}><Outlet /></WrapperCard>
+                            children: <WrapperCard width={"100%"} height={"100%"} shadowed={false}
+                                                   backgroundColor={theme.cardBgLighter}><Outlet/></WrapperCard>
                         },
                         {
                             key: 'settings',
                             label: 'تنظیمات',
-                            children: <WrapperCard shadowed={false} backgroundColor={theme.cardBgLighter}><Outlet/></WrapperCard>
+                            children: <WrapperCard width={"100%"} height={"100%"} shadowed={false}
+                                                   backgroundColor={theme.cardBgLighter}><Outlet/></WrapperCard>
                         }
                     ]
                 }
