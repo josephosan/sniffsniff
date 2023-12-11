@@ -1,4 +1,4 @@
-import { appConfig, colors } from '../config/app.config';
+import { colors } from '../config/app.config';
 import moment from 'jalali-moment';
 
 const pathNamesMap = {
@@ -7,6 +7,10 @@ const pathNamesMap = {
     create: 'جدید',
     timeline: 'جدول زمانی',
     edit: 'ویرایش',
+    organization: 'سازمان',
+    settings: 'تنظیمات',
+    projects: 'پروژه ها',
+    dashboard: 'داشبورد'
 };
 
 const pathIconsMap = {
@@ -15,6 +19,10 @@ const pathIconsMap = {
     create: 'bi bi-plus-circle',
     timeline: 'bi bi-calendar2-range',
     edit: 'bi bi-pen',
+    organization: 'bi bi-building',
+    settings: 'bi bi-gear',
+    projects: 'bi bi-kanban',
+    dashboard: 'bi bi-speedometer2'
 };
 
 const getPageNameByPath = (route: string) => {

@@ -15,6 +15,8 @@ import Events from '../pages/timeline/event/Events';
 import OrganizationView from '../pages/organization/View';
 import OrganizationSettings from "../pages/organization/Settings";
 import OrganizationProjects from "../pages/organization/Projects";
+import CreateOrganization from "../pages/organization/Create";
+import Organizations from "../pages/organization/List";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -106,6 +108,14 @@ export const AppRouter: React.FC = () => {
                             element: <OrganizationProjects />
                         }
                     ]
+                },
+                {
+                    path: 'organization/create',
+                    element: <CreateOrganization />
+                },
+                {
+                    path: 'organization',
+                    element: <Organizations />
                 }
             ],
         },
