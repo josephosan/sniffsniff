@@ -55,7 +55,8 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
                 left: appConfig.defaultPadding,
                 right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
                 backgroundColor: scrolled ? theme.cardBg : undefined,
-                borderRadius: appConfig.defaultBorderRadius
+                borderRadius: appConfig.defaultBorderRadius,
+                zIndex: 1
             }}
         >
             {isMobile ? (
