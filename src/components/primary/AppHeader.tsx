@@ -45,7 +45,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
     return (
         <div
             className={
-                'px-2 mt-3 d-flex align-items-center justify-content-' +
+                'px-3 mt-3 d-flex align-items-center justify-content-' +
                 (isMobile ? 'between ' : 'between ') +
                 (scrolled ? 'custom-shadow' : '')
             }
@@ -53,13 +53,13 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
                 position: "fixed",
                 top: 0,
                 left: appConfig.defaultPadding,
-                right: appConfig.sidebarWidth-17,
+                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
                 backgroundColor: scrolled ? theme.cardBg : undefined,
                 borderRadius: appConfig.defaultBorderRadius
             }}
         >
             {isMobile ? (
-                <Space onClick={() => handleSetSidebarCollapsed(true)}>
+                <Space className={"p-2"} onClick={() => handleSetSidebarCollapsed(true)}>
                     <TopBarIconWrapper iconClasses={'bi bi-list'}/>
                 </Space>
             ) : (
