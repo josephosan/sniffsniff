@@ -1,9 +1,10 @@
 import React from 'react';
+import CreateOrganization from './organization/Create';
 
 export const Home: React.FC = () => {
     return (
         <>
-            this is home
+            <CreateOrganization />
         </>
     );
 };
