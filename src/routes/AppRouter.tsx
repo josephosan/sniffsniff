@@ -13,10 +13,11 @@ import CreateEvent from '../pages/timeline/event/Create';
 import EditEvent from '../pages/timeline/event/Edit';
 import Events from '../pages/timeline/event/Events';
 import OrganizationView from '../pages/organization/View';
-import OrganizationSettings from "../pages/organization/Settings";
-import OrganizationProjects from "../pages/organization/Projects";
-import CreateOrganization from "../pages/organization/Create";
-import Organizations from "../pages/organization/List";
+import OrganizationSettings from '../pages/organization/Settings';
+import OrganizationProjects from '../pages/organization/Projects';
+import CreateOrganization from '../pages/organization/Create';
+import EditOrganization from '../pages/organization/Edit';
+import Organizations from '../pages/organization/List';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -101,22 +102,26 @@ export const AppRouter: React.FC = () => {
                     children: [
                         {
                             path: 'settings',
-                            element: <OrganizationSettings />
+                            element: <OrganizationSettings />,
                         },
                         {
                             path: 'projects',
-                            element: <OrganizationProjects />
-                        }
-                    ]
+                            element: <OrganizationProjects />,
+                        },
+                    ],
                 },
                 {
                     path: 'organization/create',
-                    element: <CreateOrganization />
+                    element: <CreateOrganization />,
+                },
+                {
+                    path: 'organization/edit/:id',
+                    element: <EditOrganization />,
                 },
                 {
                     path: 'organization',
-                    element: <Organizations />
-                }
+                    element: <Organizations />,
+                },
             ],
         },
         {
