@@ -39,7 +39,8 @@ const handleGetBreadcrump = (path) => {
     // adding home icon
     const home = {
         icon: 'bi bi-house-door',
-        href: '/dashboard'
+        href: '/dashboard',
+        key: 'dashboard'
     }
 
     let basepath = '/';
@@ -48,7 +49,7 @@ const handleGetBreadcrump = (path) => {
         return {
             href: basepath,
             title: pathNamesMap[el],
-            icon: pathIconsMap[el]
+            icon: pathIconsMap[el],
         };
     });
 

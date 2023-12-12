@@ -75,7 +75,7 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
                             return (
                                 <Breadcrumb.Item
                                     onClick={() => navigate(el.href)}
-                                    key={el.title}
+                                    key={el.href}
                                 >
                                     <Space>
                                         <i className={el.icon}></i>
