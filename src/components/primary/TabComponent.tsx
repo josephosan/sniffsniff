@@ -1,31 +1,29 @@
-import React from "react";
-import {Tabs} from "antd";
-import {TabItemProps} from "../../@types/app";
-import "../../styles/components/primary/tabs.scss";
+import React from 'react';
+import { Tabs } from 'antd';
+import { TabItemProps } from '../../@types/app';
+import '../../styles/components/primary/tabs.scss';
 
 interface TabComponentProps {
-    onChange?: () => void,
-    type?: "line" | "card" | "editable-card",
-    items: TabItemProps[],
-    activeKey?: string,
-    animation?: { inkBar: boolean, tabPane: boolean }
+    onChange?: () => void;
+    type?: 'line' | 'card' | 'editable-card';
+    items: TabItemProps[];
+    activeKey?: string;
+    animation?: { inkBar: boolean; tabPane: boolean };
 }
 
-const TabComponent: React.FC<TabComponentProps> = (
-    {
-        onChange,
-        type = "card",
-        items,
-        activeKey,
-        animation = {
-            inkBar: true,
-            tabPage: false
-        }
-    }
-) => {
+const TabComponent: React.FC<TabComponentProps> = ({
+    onChange,
+    type = 'card',
+    items,
+    activeKey,
+    animation = {
+        inkBar: true,
+        tabPage: false,
+    },
+}) => {
     const handleTabsChange = (e) => {
         if (onChange) onChange(e);
-    }
+    };
 
     return (
         <Tabs
@@ -36,6 +34,6 @@ const TabComponent: React.FC<TabComponentProps> = (
             animated={animation}
         />
     );
-}
+};
 
 export default TabComponent;

@@ -1,7 +1,7 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import {useMediaQuery} from 'react-responsive';
-import {useNavigate} from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { useNavigate } from 'react-router-dom';
 
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
@@ -10,7 +10,7 @@ import TextItemWrapper from '../../components/tiny/TextItemWrapper';
 import NoData from '../../components/tiny/NoData';
 import Loading from '../../components/secondary/Loading';
 
-import {appConfig} from '../../config/app.config';
+import { appConfig } from '../../config/app.config';
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -44,15 +44,13 @@ const OrganizationProjects: React.FC = () => {
         }
     };
 
-
-    const handleReachedBottom = async () => {
-    };
+    const handleReachedBottom = async () => {};
 
     return (
-        <WrapperScroll reachedBottom={handleReachedBottom} height="70vh">
+        <WrapperScroll reachedBottom={handleReachedBottom} height={'70vh'}>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
@@ -80,14 +78,14 @@ const OrganizationProjects: React.FC = () => {
                                         fontSize={appConfig.defaultFontSize}
                                         text={el.name}
                                     />
-                                    <TextItemWrapper text={el.description}/>
+                                    <TextItemWrapper text={el.description} />
                                 </div>
                             )}
                         </WrapperData>
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -95,7 +93,7 @@ const OrganizationProjects: React.FC = () => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>
