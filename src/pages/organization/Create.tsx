@@ -22,7 +22,6 @@ const CreateOrganization: React.FC = () => {
             placeholder: 'توضیحات',
             required: true,
             rules: [{required: true, message: 'وارد کردن توضیحات اجباری است'}],
-            rows: 20
         }
     ]
 
