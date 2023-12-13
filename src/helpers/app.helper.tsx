@@ -10,7 +10,6 @@ const pathNamesMap = {
     organization: 'سازمان',
     settings: 'تنظیمات',
     projects: 'پروژه ها',
-    dashboard: 'داشبورد'
 };
 
 const pathIconsMap = {
@@ -22,7 +21,6 @@ const pathIconsMap = {
     organization: 'bi bi-building',
     settings: 'bi bi-gear',
     projects: 'bi bi-kanban',
-    dashboard: 'bi bi-speedometer2'
 };
 
 const getPageNameByPath = (route: string) => {
@@ -38,15 +36,26 @@ const handleGetBreadcrump = (path) => {
             return Object.keys(pathNamesMap).includes(el);
         });
 
+    // adding home icon
+    const home = {
+        icon: 'bi bi-house-door',
+        href: '/dashboard',
+        key: 'dashboard'
+    }
+
     let basepath = '/';
-    return pathNames.map((el) => {
+    let result = pathNames.map((el) => {
         basepath += el + '/';
         return {
             href: basepath,
             title: pathNamesMap[el],
-            icon: pathIconsMap[el]
+            icon: pathIconsMap[el],
         };
     });
+
+    result = [home, ...result];
+
+    return result;
 };
 
 const getRandomNumber = (upTo: number) => {
