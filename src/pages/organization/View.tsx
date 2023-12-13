@@ -4,7 +4,7 @@ import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
 import { useApp } from '../../store/app.store';
 
-const OrganizationView: React.FC = () => {
+const OrganizationView: React.FC = React.memo(() => {
     const navigate = useNavigate();
     const params = useParams();
     const location = useLocation();
@@ -63,6 +63,6 @@ const OrganizationView: React.FC = () => {
             />
         </div>
     );
-};
+});
 
 export default OrganizationView;

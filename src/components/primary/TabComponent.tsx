@@ -11,7 +11,7 @@ interface TabComponentProps {
     animation?: { inkBar: boolean, tabPane: boolean }
 }
 
-const TabComponent: React.FC<TabComponentProps> = (
+const TabComponent: React.FC<TabComponentProps> = React.memo((
     {
         onChange,
         type = "card",
@@ -36,6 +36,6 @@ const TabComponent: React.FC<TabComponentProps> = (
             animated={animation}
         />
     );
-}
+})
 
 export default TabComponent;

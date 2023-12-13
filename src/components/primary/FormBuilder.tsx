@@ -33,7 +33,7 @@ interface FormBuilderProps {
     fieldsPaddingLevel?: string;
 }
 
-const FormBuilder: React.FC<FormBuilderProps> = ({
+const FormBuilder: React.FC<FormBuilderProps> = React.memo(({
     onFinish,
     onFinishFailed,
     fields,
@@ -272,6 +272,6 @@ const FormBuilder: React.FC<FormBuilderProps> = ({
             </Form>
         </>
     );
-};
+});
 
 export default FormBuilder;

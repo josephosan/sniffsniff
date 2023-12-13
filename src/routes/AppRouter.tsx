@@ -42,7 +42,7 @@ import Loading from '../components/secondary/Loading';
 import { getToken } from '../helpers/jwt.helper';
 import Timelines from '../pages/timeline/Timelines';
 
-export const AppRouter: React.FC = () => {
+export const AppRouter: React.FC = React.memo(() => {
     const notifyStore = useNotify();
     const appStore = useApp();
     const authStore = useAuth();
@@ -194,4 +194,4 @@ export const AppRouter: React.FC = () => {
             )}
         </>
     );
-};
+});
