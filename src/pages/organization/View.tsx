@@ -32,7 +32,7 @@ const OrganizationView: React.FC = React.memo(() => {
                 onChange={handleTabItemClick}
                 items={[
                     {
-                        key: 'projects',
+                        key: 'project',
                         label: 'پروژه ها',
                         children: (
                             <WrapperCard
@@ -46,7 +46,7 @@ const OrganizationView: React.FC = React.memo(() => {
                         ),
                     },
                     {
-                        key: 'settings',
+                        key: 'setting',
                         label: 'تنظیمات',
                         children: (
                             <WrapperCard

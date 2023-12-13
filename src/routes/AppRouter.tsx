@@ -17,6 +17,7 @@ import OrganizationSettings from '../pages/organization/Settings';
 import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
 import Organizations from '../pages/organization/List';
+import CreateProject from "../pages/organization/project/Create";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -100,11 +101,11 @@ export const AppRouter: React.FC = React.memo(() => {
                     element: <OrganizationView />,
                     children: [
                         {
-                            path: 'settings',
+                            path: 'setting',
                             element: <OrganizationSettings />,
                         },
                         {
-                            path: 'projects',
+                            path: 'project',
                             element: <OrganizationProjects />,
                         },
                     ],
@@ -117,6 +118,12 @@ export const AppRouter: React.FC = React.memo(() => {
                     path: 'organization',
                     element: <Organizations />,
                 },
+
+                // projects
+                {
+                    path: 'organization/:id/project/create',
+                    element: <CreateProject />
+                }
             ],
         },
         {
