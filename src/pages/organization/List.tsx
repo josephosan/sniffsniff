@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
 
-const OrganizationList: React.FC = () => {
+const OrganizationList: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [organizationList, setOrganizationList] = useState<never[]>(null);
@@ -354,5 +354,5 @@ const OrganizationList: React.FC = () => {
             )}
         </WrapperScroll>
     );
-};
+});
 export default OrganizationList;

@@ -12,7 +12,7 @@ import Loading from '../../components/secondary/Loading';
 
 import {appConfig} from '../../config/app.config';
 
-const OrganizationProjects: React.FC = () => {
+const OrganizationProjects: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [projectList, setProjectList] = useState<never[]>(null);
@@ -100,6 +100,6 @@ const OrganizationProjects: React.FC = () => {
             )}
         </WrapperScroll>
     );
-};
+});
 
 export default OrganizationProjects;

@@ -11,7 +11,7 @@ interface WrapperCardProps {
     backgroundColor?: string;
 }
 
-const WrapperCard: React.FC<WrapperCardProps> = ({
+const WrapperCard: React.FC<WrapperCardProps> = React.memo(({
     width = 200,
     height = 200,
     children,
@@ -31,6 +31,6 @@ const WrapperCard: React.FC<WrapperCardProps> = ({
             {children}
         </StyledDiv>
     );
-};
+});
 
 export default WrapperCard;
