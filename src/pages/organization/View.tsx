@@ -27,7 +27,7 @@ const OrganizationView: React.FC = () => {
 
     return (
         <div className="d-flex flex-column gap-3 ">
-            <div className="d-flex flex-column ">
+            <div className="d-flex flex-column mb-5">
                 <CollapsableWrapper
                     items={[
                         {
@@ -35,8 +35,8 @@ const OrganizationView: React.FC = () => {
                             label: (
                                 <div className="d-flex flex-row align-items-center gap-3">
                                     <svg
-                                        width="10"
-                                        height="10"
+                                        width="40"
+                                        height="40"
                                         viewBox="0 0 125 125"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -48,11 +48,11 @@ const OrganizationView: React.FC = () => {
                                             fill="#3AA1E0"
                                         />
                                     </svg>
-                                    <h5>نام سازمان</h5>
+                                    <h5 className={"mb-0"}>نام سازمان</h5>
                                 </div>
                             ),
                             children: (
-                                <div className="d-flex flex-column  align-items-end gap-3 px-5 ">
+                                <div className="d-flex flex-column  align-items-end gap-3 px-md-5 px-xl-5 ">
                                     <span
                                         style={{
                                             fontSize: appConfig.defaultFontSize,
@@ -87,7 +87,7 @@ const OrganizationView: React.FC = () => {
                 onChange={handleTabItemClick}
                 items={[
                     {
-                        key: 'projects',
+                        key: 'project',
                         label: 'پروژه ها',
                         children: (
                             <WrapperCard
@@ -101,7 +101,7 @@ const OrganizationView: React.FC = () => {
                         ),
                     },
                     {
-                        key: 'settings',
+                        key: 'setting',
                         label: 'تنظیمات',
                         children: (
                             <WrapperCard
