@@ -1,4 +1,4 @@
-import { colors } from '../config/app.config';
+import {colors} from '../config/app.config';
 import moment from 'jalali-moment';
 
 const pathNamesMap = {
@@ -8,8 +8,8 @@ const pathNamesMap = {
     timeline: 'جدول زمانی',
     edit: 'ویرایش',
     organization: 'سازمان',
-    settings: 'تنظیمات',
-    projects: 'پروژه ها',
+    setting: 'تنظیمات',
+    project: 'پروژه',
 };
 
 const pathIconsMap = {
@@ -19,8 +19,8 @@ const pathIconsMap = {
     timeline: 'bi bi-calendar2-range',
     edit: 'bi bi-pen',
     organization: 'bi bi-building',
-    settings: 'bi bi-gear',
-    projects: 'bi bi-kanban',
+    setting: 'bi bi-gear',
+    project: 'bi bi-kanban',
 };
 
 const getPageNameByPath = (route: string) => {
@@ -86,7 +86,7 @@ function hsvToHex(original) {
     if (/[0-9A-Fa-f]{6}/g.test(original)) {
         return original;
     } else {
-        let { h, s, v } = original;
+        let {h, s, v} = original;
 
         // Convert HSV to RGB
         let c = v * s;
