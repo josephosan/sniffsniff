@@ -9,7 +9,7 @@ import {useApp} from "../store/app.store";
 import {AppHeader} from "../components/primary/AppHeader";
 
 const {Sider, Header, Content} = Layout;
-export const DefaultLayout: React.FC = () => {
+export const DefaultLayout: React.FC = React.memo(() => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
@@ -109,6 +109,6 @@ export const DefaultLayout: React.FC = () => {
             </Layout>
         </Layout>
     );
-};
+});
 
 

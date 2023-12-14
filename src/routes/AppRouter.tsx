@@ -17,6 +17,7 @@ import OrganizationSettings from '../pages/organization/Settings';
 import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
 import Organizations from '../pages/organization/List';
+import CreateProject from "../pages/organization/project/Create";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -42,7 +43,7 @@ import Loading from '../components/secondary/Loading';
 import { getToken } from '../helpers/jwt.helper';
 import Timelines from '../pages/timeline/Timelines';
 
-export const AppRouter: React.FC = () => {
+export const AppRouter: React.FC = React.memo(() => {
     const notifyStore = useNotify();
     const appStore = useApp();
     const authStore = useAuth();
@@ -100,11 +101,11 @@ export const AppRouter: React.FC = () => {
                     element: <OrganizationView />,
                     children: [
                         {
-                            path: 'settings',
+                            path: 'setting',
                             element: <OrganizationSettings />,
                         },
                         {
-                            path: 'projects',
+                            path: 'project',
                             element: <OrganizationProjects />,
                         },
                     ],
@@ -117,6 +118,12 @@ export const AppRouter: React.FC = () => {
                     path: 'organization',
                     element: <Organizations />,
                 },
+
+                // projects
+                {
+                    path: 'organization/:id/project/create',
+                    element: <CreateProject />
+                }
             ],
         },
         {
@@ -194,4 +201,4 @@ export const AppRouter: React.FC = () => {
             )}
         </>
     );
-};
+});

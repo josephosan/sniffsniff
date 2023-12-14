@@ -14,7 +14,7 @@ interface AppHeaderProps {
     isMobile: boolean;
 }
 
-export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
+export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
     const location = useLocation();
     const navigate = useNavigate();
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
@@ -173,4 +173,4 @@ export const AppHeader: React.FC<AppHeaderProps> = ({isMobile}) => {
             </Space>
         </div>
     );
-};
+});

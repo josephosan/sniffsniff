@@ -13,7 +13,7 @@ interface SidebarItem {
     path: string
 }
 
-export const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = React.memo(() => {
     const {theme, filterMode, handleSetFilterMode} = useApp();
     const sideBarItems: SidebarItem[] = [
         {
@@ -113,4 +113,4 @@ export const Sidebar: React.FC = () => {
             }
         </div>
     );
-}
+})

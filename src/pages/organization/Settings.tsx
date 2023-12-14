@@ -4,7 +4,7 @@ import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 import {Button} from "antd";
 
-const OrganizationSettings: React.FC = () => {
+const OrganizationSettings: React.FC = React.memo(() => {
     const updateInfoFields: FormBuilderField[] = [
         {
             label: 'نام',
@@ -59,6 +59,6 @@ const OrganizationSettings: React.FC = () => {
             </div>
         </>
     )
-}
+})
 
 export default OrganizationSettings;

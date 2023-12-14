@@ -1,8 +1,7 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, useContext, useMemo, useState} from "react";
 import {AppStore, Errors, Theme} from "../@types/app";
 import {lightConfig} from "../config/app.config";
 import {saveToken} from "../helpers/jwt.helper";
-
 
 
 const AppContext = createContext<AppStore | undefined>(undefined);
@@ -16,7 +15,7 @@ export function useApp() {
 }
 
 
-export const AppProvider: React.FC = ({ children }) => {
+export const AppProvider: React.FC = ({children}) => {
     // theme config
     const [theme, setTheme] = useState<Theme>(lightConfig);
     const setThemeMode = (themeConfig: Theme) => {
@@ -46,27 +45,30 @@ export const AppProvider: React.FC = ({ children }) => {
         setSidebarCollapsed(() => collapsed);
     }
 
-    const appStore: AppStore = {
-        // theme
-        theme,
-        setThemeMode,
+    const appStore: AppStore = useMemo(
+        () => ({
+            // theme
+            theme,
+            setThemeMode,
 
-        // errors
-        errors,
-        handleSetErrors,
+            // errors
+            errors,
+            handleSetErrors,
 
-        // filter mode
-        filterMode,
-        handleSetFilterMode,
+            // filter mode
+            filterMode,
+            handleSetFilterMode,
 
-        // filters data
-        filters,
-        handleSetFilters,
+            // filters data
+            filters,
+            handleSetFilters,
 
-        // sidebar
-        sidebarCollapsed,
-        handleSetSidebarCollapsed
-    }
+            // sidebar
+            sidebarCollapsed,
+            handleSetSidebarCollapsed
+        }),
+        [sidebarCollapsed, filters, filterMode, errors, theme]
+    )
 
-    return <AppContext.Provider value={appStore}>{ children }</AppContext.Provider>
+    return <AppContext.Provider value={appStore}>{children}</AppContext.Provider>
 }
