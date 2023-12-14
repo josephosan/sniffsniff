@@ -4,6 +4,7 @@ import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
 import { useApp } from '../../store/app.store';
 import CollapsableWrapper from '../../components/primary/CollapsableWrapper';
+import { appConfig } from '../../config/app.config';
 import { dropRight } from 'lodash';
 
 const OrganizationView: React.FC = () => {
@@ -26,8 +27,8 @@ const OrganizationView: React.FC = () => {
     };
 
     return (
-        <div className="d-flex flex-column gap-4">
-            <div className="d-flex flex-column px-5">
+        <div className="d-flex flex-column gap-3 ">
+            <div className="d-flex flex-column ">
                 <CollapsableWrapper
                     items={[
                         {
@@ -35,8 +36,8 @@ const OrganizationView: React.FC = () => {
                             label: (
                                 <div className="d-flex flex-row align-items-center gap-3">
                                     <svg
-                                        width="100"
-                                        height="100"
+                                        width="40"
+                                        height="40"
                                         viewBox="0 0 125 125"
                                         fill="none"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -48,12 +49,16 @@ const OrganizationView: React.FC = () => {
                                             fill="#3AA1E0"
                                         />
                                     </svg>
-                                    <h1>نام سازمان</h1>
+                                    <h5>نام سازمان</h5>
                                 </div>
                             ),
                             children: (
-                                <div className="d-flex flex-column px-5 mx-5 align-items-end gap-3">
-                                    <span>
+                                <div className="d-flex flex-column  align-items-end gap-3 px-5 ">
+                                    <span
+                                        style={{
+                                            fontSize: appConfig.defaultFontSize,
+                                        }}
+                                    >
                                         ازمایشی و بی‌معنی در صنعت چاپ،
                                         صفحه‌آرایی و طراحی گرافیک گفته می‌شود.
                                         طراح گرافیک از این متن به عنوان عنصری از
@@ -62,7 +67,13 @@ const OrganizationView: React.FC = () => {
                                         شده استفاده می نماید، تا از نظر گرافیکی
                                         نشانگر چگونگی نوع و ان
                                     </span>
-                                    <small>ساخته شده در 2 ماه پیش</small>
+                                    <small
+                                        style={{
+                                            fontSize: appConfig.smallFontSize,
+                                        }}
+                                    >
+                                        ساخته شده در 2 ماه پیش
+                                    </small>
                                 </div>
                             ),
                         },
@@ -111,3 +122,5 @@ const OrganizationView: React.FC = () => {
 };
 
 export default OrganizationView;
+
+// right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
