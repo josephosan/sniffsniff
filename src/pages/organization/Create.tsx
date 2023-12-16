@@ -16,14 +16,6 @@ const CreateOrganization: React.FC = () => {
             rules: [{required: true, message: 'وارد کردن نام اجباری است'}]
         },
         {
-            name: 'type',
-            type: 'text',
-            label: 'نوع',
-            placeholder: 'نوع',
-            required: true,
-            rules: [{required: true, message: 'وارد کردن نوع اجباری است'}]
-        },
-        {
             name: 'desc',
             type: 'textarea',
             label: 'توضیحات',
