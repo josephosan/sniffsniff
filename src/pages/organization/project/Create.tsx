@@ -18,7 +18,17 @@ const CreateProject: React.FC = () => {
             label: 'نوع',
             placeholder: 'نوع',
             required: true,
-            rules: [{required: true, message: 'وارد کردن نوع اجباری است'}]
+            rules: [{required: true, message: 'وارد کردن نوع اجباری است'}],
+            options: [
+                {
+                    label: 'خصوصی',
+                    value: 'private'
+                },
+                {
+                    label: 'عمومی',
+                    value: 'group'
+                },
+            ]
         },
         {
             name: 'desc',
