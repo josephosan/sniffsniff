@@ -34,6 +34,7 @@ const CreateOrganization: React.FC = () => {
                     colXL={24}
                     colSM={24}
                     fieldsPaddingLevel={"0"}
+                    submitButtonLabel={"ایجاد"}
                 />
             </div>
         </div>

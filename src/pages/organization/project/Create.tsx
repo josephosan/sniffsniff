@@ -2,7 +2,7 @@ import React from "react";
 import {FormBuilderField} from "../../../@types/app";
 import FormBuilder from "../../../components/primary/FormBuilder";
 
-const CreateProject: React.FC = () => {
+const CreateProject: React.FC = React.memo(() => {
     const createFormFields: FormBuilderField[] = [
         {
             name: 'name',
@@ -51,11 +51,12 @@ const CreateProject: React.FC = () => {
                         colXL={24}
                         colSM={24}
                         fieldsPaddingLevel={"0"}
+                        submitButtonLabel={"ایجاد"}
                     />
                 </div>
             </div>
         </>
     );
-}
+})
 
 export default CreateProject;

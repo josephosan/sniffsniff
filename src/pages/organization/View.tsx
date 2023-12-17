@@ -57,6 +57,7 @@ const OrganizationView: React.FC = () => {
                                         style={{
                                             fontSize: appConfig.defaultFontSize,
                                         }}
+                                        className={"description"}
                                     >
                                         ازمایشی و بی‌معنی در صنعت چاپ،
                                         صفحه‌آرایی و طراحی گرافیک گفته می‌شود.

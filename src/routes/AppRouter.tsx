@@ -18,6 +18,11 @@ import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
 import Organizations from '../pages/organization/List';
 import CreateProject from "../pages/organization/project/Create";
+import ViewProject from "../pages/organization/project/View";
+import ProjectTerms from "../pages/organization/project/Terms";
+import ProjectUsers from "../pages/organization/project/Users";
+import ProjectSettings from "../pages/organization/project/Settings";
+import ProjectInvite from "../pages/organization/project/Invite";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -123,6 +128,28 @@ export const AppRouter: React.FC = React.memo(() => {
                 {
                     path: 'organization/:id/project/create',
                     element: <CreateProject />
+                },
+                {
+                    path: 'organization/:id/project',
+                    element: <ViewProject />,
+                    children: [
+                        {
+                            path: 'term',
+                            element: <ProjectTerms />
+                        },
+                        {
+                            path: 'users',
+                            element: <ProjectUsers />
+                        },
+                        {
+                            path: 'setting',
+                            element: <ProjectSettings />
+                        }
+                    ]
+                },
+                {
+                    path: 'organization/:id/project/invite',
+                    element: <ProjectInvite />
                 }
             ],
         },

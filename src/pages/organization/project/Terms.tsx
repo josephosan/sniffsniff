@@ -1,23 +1,21 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import {useMediaQuery} from 'react-responsive';
-import {Button} from 'antd';
-import WrapperScroll from '../../components/secondary/WrapperScroll';
-import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
-import WrapperData from '../../components/secondary/WrapperData';
-import TextItemWrapper from '../../components/tiny/TextItemWrapper';
-import NoData from '../../components/tiny/NoData';
-import Loading from '../../components/secondary/Loading';
-import CustomSearch from '../../components/primary/CustomSearch';
-import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import {useApp} from '../../store/app.store';
+import React, {useEffect, useState} from "react";
+import {useApp} from "../../../store/app.store";
+import {useMediaQuery} from "react-responsive";
+import {appConfig} from "../../../config/app.config";
+import WrapperScroll from "../../../components/secondary/WrapperScroll";
+import CustomSearch from "../../../components/primary/CustomSearch";
+import ActionIconWrapper from "../../../components/secondary/ActionIconWrapper";
+import {Button} from "antd";
+import FormSkeletonLoading from "../../../components/secondary/FormSkeletonLoading";
+import WrapperData from "../../../components/secondary/WrapperData";
+import TextItemWrapper from "../../../components/tiny/TextItemWrapper";
+import NoData from "../../../components/tiny/NoData";
+import Loading from "../../../components/secondary/Loading";
 
-import {appConfig} from '../../config/app.config';
-
-const OrganizationProjects: React.FC = React.memo(() => {
+const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-    const [projectList, setProjectList] = useState<never[]>(null);
+    const [termList, setTermList] = useState<never[]>(null);
     const [page, setPage] = useState<number>(null);
 ;
     const {
@@ -45,7 +43,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
             await handleFetchMore();
         }
 
-        setProjectList(() => []);
+        setTermList(() => []);
         fetchData();
     }, [filters]);
 
@@ -54,7 +52,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
         order: string = 'DESC',
         s: string = '',
     ) => {
-        if (projectList) setFetchMoreLoading(() => true);
+        if (termList) setFetchMoreLoading(() => true);
         else setPageFirstLoading(() => true);
 
         let params = {
@@ -67,7 +65,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
 
         try {
             // const res = await ProjectService.paginateAll({ params });
-            // setProjectList((prevState) => {
+            // setTermList((prevState) => {
             //     if (prevState) return [...prevState, ...res.data.data.items];
             //     return [...res.data.data.items];
             // });
@@ -75,7 +73,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
         } catch (e) {
             console.log(e);
         } finally {
-            if (projectList) setFetchMoreLoading(() => false);
+            if (termList) setFetchMoreLoading(() => false);
             else setPageFirstLoading(() => false);
         }
     };
@@ -92,7 +90,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
     };
 
     const handleSearch = async (e) => {
-        setProjectList(() => []);
+        setTermList(() => []);
         setPage(() => 1);
         await handleFetchMore(1, 'ASC', e.target.value);
     };
@@ -149,8 +147,8 @@ const OrganizationProjects: React.FC = React.memo(() => {
                 </div>
             )}
 
-            {(projectList && projectList.length > 0) || fetchMoreLoading ? (
-                projectList.map((el, index) => {
+            {(termList && termList.length > 0) || fetchMoreLoading ? (
+                termList.map((el, index) => {
                     return (
                         <WrapperData key={index} color={el.color}>
                             {isMobile ? (
@@ -193,6 +191,6 @@ const OrganizationProjects: React.FC = React.memo(() => {
             )}
         </WrapperScroll>
     );
-});
+})
 
-export default OrganizationProjects;
+export default ProjectTerms;
