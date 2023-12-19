@@ -10,6 +10,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import WrapperDropDown from '../secondary/WrapperDropDown';
 import {useAuth} from '../../store/auth.store';
 import WrapperTooltip from "../secondary/WrapperTooltip";
+import WrapperMessage from "../secondary/WrapperMessage";
 
 interface AppHeaderProps {
     isMobile: boolean;
@@ -110,9 +111,10 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                                 open={bellModalOpen}
                                 title={"title"}
                                 trigger={"click"}
+                                width={"400px"}
                                 content={
-                                    <div style={{ width: '200px', height: '500px' }} className={"text-center"}>
-                                        hello there
+                                    <div className={"p-1 gap-1"}>
+                                        <WrapperMessage />
                                     </div>
                                 }
                                 openChange={(e) => e ? undefined : setBellModalOpen(e)}

@@ -7,7 +7,8 @@ interface WrapperTooltipProps {
     open?: boolean,
     destroyTooltipOnHide?: boolean;
     content: string | number | ReactNode,
-    openChange?: () => void
+    openChange?: () => void,
+    width?: string
 }
 
 const WrapperTooltip: React.FC<WrapperTooltipProps> = (
@@ -17,7 +18,8 @@ const WrapperTooltip: React.FC<WrapperTooltipProps> = (
         open,
         destroyTooltipOnHide = false,
         content,
-        openChange
+        openChange,
+        width
     }
 ) => {
     return (
@@ -27,6 +29,7 @@ const WrapperTooltip: React.FC<WrapperTooltipProps> = (
             title={content}
             destroyTooltipOnHide={destroyTooltipOnHide}
             onOpenChange={openChange}
+            overlayStyle={{width: width}}
         >
             {children}
         </Tooltip>

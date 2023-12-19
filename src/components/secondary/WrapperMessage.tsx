@@ -2,11 +2,12 @@ import React from "react";
 import WrapperCard from "./WrapperCard";
 import ActionIconWrapper from "./ActionIconWrapper";
 import {appConfig} from "../../config/app.config";
+import {useApp} from "../../store/app.store";
 
 interface WrapperMessageProps {
-    type: 'success' | 'info' | 'warning',
-    title: string,
-    desc: string
+    type?: 'success' | 'info' | 'warning',
+    title?: string,
+    desc?: string
 }
 
 const WrapperMessage: React.FC<WrapperMessageProps> = React.memo((
@@ -16,12 +17,16 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo((
         desc = 'desc'
     }
 ) => {
+    const { theme } = useApp();
+
     return (
         <WrapperCard
             width={"100%"}
             height={"auto"}
+            shadowed={false}
+            backgroundColor={theme.mainBackgroundColor}
         >
-            <div className={"d-flex flex-row gap-3"}>
+            <div className={"d-flex flex-row gap-3 align-items-center"}>
                 <ActionIconWrapper
                     icon={
                         type === 'success' ? 'bi bi-check-circle' :
@@ -36,12 +41,12 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo((
                     }
                     clickable={false}
                 />
-                <h4 style={{ fontWeight: "bold" }}>
+                <h4 className={"mb-0"} style={{ fontWeight: "bold", fontSize: appConfig.defaultFontSize }}>
                     {title}
                 </h4>
             </div>
 
-            <div className={"mt-2 px-2"}>
+            <div className={"mt-2 px-2"} style={{ fontSize: appConfig.smallFontSize }}>
                 {desc}
             </div>
         </WrapperCard>

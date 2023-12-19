@@ -109,7 +109,7 @@ function App() {
                 colorBgElevated: theme.cardBg,
             },
             Dropdown: {
-                colorBgElevated: theme.mainBackgroundColor,
+                colorBgElevated: theme.cardBgLighter,
             },
             Tabs: {
                 cardBg: theme.cardBg,
