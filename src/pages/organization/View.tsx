@@ -22,7 +22,7 @@ const OrganizationView: React.FC = () => {
     }, [location.pathname]);
 
     const handleTabItemClick = (e) => {
-        navigate(`/organization/${params.id}/${e}`);
+        navigate(`/organization/${params.organizationId}/${e}`);
     };
 
     return (

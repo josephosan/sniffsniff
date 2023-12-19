@@ -102,7 +102,7 @@ export const AppRouter: React.FC = React.memo(() => {
 
                 // organizations
                 {
-                    path: 'organization/:id',
+                    path: 'organization/:organizationId',
                     element: <OrganizationView />,
                     children: [
                         {
@@ -126,11 +126,11 @@ export const AppRouter: React.FC = React.memo(() => {
 
                 // projects
                 {
-                    path: 'organization/:id/project/create',
+                    path: 'organization/:organizationId/project/create',
                     element: <CreateProject />
                 },
                 {
-                    path: 'organization/:id/project',
+                    path: 'organization/:organizationId/project/:projectId',
                     element: <ViewProject />,
                     children: [
                         {
@@ -148,7 +148,7 @@ export const AppRouter: React.FC = React.memo(() => {
                     ]
                 },
                 {
-                    path: 'organization/:id/project/invite',
+                    path: 'organization/:organizationId/project/:projectId/invite',
                     element: <ProjectInvite />
                 }
             ],

@@ -23,7 +23,7 @@ const ViewProject: React.FC = React.memo(() => {
     }, [location.pathname]);
 
     const handleTabItemClick = (e) => {
-        navigate(`/organization/${params.id}/project/${e}`);
+        navigate(`/organization/${params.organizationId}/project/${params.projectId}/${e}`);
     };
 
     return (

@@ -3,9 +3,7 @@ import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 
 
-const CreateOrganization: React.FC = () => {
-    // todo: please use form builder, for creating a form like the design on figma.
-
+const CreateOrganization: React.FC = React.memo(() => {
     const createFormFields: FormBuilderField[] = [
         {
             name: 'name',
@@ -39,6 +37,6 @@ const CreateOrganization: React.FC = () => {
             </div>
         </div>
     );
-}
+})
 
 export default CreateOrganization;
