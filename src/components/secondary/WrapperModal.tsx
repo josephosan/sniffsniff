@@ -9,6 +9,7 @@ interface ModalType {
     title?: string;
     closable?: boolean;
     top?: number | string;
+    left?: number | string;
     mask?: boolean;
     right?: number | string;
     footer?: never;
@@ -33,6 +34,7 @@ const ModalWrapper: React.FC<ModalType> = ({
     cancelText,
     okDisable,
     cancelDisable,
+    left
 }) => {
     return (
         <Modal
@@ -55,6 +57,7 @@ const ModalWrapper: React.FC<ModalType> = ({
             style={{
                 top: top,
                 right: right,
+                left: left
             }}
         >
             {elements}

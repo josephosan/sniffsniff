@@ -1,3 +1,4 @@
+import React from "react";
 import WrapperModal from '../secondary/WrapperModal';
 import { TopBarIconWrapper } from '../secondary/TopBarIconWrapper';
 import { darkConfig, lightConfig } from '../../config/app.config';

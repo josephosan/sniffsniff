@@ -6,7 +6,8 @@ interface ActionIconWrapperProps {
     icon: string,
     size?: number,
     iconClicked?: () => void,
-    clickable?: boolean
+    clickable?: boolean,
+    color?: string
 }
 
 const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
@@ -14,7 +15,8 @@ const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
         icon,
         size = appConfig.smallIconSize,
         iconClicked,
-        clickable = true
+        clickable = true,
+        color
     }
 ) => {
     return (
@@ -25,6 +27,7 @@ const ActionIconWrapper: React.FC<ActionIconWrapperProps> = (
                 style={{
                     fontSize: size,
                     cursor: clickable ? "pointer" : "",
+                    color: color
                 }}
             ></i>
         </>

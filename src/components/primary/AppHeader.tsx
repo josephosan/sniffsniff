@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TopBarIconWrapper} from '../secondary/TopBarIconWrapper';
-import {Breadcrumb, Space} from 'antd';
+import {Breadcrumb, Space, Tooltip} from 'antd';
 import {useApp} from '../../store/app.store';
 import {appConfig, darkConfig, lightConfig} from '../../config/app.config';
 import IconHeaderModal from './IconHeaderModal';
@@ -9,6 +9,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 import WrapperDropDown from '../secondary/WrapperDropDown';
 import {useAuth} from '../../store/auth.store';
+import WrapperTooltip from "../secondary/WrapperTooltip";
 
 interface AppHeaderProps {
     isMobile: boolean;
@@ -19,6 +20,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
     const navigate = useNavigate();
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
+    const [bellModalOpen, setBellModalOpen] = useState(false);
     const [scrolled, setScrolled] = useState(true); // todo: make this dynamic
     const [breadcrumbItems, setBreadcrumbItems] = useState<
         { href: string; title: string, icon: string }[] | null
@@ -53,7 +55,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                 position: "fixed",
                 top: 0,
                 left: appConfig.defaultPadding,
-                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
+                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth - 17,
                 backgroundColor: scrolled ? theme.cardBg : undefined,
                 borderRadius: appConfig.defaultBorderRadius,
                 zIndex: 1
@@ -86,11 +88,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                         })}
                 </Breadcrumb>
             )}
-            <Space
-                onClick={() => {
-                    setOpenModal(true);
-                }}
-            >
+            <Space>
                 {!isMobile ? (
                     <Space className={"d-flex align-items-center py-2"}>
                         <TopBarIconWrapper
@@ -107,10 +105,26 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                                 )
                             }
                         />
-                        <TopBarIconWrapper
-                            size={20}
-                            iconClasses={'bi bi-bell'}
-                        />
+                        <div>
+                            <WrapperTooltip
+                                open={bellModalOpen}
+                                title={"title"}
+                                trigger={"click"}
+                                content={
+                                    <div style={{ width: '200px', height: '500px' }} className={"text-center"}>
+                                        hello there
+                                    </div>
+                                }
+                                openChange={(e) => e ? undefined : setBellModalOpen(e)}
+                            >
+                                <TopBarIconWrapper
+                                    size={20}
+                                    iconClasses={'bi bi-bell'}
+                                    onClick={() => setBellModalOpen(!bellModalOpen)}
+                                />
+                            </WrapperTooltip>
+                        </div>
+
                         <WrapperDropDown
                             items={[
                                 {
@@ -160,6 +174,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                     <div>
                         <TopBarIconWrapper
                             iconClasses={'bi bi-three-dots-vertical'}
+                            onClick={() =>  setOpenModal(true)}
                         />
 
                         <IconHeaderModal

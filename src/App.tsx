@@ -117,6 +117,10 @@ function App() {
                 colorBgTextActive: theme.primaryColor,
                 colorBgContainer: theme.primaryColor,
             },
+            Tooltip: {
+                colorTextLightSolid: theme.defaultTextColor,
+                colorBgSpotlight: theme.cardBgLighter
+            }
         },
     };
 
