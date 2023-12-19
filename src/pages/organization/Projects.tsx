@@ -19,7 +19,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [projectList, setProjectList] = useState<never[]>(null);
     const [page, setPage] = useState<number>(null);
-;
+
     const {
         theme,
         handleSetFilterMode,
@@ -109,7 +109,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
                         <CustomSearch
                             inputMode={true}
                             asyncSearch={true}
-                            onSearch={handleSearch}
+                            onSearch={handleSearch} 
                         />
                         <div
                             className={'h-100 me-2'}
@@ -182,7 +182,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
             ) : (
                 <NoData/>
             )}
-            {fetchMoreLoading && (
+            { fetchMoreLoading && (
                 <div
                     className={
                         'w-100 d-flex justify-content-center align-items-center'
@@ -190,7 +190,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
                 >
                     <Loading/>
                 </div>
-            )}
+                )}
         </WrapperScroll>
     );
 });
