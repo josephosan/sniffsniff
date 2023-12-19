@@ -217,6 +217,9 @@ export const AppRouter: React.FC = React.memo(() => {
                     className={
                         'h-100 w-100 d-flex justify-content-center align-items-center'
                     }
+                    style={{
+                        backgroundColor: appStore.theme.mainBackgroundColor
+                    }}
                 >
                     <Loading />
                 </div>
