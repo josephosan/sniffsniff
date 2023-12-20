@@ -16,7 +16,8 @@ import { appConfig } from "../../../config/app.config";
 const ProjectUsers: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-    const [userList, setUserList] = useState<never[]>([{"name":"daj","imageUrl":"fdfdf"}]);
+    const [userList, setUserList] = useState<never[]>([{ "name": "daj", "imageUrl": "fdfdf","desc":"dda" },
+    { "name": "daj", "imageUrl": "fdfdf","desc":"dda" }]);
     const [page, setPage] = useState<number>(null);
 
     const {
@@ -150,7 +151,8 @@ const ProjectUsers: React.FC = React.memo(() => {
             {(userList && userList.length > 0) || fetchMoreLoading ? (
                 userList.map((el) => {
                     return (
-                        <WrapperUserData imageUrl={el.imageUrl} />
+                        <WrapperUserData title={el.name}
+                         desc={el.desc}   imageUrl={el.imageUrl} />
                         
                     );
                 })
