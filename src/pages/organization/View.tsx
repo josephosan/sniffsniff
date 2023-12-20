@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
@@ -18,7 +18,7 @@ const OrganizationView: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     // const [isData, setIsData] = useState(null);
 
-    useEffect(() => {
+    useMemo(() => {
         const tab =
             location.pathname.split('/')[
             location.pathname.split('/').length - 1
@@ -117,6 +117,7 @@ const OrganizationView: React.FC = () => {
                         animation={{inkBar: true, tabPane: true}}
                         activeKey={activeTab}
                         onChange={handleTabItemClick}
+                        destroyInactiveTabPane={false}
                         items={[
                             {
                                 key: 'project',

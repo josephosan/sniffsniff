@@ -19,7 +19,6 @@ const OrganizationProjects: React.FC = React.memo(() => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [projectList, setProjectList] = useState<never[]>(null);
     const [page, setPage] = useState<number>(null);
-;
     const {
         theme,
         handleSetFilterMode,
@@ -31,6 +30,10 @@ const OrganizationProjects: React.FC = React.memo(() => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
+
+    useEffect(() => {
+        console.log('projects mounted');
+    }, [])
 
     useEffect(() => {
         async function fetchData() {

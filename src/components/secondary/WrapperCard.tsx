@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode, useEffect} from 'react';
 import { appConfig } from '../../config/app.config';
 import styled from 'styled-components';
 import { useApp } from '../../store/app.store';
