@@ -11,6 +11,7 @@ import WrapperDropDown from '../secondary/WrapperDropDown';
 import {useAuth} from '../../store/auth.store';
 import WrapperTooltip from "../secondary/WrapperTooltip";
 import WrapperMessage from "../secondary/WrapperMessage";
+import NotificationBell from "../secondary/NotificationBell";
 
 interface AppHeaderProps {
     isMobile: boolean;
@@ -106,26 +107,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                                 )
                             }
                         />
-                        <div>
-                            <WrapperTooltip
-                                open={bellModalOpen}
-                                title={"title"}
-                                trigger={"click"}
-                                width={"400px"}
-                                content={
-                                    <div className={"p-1 gap-1"}>
-                                        <WrapperMessage />
-                                    </div>
-                                }
-                                openChange={(e) => e ? undefined : setBellModalOpen(e)}
-                            >
-                                <TopBarIconWrapper
-                                    size={20}
-                                    iconClasses={'bi bi-bell'}
-                                    onClick={() => setBellModalOpen(!bellModalOpen)}
-                                />
-                            </WrapperTooltip>
-                        </div>
+                        <NotificationBell />
 
                         <WrapperDropDown
                             items={[
