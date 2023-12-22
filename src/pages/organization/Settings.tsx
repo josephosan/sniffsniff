@@ -4,7 +4,7 @@ import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 import {Button} from "antd";
 
-const OrganizationSettings: React.FC = React.memo(() => {
+const OrganizationSettings: React.FC = () => {
     useEffect(() => {
         console.log('settings mounted');
     }, [])
@@ -63,6 +63,6 @@ const OrganizationSettings: React.FC = React.memo(() => {
             </div>
         </>
     )
-})
+}
 
 export default OrganizationSettings;

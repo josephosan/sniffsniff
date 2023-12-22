@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
-import { appConfig } from '../../config/app.config';
-import { getPersianDateAsText } from '../../helpers/app.helper';
-import { Button, Divider, Popconfirm, Popover, Space, Tag } from 'antd';
+import {appConfig} from '../../config/app.config';
+import {getPersianDateAsText} from '../../helpers/app.helper';
+import {Button, Divider, Popconfirm, Popover, Space, Tag} from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import { useMediaQuery } from 'react-responsive';
+import {useMediaQuery} from 'react-responsive';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
 import CustomSearch from '../../components/primary/CustomSearch';
-import { useNavigate } from 'react-router-dom';
-import { useApp } from '../../store/app.store';
+import {useNavigate} from 'react-router-dom';
+import {useApp} from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
 
 const OrganizationList: React.FC = React.memo(() => {
@@ -36,14 +36,6 @@ const OrganizationList: React.FC = React.memo(() => {
             await handleFetchMore();
         }
 
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        async function fetchData() {
-            await handleFetchMore();
-        }
-
         setOrganizationList(() => []);
         fetchData();
     }, [filters]);
@@ -62,7 +54,7 @@ const OrganizationList: React.FC = React.memo(() => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = { ...params, ...filters };
+        if (filters) params = {...params, ...filters};
 
         try {
             // const res = await OrganizationService.paginateAll({ params });
@@ -151,7 +143,7 @@ const OrganizationList: React.FC = React.memo(() => {
 
             {pageFirstLoading && (
                 <div className={'w-100'}>
-                    <FormSkeletonLoading fillRow={true} count={10} />
+                    <FormSkeletonLoading fillRow={true} count={10}/>
                 </div>
             )}
             {(organizationList && organizationList.length > 0) ||
@@ -185,7 +177,7 @@ const OrganizationList: React.FC = React.memo(() => {
                                     </div>
                                     <div className="d-flex flex-column ">
                                         {el.description}
-                                        <TextItemWrapper text={el.tags} />
+                                        <TextItemWrapper text={el.tags}/>
                                     </div>
                                     <Space
                                         className={
@@ -204,11 +196,11 @@ const OrganizationList: React.FC = React.memo(() => {
                                                 )
                                             }
                                         /> */}
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-binoculars'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-pencil-square'}
                                             iconClicked={() =>
@@ -217,7 +209,7 @@ const OrganizationList: React.FC = React.memo(() => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <Popconfirm
                                             title={`حذف ${el.name}`}
                                             description={
@@ -258,7 +250,7 @@ const OrganizationList: React.FC = React.memo(() => {
                                             <Tag color={'green'}>گروه</Tag>
                                         )}
                                     </div>
-                                    <TextItemWrapper text={el.tags} />
+                                    <TextItemWrapper text={el.tags}/>
                                     <TextItemWrapper
                                         text={getPersianDateAsText(
                                             el.startDate,
@@ -295,11 +287,11 @@ const OrganizationList: React.FC = React.memo(() => {
                                                 )
                                             }
                                         /> */}
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-binoculars'}
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <ActionIconWrapper
                                             icon={'bi bi-pencil-square'}
                                             iconClicked={() =>
@@ -308,7 +300,7 @@ const OrganizationList: React.FC = React.memo(() => {
                                                 )
                                             }
                                         />
-                                        <Divider type={'vertical'} />
+                                        <Divider type={'vertical'}/>
                                         <Popconfirm
                                             title={`حذف ${el.name}`}
                                             description={
@@ -341,7 +333,7 @@ const OrganizationList: React.FC = React.memo(() => {
                     );
                 })
             ) : (
-                <NoData />
+                <NoData/>
             )}
             {fetchMoreLoading && (
                 <div
@@ -349,7 +341,7 @@ const OrganizationList: React.FC = React.memo(() => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading />
+                    <Loading/>
                 </div>
             )}
         </WrapperScroll>

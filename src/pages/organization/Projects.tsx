@@ -14,7 +14,7 @@ import {useApp} from '../../store/app.store';
 
 import {appConfig} from '../../config/app.config';
 
-const OrganizationProjects: React.FC = React.memo(() => {
+const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [projectList, setProjectList] = useState<never[]>(null);
@@ -26,22 +26,10 @@ const OrganizationProjects: React.FC = React.memo(() => {
         handleSetSidebarCollapsed,
         filters,
     } = useApp();
-
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
 
-    useEffect(() => {
-        console.log('projects mounted');
-    }, [])
-
-    useEffect(() => {
-        async function fetchData() {
-            await handleFetchMore();
-        }
-
-        fetchData();
-    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -49,6 +37,7 @@ const OrganizationProjects: React.FC = React.memo(() => {
         }
 
         setProjectList(() => []);
+        console.log('projects mounted');
         fetchData();
     }, [filters]);
 
@@ -196,6 +185,6 @@ const OrganizationProjects: React.FC = React.memo(() => {
             )}
         </WrapperScroll>
     );
-});
+};
 
 export default OrganizationProjects;

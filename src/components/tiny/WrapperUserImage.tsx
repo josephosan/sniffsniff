@@ -1,5 +1,5 @@
 import React from "react";
-import CustomImage from "./CustomImage";
+import CustomImage from "../secondary/CustomImage";
 import {useApp} from "../../store/app.store";
 
 interface WrapperUserImageProps {
