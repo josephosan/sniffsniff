@@ -57,7 +57,7 @@ const ModalWrapper: React.FC<ModalType> = React.memo(({
             style={{
                 top: top,
                 right: right,
-                left: left
+                left: left,
             }}
         >
             {elements}

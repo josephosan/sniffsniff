@@ -35,7 +35,7 @@ const lightConfig = {
     mode: 'light',
     cardBg: '#ffffff',
     cardBgLighter: '#fbfbfb',
-    mainBackgroundColor: '#F7F8FA',
+    mainBackgroundColor: '#f7f8fa',
     defaultTextColor: '#797979',
     fadeTextColor: '#808080',
     primaryColor: '#F0B86E',
