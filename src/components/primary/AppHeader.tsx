@@ -22,16 +22,15 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
     const navigate = useNavigate();
     const {theme, setThemeMode, handleSetSidebarCollapsed} = useApp();
     const [openModal, setOpenModal] = useState(false);
-    const [bellModalOpen, setBellModalOpen] = useState(false);
     const [scrolled, setScrolled] = useState(true); // todo: make this dynamic
     const [breadcrumbItems, setBreadcrumbItems] = useState<
-        { href: string; title: string, icon: string }[] | null
+        { href: string; title: string, icon: string, clickable: boolean }[] | null
     >(null);
 
     const authStore = useAuth();
 
     useEffect(() => {
-        setBreadcrumbItems((prevState) => {
+        setBreadcrumbItems(() => {
             return handleGetBreadcrump(location.pathname);
         });
     }, [location.pathname]);
@@ -71,17 +70,20 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                 <Breadcrumb
                     style={{
                         fontSize: appConfig.largeFontSize + 'px',
-                        cursor: 'pointer',
                     }}
                 >
                     {breadcrumbItems &&
                         breadcrumbItems.map((el) => {
                             return (
                                 <Breadcrumb.Item
-                                    onClick={() => navigate(el.href)}
+                                    onClick={() => el.clickable ? navigate(el.href) : undefined}
                                     key={el.href}
                                 >
-                                    <Space>
+                                    <Space
+                                        style={{
+                                            cursor: el.clickable ? 'pointer' : 'not-allowed'
+                                        }}
+                                    >
                                         <i className={el.icon}></i>
                                         <span>{el.title}</span>
                                     </Space>

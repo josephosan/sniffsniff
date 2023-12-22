@@ -13,7 +13,7 @@ const ProjectInvite: React.FC = React.memo(() => {
         {
             name: 'users',
             type: 'tags',
-            label: 'کاربران',
+            label: 'انتخاب کاربر',
             placeholder: 'انتخاب کنید',
             required: true,
             rules: [{required: true, message: 'وارد کردن نام اجباری است'}]

@@ -13,6 +13,7 @@ import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
 import {useApp} from '../../store/app.store';
 
 import {appConfig} from '../../config/app.config';
+import {useNavigate, useParams} from "react-router-dom";
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -29,6 +30,8 @@ const OrganizationProjects: React.FC = () => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
+    const navigate = useNavigate();
+    const params = useParams();
 
 
     useEffect(() => {
@@ -129,7 +132,7 @@ const OrganizationProjects: React.FC = () => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        // onClick={() => navigate()}
+                        onClick={() => navigate(`/organization/${params.organizationId}/project/create`)}
                     >
                         افزودن
                     </Button>

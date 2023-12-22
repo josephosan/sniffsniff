@@ -34,6 +34,8 @@ const getPageNameByPath = (route: string) => {
     return route.split('/')[1];
 };
 
+const notClickableRouteNames = ['project'];
+
 const handleGetBreadcrump = (path) => {
     const pathNames = path
         .split('/')
@@ -46,7 +48,8 @@ const handleGetBreadcrump = (path) => {
     const home = {
         icon: 'bi bi-house-door',
         href: '/dashboard',
-        key: 'dashboard'
+        key: 'dashboard',
+        clickable: true
     }
 
     let basepath = '/';
@@ -56,6 +59,7 @@ const handleGetBreadcrump = (path) => {
             href: basepath,
             title: pathNamesMap[el],
             icon: pathIconsMap[el],
+            clickable: !notClickableRouteNames.includes(el)
         };
     });
 

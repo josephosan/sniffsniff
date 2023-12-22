@@ -11,6 +11,7 @@ import CustomSearch from '../../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
 import WrapperUserData from "../../../components/secondary/WrapperUserData";
 import {appConfig} from "../../../config/app.config";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 const ProjectUsers: React.FC = React.memo(() => {
@@ -31,6 +32,8 @@ const ProjectUsers: React.FC = React.memo(() => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
+    const navigate = useNavigate();
+    const params = useParams();
 
 
      useEffect(() => {
@@ -129,7 +132,7 @@ const ProjectUsers: React.FC = React.memo(() => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        // onClick={() => navigate()}
+                        onClick={() => navigate(`/organization/${params.organizationId}/project/${params.projectId}/invite`)}
                     >
                         افزودن
                     </Button>
