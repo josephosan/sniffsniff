@@ -28,10 +28,9 @@ const WrapperData: React.FC<DataProps> = (
         <>
             {(isMobile && !forceDesktop) ? (
                 <div
-                    className="shadow-sm mb-4 px-4 py-3 rounded align-items-center"
+                    className="shadow-sm mb-3 px-4 py-3 rounded align-items-center"
                     style={{
-                        backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor,
+                        backgroundColor: theme.cardBg,
                     }}
                 >
                     {children}
@@ -41,8 +40,7 @@ const WrapperData: React.FC<DataProps> = (
                     className="shadow-sm mb-4 rounded align-items-center"
                     style={{
                         borderRadius: appConfig.defaultBorderRadius,
-                        backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor,
+                        backgroundColor: theme.cardBg,
                         borderRight: displayBorder ? `4px solid ${color}` : '',
                         padding: padding
                     }}
