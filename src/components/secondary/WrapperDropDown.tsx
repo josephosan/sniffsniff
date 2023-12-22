@@ -16,7 +16,7 @@ interface WrapperDropDownProps {
     children: ReactNode
 }
 
-const WrapperDropDown: React.FC<WrapperDropDownProps> = ({
+const WrapperDropDown: React.FC<WrapperDropDownProps> = React.memo(({
     items,
     placement = 'bottomLeft',
     trigger = 'click',
@@ -34,6 +34,6 @@ const WrapperDropDown: React.FC<WrapperDropDownProps> = ({
             {children}
         </Dropdown>
     );
-};
+});
 
 export default WrapperDropDown;

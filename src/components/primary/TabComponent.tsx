@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Tabs } from 'antd';
 import { TabItemProps } from '../../@types/app';
 import '../../styles/components/primary/tabs.scss';
@@ -9,6 +9,7 @@ interface TabComponentProps {
     items: TabItemProps[];
     activeKey?: string;
     animation?: { inkBar: boolean; tabPane: boolean };
+    destroyInactiveTabPane?: boolean
 }
 
 const TabComponent: React.FC<TabComponentProps> = React.memo((
@@ -20,7 +21,8 @@ const TabComponent: React.FC<TabComponentProps> = React.memo((
         animation = {
             inkBar: true,
             tabPage: false
-        }
+        },
+        destroyInactiveTabPane = true
     }
 ) => {
     const handleTabsChange = (e) => {
@@ -34,6 +36,7 @@ const TabComponent: React.FC<TabComponentProps> = React.memo((
             items={items}
             activeKey={activeKey}
             animated={animation}
+            destroyInactiveTabPane={destroyInactiveTabPane}
         />
     );
 })

@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import {appConfig} from "../../config/app.config";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 import {Button} from "antd";
 
-const OrganizationSettings: React.FC = React.memo(() => {
-    const updateInfoFields: FormBuilderField[] = [
+const OrganizationSettings: React.FC = () => {
+    useEffect(() => {
+        console.log('settings mounted');
+    }, [])
+
+    const updateInfoFields = useRef<FormBuilderField[]>([
         {
             label: 'نام',
             name: 'name',
@@ -22,7 +26,7 @@ const OrganizationSettings: React.FC = React.memo(() => {
             required: true,
             rules: [{required: true, message: 'توضیحات اجباری است!'}]
         },
-    ]
+    ]);
 
 
     return (
@@ -38,7 +42,7 @@ const OrganizationSettings: React.FC = React.memo(() => {
                 <h5>ویرایش اطلاعات</h5>
                 <div className={"mt-4 px-2"} style={{maxWidth: "300px"}}>
                     <FormBuilder
-                        fields={updateInfoFields}
+                        fields={updateInfoFields.current}
                         colSM={"24"}
                         colXL={"24"}
                         colXS={"24"}
@@ -59,6 +63,6 @@ const OrganizationSettings: React.FC = React.memo(() => {
             </div>
         </>
     )
-})
+}
 
 export default OrganizationSettings;

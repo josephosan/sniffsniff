@@ -8,7 +8,7 @@ import {Button} from "antd";
 interface FiltersOptions {
 }
 
-const Filters: React.FC<FiltersOptions> = () => {
+const Filters: React.FC<FiltersOptions> = React.memo(() => {
     const {handleSetFilters, filters} = useApp();
     const [key, setKey] = useState<number>(0);
     const filterFormFields: FormBuilderField = [
@@ -53,6 +53,6 @@ const Filters: React.FC<FiltersOptions> = () => {
             <Button type={"primary"} size={"small"} onClick={handleClearClick}>پاک کردن</Button>
         </div>
     );
-}
+});
 
 export default Filters;

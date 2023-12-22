@@ -19,7 +19,7 @@ interface ModalType {
     cancelDisable?: boolean;
 }
 
-const ModalWrapper: React.FC<ModalType> = ({
+const ModalWrapper: React.FC<ModalType> = React.memo(({
     elements,
     open,
     setOpenModal,
@@ -63,6 +63,6 @@ const ModalWrapper: React.FC<ModalType> = ({
             {elements}
         </Modal>
     );
-};
+});
 
 export default ModalWrapper;
