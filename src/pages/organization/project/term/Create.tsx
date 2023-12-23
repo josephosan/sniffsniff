@@ -9,7 +9,7 @@ const CreateTerm: React.FC = () => {
             type: 'select',
            
             placeholder: 'نوع',
-            options: [{ label: 'یادآوری', value: 'reminder' },
+            options: [{ label: 'یادآور', value: 'reminder' },
                 { label: 'تسک', value: 'task' },
                 { label: 'رویداد', value: 'event' },
                 
