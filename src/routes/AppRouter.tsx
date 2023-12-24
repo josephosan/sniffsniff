@@ -24,6 +24,7 @@ import ProjectUsers from "../pages/organization/project/Users";
 import ProjectSettings from "../pages/organization/project/Settings";
 import ProjectInvite from "../pages/organization/project/Invite";
 import CreateTerm from "../pages/organization/project/term/Create";
+import Notifications from "../pages/Notifications";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -158,6 +159,12 @@ export const AppRouter: React.FC = React.memo(() => {
                     path: 'organization/:organizationId/project/:projectId/term/create',
                     element: <CreateTerm/>
                 },
+
+                // notifications
+                {
+                    path: 'notifications',
+                    element: <Notifications />
+                }
             ],
         },
         {

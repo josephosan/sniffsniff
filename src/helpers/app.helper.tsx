@@ -12,7 +12,8 @@ const pathNamesMap = {
     project: 'پروژه',
     users: 'کاربران',
     term: 'ترم',
-    invite: 'دعوت'
+    invite: 'دعوت',
+    notifications: 'اعلان ها'
 };
 
 const pathIconsMap = {
@@ -26,7 +27,8 @@ const pathIconsMap = {
     project: 'bi bi-kanban',
     users: 'bi bi-people',
     term: 'bi bi-backpack',
-    invite: 'bi bi-person-plus'
+    invite: 'bi bi-person-plus',
+    notifications: 'bi bi-app-indicator'
 };
 
 const getPageNameByPath = (route: string) => {
