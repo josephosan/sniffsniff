@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useRoutes, Outlet, useNavigate, Navigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useRoutes, Outlet, useNavigate, Navigate } from 'react-router-dom';
 
 // Import pages
-import {Home} from '../pages/Home';
+import { Home } from '../pages/Home';
 import Login from '../pages/Login';
 import CreateTimeLine from '../pages/timeline/Create';
 import EditTimeLine from '../pages/timeline/Edit';
@@ -17,27 +17,30 @@ import OrganizationSettings from '../pages/organization/Settings';
 import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
 import Organizations from '../pages/organization/List';
-import CreateProject from "../pages/organization/project/Create";
-import ViewProject from "../pages/organization/project/View";
-import ProjectTerms from "../pages/organization/project/Terms";
-import ProjectUsers from "../pages/organization/project/Users";
-import ProjectSettings from "../pages/organization/project/Settings";
-import ProjectInvite from "../pages/organization/project/Invite";
-import CreateTerm from "../pages/organization/project/term/Create";
-import Notifications from "../pages/Notifications";
+import CreateProject from '../pages/organization/project/Create';
+import ViewProject from '../pages/organization/project/View';
+import ProjectTerms from '../pages/organization/project/Terms';
+import ProjectUsers from '../pages/organization/project/Users';
+import ProjectSettings from '../pages/organization/project/Settings';
+import ProjectInvite from '../pages/organization/project/Invite';
+import CreateTerm from '../pages/organization/project/term/Create';
+import Notifications from '../pages/notification/Notifications';
+import NotificationsList from '../pages/notification/List';
+import PublicNotifications from '../pages/notification/Public';
+import ProjectNotifications from '../pages/notification/Project';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
-import {DefaultLayout} from '../layouts/DefaultLayout';
+import { DefaultLayout } from '../layouts/DefaultLayout';
 
 // Import types
-import {RouteObject} from '../@types/app';
-import {User} from '../@types/auth';
+import { RouteObject } from '../@types/app';
+import { User } from '../@types/auth';
 
 // Import stores
-import {useNotify} from '../store/notify.store';
-import {useApp} from '../store/app.store';
-import {useAuth} from '../store/auth.store';
+import { useNotify } from '../store/notify.store';
+import { useApp } from '../store/app.store';
+import { useAuth } from '../store/auth.store';
 
 // Import services
 import ApiService from '../services/ApiService';
@@ -47,7 +50,7 @@ import AuthService from '../services/AuthService';
 import Loading from '../components/secondary/Loading';
 
 // others
-import {getToken} from '../helpers/jwt.helper';
+import { getToken } from '../helpers/jwt.helper';
 import Timelines from '../pages/timeline/Timelines';
 
 export const AppRouter: React.FC = React.memo(() => {
@@ -60,132 +63,147 @@ export const AppRouter: React.FC = React.memo(() => {
             name: 'default',
             path: '/',
             element: authStore.isAuthenticated ? (
-                <DefaultLayout/>
+                <DefaultLayout />
             ) : (
-                <Navigate to={'/login'}/>
+                <Navigate to={'/login'} />
             ),
             children: [
                 {
                     path: 'dashboard',
-                    element: <Home/>,
+                    element: <Home />,
                 },
 
                 // timelines
                 {
                     path: 'timeline',
-                    element: <Timelines/>,
+                    element: <Timelines />,
                 },
                 {
                     path: 'timeline/:id',
-                    element: <ViewTimeline/>,
+                    element: <ViewTimeline />,
                 },
                 {
                     path: 'timeline/create',
-                    element: <CreateTimeLine/>,
+                    element: <CreateTimeLine />,
                 },
                 {
                     path: 'timeline/edit/:id',
-                    element: <EditTimeLine/>,
+                    element: <EditTimeLine />,
                 },
 
                 // events
                 {
                     path: 'timeline/:timelineId/event',
-                    element: <Events/>,
+                    element: <Events />,
                 },
                 {
                     path: 'timeline/:timelineId/event/create',
-                    element: <CreateEvent/>,
+                    element: <CreateEvent />,
                 },
                 {
                     path: 'timeline/:eventId/event/edit',
-                    element: <EditEvent/>,
+                    element: <EditEvent />,
                 },
 
                 // organizations
                 {
                     path: 'organization/:organizationId',
-                    element: <OrganizationView/>,
+                    element: <OrganizationView />,
                     children: [
                         {
                             path: 'setting',
-                            element: <OrganizationSettings/>,
+                            element: <OrganizationSettings />,
                         },
                         {
                             path: 'project',
-                            element: <OrganizationProjects/>,
+                            element: <OrganizationProjects />,
                         },
                     ],
                 },
                 {
                     path: 'organization/create',
-                    element: <CreateOrganization/>,
+                    element: <CreateOrganization />,
                 },
                 {
                     path: 'organization',
-                    element: <Organizations/>,
+                    element: <Organizations />,
                 },
 
                 // projects
                 {
                     path: 'organization/:organizationId/project/create',
-                    element: <CreateProject/>
+                    element: <CreateProject />,
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId',
-                    element: <ViewProject/>,
+                    element: <ViewProject />,
                     children: [
                         {
                             path: 'term',
-                            element: <ProjectTerms/>
+                            element: <ProjectTerms />,
                         },
                         {
                             path: 'users',
-                            element: <ProjectUsers/>
+                            element: <ProjectUsers />,
                         },
                         {
                             path: 'setting',
-                            element: <ProjectSettings/>
-                        }
-                    ]
+                            element: <ProjectSettings />,
+                        },
+                    ],
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId/invite',
-                    element: <ProjectInvite/>
+                    element: <ProjectInvite />,
                 },
 
                 // terms
                 {
                     path: 'organization/:organizationId/project/:projectId/term/create',
-                    element: <CreateTerm/>
+                    element: <CreateTerm />,
                 },
 
                 // notifications
                 {
                     path: 'notifications',
-                    element: <Notifications />
-                }
+                    element: <Notifications />,
+                },
+
+                {
+                    path: 'notifications/list/',
+                    element: <NotificationsList />,
+                    children: [
+                        {
+                            path: 'project',
+                            element: <ProjectNotifications />,
+                        },
+                        {
+                            path: 'public',
+                            element: <PublicNotifications />,
+                        },
+                    ],
+                },
             ],
         },
         {
             name: 'auth',
             path: '/',
-            element: <AuthLayout/>,
+            element: <AuthLayout />,
             children: [
                 {
                     path: 'login',
                     element: !authStore.isAuthenticated ? (
-                        <Login/>
+                        <Login />
                     ) : (
-                        <Navigate to={'/dashboard'}/>
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
                 {
                     path: 'forgot-password',
                     element: !authStore.isAuthenticated ? (
-                        <ForgotPassword/>
+                        <ForgotPassword />
                     ) : (
-                        <Navigate to={'/dashboard'}/>
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
             ],
@@ -193,7 +211,7 @@ export const AppRouter: React.FC = React.memo(() => {
         {
             name: 'error',
             path: '*',
-            element: <_404/>,
+            element: <_404 />,
         },
     ];
     const element = useRoutes(routes);
@@ -211,7 +229,7 @@ export const AppRouter: React.FC = React.memo(() => {
             setLoading(false);
         } else {
             AuthService.who()
-                .then(({data}) => {
+                .then(({ data }) => {
                     authStore.handleSetUser(data.data as User);
                     authStore.handleSetIsAuthenticated(true);
                 })
@@ -232,15 +250,15 @@ export const AppRouter: React.FC = React.memo(() => {
                         'h-100 w-100 d-flex justify-content-center align-items-center'
                     }
                     style={{
-                        backgroundColor: appStore.theme.mainBackgroundColor
+                        backgroundColor: appStore.theme.mainBackgroundColor,
                     }}
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             ) : (
                 <>
                     {element}
-                    <Outlet/>
+                    <Outlet />
                 </>
             )}
         </>
