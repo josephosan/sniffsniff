@@ -30,7 +30,7 @@ const pathIconsMap = {
     term: 'bi bi-backpack',
     invite: 'bi bi-person-plus',
     notifications: 'bi bi-app-indicator',
-    public: 'bi bi-app-indicator',
+    public: 'bi bi-globe',
 };
 
 const getPageNameByPath = (route: string) => {

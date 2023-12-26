@@ -165,12 +165,7 @@ export const AppRouter: React.FC = React.memo(() => {
 
                 // notifications
                 {
-                    path: 'notifications',
-                    element: <Notifications />,
-                },
-
-                {
-                    path: 'notifications/list/',
+                    path: 'notifications/',
                     element: <NotificationsList />,
                     children: [
                         {

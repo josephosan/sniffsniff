@@ -27,7 +27,7 @@ const NotificationsList: React.FC = () => {
     }, [location.pathname]);
 
     const handleTabItemClick = (e) => {
-        navigate(`/notifications/list/${e}`);
+        navigate(`/notifications/${e}`);
     };
 
     return (
@@ -45,8 +45,8 @@ const NotificationsList: React.FC = () => {
                         onChange={handleTabItemClick}
                         items={[
                             {
-                                key: 'project',
-                                label: 'پروژه ',
+                                key: 'public',
+                                label: 'عمومی',
                                 children: (
                                     <WrapperCard
                                         shadowed={false}
@@ -59,8 +59,8 @@ const NotificationsList: React.FC = () => {
                                 ),
                             },
                             {
-                                key: 'public',
-                                label: 'عمومی',
+                                key: 'project',
+                                label: 'پروژه ',
                                 children: (
                                     <WrapperCard
                                         shadowed={false}
