@@ -24,7 +24,9 @@ import ProjectUsers from "../pages/organization/project/Users";
 import ProjectSettings from "../pages/organization/project/Settings";
 import ProjectInvite from "../pages/organization/project/Invite";
 import CreateTerm from "../pages/organization/project/term/Create";
-import Notifications from "../pages/Notifications";
+import NotificationsList from "../pages/notification/List";
+import PublicNotifications from "../pages/notification/Public";
+import ProjectNotifications from "../pages/notification/Project";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -182,10 +184,22 @@ export const AppRouter: React.FC = React.memo(() => {
 
                 // notifications
                 {
-                    path: 'notifications',
+                    path: 'notifications/',
                     name: 'Notifications',
-                    element: <Notifications/>
-                }
+                    element: <NotificationsList/>,
+                    children: [
+                        {
+                            path: 'project',
+                            name: 'ProjectNotifications',
+                            element: <ProjectNotifications/>,
+                        },
+                        {
+                            path: 'public',
+                            name: 'PublicNotifications',
+                            element: <PublicNotifications/>,
+                        },
+                    ],
+                },
             ],
         },
         {
