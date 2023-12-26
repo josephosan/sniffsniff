@@ -185,14 +185,17 @@ export const AppRouter: React.FC = React.memo(() => {
                 // notifications
                 {
                     path: 'notifications/',
+                    name: 'Notifications',
                     element: <NotificationsList/>,
                     children: [
                         {
                             path: 'project',
+                            name: 'ProjectNotifications',
                             element: <ProjectNotifications/>,
                         },
                         {
                             path: 'public',
+                            name: 'PublicNotifications',
                             element: <PublicNotifications/>,
                         },
                     ],
