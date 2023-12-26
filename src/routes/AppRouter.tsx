@@ -27,6 +27,7 @@ import CreateTerm from "../pages/organization/project/term/Create";
 import NotificationsList from "../pages/notification/List";
 import PublicNotifications from "../pages/notification/Public";
 import ProjectNotifications from "../pages/notification/Project";
+import ViewNotification from "../pages/notification/view/View";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -200,6 +201,11 @@ export const AppRouter: React.FC = React.memo(() => {
                         },
                     ],
                 },
+                {
+                    path: 'notifications/:id',
+                    name: 'ViewNotification',
+                    element: <ViewNotification/>
+                }
             ],
         },
         {
