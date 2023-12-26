@@ -120,6 +120,11 @@ function App() {
             Tooltip: {
                 colorTextLightSolid: theme.defaultTextColor,
                 colorBgSpotlight: theme.cardBgLighter
+            },
+            Segmented: {
+                itemSelectedBg: theme.primaryColor,
+                itemSelectedColor: 'white',
+                colorBgLayout: theme.mainBackgroundColor
             }
         },
     };
