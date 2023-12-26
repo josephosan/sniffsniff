@@ -36,6 +36,7 @@ const MobileNotifications = () => {
                                 type={notif.type}
                                 title={notif.title}
                                 desc={notif.desc}
+                                key={index}
                             />
                         );
                     })
