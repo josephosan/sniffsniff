@@ -49,7 +49,7 @@ const CreateTerm: React.FC = () => {
                 <div className="mt-5">
                     <FormBuilder
                         fields={createTermFormFields}
-                        submitButtonFlex={"center"}
+                        submitButtonFlex={"start"}
                         colXL={24}
                         colSM={24}
                         fieldsPaddingLevel={"0"}
