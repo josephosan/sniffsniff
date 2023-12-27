@@ -14,7 +14,7 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo((
     {
         type = 'success',
         title = 'title',
-        desc = 'desc'
+        desc = 'desc',
     }
 ) => {
     const { theme } = useApp();

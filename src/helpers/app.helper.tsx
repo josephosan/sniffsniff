@@ -1,4 +1,4 @@
-import {colors} from '../config/app.config';
+import { colors } from '../config/app.config';
 import moment from 'jalali-moment';
 
 const pathNamesMap = {
@@ -13,7 +13,8 @@ const pathNamesMap = {
     users: 'کاربران',
     term: 'ترم',
     invite: 'دعوت',
-    notifications: 'اعلان ها'
+    notifications: 'اعلان ها',
+    public: 'عمومی',
 };
 
 const pathIconsMap = {
@@ -28,7 +29,8 @@ const pathIconsMap = {
     users: 'bi bi-people',
     term: 'bi bi-backpack',
     invite: 'bi bi-person-plus',
-    notifications: 'bi bi-app-indicator'
+    notifications: 'bi bi-app-indicator',
+    public: 'bi bi-globe',
 };
 
 const getPageNameByPath = (route: string) => {
@@ -51,8 +53,8 @@ const handleGetBreadcrump = (path) => {
         icon: 'bi bi-house-door',
         href: '/dashboard',
         key: 'dashboard',
-        clickable: true
-    }
+        clickable: true,
+    };
 
     let basepath = '/';
     let result = pathNames.map((el) => {
@@ -61,7 +63,7 @@ const handleGetBreadcrump = (path) => {
             href: basepath,
             title: pathNamesMap[el],
             icon: pathIconsMap[el],
-            clickable: !notClickableRouteNames.includes(el)
+            clickable: !notClickableRouteNames.includes(el),
         };
     });
 
@@ -98,7 +100,7 @@ function hsvToHex(original) {
     if (/[0-9A-Fa-f]{6}/g.test(original)) {
         return original;
     } else {
-        let {h, s, v} = original;
+        let { h, s, v } = original;
 
         // Convert HSV to RGB
         let c = v * s;

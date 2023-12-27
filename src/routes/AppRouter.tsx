@@ -24,7 +24,10 @@ import ProjectUsers from "../pages/organization/project/Users";
 import ProjectSettings from "../pages/organization/project/Settings";
 import ProjectInvite from "../pages/organization/project/Invite";
 import CreateTerm from "../pages/organization/project/term/Create";
-import Notifications from "../pages/Notifications";
+import NotificationsList from "../pages/notification/List";
+import PublicNotifications from "../pages/notification/Public";
+import ProjectNotifications from "../pages/notification/Project";
+import ViewNotification from "../pages/notification/view/View";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -67,103 +70,141 @@ export const AppRouter: React.FC = React.memo(() => {
             children: [
                 {
                     path: 'dashboard',
+                    name: 'Dashboard',
                     element: <Home/>,
                 },
 
                 // timelines
                 {
                     path: 'timeline',
+                    name: 'Timeline',
                     element: <Timelines/>,
                 },
                 {
                     path: 'timeline/:id',
+                    name: 'SingleTimeline',
                     element: <ViewTimeline/>,
                 },
                 {
                     path: 'timeline/create',
+                    name: 'CreateTimeline',
                     element: <CreateTimeLine/>,
                 },
                 {
                     path: 'timeline/edit/:id',
+                    name: 'EditTimeline',
                     element: <EditTimeLine/>,
                 },
 
                 // events
                 {
                     path: 'timeline/:timelineId/event',
+                    name: 'Events',
                     element: <Events/>,
                 },
                 {
                     path: 'timeline/:timelineId/event/create',
+                    name: 'CreateEvent',
                     element: <CreateEvent/>,
                 },
                 {
                     path: 'timeline/:eventId/event/edit',
+                    name: 'EditEvent',
                     element: <EditEvent/>,
                 },
 
                 // organizations
                 {
                     path: 'organization/:organizationId',
+                    name: 'SingleOrganization',
                     element: <OrganizationView/>,
                     children: [
                         {
                             path: 'setting',
+                            name: 'OrganizationSetting',
                             element: <OrganizationSettings/>,
                         },
                         {
                             path: 'project',
+                            name: 'OrganizationProject',
                             element: <OrganizationProjects/>,
                         },
                     ],
                 },
                 {
                     path: 'organization/create',
+                    name: 'CreateOrganization',
                     element: <CreateOrganization/>,
                 },
                 {
                     path: 'organization',
+                    name: 'Organization',
                     element: <Organizations/>,
                 },
 
                 // projects
                 {
                     path: 'organization/:organizationId/project/create',
+                    name: 'CreateProject',
                     element: <CreateProject/>
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId',
+                    name: 'SingleProject',
                     element: <ViewProject/>,
                     children: [
                         {
                             path: 'term',
+                            name: 'ProjectTerm',
                             element: <ProjectTerms/>
                         },
                         {
                             path: 'users',
+                            name: 'ProjectUsers',
                             element: <ProjectUsers/>
                         },
                         {
                             path: 'setting',
+                            name: 'ProjectSetting',
                             element: <ProjectSettings/>
                         }
                     ]
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId/invite',
+                    name: 'ProjectInvite',
                     element: <ProjectInvite/>
                 },
 
                 // terms
                 {
                     path: 'organization/:organizationId/project/:projectId/term/create',
+                    name: 'CreateTerm',
                     element: <CreateTerm/>
                 },
 
                 // notifications
                 {
-                    path: 'notifications',
-                    element: <Notifications />
+                    path: 'notifications/',
+                    name: 'Notifications',
+                    element: <NotificationsList/>,
+                    children: [
+                        {
+                            path: 'project',
+                            name: 'ProjectNotifications',
+                            element: <ProjectNotifications/>,
+                        },
+                        {
+                            path: 'public',
+                            name: 'PublicNotifications',
+                            element: <PublicNotifications/>,
+                        },
+                    ],
+                },
+                {
+                    path: 'notifications/:id',
+                    name: 'ViewNotification',
+                    element: <ViewNotification/>
                 }
             ],
         },
@@ -174,6 +215,7 @@ export const AppRouter: React.FC = React.memo(() => {
             children: [
                 {
                     path: 'login',
+                    name: 'Login',
                     element: !authStore.isAuthenticated ? (
                         <Login/>
                     ) : (
@@ -182,6 +224,7 @@ export const AppRouter: React.FC = React.memo(() => {
                 },
                 {
                     path: 'forgot-password',
+                    name: 'ForgotPassword',
                     element: !authStore.isAuthenticated ? (
                         <ForgotPassword/>
                     ) : (
