@@ -55,6 +55,12 @@ const darkConfig = {
     itemHoverColor: '#3B435B',
 };
 
+const statusColors = {
+    'success': '#65B741',
+    'warning': '#FB8B24',
+    'info': '#6DB9EF',
+}
+
 const colors = [
     '#61A3BA',
     '#C70039',
@@ -72,4 +78,4 @@ const apiConfig = {
     API_BASE_URL: 'http://46.102.143.25:5000/v1'
 }
 
-export {appConfig, lightConfig, darkConfig, colors, apiConfig};
+export {appConfig, lightConfig, darkConfig, colors, apiConfig, statusColors};

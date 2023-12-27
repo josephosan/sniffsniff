@@ -1,4 +1,4 @@
-import { version } from 'antd';
+import React from "react";
 import ViewProjectNotification from './Project';
 
 const ViewNotification: React.FC = () => {

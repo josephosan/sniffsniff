@@ -1,7 +1,7 @@
 import React from "react";
 import WrapperCard from "./WrapperCard";
 import ActionIconWrapper from "./ActionIconWrapper";
-import {appConfig} from "../../config/app.config";
+import {appConfig, statusColors} from "../../config/app.config";
 import {useApp} from "../../store/app.store";
 
 interface WrapperMessageProps {
@@ -35,9 +35,9 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo((
                     }
                     size={appConfig.defaultIconSize}
                     color={
-                        type === 'success' ? '#65B741' :
-                            type === 'warning' ? '#FB8B24' :
-                                '#6DB9EF'
+                        type === 'success' ? statusColors.success :
+                            type === 'warning' ? statusColors.warning :
+                                statusColors.info
                     }
                     clickable={false}
                 />
