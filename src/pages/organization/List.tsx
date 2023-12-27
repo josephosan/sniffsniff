@@ -4,8 +4,7 @@ import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading'
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
 import {appConfig} from '../../config/app.config';
-import {getPersianDateAsText} from '../../helpers/app.helper';
-import {Button, Divider, Popconfirm, Popover, Space, Tag} from 'antd';
+import {Button} from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
 import {useMediaQuery} from 'react-responsive';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
@@ -13,12 +12,15 @@ import CustomSearch from '../../components/primary/CustomSearch';
 import {useNavigate} from 'react-router-dom';
 import {useApp} from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
+import OrganizationApiService from "../../services/OrganizationApiService";
+import CustomImage from "../../components/secondary/CustomImage";
 
 const OrganizationList: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [organizationList, setOrganizationList] = useState<never[]>(null);
-    const [page, setPage] = useState<number>(null);
+    const [page, setPage] = useState<string | null>(null);
+    const [searchValue, setSearch] = useState<string | null>(null)
     const navigate = useNavigate();
     const {
         theme,
@@ -41,7 +43,7 @@ const OrganizationList: React.FC = React.memo(() => {
     }, [filters]);
 
     const handleFetchMore = async (
-        page: number = 1,
+        page: string | null = null,
         order: string = 'DESC',
         s: string = '',
     ) => {
@@ -51,18 +53,18 @@ const OrganizationList: React.FC = React.memo(() => {
         let params = {
             limit: appConfig.paginationLimit,
             order: order,
-            page: page,
+            cursor: page
         };
         if (s !== '') params['s'] = s;
         if (filters) params = {...params, ...filters};
 
         try {
-            // const res = await OrganizationService.paginateAll({ params });
-            // setOrganizationList((prevState) => {
-            //     if (prevState) return [...prevState, ...res.data.data.items];
-            //     return [...res.data.data.items];
-            // });
-            // setPage(() => res.data.data.next);
+            const res = await OrganizationApiService.paginateAll({params});
+            setOrganizationList((prevState) => {
+                if (prevState) return [...prevState, ...res.data.data.items];
+                return [...res.data.data.items];
+            });
+            setPage(() => res.data.data.cursor);
         } catch (e) {
             console.log(e);
         } finally {
@@ -73,7 +75,7 @@ const OrganizationList: React.FC = React.memo(() => {
 
     const handleReachedBottom = async () => {
         if (!pageFirstLoading && !fetchMoreLoading && page) {
-            await handleFetchMore(page);
+            await handleFetchMore(page, 'DESC', searchValue);
         }
     };
 
@@ -84,13 +86,9 @@ const OrganizationList: React.FC = React.memo(() => {
 
     const handleSearch = async (e) => {
         setOrganizationList(() => []);
-        setPage(() => 1);
-        await handleFetchMore(1, 'ASC', e.target.value);
-    };
-
-    const handleOrganizationDelete = (el) => {
-        // todo: handle this
-        console.log(el);
+        setPage(() => null);
+        setSearch(e.target.value);
+        await handleFetchMore(null, 'ASC', e.target.value);
     };
 
     return (
@@ -150,183 +148,32 @@ const OrganizationList: React.FC = React.memo(() => {
             fetchMoreLoading ? (
                 organizationList.map((el, index) => {
                     return (
-                        <WrapperData key={index} color={el.color}>
+                        <WrapperData key={index} handleClick={() => navigate(`/organization/${el.id}/project`)}>
                             {isMobile ? (
-                                <div className="d-flex flex-column gap-5">
-                                    <div className="d-flex justify-content-between align-items-center ">
-                                        <div className="d-flex flex-column">
-                                            <TextItemWrapper
-                                                fontSize={
-                                                    appConfig.defaultFontSize
-                                                }
-                                                text={el.name}
-                                            />
-                                            <TextItemWrapper
-                                                text={getPersianDateAsText(
-                                                    el.startDate,
-                                                )}
-                                            />{' '}
-                                        </div>
-                                        <div>
-                                            {el.type === 'PRIVATE' ? (
-                                                <Tag color={'red'}>خصوصی</Tag>
-                                            ) : (
-                                                <Tag color={'green'}>گروه</Tag>
-                                            )}
-                                        </div>
+                                <div className="d-flex flex-column gap-3">
+                                    <div className="d-flex align-items-center gap-2">
+                                        <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
+                                        <TextItemWrapper
+                                            fontSize={
+                                                appConfig.largeFontSize
+                                            }
+                                            text={el.name}
+                                        />
                                     </div>
-                                    <div className="d-flex flex-column ">
-                                        {el.description}
-                                        <TextItemWrapper text={el.tags}/>
+                                    <div className={"px-2"}>
+                                        <TextItemWrapper text={el.description}/>
                                     </div>
-                                    <Space
-                                        className={
-                                            'd-flex align-items-center justify-content-between'
-                                        }
-                                    >
-                                        <ActionIconWrapper
-                                            icon={'bi bi-share'}
-                                        />
-                                        {/* <Divider type={'vertical'} />
-                                        <ActionIconWrapper
-                                            icon={'bi bi-calendar-event'}
-                                            iconClicked={() =>
-                                                navigate(
-                                                    `/timeline/${el.id}/event`,
-                                                )
-                                            }
-                                        /> */}
-                                        <Divider type={'vertical'}/>
-                                        <ActionIconWrapper
-                                            icon={'bi bi-binoculars'}
-                                        />
-                                        <Divider type={'vertical'}/>
-                                        <ActionIconWrapper
-                                            icon={'bi bi-pencil-square'}
-                                            iconClicked={() =>
-                                                navigate(
-                                                    `/organization/edit/${el.id}`,
-                                                )
-                                            }
-                                        />
-                                        <Divider type={'vertical'}/>
-                                        <Popconfirm
-                                            title={`حذف ${el.name}`}
-                                            description={
-                                                'آیا از حذف اطمینان دارید؟'
-                                            }
-                                            onConfirm={() =>
-                                                setOrganizationList(el)
-                                            }
-                                            okText={'تایید'}
-                                            placement={'right'}
-                                            showCancel={false}
-                                        >
-                                            <Button
-                                                style={{
-                                                    border: 'none',
-                                                    backgroundColor: 'inherit',
-                                                }}
-                                                className={'p-0'}
-                                                key={el.id}
-                                            >
-                                                <ActionIconWrapper
-                                                    icon={'bi bi-trash'}
-                                                />
-                                            </Button>
-                                        </Popconfirm>
-                                    </Space>
                                 </div>
                             ) : (
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <TextItemWrapper
-                                        fontSize={appConfig.defaultFontSize}
-                                        text={el.name}
-                                    />
-                                    <div>
-                                        {el.type === 'PRIVATE' ? (
-                                            <Tag color={'red'}>خصوصی</Tag>
-                                        ) : (
-                                            <Tag color={'green'}>گروه</Tag>
-                                        )}
+                                <div className="d-flex align-items-center gap-3">
+                                    <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
+                                    <div className={"d-flex flex-column"}>
+                                        <TextItemWrapper
+                                            fontSize={appConfig.largeFontSize}
+                                            text={el.name}
+                                        />
+                                        <TextItemWrapper text={el.description}/>
                                     </div>
-                                    <TextItemWrapper text={el.tags}/>
-                                    <TextItemWrapper
-                                        text={getPersianDateAsText(
-                                            el.startDate,
-                                        )}
-                                    />
-                                    <TextItemWrapper
-                                        text={getPersianDateAsText(el.endDate)}
-                                    />
-
-                                    <Popover content={el.description}>
-                                        <span
-                                            style={{
-                                                fontSize:
-                                                    appConfig.smallFontSize +
-                                                    'px',
-                                            }}
-                                        >
-                                            {el.description?.split(' ')[0]}{' '}
-                                            &nbsp;
-                                            {el.description?.split(' ')[1]}{' '}
-                                            &nbsp; ...
-                                        </span>
-                                    </Popover>
-                                    <Space className={'mt-1 float-left'}>
-                                        <ActionIconWrapper
-                                            icon={'bi bi-share'}
-                                        />
-                                        {/* <Divider type={'vertical'} />
-                                        <ActionIconWrapper
-                                            icon={'bi bi-calendar-event'}
-                                            iconClicked={() =>
-                                                navigate(
-                                                    `/timeline/${el.id}/event`,
-                                                )
-                                            }
-                                        /> */}
-                                        <Divider type={'vertical'}/>
-                                        <ActionIconWrapper
-                                            icon={'bi bi-binoculars'}
-                                        />
-                                        <Divider type={'vertical'}/>
-                                        <ActionIconWrapper
-                                            icon={'bi bi-pencil-square'}
-                                            iconClicked={() =>
-                                                navigate(
-                                                    `/organization/edit/${el.id}`,
-                                                )
-                                            }
-                                        />
-                                        <Divider type={'vertical'}/>
-                                        <Popconfirm
-                                            title={`حذف ${el.name}`}
-                                            description={
-                                                'آیا از حذف اطمینان دارید؟'
-                                            }
-                                            onConfirm={() =>
-                                                handleOrganizationDelete(el)
-                                            }
-                                            okText={'تایید'}
-                                            showCancel={false}
-                                            placement={'right'}
-                                        >
-                                            <Button
-                                                style={{
-                                                    border: 'none',
-                                                    backgroundColor: 'inherit',
-                                                }}
-                                                className={'p-0'}
-                                                key={el.id}
-                                            >
-                                                <ActionIconWrapper
-                                                    icon={'bi bi-trash'}
-                                                />
-                                            </Button>
-                                        </Popconfirm>
-                                    </Space>
                                 </div>
                             )}
                         </WrapperData>

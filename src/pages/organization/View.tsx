@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
@@ -8,6 +8,7 @@ import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading'
 import BigBoxSkeletonLoading from '../../components/secondary/BigBoxSkeletonLoading';
 import {appConfig} from "../../config/app.config";
 import CustomImage from "../../components/secondary/CustomImage";
+import OrganizationApiService from "../../services/OrganizationApiService";
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
@@ -15,11 +16,20 @@ const OrganizationView: React.FC = () => {
     const location = useLocation();
     const {theme} = useApp();
     const [activeTab, setActiveTab] = useState<string | null>(null);
-
-    const [isLoading, setIsLoading] = useState(false);
-    // const [isData, setIsData] = useState(null);
+    const [data, setData] = useState<never>(null);
 
     useMemo(() => {
+        async function getData() {
+            try {
+                const {data} = await OrganizationApiService.getOne(params.organizationId);
+                setData(data.data);
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        getData();
+
         const tab =
             location.pathname.split('/')[
             location.pathname.split('/').length - 1
@@ -33,7 +43,7 @@ const OrganizationView: React.FC = () => {
 
     return (
         <div>
-            {isLoading ? (
+            {!data ? (
                 <div className="d-flex flex-column gap-3">
                     <FormSkeletonLoading count={1}/>
                     <div className={"d-flex flex-row justify-content-center"} style={{width: '260px'}}>
@@ -50,32 +60,29 @@ const OrganizationView: React.FC = () => {
                                     key: 'title',
                                     label: (
                                         <div className="d-flex flex-row align-items-center gap-3 mb-3">
-                                            <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"} />
-                                            <h5 className={"mb-0"}>نام سازمان</h5>
+                                            <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
+                                            <h5 className={"mb-0"}>
+                                                {data.name}
+                                            </h5>
                                         </div>
                                     ),
                                     children: (
-                                        <div className="d-flex flex-column  align-items-end gap-3 px-md-5 px-xl-5 ">
-                                    <span
-                                        style={{
-                                            fontSize: appConfig.defaultFontSize,
-                                        }}
-                                        className={"description"}
-                                    >
-                                        ازمایشی و بی‌معنی در صنعت چاپ،
-                                        صفحه‌آرایی و طراحی گرافیک گفته می‌شود.
-                                        طراح گرافیک از این متن به عنوان عنصری از
-                                        ترکیب بندی برای پر کردن صفحه و ارایه
-                                        اولیه شکل ظاهری و کلی طرح سفارش گرفته
-                                        شده استفاده می نماید، تا از نظر گرافیکی
-                                        نشانگر چگونگی نوع و ان
-                                    </span>
+                                        <div className="d-flex flex-column gap-3 px-md-5 px-xl-5 ">
+                                            <span
+                                                style={{
+                                                    fontSize: appConfig.defaultFontSize,
+                                                }}
+                                                className={"description"}
+                                            >
+                                                {data.description}
+                                            </span>
                                             <small
                                                 style={{
                                                     fontSize: appConfig.smallFontSize,
                                                 }}
+                                                className={"d-flex justify-content-end"}
                                             >
-                                                ساخته شده در 2 ماه پیش
+                                                {data.createdAt}
                                             </small>
                                         </div>
                                     ),
