@@ -172,6 +172,10 @@ export default class ApiService {
         return this.post(this.baseUrl, config);
     }
 
+    public static async getOne(id) {
+        return this.get(`${this.baseUrl}${id}`);
+    }
+
     // basic urls
     public static get selectUrl() {
         return `${apiConfig.API_BASE_URL}/${this.baseUrl}paginate/`;

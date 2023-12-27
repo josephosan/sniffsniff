@@ -4,8 +4,7 @@ import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading'
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
 import {appConfig} from '../../config/app.config';
-import {getPersianDateAsText, getRandomColor} from '../../helpers/app.helper';
-import {Button, Divider, Popconfirm, Popover, Space, Tag} from 'antd';
+import {Button} from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
 import {useMediaQuery} from 'react-responsive';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
@@ -14,7 +13,6 @@ import {useNavigate} from 'react-router-dom';
 import {useApp} from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
 import OrganizationApiService from "../../services/OrganizationApiService";
-import WrapperUserImage from "../../components/tiny/WrapperUserImage";
 import CustomImage from "../../components/secondary/CustomImage";
 
 const OrganizationList: React.FC = React.memo(() => {
@@ -22,6 +20,7 @@ const OrganizationList: React.FC = React.memo(() => {
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [organizationList, setOrganizationList] = useState<never[]>(null);
     const [page, setPage] = useState<string | null>(null);
+    const [searchValue, setSearch] = useState<string | null>(null)
     const navigate = useNavigate();
     const {
         theme,
@@ -76,7 +75,7 @@ const OrganizationList: React.FC = React.memo(() => {
 
     const handleReachedBottom = async () => {
         if (!pageFirstLoading && !fetchMoreLoading && page) {
-            await handleFetchMore(page);
+            await handleFetchMore(page, 'DESC', searchValue);
         }
     };
 
@@ -88,7 +87,8 @@ const OrganizationList: React.FC = React.memo(() => {
     const handleSearch = async (e) => {
         setOrganizationList(() => []);
         setPage(() => null);
-        await handleFetchMore(1, 'ASC', e.target.value);
+        setSearch(e.target.value);
+        await handleFetchMore(null, 'ASC', e.target.value);
     };
 
     return (

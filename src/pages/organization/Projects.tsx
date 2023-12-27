@@ -40,7 +40,6 @@ const OrganizationProjects: React.FC = () => {
         }
 
         setProjectList(() => []);
-        console.log('projects mounted');
         fetchData();
     }, [filters]);
 
