@@ -22,23 +22,13 @@ export const Sidebar: React.FC = React.memo(() => {
             icon: "bi bi-speedometer2"
         },
         {
-            name: "جداول زمانی",
-            path: "/timeline",
-            icon: "bi bi-calendar-range"
-        },
-        {
             name: "سازمان ها",
             path: "/organization",
             icon: "bi bi-building"
         },
         {
-            name: "کلاس ها",
-            path: "/classes",
-            icon: "bi bi-person-video3"
-        },
-        {
             name: "اعلان ها",
-            path: "/notifications",
+            path: "/notifications/public",
             icon: "bi bi-app-indicator"
         },
     ]

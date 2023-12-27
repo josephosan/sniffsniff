@@ -5,10 +5,6 @@ import {FormBuilderField} from "../../@types/app";
 import {Button} from "antd";
 
 const OrganizationSettings: React.FC = () => {
-    useEffect(() => {
-        console.log('settings mounted');
-    }, [])
-
     const updateInfoFields = useRef<FormBuilderField[]>([
         {
             label: 'نام',

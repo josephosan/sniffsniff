@@ -133,6 +133,7 @@ export default class ApiService {
         } catch (err) {
             destroyToken();
             this.notify?.showAlert('warning', 'ورود دوباره', 'توکن شما باطل شده, لطفا دوباره وارد شوید!');
+            this.navigate('/login');
             return null;
         }
     }
@@ -169,6 +170,10 @@ export default class ApiService {
 
     public static async createOne(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return this.post(this.baseUrl, config);
+    }
+
+    public static async getOne(id) {
+        return this.get(`${this.baseUrl}${id}`);
     }
 
     // basic urls
