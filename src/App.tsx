@@ -124,7 +124,7 @@ function App() {
             Segmented: {
                 itemSelectedBg: theme.primaryColor,
                 itemSelectedColor: 'white',
-                colorBgLayout: theme.mainBackgroundColor
+                colorBgLayout: theme.cardBgLighter
             }
         },
     };
