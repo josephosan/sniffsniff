@@ -133,6 +133,7 @@ export default class ApiService {
         } catch (err) {
             destroyToken();
             this.notify?.showAlert('warning', 'ورود دوباره', 'توکن شما باطل شده, لطفا دوباره وارد شوید!');
+            this.navigate('/login');
             return null;
         }
     }
