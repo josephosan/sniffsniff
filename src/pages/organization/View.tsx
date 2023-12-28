@@ -57,7 +57,7 @@ const OrganizationView: React.FC = () => {
                 <div className="d-flex flex-column gap-3">
                     <FormSkeletonLoading count={1}/>
                     <div className={"d-flex flex-row justify-content-center"} style={{width: '260px'}}>
-                        <FormSkeletonLoading count={2} width={"70px"}/>
+                        <FormSkeletonLoading count={1}/>
                     </div>
                     <BigBoxSkeletonLoading count={1}/>
                 </div>
