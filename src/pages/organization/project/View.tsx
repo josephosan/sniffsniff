@@ -8,6 +8,7 @@ import {appConfig} from "../../../config/app.config";
 import FormSkeletonLoading from "../../../components/secondary/FormSkeletonLoading";
 import BigBoxSkeletonLoading from "../../../components/secondary/BigBoxSkeletonLoading";
 import ProjectApiService from "../../../services/ProjectApiService";
+import Emitter from "../../../helpers/emitter.helper";
 
 
 const ViewProject: React.FC = React.memo(() => {
@@ -19,6 +20,7 @@ const ViewProject: React.FC = React.memo(() => {
     const [data, setData] = useState<never>(null);
 
     useEffect(() => {
+        Emitter.on('project:update', () => fetchData());
         async function getData() {
             await fetchData();
         }
@@ -30,6 +32,10 @@ const ViewProject: React.FC = React.memo(() => {
             location.pathname.split('/').length - 1
                 ];
         setActiveTab(() => tab);
+
+        return () => {
+            Emitter.off('project:update');
+        }
     }, [location.pathname]);
 
     const fetchData = async () => {

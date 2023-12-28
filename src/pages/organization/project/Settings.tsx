@@ -1,10 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {FormBuilderField} from "../../../@types/app";
 import {appConfig} from "../../../config/app.config";
 import FormBuilder from "../../../components/primary/FormBuilder";
 import {Button} from "antd";
+import Emitter from "../../../helpers/emitter.helper";
+import ProjectApiService from "../../../services/ProjectApiService";
+import {useParams} from "react-router-dom";
+import {useNotify} from "../../../store/notify.store";
 
 const ProjectSettings: React.FC = React.memo(() => {
+    const [loading, setLoading] = useState(false);
+    const params = useParams();
+    const notifyStore = useNotify();
     const updateInfoFields: FormBuilderField[] = [
         {
             label: 'نام',
@@ -12,18 +19,26 @@ const ProjectSettings: React.FC = React.memo(() => {
             placeholder: 'نام پروژه',
             type: 'text',
             required: true,
-            rules: [{required: true, message: 'نام اجباری است!'}]
         },
         {
             label: 'توضیحات',
-            name: 'desc',
+            name: 'description',
             type: 'textarea',
             placeholder: 'توضیحات',
-            required: true,
-            rules: [{required: true, message: 'توضیحات اجباری است!'}]
         },
     ]
-
+    const handleUpdate = async (formData) => {
+        setLoading(true);
+        try {
+            const {data} = await ProjectApiService.updateOne(params.projectId, formData);
+            notifyStore.showMessage('success', 'با موفقیت ویرایش شد.');
+            Emitter.emit('project:update');
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -43,6 +58,7 @@ const ProjectSettings: React.FC = React.memo(() => {
                         colXL={"24"}
                         colXS={"24"}
                         fieldsPaddingLevel={"0"}
+                        onFinish={handleUpdate}
                     />
                 </div>
             </div>

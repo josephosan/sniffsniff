@@ -2,7 +2,6 @@ import React from "react";
 import {useApp} from '../../../store/app.store';
 import WrapperScroll from "../../../components/secondary/WrapperScroll";
 import {useState, useEffect} from 'react';
-import {useMediaQuery} from 'react-responsive';
 import {Button} from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import NoData from '../../../components/tiny/NoData';
@@ -28,10 +27,6 @@ const ProjectUsers: React.FC = React.memo(() => {
         handleSetSidebarCollapsed,
         filters,
     } = useApp();
-
-    const isMobile = useMediaQuery({
-        query: `(max-width: ${appConfig.appBreakPoint}px)`,
-    });
     const navigate = useNavigate();
     const params = useParams();
 
