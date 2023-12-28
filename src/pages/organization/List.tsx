@@ -167,7 +167,7 @@ const OrganizationList: React.FC = React.memo(() => {
                             ) : (
                                 <div className="d-flex align-items-center gap-3">
                                     <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
-                                    <div className={"d-flex flex-column"}>
+                                    <div className={"d-flex flex-column gap-2"}>
                                         <TextItemWrapper
                                             fontSize={appConfig.largeFontSize}
                                             text={el.name}
