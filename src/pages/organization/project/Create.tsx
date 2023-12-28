@@ -2,6 +2,7 @@ import React from "react";
 import {FormBuilderField} from "../../../@types/app";
 import FormBuilder from "../../../components/primary/FormBuilder";
 
+
 const CreateProject: React.FC = React.memo(() => {
     const createFormFields: FormBuilderField[] = [
         {
@@ -39,6 +40,7 @@ const CreateProject: React.FC = React.memo(() => {
             rules: [{required: true, message: 'وارد کردن توضیحات اجباری است'}],
         }
     ]
+
 
 
     return (

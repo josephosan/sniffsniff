@@ -1,29 +1,42 @@
-import React, {useEffect, useRef} from "react";
+import React, {useRef, useState} from "react";
 import {appConfig} from "../../config/app.config";
 import FormBuilder from "../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../@types/app";
 import {Button} from "antd";
+import OrganizationApiService from "../../services/OrganizationApiService";
+import {useParams} from "react-router-dom";
+import {useNotify} from "../../store/notify.store";
 
 const OrganizationSettings: React.FC = () => {
+    const params = useParams();
+    const notifyStore = useNotify();
+    const [loading, setLoading] = useState(false);
     const updateInfoFields = useRef<FormBuilderField[]>([
         {
             label: 'نام',
             name: 'name',
             placeholder: 'نام سازمان',
             type: 'text',
-            required: true,
-            rules: [{required: true, message: 'نام اجباری است!'}]
         },
         {
             label: 'توضیحات',
-            name: 'desc',
+            name: 'description',
             type: 'textarea',
             placeholder: 'توضیحات',
-            required: true,
-            rules: [{required: true, message: 'توضیحات اجباری است!'}]
         },
     ]);
 
+    const handleUpdate = async (formData) => {
+        setLoading(true);
+        try {
+            const {data} = await OrganizationApiService.updateOne(params.organizationId, formData);
+            notifyStore.showMessage('success', 'با موفقیت ویرایش شد.');
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <>
@@ -43,6 +56,8 @@ const OrganizationSettings: React.FC = () => {
                         colXL={"24"}
                         colXS={"24"}
                         fieldsPaddingLevel={"0"}
+                        onFinish={handleUpdate}
+                        loading={loading}
                     />
                 </div>
             </div>
