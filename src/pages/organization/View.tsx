@@ -39,7 +39,6 @@ const OrganizationView: React.FC = () => {
     }, [location.pathname]);
 
     const fetchData = async () => {
-        console.log('called');
         try {
             const {data} = await OrganizationApiService.getOne(params.organizationId);
             setData(data.data);
