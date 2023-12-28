@@ -19,8 +19,14 @@ const CreateOrganization: React.FC = React.memo(() => {
             required: true,
             rules: [{required: true, message: 'وارد کردن نام اجباری است'}]
         },
+<<<<<<< HEAD
+        
+        {
+            name: 'desc',
+=======
         {
             name: 'description',
+>>>>>>> master
             type: 'textarea',
             label: 'توضیحات',
             placeholder: 'توضیحات',
