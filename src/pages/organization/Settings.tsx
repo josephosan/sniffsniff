@@ -6,6 +6,7 @@ import {Button} from "antd";
 import OrganizationApiService from "../../services/OrganizationApiService";
 import {useParams} from "react-router-dom";
 import {useNotify} from "../../store/notify.store";
+import Emitter from "../../helpers/emitter.helper";
 
 const OrganizationSettings: React.FC = () => {
     const params = useParams();
@@ -31,6 +32,7 @@ const OrganizationSettings: React.FC = () => {
         try {
             const {data} = await OrganizationApiService.updateOne(params.organizationId, formData);
             notifyStore.showMessage('success', 'با موفقیت ویرایش شد.');
+            Emitter.emit('organization:update');
         } catch (e) {
             console.log(e);
         } finally {

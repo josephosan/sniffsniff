@@ -9,6 +9,7 @@ import BigBoxSkeletonLoading from '../../components/secondary/BigBoxSkeletonLoad
 import {appConfig} from "../../config/app.config";
 import CustomImage from "../../components/secondary/CustomImage";
 import OrganizationApiService from "../../services/OrganizationApiService";
+import Emitter from "../../helpers/emitter.helper";
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const OrganizationView: React.FC = () => {
     const [data, setData] = useState<never>(null);
 
     useEffect(() => {
+        Emitter.on('organization:update', () => fetchData());
         async function getData() {
             await fetchData();
         }
@@ -30,9 +32,14 @@ const OrganizationView: React.FC = () => {
             location.pathname.split('/').length - 1
                 ];
         setActiveTab(() => tab);
+
+        return () => {
+            Emitter.off('organization:update');
+        }
     }, [location.pathname]);
 
     const fetchData = async () => {
+        console.log('called');
         try {
             const {data} = await OrganizationApiService.getOne(params.organizationId);
             setData(data.data);
