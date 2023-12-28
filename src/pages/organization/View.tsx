@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
@@ -18,14 +18,9 @@ const OrganizationView: React.FC = () => {
     const [activeTab, setActiveTab] = useState<string | null>(null);
     const [data, setData] = useState<never>(null);
 
-    useMemo(() => {
+    useEffect(() => {
         async function getData() {
-            try {
-                const {data} = await OrganizationApiService.getOne(params.organizationId);
-                setData(data.data);
-            } catch (e) {
-                console.log(e);
-            }
+            await fetchData();
         }
 
         getData();
@@ -36,6 +31,15 @@ const OrganizationView: React.FC = () => {
                 ];
         setActiveTab(() => tab);
     }, [location.pathname]);
+
+    const fetchData = async () => {
+        try {
+            const {data} = await OrganizationApiService.getOne(params.organizationId);
+            setData(data.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const handleTabItemClick = (e) => {
         navigate(`/organization/${params.organizationId}/${e}`);
