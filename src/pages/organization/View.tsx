@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
@@ -9,6 +9,7 @@ import BigBoxSkeletonLoading from '../../components/secondary/BigBoxSkeletonLoad
 import {appConfig} from "../../config/app.config";
 import CustomImage from "../../components/secondary/CustomImage";
 import OrganizationApiService from "../../services/OrganizationApiService";
+import Emitter from "../../helpers/emitter.helper";
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
@@ -18,14 +19,10 @@ const OrganizationView: React.FC = () => {
     const [activeTab, setActiveTab] = useState<string | null>(null);
     const [data, setData] = useState<never>(null);
 
-    useMemo(() => {
+    useEffect(() => {
+        Emitter.on('organization:update', () => fetchData());
         async function getData() {
-            try {
-                const {data} = await OrganizationApiService.getOne(params.organizationId);
-                setData(data.data);
-            } catch (e) {
-                console.log(e);
-            }
+            await fetchData();
         }
 
         getData();
@@ -35,7 +32,21 @@ const OrganizationView: React.FC = () => {
             location.pathname.split('/').length - 1
                 ];
         setActiveTab(() => tab);
+
+        return () => {
+            Emitter.off('organization:update');
+        }
     }, [location.pathname]);
+
+    const fetchData = async () => {
+        console.log('called');
+        try {
+            const {data} = await OrganizationApiService.getOne(params.organizationId);
+            setData(data.data);
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
     const handleTabItemClick = (e) => {
         navigate(`/organization/${params.organizationId}/${e}`);

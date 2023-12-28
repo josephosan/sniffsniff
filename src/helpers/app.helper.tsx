@@ -1,4 +1,4 @@
-import { colors } from '../config/app.config';
+import {colors} from '../config/app.config';
 import moment from 'jalali-moment';
 
 const pathNamesMap = {
@@ -100,7 +100,7 @@ function hsvToHex(original) {
     if (/[0-9A-Fa-f]{6}/g.test(original)) {
         return original;
     } else {
-        let { h, s, v } = original;
+        let {h, s, v} = original;
 
         // Convert HSV to RGB
         let c = v * s;
@@ -132,6 +132,7 @@ function hsvToHex(original) {
             .slice(1)}`;
     }
 }
+
 
 export {
     getPageNameByPath,
