@@ -1,8 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import {FormBuilderField} from "../../../@types/app";
 import FormBuilder from "../../../components/primary/FormBuilder";
+import ProjectApiService from "../../../services/ProjectApiService";
+import { useNotify } from "../../../store/notify.store";
+import {useNavigate, useParams} from "react-router-dom";
+
 
 const CreateProject: React.FC = React.memo(() => {
+    const notifyStore = useNotify();
+    const navigate = useNavigate();
+    const params = useParams();
+    const [loading, setLoading] = useState(false);
+    
     const createFormFields: FormBuilderField[] = [
         {
             name: 'name',
@@ -22,16 +31,16 @@ const CreateProject: React.FC = React.memo(() => {
             options: [
                 {
                     label: 'خصوصی',
-                    value: 'private'
+                    value: 'PRIVATE'
                 },
                 {
-                    label: 'عمومی',
-                    value: 'group'
+                    label: 'تیم',
+                    value: 'TEAM'
                 },
             ]
         },
         {
-            name: 'desc',
+            name: 'description',
             type: 'textarea',
             label: 'توضیحات',
             placeholder: 'توضیحات',
@@ -39,6 +48,21 @@ const CreateProject: React.FC = React.memo(() => {
             rules: [{required: true, message: 'وارد کردن توضیحات اجباری است'}],
         }
     ]
+
+    const handleSubmit = async (formData) => {
+        formData['organizationId'] = params.organizationId;
+        setLoading(true);
+        try {
+            const {data} = await ProjectApiService.createOne(formData);
+            notifyStore.showMessage("success", "با موفقیت انجام شد.");
+            navigate(`/organization/${params.organizationId}/project/${data.data.id}/term`);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
 
     return (
@@ -52,6 +76,8 @@ const CreateProject: React.FC = React.memo(() => {
                         colSM={24}
                         fieldsPaddingLevel={"0"}
                         submitButtonLabel={"ایجاد"}
+                        onFinish={handleSubmit}
+                        loading={loading}
                     />
                 </div>
             </div>
