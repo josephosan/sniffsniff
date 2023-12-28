@@ -1,9 +1,7 @@
-import React, { useContext, createContext, useState } from "react";
+import React, {useContext, createContext, useState, useMemo} from "react";
 import {AuthStore, User} from "../@types/auth";
 import {destroyToken, saveToken} from "../helpers/jwt.helper";
 import ApiService from "../services/ApiService";
-
-
 
 
 // to define AuthContext. with the provided type.
@@ -18,7 +16,7 @@ export function useAuth() {
 }
 
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
     const handleSetIsAuthenticated = (value: boolean) => {
         setIsAuthenticated(() => value);
@@ -44,14 +42,16 @@ export const AuthProvider: React.FC = ({ children }) => {
         destroyToken();
     }
 
-    const authStore: AuthStore = {
-        handleSetIsAuthenticated,
-        isAuthenticated,
-        user,
-        handleSetUser,
-        logout,
-        handleSetTokens
-    }
+    const authStore: AuthStore = useMemo(
+        () => ({
+            handleSetIsAuthenticated,
+            isAuthenticated,
+            user,
+            handleSetUser,
+            logout,
+            handleSetTokens
+        }),
+        [isAuthenticated, user]);
 
-    return <AuthContext.Provider value={authStore}>{ children }</AuthContext.Provider>;
+    return <AuthContext.Provider value={authStore}>{children}</AuthContext.Provider>;
 }

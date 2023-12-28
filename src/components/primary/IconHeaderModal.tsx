@@ -1,9 +1,11 @@
+import React from "react";
 import WrapperModal from '../secondary/WrapperModal';
 import { TopBarIconWrapper } from '../secondary/TopBarIconWrapper';
 import { darkConfig, lightConfig } from '../../config/app.config';
 
 import { useAuth } from '../../store/auth.store';
 import { useNavigate } from 'react-router-dom';
+import NotificationBell from "../secondary/NotificationBell";
 
 interface IconHeaderModalProps {
     theme: never;
@@ -67,10 +69,7 @@ const IconHeaderModal: React.FC<IconHeaderModalProps> = ({
                                     )
                                 }
                             />
-                            <TopBarIconWrapper
-                                size={20}
-                                iconClasses={'bi bi-bell'}
-                            />
+                            <NotificationBell tooltipWidth={"500px"}/>
                             <TopBarIconWrapper
                                 size={20}
                                 iconClasses={'bi bi-person-check'}

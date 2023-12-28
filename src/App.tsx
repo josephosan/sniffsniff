@@ -109,7 +109,7 @@ function App() {
                 colorBgElevated: theme.cardBg,
             },
             Dropdown: {
-                colorBgElevated: theme.mainBackgroundColor,
+                colorBgElevated: theme.cardBgLighter,
             },
             Tabs: {
                 cardBg: theme.cardBg,
@@ -117,6 +117,15 @@ function App() {
                 colorBgTextActive: theme.primaryColor,
                 colorBgContainer: theme.primaryColor,
             },
+            Tooltip: {
+                colorTextLightSolid: theme.defaultTextColor,
+                colorBgSpotlight: theme.cardBgLighter
+            },
+            Segmented: {
+                itemSelectedBg: theme.primaryColor,
+                itemSelectedColor: 'white',
+                colorBgLayout: theme.cardBgLighter
+            }
         },
     };
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TopBarIconWrapper} from '../secondary/TopBarIconWrapper';
-import {Breadcrumb, Space} from 'antd';
+import {Breadcrumb, Space, Tooltip} from 'antd';
 import {useApp} from '../../store/app.store';
 import {appConfig, darkConfig, lightConfig} from '../../config/app.config';
 import IconHeaderModal from './IconHeaderModal';
@@ -9,6 +9,9 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 import WrapperDropDown from '../secondary/WrapperDropDown';
 import {useAuth} from '../../store/auth.store';
+import WrapperTooltip from "../secondary/WrapperTooltip";
+import WrapperMessage from "../secondary/WrapperMessage";
+import NotificationBell from "../secondary/NotificationBell";
 
 interface AppHeaderProps {
     isMobile: boolean;
@@ -21,13 +24,13 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
     const [openModal, setOpenModal] = useState(false);
     const [scrolled, setScrolled] = useState(true); // todo: make this dynamic
     const [breadcrumbItems, setBreadcrumbItems] = useState<
-        { href: string; title: string, icon: string }[] | null
+        { href: string; title: string, icon: string, clickable: boolean }[] | null
     >(null);
 
     const authStore = useAuth();
 
     useEffect(() => {
-        setBreadcrumbItems((prevState) => {
+        setBreadcrumbItems(() => {
             return handleGetBreadcrump(location.pathname);
         });
     }, [location.pathname]);
@@ -53,7 +56,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                 position: "fixed",
                 top: 0,
                 left: appConfig.defaultPadding,
-                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth-17,
+                right: isMobile ? appConfig.defaultPadding : appConfig.sidebarWidth - 17,
                 backgroundColor: scrolled ? theme.cardBg : undefined,
                 borderRadius: appConfig.defaultBorderRadius,
                 zIndex: 1
@@ -67,17 +70,20 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                 <Breadcrumb
                     style={{
                         fontSize: appConfig.largeFontSize + 'px',
-                        cursor: 'pointer',
                     }}
                 >
                     {breadcrumbItems &&
                         breadcrumbItems.map((el) => {
                             return (
                                 <Breadcrumb.Item
-                                    onClick={() => navigate(el.href)}
+                                    onClick={() => el.clickable ? navigate(el.href) : undefined}
                                     key={el.href}
                                 >
-                                    <Space>
+                                    <Space
+                                        style={{
+                                            cursor: el.clickable ? 'pointer' : 'not-allowed'
+                                        }}
+                                    >
                                         <i className={el.icon}></i>
                                         <span>{el.title}</span>
                                     </Space>
@@ -86,11 +92,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                         })}
                 </Breadcrumb>
             )}
-            <Space
-                onClick={() => {
-                    setOpenModal(true);
-                }}
-            >
+            <Space>
                 {!isMobile ? (
                     <Space className={"d-flex align-items-center py-2"}>
                         <TopBarIconWrapper
@@ -107,10 +109,8 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                                 )
                             }
                         />
-                        <TopBarIconWrapper
-                            size={20}
-                            iconClasses={'bi bi-bell'}
-                        />
+                        <NotificationBell />
+
                         <WrapperDropDown
                             items={[
                                 {
@@ -160,6 +160,7 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(({isMobile}) => {
                     <div>
                         <TopBarIconWrapper
                             iconClasses={'bi bi-three-dots-vertical'}
+                            onClick={() =>  setOpenModal(true)}
                         />
 
                         <IconHeaderModal

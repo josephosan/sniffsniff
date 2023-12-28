@@ -22,10 +22,12 @@ const UnderlinedLink: React.FC<UnderlinedLinkProps> = (
                         paddingBottom: '3px',
                         textDecorationSkipInk: 'none',
                         textDecorationColor: theme.primaryColor,
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        color: theme.fadeTextColor
                     }}
-                >{text}</span>
-
+                >
+                    {text}
+                </span>
         </div>
     );
 }

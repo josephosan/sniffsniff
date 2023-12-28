@@ -21,7 +21,7 @@ interface CustomSelectProps {
     tag_create_url?: string,
 }
 
-const CustomSelect: React.FC<CustomSelectProps> = (
+const CustomSelect: React.FC<CustomSelectProps> = React.memo((
     {
         options = [],
         placeholder = "انتخاب کنید",
@@ -216,6 +216,6 @@ const CustomSelect: React.FC<CustomSelectProps> = (
             }
         </Select>
     );
-}
+});
 
 export default CustomSelect;

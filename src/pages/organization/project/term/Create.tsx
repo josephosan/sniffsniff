@@ -1,10 +1,10 @@
 import React from "react";
-import {FormBuilderField} from "../../../@types/app";
-import FormBuilder from "../../../components/primary/FormBuilder";
+import {FormBuilderField} from "../../../../@types/app";
+import FormBuilder from "../../../../components/primary/FormBuilder";
 
-const CreateProject: React.FC = React.memo(() => {
-    const createFormFields: FormBuilderField[] = [
-        {
+const CreateTerm: React.FC = () => {
+    const createTermFormFields: FormBuilderField[] = [
+    {
             name: 'name',
             type: 'text',
             label: 'نام',
@@ -19,17 +19,21 @@ const CreateProject: React.FC = React.memo(() => {
             placeholder: 'نوع',
             required: true,
             rules: [{required: true, message: 'وارد کردن نوع اجباری است'}],
-            options: [
+            options: [{label: 'یادآور', value: 'reminder'},
                 {
-                    label: 'خصوصی',
-                    value: 'private'
+                    label: 'تسک',
+                    value: 'task'
                 },
                 {
-                    label: 'عمومی',
-                    value: 'group'
+                    label: 'رویداد',
+                    value: 'event'
                 },
+
+            
+
             ]
         },
+        
         {
             name: 'desc',
             type: 'textarea',
@@ -39,14 +43,12 @@ const CreateProject: React.FC = React.memo(() => {
             rules: [{required: true, message: 'وارد کردن توضیحات اجباری است'}],
         }
     ]
-
-
     return (
         <>
             <div className="d-flex flex-column justify-content-between align-items-center">
                 <div className="mt-5">
                     <FormBuilder
-                        fields={createFormFields}
+                        fields={createTermFormFields}
                         submitButtonFlex={"start"}
                         colXL={24}
                         colSM={24}
@@ -57,6 +59,6 @@ const CreateProject: React.FC = React.memo(() => {
             </div>
         </>
     );
-})
+}
 
-export default CreateProject;
+export default CreateTerm;

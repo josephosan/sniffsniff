@@ -9,6 +9,7 @@ interface ModalType {
     title?: string;
     closable?: boolean;
     top?: number | string;
+    left?: number | string;
     mask?: boolean;
     right?: number | string;
     footer?: never;
@@ -18,7 +19,7 @@ interface ModalType {
     cancelDisable?: boolean;
 }
 
-const ModalWrapper: React.FC<ModalType> = ({
+const ModalWrapper: React.FC<ModalType> = React.memo(({
     elements,
     open,
     setOpenModal,
@@ -33,6 +34,7 @@ const ModalWrapper: React.FC<ModalType> = ({
     cancelText,
     okDisable,
     cancelDisable,
+    left
 }) => {
     return (
         <Modal
@@ -55,11 +57,12 @@ const ModalWrapper: React.FC<ModalType> = ({
             style={{
                 top: top,
                 right: right,
+                left: left,
             }}
         >
             {elements}
         </Modal>
     );
-};
+});
 
 export default ModalWrapper;

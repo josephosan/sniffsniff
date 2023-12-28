@@ -13,7 +13,7 @@ import {useApp} from "../../store/app.store";
 import "../../styles/components/secondary/date-picker-color.scss";
 import "../../styles/components/secondary/date-picker-background.scss";
 
-const FieldComponent: React.FC<FormBuilderField> = (
+const FieldComponent: React.FC<FormBuilderField> = React.memo((
     {
         label,
         name,
@@ -206,6 +206,6 @@ const FieldComponent: React.FC<FormBuilderField> = (
             }
         </>
     )
-}
+});
 
 export default FieldComponent;

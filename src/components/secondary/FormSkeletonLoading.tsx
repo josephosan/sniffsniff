@@ -6,7 +6,8 @@ interface FormSkeletonLoadingProps {
     size?: ShapeSizeTypes,
     active?: boolean,
     count?: number,
-    fillRow?: boolean
+    fillRow?: boolean,
+    width?: string
 }
 
 const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = (
@@ -14,7 +15,8 @@ const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = (
         size = 'large',
         active = true,
         count = 10,
-        fillRow = false
+        fillRow = false,
+        width
     }
 ) => {
     const skeletonArray = Array.from({length: count}, (_, index) => index)
@@ -24,7 +26,7 @@ const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = (
             {
                 skeletonArray.map(el => {
                     return (
-                        <Skeleton.Input className={"w-100 m-2 " + (fillRow ? '' : 'col-sm')} key={el} active={active} size={size}/>
+                        <Skeleton.Input style={{ minWidth: width, width: width, maxWidth: width }} className={"w-100 m-2 " + (fillRow ? '' : 'col-sm')} key={el} active={active} size={size}/>
                     )
                 })
             }

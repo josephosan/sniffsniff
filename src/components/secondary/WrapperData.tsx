@@ -8,7 +8,9 @@ interface DataProps {
     color?: never;
     forceDesktop?: boolean,
     displayBorder?: boolean,
-    padding?: string
+    padding?: string,
+    handleClick?: () => void,
+    wrapperCursor?: string
 }
 
 const WrapperData: React.FC<DataProps> = (
@@ -17,7 +19,9 @@ const WrapperData: React.FC<DataProps> = (
         color,
         displayBorder = true,
         forceDesktop = false,
-        padding = '15px'
+        padding = '15px',
+        handleClick,
+        wrapperCursor = 'pointer'
     }
 ) => {
     const isMobile = useMediaQuery({
@@ -25,13 +29,12 @@ const WrapperData: React.FC<DataProps> = (
     });
     const {theme} = useApp();
     return (
-        <>
+        <div onClick={handleClick ? handleClick : undefined} style={{cursor: wrapperCursor}}>
             {(isMobile && !forceDesktop) ? (
                 <div
-                    className="shadow-sm mb-4 px-4 py-3 rounded align-items-center"
+                    className="shadow-sm mb-3 px-4 py-3 rounded align-items-center"
                     style={{
                         backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor,
                     }}
                 >
                     {children}
@@ -42,7 +45,6 @@ const WrapperData: React.FC<DataProps> = (
                     style={{
                         borderRadius: appConfig.defaultBorderRadius,
                         backgroundColor: theme.cardBgLighter,
-                        color: theme.defaultTextColor,
                         borderRight: displayBorder ? `4px solid ${color}` : '',
                         padding: padding
                     }}
@@ -50,7 +52,7 @@ const WrapperData: React.FC<DataProps> = (
                     {children}
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

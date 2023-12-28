@@ -9,7 +9,7 @@ interface TopBarIconWrapperProps {
     shadow?: boolean
 }
 
-export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = (
+export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = React.memo((
     {
         iconClasses,
         size,
@@ -41,4 +41,4 @@ export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = (
             ></i>
         </div>
     );
-}
+})
