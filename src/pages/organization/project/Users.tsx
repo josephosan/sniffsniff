@@ -1,23 +1,22 @@
-import React from "react";
-import {useApp} from '../../../store/app.store';
-import WrapperScroll from "../../../components/secondary/WrapperScroll";
-import {useState, useEffect} from 'react';
-import {Button} from 'antd';
+import React from 'react';
+import { useApp } from '../../../store/app.store';
+import WrapperScroll from '../../../components/secondary/WrapperScroll';
+import { useState, useEffect } from 'react';
+import { Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import CustomSearch from '../../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
-import WrapperUserData from "../../../components/secondary/WrapperUserData";
-import {appConfig} from "../../../config/app.config";
-import {useNavigate, useParams} from "react-router-dom";
-
+import WrapperUserData from '../../../components/secondary/WrapperUserData';
+import { appConfig } from '../../../config/app.config';
+import { useNavigate, useParams } from 'react-router-dom';
+import ProjectApiService from '../../../services/ProjectApiService';
 
 const ProjectUsers: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(false); // todo: make this true
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-    const [userList, setUserList] = useState<never[]>([{"name": "daj", "imageUrl": "fdfdf", "desc": "dda"},
-        {"name": "daj", "imageUrl": "fdfdf", "desc": "dda"}]);
+    const [userList, setUserList] = useState<never[]>([]);
     const [page, setPage] = useState<number>(null);
 
     const {
@@ -28,17 +27,16 @@ const ProjectUsers: React.FC = React.memo(() => {
         filters,
     } = useApp();
     const navigate = useNavigate();
-    const params = useParams();
+    const param = useParams();
 
+    useEffect(() => {
+        async function fetchData() {
+            await handleFetchMore();
+        }
 
-     useEffect(() => {
-         async function fetchData() {
-             await handleFetchMore();
-         }
-
-         // setUserList(() => []);
-         fetchData();
-     }, [filters]);
+        // setUserList(() => []);
+        fetchData();
+    }, [filters]);
 
     const handleFetchMore = async (
         page: number = 1,
@@ -54,15 +52,11 @@ const ProjectUsers: React.FC = React.memo(() => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            // const res = await ProjectService.paginateAll({ params });
-            // setProjectList((prevState) => {
-            //     if (prevState) return [...prevState, ...res.data.data.items];
-            //     return [...res.data.data.items];
-            // });
-            // setPage(() => res.data.data.next);
+            const { data } = await ProjectApiService.getOne(param.projectId);
+            setUserList(data.data.members);
         } catch (e) {
             console.log(e);
         } finally {
@@ -127,7 +121,11 @@ const ProjectUsers: React.FC = React.memo(() => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/organization/${params.organizationId}/project/${params.projectId}/invite`)}
+                        onClick={() =>
+                            navigate(
+                                `/organization/${params.organizationId}/project/${params.projectId}/invite`,
+                            )
+                        }
                     >
                         افزودن
                     </Button>
@@ -135,7 +133,7 @@ const ProjectUsers: React.FC = React.memo(() => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
@@ -147,13 +145,12 @@ const ProjectUsers: React.FC = React.memo(() => {
                         <WrapperUserData
                             title={el.name}
                             desc={el.desc}
-                            imageUrl={"/public/vite.svg"}
+                            imageUrl={'/public/vite.svg'}
                         />
-
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -161,12 +158,11 @@ const ProjectUsers: React.FC = React.memo(() => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>
     );
 });
-
 
 export default ProjectUsers;

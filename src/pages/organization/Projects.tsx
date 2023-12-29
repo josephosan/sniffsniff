@@ -1,7 +1,7 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import {useMediaQuery} from 'react-responsive';
-import {Button} from 'antd';
+import { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { Button } from 'antd';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../components/secondary/WrapperData';
@@ -10,10 +10,11 @@ import NoData from '../../components/tiny/NoData';
 import Loading from '../../components/secondary/Loading';
 import CustomSearch from '../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import {useApp} from '../../store/app.store';
+import { useApp } from '../../store/app.store';
+import ProjectApiService from '../../services/ProjectApiService';
 
-import {appConfig} from '../../config/app.config';
-import {useNavigate, useParams} from "react-router-dom";
+import { appConfig } from '../../config/app.config';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -32,7 +33,6 @@ const OrganizationProjects: React.FC = () => {
     });
     const navigate = useNavigate();
     const params = useParams();
-
 
     useEffect(() => {
         async function fetchData() {
@@ -57,15 +57,15 @@ const OrganizationProjects: React.FC = () => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            // const res = await ProjectService.paginateAll({ params });
+            // const res = await ProjectApiService.paginateAll({ params });
             // setProjectList((prevState) => {
             //     if (prevState) return [...prevState, ...res.data.data.items];
             //     return [...res.data.data.items];
             // });
-            // setPage(() => res.data.data.next);
+            // setPage(() => res.data.data.cursor);
         } catch (e) {
             console.log(e);
         } finally {
@@ -131,7 +131,11 @@ const OrganizationProjects: React.FC = () => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/organization/${params.organizationId}/project/create`)}
+                        onClick={() =>
+                            navigate(
+                                `/organization/${params.organizationId}/project/create`,
+                            )
+                        }
                     >
                         افزودن
                     </Button>
@@ -139,7 +143,7 @@ const OrganizationProjects: React.FC = () => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
@@ -167,14 +171,14 @@ const OrganizationProjects: React.FC = () => {
                                         fontSize={appConfig.defaultFontSize}
                                         text={el.name}
                                     />
-                                    <TextItemWrapper text={el.description}/>
+                                    <TextItemWrapper text={el.description} />
                                 </div>
                             )}
                         </WrapperData>
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -182,7 +186,7 @@ const OrganizationProjects: React.FC = () => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>

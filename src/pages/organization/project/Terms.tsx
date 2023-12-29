@@ -1,23 +1,23 @@
-import React, {useEffect, useState} from "react";
-import {useApp} from "../../../store/app.store";
-import {useMediaQuery} from "react-responsive";
-import {appConfig} from "../../../config/app.config";
-import WrapperScroll from "../../../components/secondary/WrapperScroll";
-import CustomSearch from "../../../components/primary/CustomSearch";
-import ActionIconWrapper from "../../../components/secondary/ActionIconWrapper";
-import {Button} from "antd";
-import FormSkeletonLoading from "../../../components/secondary/FormSkeletonLoading";
-import WrapperData from "../../../components/secondary/WrapperData";
-import TextItemWrapper from "../../../components/tiny/TextItemWrapper";
-import NoData from "../../../components/tiny/NoData";
-import Loading from "../../../components/secondary/Loading";
+import React, { useEffect, useState } from 'react';
+import { useApp } from '../../../store/app.store';
+import { useMediaQuery } from 'react-responsive';
+import { appConfig } from '../../../config/app.config';
+import WrapperScroll from '../../../components/secondary/WrapperScroll';
+import CustomSearch from '../../../components/primary/CustomSearch';
+import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
+import { Button } from 'antd';
+import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
+import WrapperData from '../../../components/secondary/WrapperData';
+import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
+import NoData from '../../../components/tiny/NoData';
+import Loading from '../../../components/secondary/Loading';
+import ProjectApiService from '../../../services/ProjectApiService';
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [termList, setTermList] = useState<never[]>(null);
     const [page, setPage] = useState<number>(null);
-;
     const {
         theme,
         handleSetFilterMode,
@@ -61,15 +61,11 @@ const ProjectTerms: React.FC = React.memo(() => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            // const res = await ProjectService.paginateAll({ params });
-            // setTermList((prevState) => {
-            //     if (prevState) return [...prevState, ...res.data.data.items];
-            //     return [...res.data.data.items];
-            // });
-            // setPage(() => res.data.data.next);
+            // const res = await ProjectApiService.getTermPaginate();
+            // setTermList(res.data);
         } catch (e) {
             console.log(e);
         } finally {
@@ -143,7 +139,7 @@ const ProjectTerms: React.FC = React.memo(() => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
@@ -171,14 +167,14 @@ const ProjectTerms: React.FC = React.memo(() => {
                                         fontSize={appConfig.defaultFontSize}
                                         text={el.name}
                                     />
-                                    <TextItemWrapper text={el.description}/>
+                                    <TextItemWrapper text={el.description} />
                                 </div>
                             )}
                         </WrapperData>
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -186,11 +182,11 @@ const ProjectTerms: React.FC = React.memo(() => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>
     );
-})
+});
 
 export default ProjectTerms;
