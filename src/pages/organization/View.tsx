@@ -20,22 +20,28 @@ const OrganizationView: React.FC = () => {
     const [data, setData] = useState<never>(null);
 
     useEffect(() => {
-        Emitter.on('organization:update', () => fetchData());
+        Emitter.once('organization:update', () => {
+            fetchData();
+        });
+
         async function getData() {
             await fetchData();
         }
 
         getData();
 
+
+        return () => {
+            Emitter.off('organization:update');
+        }
+    }, []);
+
+    useEffect(() => {
         const tab =
             location.pathname.split('/')[
             location.pathname.split('/').length - 1
                 ];
         setActiveTab(() => tab);
-
-        return () => {
-            Emitter.off('organization:update');
-        }
     }, [location.pathname]);
 
     const fetchData = async () => {
