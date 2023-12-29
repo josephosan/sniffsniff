@@ -11,9 +11,11 @@ import Loading from '../../components/secondary/Loading';
 import CustomSearch from '../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
 import {useApp} from '../../store/app.store';
+import ProjectApiService from '../../services/ProjectApiService';
 
 import {appConfig} from '../../config/app.config';
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams} from 'react-router-dom';
+import CustomImage from "../../components/secondary/CustomImage";
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -32,7 +34,6 @@ const OrganizationProjects: React.FC = () => {
     });
     const navigate = useNavigate();
     const params = useParams();
-
 
     useEffect(() => {
         async function fetchData() {
@@ -60,12 +61,12 @@ const OrganizationProjects: React.FC = () => {
         if (filters) params = {...params, ...filters};
 
         try {
-            // const res = await ProjectService.paginateAll({ params });
-            // setProjectList((prevState) => {
-            //     if (prevState) return [...prevState, ...res.data.data.items];
-            //     return [...res.data.data.items];
-            // });
-            // setPage(() => res.data.data.next);
+            const res = await ProjectApiService.paginateAll({params});
+            setProjectList((prevState) => {
+                if (prevState) return [...prevState, ...res.data.data.items];
+                return [...res.data.data.items];
+            });
+            setPage(() => res.data.data.cursor);
         } catch (e) {
             console.log(e);
         } finally {
@@ -131,7 +132,11 @@ const OrganizationProjects: React.FC = () => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/organization/${params.organizationId}/project/create`)}
+                        onClick={() =>
+                            navigate(
+                                `/organization/${params.organizationId}/project/create`,
+                            )
+                        }
                     >
                         افزودن
                     </Button>
@@ -146,28 +151,30 @@ const OrganizationProjects: React.FC = () => {
             {(projectList && projectList.length > 0) || fetchMoreLoading ? (
                 projectList.map((el, index) => {
                     return (
-                        <WrapperData key={index} color={el.color}>
+                        <WrapperData handleClick={() => navigate(`/organization/${params.organizationId}/project/${el.id}/term`)} key={index} color={el.color}>
                             {isMobile ? (
-                                <div className="d-flex flex-column gap-5">
-                                    <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex flex-column gap-3">
+                                    <div className="d-flex align-items-center gap-2">
                                         <TextItemWrapper
-                                            fontSize={appConfig.defaultFontSize}
+                                            fontSize={
+                                                appConfig.largeFontSize
+                                            }
                                             text={el.name}
                                         />
                                     </div>
-                                    <div className="d-flex">
-                                        <TextItemWrapper
-                                            text={el.description}
-                                        />
+                                    <div className={"px-2"}>
+                                        <TextItemWrapper text={el.description}/>
                                     </div>
                                 </div>
                             ) : (
-                                <div className="d-flex align-items-center justify-content-between">
-                                    <TextItemWrapper
-                                        fontSize={appConfig.defaultFontSize}
-                                        text={el.name}
-                                    />
-                                    <TextItemWrapper text={el.description}/>
+                                <div className="d-flex align-items-center gap-3">
+                                    <div className={"d-flex flex-column gap-2"}>
+                                        <TextItemWrapper
+                                            fontSize={appConfig.largeFontSize}
+                                            text={el.name}
+                                        />
+                                        <TextItemWrapper text={el.description}/>
+                                    </div>
                                 </div>
                             )}
                         </WrapperData>

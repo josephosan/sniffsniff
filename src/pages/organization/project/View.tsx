@@ -21,21 +21,24 @@ const ViewProject: React.FC = React.memo(() => {
 
     useEffect(() => {
         Emitter.on('project:update', () => fetchData());
+
         async function getData() {
             await fetchData();
         }
 
         getData();
 
+        return () => {
+            Emitter.off('project:update');
+        }
+    }, [])
+
+    useEffect(() => {
         const tab =
             location.pathname.split('/')[
             location.pathname.split('/').length - 1
                 ];
         setActiveTab(() => tab);
-
-        return () => {
-            Emitter.off('project:update');
-        }
     }, [location.pathname]);
 
     const fetchData = async () => {
