@@ -14,16 +14,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ProjectApiService from '../../../services/ProjectApiService';
 
 const ProjectUsers: React.FC = React.memo(() => {
-    const [pageFirstLoading, setPageFirstLoading] = useState(false); // todo: make this true
-    const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
+    const [pageFirstLoading, setPageFirstLoading] = useState(true); // todo: make this true
     const [userList, setUserList] = useState<never[]>([]);
-    const [page, setPage] = useState<number>(null);
-
     const {
-        theme,
-        handleSetFilterMode,
-        filterMode,
-        handleSetSidebarCollapsed,
         filters,
     } = useApp();
     const navigate = useNavigate();
@@ -43,8 +36,7 @@ const ProjectUsers: React.FC = React.memo(() => {
         order: string = 'DESC',
         s: string = '',
     ) => {
-        if (userList) setFetchMoreLoading(() => true);
-        else setPageFirstLoading(() => true);
+        setPageFirstLoading(() => true);
 
         let params = {
             limit: appConfig.paginationLimit,
@@ -60,26 +52,27 @@ const ProjectUsers: React.FC = React.memo(() => {
         } catch (e) {
             console.log(e);
         } finally {
-            if (userList) setFetchMoreLoading(() => false);
-            else setPageFirstLoading(() => false);
+            setPageFirstLoading(() => false);
         }
-    };
-
-    const handleReachedBottom = async () => {
-        if (!pageFirstLoading && !fetchMoreLoading && page) {
-            await handleFetchMore(page);
-        }
-    };
-
-    const handleFilterButtonClick = () => {
-        handleSetFilterMode(!filterMode);
-        handleSetSidebarCollapsed(true);
     };
 
     const handleSearch = async (e) => {
-        setUserList(() => []);
-        setPage(() => 1);
-        await handleFetchMore(1, 'ASC', e.target.value);
+        const input = e.target.value;
+        setUserList(prevState => {
+            return prevState.map(el => {
+                if (el.name.includes(input) || el.email.includes(input)) {
+                    return {
+                        ...el,
+                        show: true,
+                    }
+                } else {
+                    return {
+                        ...el,
+                        show: false
+                    }
+                }
+            });
+        })
     };
     return (
         <WrapperScroll /*reachedBottom={handleReachedBottom}*/ height="70vh">
@@ -92,25 +85,8 @@ const ProjectUsers: React.FC = React.memo(() => {
                     >
                         <CustomSearch
                             inputMode={true}
-                            asyncSearch={true}
-                            /* onSearch={handleSearch} */
+                            onSearch={handleSearch}
                         />
-                        <div
-                            className={'h-100 me-2'}
-                            style={{
-                                border: '1.5px solid ' + theme.primaryColor,
-                                borderRadius: appConfig.defaultBorderRadius,
-                                padding: '3px',
-                            }}
-                        >
-                            <ActionIconWrapper
-                                icon={
-                                    'bi bi-funnel d-flex justify-content-center align-items-center'
-                                }
-                                size={appConfig.defaultIconSize}
-                                iconClicked={handleFilterButtonClick}
-                            />
-                        </div>
                     </div>
                 </div>
                 <div
@@ -123,7 +99,7 @@ const ProjectUsers: React.FC = React.memo(() => {
                         icon={<i className={'bi bi-plus'}></i>}
                         onClick={() =>
                             navigate(
-                                `/organization/${params.organizationId}/project/${params.projectId}/invite`,
+                                `/organization/${param.organizationId}/project/${param.projectId}/invite`,
                             )
                         }
                     >
@@ -139,27 +115,18 @@ const ProjectUsers: React.FC = React.memo(() => {
 
             <br />
 
-            {(userList && userList.length > 0) || fetchMoreLoading ? (
+            {(userList && userList.length > 0) ? (
                 userList.map((el) => {
                     return (
-                        <WrapperUserData
+                        (el.show != false) && <WrapperUserData
                             title={el.name}
-                            desc={el.desc}
+                            desc={el.email}
                             imageUrl={'/public/vite.svg'}
                         />
                     );
                 })
             ) : (
                 <NoData />
-            )}
-            {fetchMoreLoading && (
-                <div
-                    className={
-                        'w-100 d-flex justify-content-center align-items-center'
-                    }
-                >
-                    <Loading />
-                </div>
             )}
         </WrapperScroll>
     );

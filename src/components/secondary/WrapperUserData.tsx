@@ -46,7 +46,7 @@ const WrapperUserData: React.FC<WrapperUserDataProps> = (
                             size={"40px"}
                         />
                         <div>
-                            <Space className={"d-flex flex-column"}>
+                            <Space className={"d-flex flex-column align-items-start"}>
                                 <TextItemWrapper fontSize={appConfig.defaultFontSize}
                                                  text={title}/>
                                 <TextItemWrapper fontSize={appConfig.smallFontSize}

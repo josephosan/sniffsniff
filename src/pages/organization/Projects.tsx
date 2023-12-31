@@ -33,7 +33,7 @@ const OrganizationProjects: React.FC = () => {
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
     const navigate = useNavigate();
-    const params = useParams();
+    const route = useParams();
 
     useEffect(() => {
         async function fetchData() {
@@ -53,6 +53,7 @@ const OrganizationProjects: React.FC = () => {
         else setPageFirstLoading(() => true);
 
         let params = {
+            organization: route.organizationId,
             limit: appConfig.paginationLimit,
             order: order,
             page: page,
@@ -134,7 +135,7 @@ const OrganizationProjects: React.FC = () => {
                         icon={<i className={'bi bi-plus'}></i>}
                         onClick={() =>
                             navigate(
-                                `/organization/${params.organizationId}/project/create`,
+                                `/organization/${route.organizationId}/project/create`,
                             )
                         }
                     >
@@ -151,7 +152,7 @@ const OrganizationProjects: React.FC = () => {
             {(projectList && projectList.length > 0) || fetchMoreLoading ? (
                 projectList.map((el, index) => {
                     return (
-                        <WrapperData handleClick={() => navigate(`/organization/${params.organizationId}/project/${el.id}/term`)} key={index} color={el.color}>
+                        <WrapperData handleClick={() => navigate(`/organization/${route.organizationId}/project/${el.id}/term`)} key={index} color={el.color}>
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-3">
                                     <div className="d-flex align-items-center gap-2">

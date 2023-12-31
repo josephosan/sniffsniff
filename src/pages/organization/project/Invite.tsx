@@ -2,7 +2,7 @@ import React from "react";
 import FormBuilder from "../../../components/primary/FormBuilder";
 import {FormBuilderField} from "../../../@types/app";
 import {useMediaQuery} from "react-responsive";
-import {appConfig} from "../../../config/app.config";
+import {apiConfig, appConfig} from "../../../config/app.config";
 
 
 const ProjectInvite: React.FC = React.memo(() => {
@@ -16,7 +16,8 @@ const ProjectInvite: React.FC = React.memo(() => {
             label: 'انتخاب کاربر',
             placeholder: 'انتخاب کنید',
             required: true,
-            rules: [{required: true, message: 'وارد کردن نام اجباری است'}]
+            rules: [{required: true, message: 'وارد کردن نام اجباری است'}],
+            select_url: `${apiConfig.API_BASE_URL}/user/account/search`
         },
     ]
 
