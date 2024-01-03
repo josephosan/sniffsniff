@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {TopBarIconWrapper} from '../secondary/TopBarIconWrapper';
-import {Breadcrumb, Space, Tooltip} from 'antd';
+import {Breadcrumb, Space} from 'antd';
 import {useApp} from '../../store/app.store';
 import {appConfig, darkConfig, lightConfig} from '../../config/app.config';
 import IconHeaderModal from './IconHeaderModal';
@@ -9,8 +9,6 @@ import {useLocation, useNavigate} from 'react-router-dom';
 
 import WrapperDropDown from '../secondary/WrapperDropDown';
 import {useAuth} from '../../store/auth.store';
-import WrapperTooltip from "../secondary/WrapperTooltip";
-import WrapperMessage from "../secondary/WrapperMessage";
 import NotificationBell from "../secondary/NotificationBell";
 
 interface AppHeaderProps {

@@ -71,28 +71,6 @@ export const AppRouter: React.FC = React.memo(() => {
                     element: <Home/>,
                 },
 
-                // // timelines
-                // {
-                //     path: 'timeline',
-                //     name: 'Timeline',
-                //     element: <Timelines/>,
-                // },
-                // {
-                //     path: 'timeline/:id',
-                //     name: 'SingleTimeline',
-                //     element: <ViewTimeline/>,
-                // },
-                // {
-                //     path: 'timeline/create',
-                //     name: 'CreateTimeline',
-                //     element: <CreateTimeLine/>,
-                // },
-                // {
-                //     path: 'timeline/edit/:id',
-                //     name: 'EditTimeline',
-                //     element: <EditTimeLine/>,
-                // },
-
                 // events
                 {
                     path: 'timeline/:timelineId/event',

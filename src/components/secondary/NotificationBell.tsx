@@ -1,15 +1,13 @@
 import React, {useState} from "react";
-import WrapperMessage from "./WrapperMessage";
 import WrapperTooltip from "./WrapperTooltip";
 import {TopBarIconWrapper} from "./TopBarIconWrapper";
-import UnderlinedLink from "./UnderlinedLink";
 import {useMediaQuery} from "react-responsive";
 import {appConfig} from "../../config/app.config";
 import WrapperModal from "./WrapperModal";
 import NotificationModalMessages from "./NotificationModalMessages";
 
 interface NotificationBellProps {
-    tooltipWidth: string
+    tooltipWidth?: string
 }
 
 const NotificationBell: React.FC<NotificationBellProps> = (
@@ -40,6 +38,7 @@ const NotificationBell: React.FC<NotificationBellProps> = (
                             setOpenModal={setBellModalOpen}
                             closable={false}
                             footer={null}
+                            destroyOnClose={true}
                         />
                     </>
                 ) : (
@@ -48,6 +47,7 @@ const NotificationBell: React.FC<NotificationBellProps> = (
                         title={"title"}
                         trigger={"click"}
                         width={tooltipWidth}
+                        destroyTooltipOnHide={true}
                         content={
                             <NotificationModalMessages/>
                         }

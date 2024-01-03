@@ -17,6 +17,7 @@ interface ModalType {
     cancelText?: string;
     okDisable?: boolean;
     cancelDisable?: boolean;
+    destroyOnClose? : boolean
 }
 
 const ModalWrapper: React.FC<ModalType> = React.memo(({
@@ -34,7 +35,8 @@ const ModalWrapper: React.FC<ModalType> = React.memo(({
     cancelText,
     okDisable,
     cancelDisable,
-    left
+    left,
+    destroyOnClose = false
 }) => {
     return (
         <Modal
@@ -54,6 +56,7 @@ const ModalWrapper: React.FC<ModalType> = React.memo(({
             okButtonProps={{ disabled: okDisable }}
             cancelButtonProps={{ disabled: cancelDisable }}
             bodyStyle={{}}
+            destroyOnClose={destroyOnClose}
             style={{
                 top: top,
                 right: right,

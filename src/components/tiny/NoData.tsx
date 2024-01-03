@@ -10,7 +10,7 @@ const NoData: React.FC<NoDataProps> = (
     }
 ) => {
     return (
-        <div className={"w-100 h-100 p-1 d-flex align-items-center justify-content-" + direction}>
+        <div className={"w-100 h-100 p-2 d-flex align-items-center justify-content-" + direction}>
             داده ای موجود نیست.
         </div>
     );
