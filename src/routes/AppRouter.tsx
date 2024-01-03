@@ -4,11 +4,8 @@ import {useRoutes, Outlet, useNavigate, Navigate} from 'react-router-dom';
 // Import pages
 import {Home} from '../pages/Home';
 import Login from '../pages/Login';
-import CreateTimeLine from '../pages/timeline/Create';
-import EditTimeLine from '../pages/timeline/Edit';
 import _404 from '../pages/_404';
 import ForgotPassword from '../pages/ForgotPassword';
-import ViewTimeline from '../pages/timeline/ViewTimeline';
 import CreateEvent from '../pages/timeline/event/Create';
 import EditEvent from '../pages/timeline/event/Edit';
 import Events from '../pages/timeline/event/Events';
@@ -27,7 +24,8 @@ import CreateTerm from "../pages/organization/project/term/Create";
 import NotificationsList from "../pages/notification/List";
 import PublicNotifications from "../pages/notification/Public";
 import ProjectNotifications from "../pages/notification/Project";
-import ViewNotification from "../pages/notification/view/View";
+import ViewProjectNotification from "../pages/notification/view/Project";
+import ViewPublicNotification from "../pages/notification/view/Public";
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -51,7 +49,6 @@ import Loading from '../components/secondary/Loading';
 
 // others
 import {getToken} from '../helpers/jwt.helper';
-import Timelines from '../pages/timeline/Timelines';
 
 export const AppRouter: React.FC = React.memo(() => {
     const notifyStore = useNotify();
@@ -202,9 +199,14 @@ export const AppRouter: React.FC = React.memo(() => {
                     ],
                 },
                 {
-                    path: 'notifications/:id',
-                    name: 'ViewNotification',
-                    element: <ViewNotification/>
+                    path: 'notifications/project/:id',
+                    name: 'ProjectSingleNotifications',
+                    element: <ViewProjectNotification/>
+                },
+                {
+                    path: 'notifications/public/:id',
+                    name: 'PublicSingleNotifications',
+                    element: <ViewPublicNotification/>
                 }
             ],
         },

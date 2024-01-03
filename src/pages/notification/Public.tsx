@@ -3,11 +3,13 @@ import WrapperMessage from '../../components/secondary/WrapperMessage';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import NoData from '../../components/tiny/NoData';
+import NotificationApiService from '../../services/NotificationApiService';
+import Loading from '../../components/secondary/Loading';
 
 const PublicNotifications = () => {
     const [publicNotifications, setPublicNotifications] =
         useState<never[]>(null);
-    const [pageFirstLoading, setPageFirstLoading] = useState(false);
+    const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
     useEffect(() => {
@@ -19,14 +21,25 @@ const PublicNotifications = () => {
     }, []);
 
     const handleFetchMore = async () => {
+        if (publicNotifications) setFetchMoreLoading(() => true);
+        else setPageFirstLoading(() => true);
+
         try {
-            // const res = await
-            // setProjectNotifications((prevState) => {
-            //     if (prevState) return [...prevState, ...res.data.data.items];
-            //     return [...res.data.data.items];
+            const res = await NotificationApiService.getAll({
+                params: {
+                    type: 0,
+                },
+            });
+
+            setPublicNotifications((prevState) => {
+                if (prevState) return [...prevState, ...res.data.data.items];
+                return [...res.data.data.items];
+            });
         } catch (e) {
             console.log(e);
         } finally {
+            if (publicNotifications) setFetchMoreLoading(() => false);
+            else setPageFirstLoading(() => false);
         }
     };
 
@@ -37,18 +50,27 @@ const PublicNotifications = () => {
                     <FormSkeletonLoading fillRow={true} count={10} />
                 )}
 
-                {publicNotifications && publicNotifications.length > 0 ? (
-                    publicNotifications.map((notif) => {
-                        return (
-                            <WrapperMessage
-                                type={notif.type}
-                                title={notif.title}
-                                desc={notif.desc}
-                            />
-                        );
-                    })
-                ) : (
-                    <NoData />
+                {(publicNotifications && publicNotifications.length > 0) ||
+                fetchMoreLoading
+                    ? publicNotifications.map((notif) => {
+                          return (
+                              <WrapperMessage
+                                  type={notif.type}
+                                  title={notif.title}
+                                  desc={notif.desc}
+                              />
+                          );
+                      })
+                    : !pageFirstLoading && <NoData />}
+
+                {fetchMoreLoading && (
+                    <div
+                        className={
+                            'w-100 d-flex justify-content-center align-items-center'
+                        }
+                    >
+                        <Loading />
+                    </div>
                 )}
             </div>
         </WrapperScroll>

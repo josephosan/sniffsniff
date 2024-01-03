@@ -14,7 +14,7 @@ const pathNamesMap = {
     term: 'ترم',
     invite: 'دعوت',
     notifications: 'اعلان ها',
-    public: 'عمومی',
+    public: 'عمومی'
 };
 
 const pathIconsMap = {
