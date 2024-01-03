@@ -12,12 +12,14 @@ import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import ProjectApiService from '../../../services/ProjectApiService';
+import {useParams} from "react-router-dom";
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [termList, setTermList] = useState<never[]>(null);
     const [page, setPage] = useState<number>(null);
+    const param = useParams();
     const {
         theme,
         handleSetFilterMode,
@@ -29,14 +31,6 @@ const ProjectTerms: React.FC = React.memo(() => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
-
-    useEffect(() => {
-        async function fetchData() {
-            await handleFetchMore();
-        }
-
-        fetchData();
-    }, []);
 
     useEffect(() => {
         async function fetchData() {
@@ -64,8 +58,12 @@ const ProjectTerms: React.FC = React.memo(() => {
         if (filters) params = { ...params, ...filters };
 
         try {
-            // const res = await ProjectApiService.getTermPaginate();
-            // setTermList(res.data);
+            const res = await ProjectApiService.getTermPaginate({
+                params: {
+                    project: param.projectId
+                }
+            });
+            setTermList(res.data);
         } catch (e) {
             console.log(e);
         } finally {

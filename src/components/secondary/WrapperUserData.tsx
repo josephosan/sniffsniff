@@ -36,6 +36,7 @@ const WrapperUserData: React.FC<WrapperUserDataProps> = (
         <WrapperData
             forceDesktop={true}
             padding={"10px"}
+            wrapperCursor={"auto"}
         >
 
             <div className={"d-flex justify-content-between align-items-center"}>

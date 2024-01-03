@@ -1,16 +1,16 @@
 import React from 'react';
-import { useApp } from '../../../store/app.store';
+import {useApp} from '../../../store/app.store';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
-import { useState, useEffect } from 'react';
-import { Button } from 'antd';
+import {useState, useEffect} from 'react';
+import {Button} from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import CustomSearch from '../../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
 import WrapperUserData from '../../../components/secondary/WrapperUserData';
-import { appConfig } from '../../../config/app.config';
-import { useNavigate, useParams } from 'react-router-dom';
+import {appConfig} from '../../../config/app.config';
+import {useNavigate, useParams} from 'react-router-dom';
 import ProjectApiService from '../../../services/ProjectApiService';
 
 const ProjectUsers: React.FC = React.memo(() => {
@@ -27,7 +27,7 @@ const ProjectUsers: React.FC = React.memo(() => {
             await handleFetchMore();
         }
 
-        // setUserList(() => []);
+        setUserList(() => []);
         fetchData();
     }, [filters]);
 
@@ -44,10 +44,10 @@ const ProjectUsers: React.FC = React.memo(() => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = { ...params, ...filters };
+        if (filters) params = {...params, ...filters};
 
         try {
-            const { data } = await ProjectApiService.getOne(param.projectId);
+            const {data} = await ProjectApiService.getOne(param.projectId);
             setUserList(data.data.members);
         } catch (e) {
             console.log(e);
@@ -109,24 +109,26 @@ const ProjectUsers: React.FC = React.memo(() => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10} />
+                    <FormSkeletonLoading fillRow={true} count={10}/>
                 </div>
             )}
 
-            <br />
+            <br/>
 
             {(userList && userList.length > 0) ? (
                 userList.map((el) => {
                     return (
-                        (el.show != false) && <WrapperUserData
-                            title={el.name}
-                            desc={el.email}
-                            imageUrl={'/public/vite.svg'}
-                        />
+                        (el.show != false) && (
+                            <WrapperUserData
+                                title={el.name}
+                                desc={el.email}
+                                imageUrl={'/public/vite.svg'}
+                            />
+                        )
                     );
                 })
             ) : (
-                <NoData />
+                <NoData/>
             )}
         </WrapperScroll>
     );
