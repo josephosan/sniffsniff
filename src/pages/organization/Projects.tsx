@@ -52,6 +52,8 @@ const OrganizationProjects: React.FC = () => {
         if (projectList) setFetchMoreLoading(() => true);
         else setPageFirstLoading(() => true);
 
+        if (filters && filters['order']) order = filters['order'];
+
         let params = {
             organization: route.organizationId,
             limit: appConfig.paginationLimit,

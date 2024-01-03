@@ -49,6 +49,8 @@ const ProjectTerms: React.FC = React.memo(() => {
         if (termList) setFetchMoreLoading(() => true);
         else setPageFirstLoading(() => true);
 
+        if (filters && filters['order']) order = filters['order'];
+
         let params = {
             limit: appConfig.paginationLimit,
             order: order,
