@@ -38,7 +38,7 @@ const getPageNameByPath = (route: string) => {
     return route.split('/')[1];
 };
 
-const notClickableRouteNames = ['project'];
+const notClickableRouteNames = ['project', 'notifications'];
 
 const handleGetBreadcrump = (path) => {
     const pathNames = path
