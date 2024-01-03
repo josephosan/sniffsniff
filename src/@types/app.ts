@@ -15,7 +15,10 @@ export interface AppStore {
     handleSetFilters: (value: never) => void,
 
     sidebarCollapsed: boolean,
-    handleSetSidebarCollapsed: (collapsed: boolean) => void
+    handleSetSidebarCollapsed: (collapsed: boolean) => void,
+
+    filterFields: FormBuilderField[],
+    handleSetFilterFields: (fields: FormBuilderField[]) => void
 }
 
 

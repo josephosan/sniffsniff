@@ -1,3 +1,5 @@
+import {FormBuilderField} from "../@types/app";
+
 const appConfig = {
     // break point
     appBreakPoint: 700,
@@ -78,4 +80,32 @@ const apiConfig = {
     API_BASE_URL: 'http://46.102.143.25:5000/v1'
 }
 
-export {appConfig, lightConfig, darkConfig, colors, apiConfig, statusColors};
+// filters
+const defaultFilterFields: FormBuilderField[] = [
+    {
+        type: 'select',
+        name: 'order',
+        required: false,
+        placeholder: 'ترتیب',
+        options: [
+            {
+                label: 'صعودی',
+                value: 'ASC'
+            },
+            {
+                label: 'نزولی',
+                value: 'DESC'
+            },
+        ]
+    },
+];
+
+export {
+    appConfig,
+    lightConfig,
+    darkConfig,
+    colors,
+    apiConfig,
+    statusColors,
+    defaultFilterFields
+};

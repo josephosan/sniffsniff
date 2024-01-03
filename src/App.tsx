@@ -4,18 +4,21 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { appConfig, lightConfig } from './config/app.config';
+import {appConfig, defaultFilterFields, lightConfig} from './config/app.config';
 import { useApp } from './store/app.store';
 import { NotifyProvider } from './store/notify.store';
 import { useEffect } from 'react';
 import { getToken } from './helpers/jwt.helper';
 
 function App() {
-    const { theme, setThemeMode } = useApp();
+    const { theme, setThemeMode, handleSetFilterFields } = useApp();
 
     useEffect(() => {
         const themeConfig = getToken('themeConfig');
         if (themeConfig) setThemeMode(JSON.parse(themeConfig));
+
+        // initialize default filter fields
+        handleSetFilterFields(defaultFilterFields);
     }, []);
 
     const themeConfig: ThemeConfig = {

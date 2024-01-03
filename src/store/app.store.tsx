@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useMemo, useState} from "react";
-import {AppStore, Errors, Theme} from "../@types/app";
+import {AppStore, Errors, FormBuilderField, Theme} from "../@types/app";
 import {lightConfig} from "../config/app.config";
 import {saveToken} from "../helpers/jwt.helper";
 
@@ -40,6 +40,11 @@ export const AppProvider: React.FC = ({children}) => {
         setFilters(() => value);
     }
 
+    const [filterFields, setFilterFields] = useState<FormBuilderField[] | null>(null);
+    const handleSetFilterFields = (fields: FormBuilderField[]) => {
+        setFilterFields(fields);
+    }
+
     const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
     const handleSetSidebarCollapsed = (collapsed: boolean) => {
         setSidebarCollapsed(() => collapsed);
@@ -65,9 +70,13 @@ export const AppProvider: React.FC = ({children}) => {
 
             // sidebar
             sidebarCollapsed,
-            handleSetSidebarCollapsed
+            handleSetSidebarCollapsed,
+
+            // filter fields
+            filterFields,
+            handleSetFilterFields
         }),
-        [sidebarCollapsed, filters, filterMode, errors, theme]
+        [sidebarCollapsed, filters, filterMode, errors, theme, filterFields]
     )
 
     return <AppContext.Provider value={appStore}>{children}</AppContext.Provider>
