@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperMessage from '../../components/secondary/WrapperMessage';
 import NoData from '../../components/tiny/NoData';
@@ -41,34 +41,41 @@ const MobileNotifications = () => {
 
     return (
         <>
-            <div className="d-flex flex-column gap-3 h-100  align-items-center">
-                {pageFirstLoading && (
-                    <FormSkeletonLoading fillRow={true} count={10} />
-                )}
+            <div className="d-flex flex-column gap-3 h-100 align-items-center">
+                <div>
+                    {
+                        pageFirstLoading && (
+                            <FormSkeletonLoading width={'100%'} count={10}/>
+                        )
+                    }
+                </div>
 
-                {(mobileNotifications && mobileNotifications.length > 0) ||
-                fetchMoreLoading
-                    ? mobileNotifications.map((notif, index) => {
-                          return (
-                              <WrapperMessage
-                                  type={notif.type}
-                                  title={notif.title}
-                                  desc={notif.desc}
-                                  key={index}
-                              />
-                          );
-                      })
-                    : !pageFirstLoading && <NoData />}
+                {
+                    (mobileNotifications && mobileNotifications.length > 0) || fetchMoreLoading
+                        ? mobileNotifications.map((notif, index) => {
+                            return (
+                                <WrapperMessage
+                                    type={notif.type}
+                                    title={notif.title}
+                                    desc={notif.desc}
+                                    key={index}
+                                />
+                            );
+                        })
+                        : !pageFirstLoading && <NoData/>
+                }
 
-                {fetchMoreLoading && (
-                    <div
-                        className={
-                            'w-100 d-flex justify-content-center align-items-center'
-                        }
-                    >
-                        <Loading />
-                    </div>
-                )}
+                {
+                    fetchMoreLoading && (
+                        <div
+                            className={
+                                'w-100 d-flex justify-content-center align-items-center'
+                            }
+                        >
+                            <Loading/>
+                        </div>
+                    )
+                }
             </div>
         </>
     );
