@@ -22,11 +22,7 @@ const ViewProject: React.FC = React.memo(() => {
     useEffect(() => {
         Emitter.on('project:update', () => fetchData());
 
-        async function getData() {
-            await fetchData();
-        }
-
-        getData();
+        fetchData();
 
         return () => {
             Emitter.off('project:update');

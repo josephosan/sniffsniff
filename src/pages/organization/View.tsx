@@ -24,12 +24,7 @@ const OrganizationView: React.FC = () => {
             fetchData();
         });
 
-        async function getData() {
-            await fetchData();
-        }
-
-        getData();
-
+        fetchData();
 
         return () => {
             Emitter.off('organization:update');
@@ -41,7 +36,9 @@ const OrganizationView: React.FC = () => {
             location.pathname.split('/')[
             location.pathname.split('/').length - 1
                 ];
-        setActiveTab(() => tab);
+        setActiveTab(prevState => {
+            if (prevState !== tab) return tab;
+        });
     }, [location.pathname]);
 
     const fetchData = async () => {
@@ -111,7 +108,7 @@ const OrganizationView: React.FC = () => {
                         animation={{inkBar: true, tabPane: true}}
                         activeKey={activeTab}
                         onChange={handleTabItemClick}
-                        destroyInactiveTabPane={false}
+                        destroyInactiveTabPane={true}
                         items={[
                             {
                                 key: 'project',
