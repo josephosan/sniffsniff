@@ -7,7 +7,7 @@ interface SegmentedWrapperProps {
         label: ReactNode;
         value: string;
         icon?: ReactNode;
-        disabled: boolean;
+        disabled?: boolean;
         className: string;
     }[];
     block?: boolean; // an option to make the component fit it's parent with
