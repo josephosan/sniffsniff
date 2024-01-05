@@ -15,7 +15,6 @@ import ProjectApiService from '../../services/ProjectApiService';
 
 import {appConfig} from '../../config/app.config';
 import {useNavigate, useParams} from 'react-router-dom';
-import CustomImage from "../../components/secondary/CustomImage";
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -36,12 +35,8 @@ const OrganizationProjects: React.FC = () => {
     const route = useParams();
 
     useEffect(() => {
-        async function fetchData() {
-            await handleFetchMore();
-        }
-
         setProjectList(() => []);
-        fetchData();
+        handleFetchMore();
     }, [filters]);
 
     const handleFetchMore = async (
