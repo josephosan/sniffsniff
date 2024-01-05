@@ -39,7 +39,7 @@ const NotificationsList: React.FC = () => {
                     <TabComponent
                         type="card"
                         activeKey={activeTab}
-                        tabPos="right"
+                        tabPos="top"
                         destroyInactiveTabPane={false}
                         animation={{ inkBar: true, tabPane: true }}
                         onChange={handleTabItemClick}
