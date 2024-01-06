@@ -154,7 +154,7 @@ export default class ApiService {
         return await api.delete(recourse, config);
     }
 
-    public static async put(recourse: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+    public static async put(recourse: string, data: never | undefined, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.put(recourse, data, config);
     }
 
@@ -168,15 +168,15 @@ export default class ApiService {
         return this.get(this.baseUrl + "paginate", config);
     }
 
-    public static async createOne(config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
-        return this.post(this.baseUrl, config);
+    public static async createOne(data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+        return this.post(this.baseUrl, data, config);
     }
 
-    public static async updateOne(id, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+    public static async updateOne(id: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return this.patch(`${this.baseUrl}${id}`, config);
     }
 
-    public static async getOne(id) {
+    public static async getOne(id: string) {
         return this.get(`${this.baseUrl}${id}`);
     }
 

@@ -16,7 +16,7 @@ const ViewProjectNotification: React.FC = () => {
     const [status, setStatue] = useState('pending');
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
 
-    const [data, setData] = useState<never[]>(null);
+    const [data, setData] = useState<never[] | null>(null);
 
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
@@ -33,7 +33,9 @@ const ViewProjectNotification: React.FC = () => {
         if (data) setPageFirstLoading(() => false);
 
         try {
-            const res = await NotificationApiService.getOne(params.id);
+            const res = await NotificationApiService.getOne(
+                params.id as string,
+            );
             setData(res.data);
             setStatue(res.data.projectInvite.status);
         } catch (e) {
@@ -64,7 +66,7 @@ const ViewProjectNotification: React.FC = () => {
                                 width: '260px',
                             }}
                         >
-                            <FormSkeletonLoading count={2} />
+                            <FormSkeletonLoading count={1} />
                         </div>
                         <div className="d-flex flex-column align-items-center  ">
                             <BigBoxSkeletonLoading count={1} />
