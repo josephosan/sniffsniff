@@ -67,19 +67,16 @@ const ViewProjectNotification: React.FC = () => {
                                         {
                                             label: 'رد',
                                             value: 'reject',
-                                            // disabled: true,
                                             className: 'reject',
                                         },
                                         {
                                             label: 'انتظار',
                                             value: 'pending',
-                                            // disabled: true,
                                             className: 'pending',
                                         },
                                         {
                                             label: 'تایید',
                                             value: 'accept',
-                                            // disabled: false,
                                             className: 'accept',
                                         },
                                     ]}
