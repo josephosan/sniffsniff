@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useRoutes, Outlet, useNavigate, Navigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useRoutes, Outlet, useNavigate, Navigate } from 'react-router-dom';
 
 // Import pages
-import {Home} from '../pages/Home';
+import { Home } from '../pages/Home';
 import Login from '../pages/Login';
 import _404 from '../pages/_404';
 import ForgotPassword from '../pages/ForgotPassword';
@@ -14,41 +14,43 @@ import OrganizationSettings from '../pages/organization/Settings';
 import OrganizationProjects from '../pages/organization/Projects';
 import CreateOrganization from '../pages/organization/Create';
 import Organizations from '../pages/organization/List';
-import CreateProject from "../pages/organization/project/Create";
-import ViewProject from "../pages/organization/project/View";
-import ProjectTerms from "../pages/organization/project/Terms";
-import ProjectUsers from "../pages/organization/project/Users";
-import ProjectSettings from "../pages/organization/project/Settings";
-import ProjectInvite from "../pages/organization/project/Invite";
-import CreateTerm from "../pages/organization/project/term/Create";
-import NotificationsList from "../pages/notification/List";
-import PublicNotifications from "../pages/notification/Public";
-import ProjectNotifications from "../pages/notification/Project";
-import ViewProjectNotification from "../pages/notification/view/Project";
-import ViewPublicNotification from "../pages/notification/view/Public";
+import CreateProject from '../pages/organization/project/Create';
+import ViewProject from '../pages/organization/project/View';
+import ProjectTerms from '../pages/organization/project/Terms';
+import ProjectUsers from '../pages/organization/project/Users';
+import ProjectSettings from '../pages/organization/project/Settings';
+import ProjectInvite from '../pages/organization/project/Invite';
+import CreateTerm from '../pages/organization/project/term/Create';
+import NotificationsList from '../pages/notification/List';
+import PublicNotifications from '../pages/notification/Public';
+import ProjectNotifications from '../pages/notification/Project';
+import ViewProjectNotification from '../pages/notification/view/Project';
+import ViewPublicNotification from '../pages/notification/view/Public';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
-import {DefaultLayout} from '../layouts/DefaultLayout';
+import { DefaultLayout } from '../layouts/DefaultLayout';
 
 // Import types
-import {RouteObject} from '../@types/app';
-import {User} from '../@types/auth';
+import { RouteObject } from '../@types/app';
+import { User } from '../@types/auth';
 
 // Import stores
-import {useNotify} from '../store/notify.store';
-import {useApp} from '../store/app.store';
-import {useAuth} from '../store/auth.store';
+import { useNotify } from '../store/notify.store';
+import { useApp } from '../store/app.store';
+import { useAuth } from '../store/auth.store';
 
 // Import services
 import ApiService from '../services/ApiService';
 import AuthService from '../services/AuthService';
 
-// Import components
-import Loading from '../components/secondary/Loading';
-
 // others
-import {getToken} from '../helpers/jwt.helper';
+import { getToken } from '../helpers/jwt.helper';
+import { useMediaQuery } from 'react-responsive';
+import { appConfig } from '../config/app.config';
+import FormSkeletonLoading from '../components/secondary/FormSkeletonLoading';
+import BigBoxSkeletonLoading from '../components/secondary/BigBoxSkeletonLoading';
+import Loading from '../components/secondary/Loading';
 
 export const AppRouter: React.FC = React.memo(() => {
     const notifyStore = useNotify();
@@ -60,155 +62,155 @@ export const AppRouter: React.FC = React.memo(() => {
             name: 'default',
             path: '/',
             element: authStore.isAuthenticated ? (
-                <DefaultLayout/>
+                <DefaultLayout />
             ) : (
-                <Navigate to={'/login'}/>
+                <Navigate to={'/login'} />
             ),
             children: [
                 {
                     path: 'dashboard',
                     name: 'Dashboard',
-                    element: <Home/>,
+                    element: <Home />,
                 },
 
                 // events
                 {
                     path: 'timeline/:timelineId/event',
                     name: 'Events',
-                    element: <Events/>,
+                    element: <Events />,
                 },
                 {
                     path: 'timeline/:timelineId/event/create',
                     name: 'CreateEvent',
-                    element: <CreateEvent/>,
+                    element: <CreateEvent />,
                 },
                 {
                     path: 'timeline/:eventId/event/edit',
                     name: 'EditEvent',
-                    element: <EditEvent/>,
+                    element: <EditEvent />,
                 },
 
                 // organizations
                 {
                     path: 'organization/:organizationId',
                     name: 'SingleOrganization',
-                    element: <OrganizationView/>,
+                    element: <OrganizationView />,
                     children: [
                         {
                             path: 'setting',
                             name: 'OrganizationSetting',
-                            element: <OrganizationSettings/>,
+                            element: <OrganizationSettings />,
                         },
                         {
                             path: 'project',
                             name: 'OrganizationProject',
-                            element: <OrganizationProjects/>,
+                            element: <OrganizationProjects />,
                         },
                     ],
                 },
                 {
                     path: 'organization/create',
                     name: 'CreateOrganization',
-                    element: <CreateOrganization/>,
+                    element: <CreateOrganization />,
                 },
                 {
                     path: 'organization',
                     name: 'Organization',
-                    element: <Organizations/>,
+                    element: <Organizations />,
                 },
 
                 // projects
                 {
                     path: 'organization/:organizationId/project/create',
                     name: 'CreateProject',
-                    element: <CreateProject/>
+                    element: <CreateProject />,
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId',
                     name: 'SingleProject',
-                    element: <ViewProject/>,
+                    element: <ViewProject />,
                     children: [
                         {
                             path: 'term',
                             name: 'ProjectTerm',
-                            element: <ProjectTerms/>
+                            element: <ProjectTerms />,
                         },
                         {
                             path: 'users',
                             name: 'ProjectUsers',
-                            element: <ProjectUsers/>
+                            element: <ProjectUsers />,
                         },
                         {
                             path: 'setting',
                             name: 'ProjectSetting',
-                            element: <ProjectSettings/>
-                        }
-                    ]
+                            element: <ProjectSettings />,
+                        },
+                    ],
                 },
                 {
                     path: 'organization/:organizationId/project/:projectId/invite',
                     name: 'ProjectInvite',
-                    element: <ProjectInvite/>
+                    element: <ProjectInvite />,
                 },
 
                 // terms
                 {
                     path: 'organization/:organizationId/project/:projectId/term/create',
                     name: 'CreateTerm',
-                    element: <CreateTerm/>
+                    element: <CreateTerm />,
                 },
 
                 // notifications
                 {
                     path: 'notifications/',
                     name: 'Notifications',
-                    element: <NotificationsList/>,
+                    element: <NotificationsList />,
                     children: [
                         {
                             path: 'project',
                             name: 'ProjectNotifications',
-                            element: <ProjectNotifications/>,
+                            element: <ProjectNotifications />,
                         },
                         {
                             path: 'public',
                             name: 'PublicNotifications',
-                            element: <PublicNotifications/>,
+                            element: <PublicNotifications />,
                         },
                     ],
                 },
                 {
                     path: 'notifications/project/:id',
                     name: 'ProjectSingleNotifications',
-                    element: <ViewProjectNotification/>
+                    element: <ViewProjectNotification />,
                 },
                 {
                     path: 'notifications/public/:id',
                     name: 'PublicSingleNotifications',
-                    element: <ViewPublicNotification/>
-                }
+                    element: <ViewPublicNotification />,
+                },
             ],
         },
         {
             name: 'auth',
             path: '/',
-            element: <AuthLayout/>,
+            element: <AuthLayout />,
             children: [
                 {
                     path: 'login',
                     name: 'Login',
                     element: !authStore.isAuthenticated ? (
-                        <Login/>
+                        <Login />
                     ) : (
-                        <Navigate to={'/dashboard'}/>
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
                 {
                     path: 'forgot-password',
                     name: 'ForgotPassword',
                     element: !authStore.isAuthenticated ? (
-                        <ForgotPassword/>
+                        <ForgotPassword />
                     ) : (
-                        <Navigate to={'/dashboard'}/>
+                        <Navigate to={'/dashboard'} />
                     ),
                 },
             ],
@@ -216,11 +218,14 @@ export const AppRouter: React.FC = React.memo(() => {
         {
             name: 'error',
             path: '*',
-            element: <_404/>,
+            element: <_404 />,
         },
     ];
     const element = useRoutes(routes);
     const [loading, setLoading] = useState<boolean>(true);
+    const isMobile = useMediaQuery({
+        query: `(max-width: ${appConfig.appBreakPoint}px)`,
+    });
 
     useEffect(() => {
         ApiService.init(notifyStore, appStore, navigate);
@@ -234,7 +239,7 @@ export const AppRouter: React.FC = React.memo(() => {
             setLoading(false);
         } else {
             AuthService.who()
-                .then(({data}) => {
+                .then(({ data }) => {
                     authStore.handleSetUser(data.data as User);
                     authStore.handleSetIsAuthenticated(true);
                 })
@@ -252,18 +257,47 @@ export const AppRouter: React.FC = React.memo(() => {
             {loading ? (
                 <div
                     className={
-                        'h-100 w-100 d-flex justify-content-center align-items-center'
+                        'd-flex justify-content-center align-items-center'
                     }
                     style={{
-                        backgroundColor: appStore.theme.mainBackgroundColor
+                        backgroundColor: appStore.theme.mainBackgroundColor,
+                        position: 'absolute',
+                        right: 0,
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
                     }}
                 >
-                    <Loading/>
+                    {isMobile ? (
+                        <Loading />
+                    ) : (
+                        <div className="d-flex w-100 h-100">
+                            <div
+                                className="col-3"
+                                style={{ maxWidth: '300px' }}
+                            >
+                                <BigBoxSkeletonLoading height="90%" />
+                            </div>
+                            <div className="w-100">
+                                <div>
+                                    <FormSkeletonLoading count={1} />
+                                </div>
+                                <div className="w-100 d-flex justify-content-center">
+                                    <div
+                                        className="col-9"
+                                        style={{ maxWidth: '1200px' }}
+                                    >
+                                        <BigBoxSkeletonLoading height="80vh" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <>
                     {element}
-                    <Outlet/>
+                    <Outlet />
                 </>
             )}
         </>
