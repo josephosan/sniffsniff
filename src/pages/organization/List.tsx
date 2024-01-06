@@ -1,26 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../components/secondary/WrapperData';
 import Loading from '../../components/secondary/Loading';
-import {appConfig} from '../../config/app.config';
-import {Button} from 'antd';
+import { appConfig } from '../../config/app.config';
+import { Button } from 'antd';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import {useMediaQuery} from 'react-responsive';
+import { useMediaQuery } from 'react-responsive';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
 import CustomSearch from '../../components/primary/CustomSearch';
-import {useNavigate} from 'react-router-dom';
-import {useApp} from '../../store/app.store';
+import { useNavigate } from 'react-router-dom';
+import { useApp } from '../../store/app.store';
 import NoData from '../../components/tiny/NoData';
-import OrganizationApiService from "../../services/OrganizationApiService";
-import CustomImage from "../../components/secondary/CustomImage";
+import OrganizationApiService from '../../services/OrganizationApiService';
+import CustomImage from '../../components/secondary/CustomImage';
 
 const OrganizationList: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [organizationList, setOrganizationList] = useState<never[]>(null);
     const [page, setPage] = useState<string | null>(null);
-    const [searchValue, setSearch] = useState<string | null>(null)
+    const [searchValue, setSearch] = useState<string | null>(null);
     const navigate = useNavigate();
     const {
         theme,
@@ -55,13 +55,13 @@ const OrganizationList: React.FC = React.memo(() => {
         let params = {
             limit: appConfig.paginationLimit,
             order: order,
-            cursor: page
+            cursor: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            const res = await OrganizationApiService.paginateAll({params});
+            const res = await OrganizationApiService.paginateAll({ params });
             setOrganizationList((prevState) => {
                 if (prevState) return [...prevState, ...res.data.data.items];
                 return [...res.data.data.items];
@@ -95,94 +95,120 @@ const OrganizationList: React.FC = React.memo(() => {
 
     return (
         <WrapperScroll reachedBottom={handleReachedBottom}>
-            <div className={'row mb-3 mt-2'}>
-                <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
-                    <div
-                        className={
-                            'd-flex justify-content-between align-items-center'
-                        }
-                    >
-                        <CustomSearch
-                            inputMode={true}
-                            asyncSearch={true}
-                            onSearch={handleSearch}
-                        />
-                        <div
-                            className={'h-100 me-2'}
-                            style={{
-                                border: '1.5px solid ' + theme.primaryColor,
-                                borderRadius: appConfig.defaultBorderRadius,
-                                padding: '3px',
-                            }}
-                        >
-                            <ActionIconWrapper
-                                icon={
-                                    'bi bi-funnel d-flex justify-content-center align-items-center'
-                                }
-                                size={appConfig.defaultIconSize}
-                                iconClicked={handleFilterButtonClick}
-                            />
+            {pageFirstLoading && (
+                <div className={'w-100 d-flex flex-column '}>
+                    <div className="d-flex justify-content-between">
+                        <div style={{ width: '260px' }}>
+                            <FormSkeletonLoading count={1} />
+                        </div>
+                        <div style={{ width: '260px' }}>
+                            <FormSkeletonLoading count={1} />
                         </div>
                     </div>
-                </div>
 
-                <div
-                    className={
-                        'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
-                    }
-                >
-                    <Button
-                        type={'primary'}
-                        icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/organization/create`)}
-                    >
-                        افزودن
-                    </Button>
-                </div>
-            </div>
-
-            {pageFirstLoading && (
-                <div className={'w-100'}>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
+
             {(organizationList && organizationList.length > 0) ||
             fetchMoreLoading ? (
-                organizationList.map((el, index) => {
-                    return (
-                        <WrapperData key={index} handleClick={() => navigate(`/organization/${el.id}/project`)}>
+                <>
+                    <div className={'row mb-3 mt-2'}>
+                        <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
+                            <div
+                                className={
+                                    'd-flex justify-content-between align-items-center'
+                                }
+                            >
+                                <CustomSearch
+                                    inputMode={true}
+                                    asyncSearch={true}
+                                    onSearch={handleSearch}
+                                />
+                                <div
+                                    className={'h-100 me-2'}
+                                    style={{
+                                        border:
+                                            '1.5px solid ' + theme.primaryColor,
+                                        borderRadius:
+                                            appConfig.defaultBorderRadius,
+                                        padding: '3px',
+                                    }}
+                                >
+                                    <ActionIconWrapper
+                                        icon={
+                                            'bi bi-funnel d-flex justify-content-center align-items-center'
+                                        }
+                                        size={appConfig.defaultIconSize}
+                                        iconClicked={handleFilterButtonClick}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            className={
+                                'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
+                            }
+                        >
+                            <Button
+                                type={'primary'}
+                                icon={<i className={'bi bi-plus'}></i>}
+                                onClick={() => navigate(`/organization/create`)}
+                            >
+                                افزودن
+                            </Button>
+                        </div>
+                    </div>
+                    {organizationList.map((el, index) => (
+                        <WrapperData
+                            key={index}
+                            handleClick={() =>
+                                navigate(`/organization/${el.id}/project`)
+                            }
+                        >
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-3">
                                     <div className="d-flex align-items-center gap-2">
-                                        <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
-                                        <TextItemWrapper
-                                            fontSize={
-                                                appConfig.largeFontSize
-                                            }
-                                            text={el.name}
+                                        <CustomImage
+                                            src={'/public/vite.svg'}
+                                            width={'40px'}
+                                            height={'40px'}
                                         />
-                                    </div>
-                                    <div className={"px-2"}>
-                                        <TextItemWrapper text={el.description}/>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="d-flex align-items-center gap-3">
-                                    <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
-                                    <div className={"d-flex flex-column gap-2"}>
                                         <TextItemWrapper
                                             fontSize={appConfig.largeFontSize}
                                             text={el.name}
                                         />
-                                        <TextItemWrapper text={el.description}/>
+                                    </div>
+                                    <div className={'px-2'}>
+                                        <TextItemWrapper
+                                            text={el.description}
+                                        />
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="d-flex align-items-center gap-3">
+                                    <CustomImage
+                                        src={'/public/vite.svg'}
+                                        width={'40px'}
+                                        height={'40px'}
+                                    />
+                                    <div className={'d-flex flex-column gap-2'}>
+                                        <TextItemWrapper
+                                            fontSize={appConfig.largeFontSize}
+                                            text={el.name}
+                                        />
+                                        <TextItemWrapper
+                                            text={el.description}
+                                        />
                                     </div>
                                 </div>
                             )}
                         </WrapperData>
-                    );
-                })
+                    ))}
+                </>
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -190,7 +216,7 @@ const OrganizationList: React.FC = React.memo(() => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>

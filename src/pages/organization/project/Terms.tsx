@@ -12,7 +12,7 @@ import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import ProjectApiService from '../../../services/ProjectApiService';
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -62,8 +62,8 @@ const ProjectTerms: React.FC = React.memo(() => {
         try {
             const res = await ProjectApiService.getTermPaginate({
                 params: {
-                    project: param.projectId
-                }
+                    project: param.projectId,
+                },
             });
             setTermList(res.data);
         } catch (e) {
@@ -93,59 +93,70 @@ const ProjectTerms: React.FC = React.memo(() => {
 
     return (
         <WrapperScroll reachedBottom={handleReachedBottom} height="70vh">
-            <div className={'row mb-3 mt-2'}>
-                <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
-                    <div
-                        className={
-                            'd-flex justify-content-between align-items-center'
-                        }
-                    >
-                        <CustomSearch
-                            inputMode={true}
-                            asyncSearch={true}
-                            onSearch={handleSearch}
-                        />
-                        <div
-                            className={'h-100 me-2'}
-                            style={{
-                                border: '1.5px solid ' + theme.primaryColor,
-                                borderRadius: appConfig.defaultBorderRadius,
-                                padding: '3px',
-                            }}
-                        >
-                            <ActionIconWrapper
-                                icon={
-                                    'bi bi-funnel d-flex justify-content-center align-items-center'
-                                }
-                                size={appConfig.defaultIconSize}
-                                iconClicked={handleFilterButtonClick}
-                            />
+            {pageFirstLoading && (
+                <div className={'w-100 d-flex flex-column '}>
+                    <div className="d-flex justify-content-between">
+                        <div style={{ width: '260px' }}>
+                            <FormSkeletonLoading count={1} />
+                        </div>
+                        <div style={{ width: '260px' }}>
+                            <FormSkeletonLoading count={1} />
                         </div>
                     </div>
-                </div>
-                <div
-                    className={
-                        'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
-                    }
-                >
-                    <Button
-                        type={'primary'}
-                        icon={<i className={'bi bi-plus'}></i>}
-                        // onClick={() => navigate()}
-                    >
-                        افزودن
-                    </Button>
-                </div>
-            </div>
-            {pageFirstLoading && (
-                <div>
+
                     <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
-
             {(termList && termList.length > 0) || fetchMoreLoading ? (
-                termList.map((el, index) => {
-                    return (
+                <>
+                    <div className={'row mb-3 mt-2'}>
+                        <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
+                            <div
+                                className={
+                                    'd-flex justify-content-between align-items-center'
+                                }
+                            >
+                                <CustomSearch
+                                    inputMode={true}
+                                    asyncSearch={true}
+                                    onSearch={handleSearch}
+                                />
+                                <div
+                                    className={'h-100 me-2'}
+                                    style={{
+                                        border:
+                                            '1.5px solid ' + theme.primaryColor,
+                                        borderRadius:
+                                            appConfig.defaultBorderRadius,
+                                        padding: '3px',
+                                    }}
+                                >
+                                    <ActionIconWrapper
+                                        icon={
+                                            'bi bi-funnel d-flex justify-content-center align-items-center'
+                                        }
+                                        size={appConfig.defaultIconSize}
+                                        iconClicked={handleFilterButtonClick}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            className={
+                                'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
+                            }
+                        >
+                            <Button
+                                type={'primary'}
+                                icon={<i className={'bi bi-plus'}></i>}
+                                // onClick={() => navigate()}
+                            >
+                                افزودن
+                            </Button>
+                        </div>
+                    </div>
+
+                    {termList.map((el, index) => (
                         <WrapperData key={index} color={el.color}>
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-5">
@@ -171,11 +182,12 @@ const ProjectTerms: React.FC = React.memo(() => {
                                 </div>
                             )}
                         </WrapperData>
-                    );
-                })
+                    ))}
+                </>
             ) : (
                 <NoData />
             )}
+
             {fetchMoreLoading && (
                 <div
                     className={
