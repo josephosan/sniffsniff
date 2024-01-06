@@ -268,7 +268,7 @@ export const AppRouter: React.FC = React.memo(() => {
                         bottom: 0,
                     }}
                 >
-                    {isMobile ? (
+                    {/* {isMobile ? (
                         <Loading />
                     ) : (
                         <div className="d-flex w-100 h-100">
@@ -292,7 +292,8 @@ export const AppRouter: React.FC = React.memo(() => {
                                 </div>
                             </div>
                         </div>
-                    )}
+                    )} */}
+                    <Loading />
                 </div>
             ) : (
                 <>

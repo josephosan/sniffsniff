@@ -4,7 +4,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ConfigProvider, theme as antdTheme, ThemeConfig } from 'antd';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {appConfig, defaultFilterFields, lightConfig} from './config/app.config';
+import {
+    appConfig,
+    defaultFilterFields,
+    lightConfig,
+} from './config/app.config';
 import { useApp } from './store/app.store';
 import { NotifyProvider } from './store/notify.store';
 import { useEffect } from 'react';
@@ -122,13 +126,18 @@ function App() {
             },
             Tooltip: {
                 colorTextLightSolid: theme.defaultTextColor,
-                colorBgSpotlight: theme.cardBgLighter
+                colorBgSpotlight: theme.cardBgLighter,
             },
             Segmented: {
                 itemSelectedBg: theme.primaryColor,
                 itemSelectedColor: 'white',
-                colorBgLayout: theme.cardBgLighter
-            }
+                colorBgLayout: theme.cardBgLighter,
+            },
+            Timeline: {
+                dotBg: 'transparent',
+                tailColor: theme.fadeTextColor,
+                tailWidth: 1,
+            },
         },
     };
 
