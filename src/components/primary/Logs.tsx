@@ -1,6 +1,7 @@
 import { Timeline } from 'antd';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { statusColors } from '../../config/app.config';
+import { useApp } from '../../store/app.store';
 
 interface LogsProps {
     mode?: 'right' | 'left' | 'alternate' | undefined;
@@ -19,7 +20,15 @@ const Logs: React.FC<LogsProps> = ({
     items,
     pending = false,
 }) => {
-    return <Timeline mode={mode} items={items} pending={pending} />;
+    const { theme } = useApp();
+    return (
+        <Timeline
+            style={{ color: theme.fadeTextColor }}
+            mode={mode}
+            items={items}
+            pending={pending}
+        />
+    );
 };
 
 export default Logs;

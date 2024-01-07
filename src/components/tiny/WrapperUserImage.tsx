@@ -3,12 +3,14 @@ import CustomImage from '../secondary/CustomImage';
 import { useApp } from '../../store/app.store';
 
 interface WrapperUserImageProps {
-    url: string;
+    url?: string;
     size?: string;
+    icon?: string;
 }
 const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
     url,
     size = '50px',
+    icon,
 }) => {
     const { theme } = useApp();
 
@@ -22,7 +24,11 @@ const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
             }}
             className={'d-flex justify-content-center align-items-center'}
         >
-            <CustomImage src={url} width={'90%'} height={'90%'} />
+            {url ? (
+                <CustomImage src={url} width={'90%'} height={'90%'} />
+            ) : (
+                <i className={icon}></i>
+            )}
         </div>
     );
 };
