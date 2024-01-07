@@ -16,13 +16,13 @@ const LogMessage: React.FC<LogMessageProps> = ({
     username,
 }) => {
     return (
-        <>
+        <div>
             {mode === 'system' ? (
                 <SystemLogMessage title={title} time={time} />
             ) : (
                 <UserLogMessage title={title} time={time} username={username} />
             )}
-        </>
+        </div>
     );
 };
 

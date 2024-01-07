@@ -1,24 +1,20 @@
 import React from 'react';
-import {useApp} from '../../../store/app.store';
+import { useApp } from '../../../store/app.store';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
-import {useState, useEffect} from 'react';
-import {Button} from 'antd';
+import { useState, useEffect } from 'react';
+import { Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import NoData from '../../../components/tiny/NoData';
-import Loading from '../../../components/secondary/Loading';
 import CustomSearch from '../../../components/primary/CustomSearch';
-import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
 import WrapperUserData from '../../../components/secondary/WrapperUserData';
-import {appConfig} from '../../../config/app.config';
-import {useNavigate, useParams} from 'react-router-dom';
+import { appConfig } from '../../../config/app.config';
+import { useNavigate, useParams } from 'react-router-dom';
 import ProjectApiService from '../../../services/ProjectApiService';
 
 const ProjectUsers: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true); // todo: make this true
     const [userList, setUserList] = useState<never[]>([]);
-    const {
-        filters,
-    } = useApp();
+    const { filters } = useApp();
     const navigate = useNavigate();
     const param = useParams();
 
@@ -44,10 +40,10 @@ const ProjectUsers: React.FC = React.memo(() => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            const {data} = await ProjectApiService.getOne(param.projectId);
+            const { data } = await ProjectApiService.getOne(param.projectId);
             setUserList(data.data.members);
         } catch (e) {
             console.log(e);
@@ -58,21 +54,21 @@ const ProjectUsers: React.FC = React.memo(() => {
 
     const handleSearch = async (e) => {
         const input = e.target.value;
-        setUserList(prevState => {
-            return prevState.map(el => {
+        setUserList((prevState) => {
+            return prevState.map((el) => {
                 if (el.name.includes(input) || el.email.includes(input)) {
                     return {
                         ...el,
                         show: true,
-                    }
+                    };
                 } else {
                     return {
                         ...el,
-                        show: false
-                    }
+                        show: false,
+                    };
                 }
             });
-        })
+        });
     };
     return (
         <WrapperScroll /*reachedBottom={handleReachedBottom}*/ height="70vh">
@@ -109,16 +105,16 @@ const ProjectUsers: React.FC = React.memo(() => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
-            <br/>
+            <br />
 
-            {(userList && userList.length > 0) ? (
+            {userList && userList.length > 0 ? (
                 userList.map((el) => {
                     return (
-                        (el.show != false) && (
+                        el.show != false && (
                             <WrapperUserData
                                 title={el.name}
                                 desc={el.email}
@@ -128,7 +124,7 @@ const ProjectUsers: React.FC = React.memo(() => {
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
         </WrapperScroll>
     );
