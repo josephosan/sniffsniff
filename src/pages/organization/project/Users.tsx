@@ -112,13 +112,14 @@ const ProjectUsers: React.FC = React.memo(() => {
             <br />
 
             {userList && userList.length > 0 ? (
-                userList.map((el) => {
+                userList.map((el, index) => {
                     return (
                         el.show != false && (
                             <WrapperUserData
                                 title={el.name}
                                 desc={el.email}
                                 imageUrl={'/public/vite.svg'}
+                                key={index}
                             />
                         )
                     );

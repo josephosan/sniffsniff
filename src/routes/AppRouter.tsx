@@ -20,12 +20,13 @@ import ProjectTerms from '../pages/organization/project/Terms';
 import ProjectUsers from '../pages/organization/project/Users';
 import ProjectSettings from '../pages/organization/project/Settings';
 import ProjectInvite from '../pages/organization/project/Invite';
-import CreateTerm from '../pages/organization/project/term/Create';
+import CreateTerm from '../pages/organization/project/term/create/Create';
 import NotificationsList from '../pages/notification/List';
 import PublicNotifications from '../pages/notification/Public';
 import ProjectNotifications from '../pages/notification/Project';
 import ViewProjectNotification from '../pages/notification/view/Project';
 import ViewPublicNotification from '../pages/notification/view/Public';
+import ViewTerm from '../pages/organization/project/term/View/View';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -48,8 +49,6 @@ import AuthService from '../services/AuthService';
 import { getToken } from '../helpers/jwt.helper';
 import { useMediaQuery } from 'react-responsive';
 import { appConfig } from '../config/app.config';
-import FormSkeletonLoading from '../components/secondary/FormSkeletonLoading';
-import BigBoxSkeletonLoading from '../components/secondary/BigBoxSkeletonLoading';
 import Loading from '../components/secondary/Loading';
 
 export const AppRouter: React.FC = React.memo(() => {
@@ -158,6 +157,11 @@ export const AppRouter: React.FC = React.memo(() => {
                     path: 'organization/:organizationId/project/:projectId/term/create',
                     name: 'CreateTerm',
                     element: <CreateTerm />,
+                },
+                {
+                    path: 'organization/:organizationId/project/:projectId/term/:termId',
+                    name: 'ViewTerm',
+                    element: <ViewTerm />,
                 },
 
                 // notifications

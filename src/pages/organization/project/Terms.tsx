@@ -12,13 +12,15 @@ import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import ProjectApiService from '../../../services/ProjectApiService';
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import CreateTermModal from '../../../components/secondary/CreateTermModal';
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
-    const [termList, setTermList] = useState<never[]>(null);
-    const [page, setPage] = useState<number>(null);
+    const [termList, setTermList] = useState<never[] | null>(null);
+    const [page, setPage] = useState<number | null>(null);
+    const [createTermModal, setCreateTermModal] = useState(false);
     const param = useParams();
     const {
         theme,
@@ -62,8 +64,8 @@ const ProjectTerms: React.FC = React.memo(() => {
         try {
             const res = await ProjectApiService.getTermPaginate({
                 params: {
-                    project: param.projectId
-                }
+                    project: param.projectId,
+                },
             });
             setTermList(res.data);
         } catch (e) {
@@ -131,10 +133,14 @@ const ProjectTerms: React.FC = React.memo(() => {
                     <Button
                         type={'primary'}
                         icon={<i className={'bi bi-plus'}></i>}
-                        // onClick={() => navigate()}
+                        onClick={() => setCreateTermModal(true)}
                     >
                         افزودن
                     </Button>
+                    <CreateTermModal
+                        open={createTermModal}
+                        setOpen={(value) => setCreateTermModal(value)}
+                    />
                 </div>
             </div>
             {pageFirstLoading && (
