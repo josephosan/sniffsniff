@@ -12,14 +12,17 @@ import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
 import ProjectApiService from '../../../services/ProjectApiService';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CreateTermModal from '../../../components/secondary/CreateTermModal';
+import TermService from '../../../services/TermService';
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
     const [termList, setTermList] = useState<never[] | null>(null);
+    const navigate = useNavigate();
     const [page, setPage] = useState<number | null>(null);
+    const [searchValue, setSearch] = useState<string | null>(null);
     const [createTermModal, setCreateTermModal] = useState(false);
     const param = useParams();
     const {
@@ -44,7 +47,7 @@ const ProjectTerms: React.FC = React.memo(() => {
     }, [filters]);
 
     const handleFetchMore = async (
-        page: number = 1,
+        page: string | null = null,
         order: string = 'DESC',
         s: string = '',
     ) => {
@@ -62,12 +65,18 @@ const ProjectTerms: React.FC = React.memo(() => {
         if (filters) params = { ...params, ...filters };
 
         try {
-            const res = await ProjectApiService.getTermPaginate({
+            const res = await TermService.paginateAll({
                 params: {
                     project: param.projectId,
+                    ...params,
                 },
             });
-            setTermList(res.data.data.items);
+            setTermList((prevState) => {
+                if (prevState)
+                    return [...prevState, ...res.data.data.items] as any;
+                return [...res.data.data.items];
+            });
+            setPage(() => res.data.data.cursor);
         } catch (e) {
             console.log(e);
         } finally {
@@ -78,7 +87,7 @@ const ProjectTerms: React.FC = React.memo(() => {
 
     const handleReachedBottom = async () => {
         if (!pageFirstLoading && !fetchMoreLoading && page) {
-            await handleFetchMore(page);
+            await handleFetchMore(page, 'ASC', searchValue as string);
         }
     };
 
@@ -89,8 +98,9 @@ const ProjectTerms: React.FC = React.memo(() => {
 
     const handleSearch = async (e: any) => {
         setTermList(() => []);
-        setPage(() => 1);
-        await handleFetchMore(1, 'ASC', e.target.value);
+        setPage(() => null);
+        setSearch(e.target.value);
+        await handleFetchMore(null, 'ASC', e.target.value);
     };
 
     return (
@@ -158,6 +168,13 @@ const ProjectTerms: React.FC = React.memo(() => {
                                     key={index}
                                     color={el.color}
                                     backgroundColor={(theme as any).cardBg}
+                                    handleClick={() =>
+                                        navigate(
+                                            `${el.id}?type=${(
+                                                el.type as string
+                                            ).toLowerCase()}`,
+                                        )
+                                    }
                                 >
                                     {isMobile ? (
                                         <div className="d-flex flex-column gap-5">

@@ -1,7 +1,7 @@
 import React from 'react';
-import {useState, useEffect} from 'react';
-import {useMediaQuery} from 'react-responsive';
-import {Button} from 'antd';
+import { useState, useEffect } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import { Button } from 'antd';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../components/secondary/WrapperData';
@@ -10,11 +10,11 @@ import NoData from '../../components/tiny/NoData';
 import Loading from '../../components/secondary/Loading';
 import CustomSearch from '../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../components/secondary/ActionIconWrapper';
-import {useApp} from '../../store/app.store';
+import { useApp } from '../../store/app.store';
 import ProjectApiService from '../../services/ProjectApiService';
 
-import {appConfig} from '../../config/app.config';
-import {useNavigate, useParams} from 'react-router-dom';
+import { appConfig } from '../../config/app.config';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const OrganizationProjects: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -56,10 +56,10 @@ const OrganizationProjects: React.FC = () => {
             page: page,
         };
         if (s !== '') params['s'] = s;
-        if (filters) params = {...params, ...filters};
+        if (filters) params = { ...params, ...filters };
 
         try {
-            const res = await ProjectApiService.paginateAll({params});
+            const res = await ProjectApiService.paginateAll({ params });
             setProjectList((prevState) => {
                 if (prevState) return [...prevState, ...res.data.data.items];
                 return [...res.data.data.items];
@@ -142,36 +142,47 @@ const OrganizationProjects: React.FC = () => {
             </div>
             {pageFirstLoading && (
                 <div>
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
             {(projectList && projectList.length > 0) || fetchMoreLoading ? (
                 projectList.map((el, index) => {
                     return (
-                        <WrapperData handleClick={() => navigate(`/organization/${route.organizationId}/project/${el.id}/term`)} key={index} color={el.color}>
+                        <WrapperData
+                            handleClick={() =>
+                                navigate(
+                                    `/organization/${route.organizationId}/project/${el.id}/term`,
+                                )
+                            }
+                            key={index}
+                            color={el.color}
+                            backgroundColor={theme.cardBg}
+                        >
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-3">
                                     <div className="d-flex align-items-center gap-2">
                                         <TextItemWrapper
-                                            fontSize={
-                                                appConfig.largeFontSize
-                                            }
+                                            fontSize={appConfig.largeFontSize}
                                             text={el.name}
                                         />
                                     </div>
-                                    <div className={"px-2"}>
-                                        <TextItemWrapper text={el.description}/>
+                                    <div className={'px-2'}>
+                                        <TextItemWrapper
+                                            text={el.description}
+                                        />
                                     </div>
                                 </div>
                             ) : (
                                 <div className="d-flex align-items-center gap-3">
-                                    <div className={"d-flex flex-column gap-2"}>
+                                    <div className={'d-flex flex-column gap-2'}>
                                         <TextItemWrapper
                                             fontSize={appConfig.largeFontSize}
                                             text={el.name}
                                         />
-                                        <TextItemWrapper text={el.description}/>
+                                        <TextItemWrapper
+                                            text={el.description}
+                                        />
                                     </div>
                                 </div>
                             )}
@@ -179,7 +190,7 @@ const OrganizationProjects: React.FC = () => {
                     );
                 })
             ) : (
-                <NoData/>
+                <NoData />
             )}
             {fetchMoreLoading && (
                 <div
@@ -187,7 +198,7 @@ const OrganizationProjects: React.FC = () => {
                         'w-100 d-flex justify-content-center align-items-center'
                     }
                 >
-                    <Loading/>
+                    <Loading />
                 </div>
             )}
         </WrapperScroll>
