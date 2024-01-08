@@ -16,7 +16,7 @@ const LogMessage: React.FC<LogMessageProps> = ({
     username,
 }) => {
     return (
-        <div>
+        <div className="pb-5">
             {mode === 'system' ? (
                 <SystemLogMessage title={title} time={time} />
             ) : (

@@ -1,0 +1,16 @@
+.ant-timeline-item:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.ant-timeline-item-tail {
+    position: absolute;
+    inset-block-start: 35px !important;
+    inset-inline-start: 5px !important;
+    height: calc(100% - 60px) !important;
+    border-inline-start: 1px solid #C3C5CA;
+}
+
+.ant-timeline-item-content {
+    margin-inline-start: 35px !important;
+}

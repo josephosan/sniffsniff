@@ -2,8 +2,9 @@ import React from 'react';
 import Logs from '../components/primary/Logs';
 import LogMessage from '../components/secondary/LogMessage';
 import { statusColors } from '../config/app.config';
-import WrapperUserImage from '../components/tiny/WrapperUserImage';
 import LogComment from '../components/tiny/LogComment';
+import { TopBarIconWrapper } from '../components/secondary/TopBarIconWrapper';
+import LogIconWrapper from '../components/tiny/LogIconWrapper';
 
 export const Home: React.FC = () => {
     return (
@@ -11,7 +12,7 @@ export const Home: React.FC = () => {
             <Logs
                 items={[
                     {
-                        dot: <i className="bi bi-cloud-plus"></i>,
+                        dot: <LogIconWrapper icon="bi bi-cloud-plus" />,
                         color: statusColors.success,
                         children: (
                             <LogMessage
@@ -23,7 +24,7 @@ export const Home: React.FC = () => {
                         ),
                     },
                     {
-                        dot: <i className="bi bi-window"></i>,
+                        dot: <LogIconWrapper icon="bi bi-window" />,
                         color: statusColors.info,
                         children: (
                             <LogMessage
@@ -34,7 +35,7 @@ export const Home: React.FC = () => {
                         ),
                     },
                     {
-                        dot: <i className="bi bi-chat-dots"></i>,
+                        dot: <LogIconWrapper icon="bi bi-chat-dots" />,
                         color: statusColors.warning,
                         children: (
                             <LogMessage
@@ -46,9 +47,7 @@ export const Home: React.FC = () => {
                         ),
                     },
                     {
-                        dot: (
-                            <WrapperUserImage size="25px" icon="bi bi-person" />
-                        ),
+                        dot: <LogIconWrapper icon="bi bi-person-check" />,
                         children: (
                             <LogComment
                                 onSubmit={(value) => console.log(value)}

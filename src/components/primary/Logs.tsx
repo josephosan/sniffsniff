@@ -1,7 +1,7 @@
 import { Timeline } from 'antd';
-import React, { ReactNode, useEffect, useState } from 'react';
-import { statusColors } from '../../config/app.config';
+import React, { ReactNode } from 'react';
 import { useApp } from '../../store/app.store';
+import '../../styles/components/primary/logs.scss';
 
 interface LogsProps {
     mode?: 'right' | 'left' | 'alternate' | undefined;
@@ -27,6 +27,7 @@ const Logs: React.FC<LogsProps> = ({
             mode={mode}
             items={items}
             pending={pending}
+            className="m-1"
         />
     );
 };
