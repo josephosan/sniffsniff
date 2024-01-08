@@ -5,7 +5,7 @@ import { appConfig } from '../../../config/app.config';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
 import CustomSearch from '../../../components/primary/CustomSearch';
 import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
-import { Button } from 'antd';
+import { Badge, Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../../components/secondary/WrapperData';
 import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
@@ -67,7 +67,7 @@ const ProjectTerms: React.FC = React.memo(() => {
                     project: param.projectId,
                 },
             });
-            setTermList(res.data);
+            setTermList(res.data.data.items);
         } catch (e) {
             console.log(e);
         } finally {
@@ -87,7 +87,7 @@ const ProjectTerms: React.FC = React.memo(() => {
         handleSetSidebarCollapsed(true);
     };
 
-    const handleSearch = async (e) => {
+    const handleSearch = async (e: any) => {
         setTermList(() => []);
         setPage(() => 1);
         await handleFetchMore(1, 'ASC', e.target.value);
@@ -150,33 +150,47 @@ const ProjectTerms: React.FC = React.memo(() => {
             )}
 
             {(termList && termList.length > 0) || fetchMoreLoading ? (
-                termList.map((el, index) => {
+                (termList as any[]).map((el: any, index) => {
                     return (
-                        <WrapperData key={index} color={el.color}>
-                            {isMobile ? (
-                                <div className="d-flex flex-column gap-5">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <TextItemWrapper
-                                            fontSize={appConfig.defaultFontSize}
-                                            text={el.name}
-                                        />
-                                    </div>
-                                    <div className="d-flex">
-                                        <TextItemWrapper
-                                            text={el.description}
-                                        />
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="d-flex align-items-center justify-content-between">
-                                    <TextItemWrapper
-                                        fontSize={appConfig.defaultFontSize}
-                                        text={el.name}
-                                    />
-                                    <TextItemWrapper text={el.description} />
-                                </div>
-                            )}
-                        </WrapperData>
+                        <div className="px-2">
+                            <Badge.Ribbon text={el.type} color="red">
+                                <WrapperData
+                                    key={index}
+                                    color={el.color}
+                                    backgroundColor={(theme as any).cardBg}
+                                >
+                                    {isMobile ? (
+                                        <div className="d-flex flex-column gap-5">
+                                            <div className="d-flex justify-content-between align-items-center">
+                                                <TextItemWrapper
+                                                    fontSize={
+                                                        appConfig.defaultFontSize
+                                                    }
+                                                    text={el.title}
+                                                />
+                                            </div>
+                                            <div className="d-flex">
+                                                <TextItemWrapper
+                                                    text={el.description}
+                                                />
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="d-flex align-items-start gap-2 flex-column">
+                                            <TextItemWrapper
+                                                fontSize={
+                                                    appConfig.defaultFontSize
+                                                }
+                                                text={el.title}
+                                            />
+                                            <TextItemWrapper
+                                                text={el.description}
+                                            />
+                                        </div>
+                                    )}
+                                </WrapperData>
+                            </Badge.Ribbon>
+                        </div>
                     );
                 })
             ) : (

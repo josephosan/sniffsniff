@@ -15,8 +15,8 @@ const api = axios.create({
 export default class ApiService {
     public static baseUrl = '';
     public static notify: NotificationStore | null = null;
-    public static appStore: AppStore | null = null;
-    public static navigate: NavigateFunction | null = null;
+    public static appStore: AppStore | null | undefined = null;
+    public static navigate: NavigateFunction | null | undefined = null;
 
     private static ignoreNamesForHeaders: string[] = appConfig.ignoreNamesForAuth as string[];
 
@@ -32,7 +32,7 @@ export default class ApiService {
 
     public static setRequestInterceptors() {
         api.interceptors.request.use(
-            (config) => {
+            (config: any) => {
                 let canSetHeaders = !this.ignoreNamesForHeaders.some(el => config.url.indexOf(el) !== -1);
                 if (getToken() && canSetHeaders) {
                     const tokens = JSON.parse(getToken());
@@ -88,7 +88,7 @@ export default class ApiService {
 
     public static setHeader(key: string, value: string) {
         api.interceptors.request.use(
-            (config) => {
+            (config: any) => {
                 config.headers = {
                     ...config.headers,
                     [key]: value
@@ -142,7 +142,7 @@ export default class ApiService {
         return await api.get(resource, config);
     }
 
-    public static async post(resource: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+    public static async post(resource: string, data: any, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.post(resource, data, config);
     }
 
@@ -154,7 +154,7 @@ export default class ApiService {
         return await api.delete(recourse, config);
     }
 
-    public static async put(recourse: string, data: never, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+    public static async put(recourse: string, data: any, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return await api.put(recourse, data, config);
     }
 

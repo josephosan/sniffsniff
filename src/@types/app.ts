@@ -47,7 +47,7 @@ export interface FormBuilderField {
     name: string,
     type: FormBuilderFieldType,
     label?: string,
-    rules?: never,
+    rules?: {required: boolean, message: string}[],
     options?: SelectOption[],
     select_url?: string,
     required?: boolean,

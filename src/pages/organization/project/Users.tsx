@@ -14,7 +14,7 @@ import ProjectApiService from '../../../services/ProjectApiService';
 const ProjectUsers: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true); // todo: make this true
     const [userList, setUserList] = useState<never[]>([]);
-    const { filters } = useApp();
+    const { filters, theme } = useApp();
     const navigate = useNavigate();
     const param = useParams();
 
@@ -71,7 +71,7 @@ const ProjectUsers: React.FC = React.memo(() => {
         });
     };
     return (
-        <WrapperScroll /*reachedBottom={handleReachedBottom}*/ height="70vh">
+        <WrapperScroll height="70vh">
             <div className={'row mb-3 mt-2'}>
                 <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
                     <div
@@ -112,7 +112,7 @@ const ProjectUsers: React.FC = React.memo(() => {
             <br />
 
             {userList && userList.length > 0 ? (
-                userList.map((el, index) => {
+                (userList as any[]).map((el, index) => {
                     return (
                         el.show != false && (
                             <WrapperUserData
@@ -120,6 +120,7 @@ const ProjectUsers: React.FC = React.memo(() => {
                                 desc={el.email}
                                 imageUrl={'/public/vite.svg'}
                                 key={index}
+                                backgroundColor={theme.cardBg}
                             />
                         )
                     );
