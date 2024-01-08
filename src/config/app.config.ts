@@ -77,7 +77,7 @@ const colors = [
 ];
 
 const apiConfig = {
-    API_BASE_URL: 'http://46.102.143.25:5000/v1'
+    API_BASE_URL: 'http://87.107.165.124:5000/v1'
 }
 
 // filters

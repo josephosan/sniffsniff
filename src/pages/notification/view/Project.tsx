@@ -41,7 +41,7 @@ const ViewProjectNotification: React.FC = () => {
         } catch (e) {
             console.log(e);
         } finally {
-            if (!data) setPageFirstLoading(() => false);
+            // if (!data) setPageFirstLoading(() => false);
         }
     };
     const handleChange = async (e: string) => {
@@ -55,33 +55,38 @@ const ViewProjectNotification: React.FC = () => {
 
     return (
         <>
-            <div>
-                {pageFirstLoading && (
-                    <>
-                        <div
-                            className={
-                                'd-flex flex-row justify-content-center '
-                            }
-                            style={{
-                                width: '260px',
-                            }}
-                        >
-                            <FormSkeletonLoading count={1} />
+            {pageFirstLoading && (
+                <div
+                    className=" w-100 d-flex flex-column "
+                    // style={{ border: '2px solid black' }}
+                >
+                    <FormSkeletonLoading count={1} width="200px" />
+                    <FormSkeletonLoading count={1} width="200px" />
+                    <BigBoxSkeletonLoading count={1} />
+                    <div
+                        className="w-100 d-flex justify-content-end "
+                        style={{ border: '1px solid red' }}
+                    >
+                        <div>
+                            <FormSkeletonLoading count={1} size="small" />
                         </div>
-                        <div className="d-flex flex-column align-items-center  ">
-                            <BigBoxSkeletonLoading count={1} />
-                            <div className="w-100 d-flex justify-content-end ">
-                                <div>
-                                    <FormSkeletonLoading
-                                        count={1}
-                                        size="small"
-                                    />
-                                </div>
+                    </div>
+
+                    {/* <FormSkeletonLoading count={1} width="100px" />
+
+                    <div className="d-flex flex-column align-items-center  ">
+                        <BigBoxSkeletonLoading count={1} />
+                        <div
+                            className="w-100 d-flex justify-content-end "
+                            style={{ border: '1px solid red' }}
+                        >
+                            <div>
+                                <FormSkeletonLoading count={1} size="small" />
                             </div>
                         </div>
-                    </>
-                )}
-            </div>
+                    </div> */}
+                </div>
+            )}
 
             {data ? (
                 <div className="d-flex flex-column gap-4 px-3 ">

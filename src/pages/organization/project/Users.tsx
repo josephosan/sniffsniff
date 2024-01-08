@@ -5,9 +5,7 @@ import { useState, useEffect } from 'react';
 import { Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import NoData from '../../../components/tiny/NoData';
-import Loading from '../../../components/secondary/Loading';
 import CustomSearch from '../../../components/primary/CustomSearch';
-import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
 import WrapperUserData from '../../../components/secondary/WrapperUserData';
 import { appConfig } from '../../../config/app.config';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -74,66 +72,57 @@ const ProjectUsers: React.FC = React.memo(() => {
     };
     return (
         <WrapperScroll /*reachedBottom={handleReachedBottom}*/ height="70vh">
-            {pageFirstLoading && (
-                <div className={'w-100 d-flex flex-column '}>
-                    <div className="d-flex justify-content-between">
-                        <div style={{ width: '260px' }}>
-                            <FormSkeletonLoading count={1} />
-                        </div>
-                        <div style={{ width: '260px' }}>
-                            <FormSkeletonLoading count={1} />
-                        </div>
+            <div className={'row mb-3 mt-2'}>
+                <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
+                    <div
+                        className={
+                            'd-flex justify-content-between align-items-center'
+                        }
+                    >
+                        <CustomSearch
+                            inputMode={true}
+                            onSearch={handleSearch}
+                        />
                     </div>
-
+                </div>
+                <div
+                    className={
+                        'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
+                    }
+                >
+                    <Button
+                        type={'primary'}
+                        icon={<i className={'bi bi-plus'}></i>}
+                        onClick={() =>
+                            navigate(
+                                `/organization/${param.organizationId}/project/${param.projectId}/invite`,
+                            )
+                        }
+                    >
+                        افزودن
+                    </Button>
+                </div>
+            </div>
+            {pageFirstLoading && (
+                <div>
                     <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
 
+            <br />
+
             {userList && userList.length > 0 ? (
-                <>
-                    <div className={'row mb-3 mt-2'}>
-                        <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
-                            <div
-                                className={
-                                    'd-flex justify-content-between align-items-center'
-                                }
-                            >
-                                <CustomSearch
-                                    inputMode={true}
-                                    onSearch={handleSearch}
-                                />
-                            </div>
-                        </div>
-                        <div
-                            className={
-                                'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
-                            }
-                        >
-                            <Button
-                                type={'primary'}
-                                icon={<i className={'bi bi-plus'}></i>}
-                                onClick={() =>
-                                    navigate(
-                                        `/organization/${param.organizationId}/project/${param.projectId}/invite`,
-                                    )
-                                }
-                            >
-                                افزودن
-                            </Button>
-                        </div>
-                    </div>
-                    {userList.map(
-                        (el) =>
-                            el.show !== false && (
-                                <WrapperUserData
-                                    key={el.id} // Ensure each element has a unique key
-                                    title={el.name}
-                                    desc={el.email}
-                                    imageUrl={'/public/vite.svg'}
-                                />
-                            ),
-                    )}
-                </>
+                userList.map((el) => {
+                    return (
+                        el.show != false && (
+                            <WrapperUserData
+                                title={el.name}
+                                desc={el.email}
+                                imageUrl={'/public/vite.svg'}
+                            />
+                        )
+                    );
+                })
             ) : (
                 <NoData />
             )}

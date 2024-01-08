@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import WrapperMessage from '../../components/secondary/WrapperMessage';
 import WrapperScroll from '../../components/secondary/WrapperScroll';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
@@ -47,23 +47,22 @@ const ProjectNotifications = () => {
         <WrapperScroll>
             <div className=" h-100 d-flex flex-column gap-3 align-items-center">
                 {pageFirstLoading && (
-                    <FormSkeletonLoading fillRow={true} count={10}/>
+                    <FormSkeletonLoading fillRow={true} count={10} />
                 )}
 
-                {
-                    (projectNotifications && projectNotifications.length > 0) || fetchMoreLoading
-                        ? projectNotifications.map((notif, index) => {
-                            return (
-                                <WrapperMessage
-                                    type={notif.type}
-                                    title={notif.title}
-                                    desc={notif.desc}
-                                    key={index}
-                                />
-                            );
-                        })
-                        : !pageFirstLoading && <NoData/>
-                }
+                {(projectNotifications && projectNotifications.length > 0) ||
+                fetchMoreLoading
+                    ? projectNotifications.map((notif, index) => {
+                          return (
+                              <WrapperMessage
+                                  type={notif.type}
+                                  title={notif.title}
+                                  desc={notif.desc}
+                                  key={index}
+                              />
+                          );
+                      })
+                    : !pageFirstLoading && <NoData />}
 
                 {fetchMoreLoading && (
                     <div
@@ -71,7 +70,7 @@ const ProjectNotifications = () => {
                             'w-100 d-flex justify-content-center align-items-center'
                         }
                     >
-                        <Loading/>
+                        <Loading />
                     </div>
                 )}
             </div>
