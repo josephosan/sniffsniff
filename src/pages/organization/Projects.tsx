@@ -68,8 +68,8 @@ const OrganizationProjects: React.FC = () => {
         } catch (e) {
             console.log(e);
         } finally {
-            // if (projectList) setFetchMoreLoading(() => false);
-            // else setPageFirstLoading(() => false);
+            if (projectList) setFetchMoreLoading(() => false);
+            else setPageFirstLoading(() => false);
         }
     };
 
@@ -93,22 +93,26 @@ const OrganizationProjects: React.FC = () => {
     return (
         <WrapperScroll reachedBottom={handleReachedBottom} height="70vh">
             {pageFirstLoading && (
-                <div className={'w-100'}>
-                    <div className="d-flex w-100 gap-3 align-items-center ">
-                        <div
-                            style={{
-                                width: '260px',
-                                border: '2px solid blue ',
-                            }}
-                        >
-                            <FormSkeletonLoading count={1} width="260px" />
+                <div className={'w-100 d-flex flex-column'}>
+                    {isMobile ? (
+                        <div className=" d-flex justify-content-between  ">
+                            <div>
+                                <FormSkeletonLoading count={1} width="120px" />
+                            </div>
+                            <div>
+                                <FormSkeletonLoading count={1} width="120px" />
+                            </div>
                         </div>
-                        <div
-                            style={{ width: '260px', border: '2px solid red' }}
-                        >
-                            <FormSkeletonLoading count={1} width="260px" />
+                    ) : (
+                        <div className="w-100 d-flex justify-content-between ">
+                            <div>
+                                <FormSkeletonLoading count={1} />
+                            </div>
+                            <div>
+                                <FormSkeletonLoading count={1} />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <FormSkeletonLoading fillRow={true} count={10} />
                 </div>

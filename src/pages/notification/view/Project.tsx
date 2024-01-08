@@ -41,7 +41,7 @@ const ViewProjectNotification: React.FC = () => {
         } catch (e) {
             console.log(e);
         } finally {
-            // if (!data) setPageFirstLoading(() => false);
+            if (!data) setPageFirstLoading(() => false);
         }
     };
     const handleChange = async (e: string) => {
@@ -56,35 +56,10 @@ const ViewProjectNotification: React.FC = () => {
     return (
         <>
             {pageFirstLoading && (
-                <div
-                    className=" w-100 d-flex flex-column "
-                    // style={{ border: '2px solid black' }}
-                >
-                    <FormSkeletonLoading count={1} width="200px" />
-                    <FormSkeletonLoading count={1} width="200px" />
-                    <BigBoxSkeletonLoading count={1} />
-                    <div
-                        className="w-100 d-flex justify-content-end "
-                        style={{ border: '1px solid red' }}
-                    >
-                        <div>
-                            <FormSkeletonLoading count={1} size="small" />
-                        </div>
-                    </div>
+                <div>
+                    <FormSkeletonLoading width="200px" count={1} />
 
-                    {/* <FormSkeletonLoading count={1} width="100px" />
-
-                    <div className="d-flex flex-column align-items-center  ">
-                        <BigBoxSkeletonLoading count={1} />
-                        <div
-                            className="w-100 d-flex justify-content-end "
-                            style={{ border: '1px solid red' }}
-                        >
-                            <div>
-                                <FormSkeletonLoading count={1} size="small" />
-                            </div>
-                        </div>
-                    </div> */}
+                    <BigBoxSkeletonLoading />
                 </div>
             )}
 

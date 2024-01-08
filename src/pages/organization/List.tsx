@@ -96,15 +96,26 @@ const OrganizationList: React.FC = React.memo(() => {
     return (
         <WrapperScroll reachedBottom={handleReachedBottom}>
             {pageFirstLoading && (
-                <div className={'w-100 d-flex flex-column '}>
-                    <div className="d-flex justify-content-between">
-                        <div style={{ width: '260px' }}>
-                            <FormSkeletonLoading count={1} />
+                <div className={'w-100 d-flex flex-column'}>
+                    {isMobile ? (
+                        <div className=" d-flex justify-content-between  ">
+                            <div>
+                                <FormSkeletonLoading count={1} width="120px" />
+                            </div>
+                            <div>
+                                <FormSkeletonLoading count={1} width="120px" />
+                            </div>
                         </div>
-                        <div style={{ width: '260px' }}>
-                            <FormSkeletonLoading count={1} />
+                    ) : (
+                        <div className="w-100 d-flex justify-content-between ">
+                            <div>
+                                <FormSkeletonLoading count={1} />
+                            </div>
+                            <div>
+                                <FormSkeletonLoading count={1} />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
