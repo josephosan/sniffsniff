@@ -162,14 +162,9 @@ const ProjectTerms: React.FC = React.memo(() => {
             {(termList && termList.length > 0) || fetchMoreLoading ? (
                 (termList as any[]).map((el: any, index) => {
                     return (
-                        <div className="px-2">
-                            <Badge.Ribbon
-                                text={el.type}
-                                color="red"
-                                key={index}
-                            >
+                        <div className="px-2" key={index}>
+                            <Badge.Ribbon text={el.type} color="red">
                                 <WrapperData
-                                    key={index}
                                     color={el.color}
                                     backgroundColor={(theme as any).cardBg}
                                     handleClick={() =>
