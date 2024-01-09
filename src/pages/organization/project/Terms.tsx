@@ -3,22 +3,14 @@ import { useApp } from '../../../store/app.store';
 import { useMediaQuery } from 'react-responsive';
 import { appConfig } from '../../../config/app.config';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
-import CustomSearch from '../../../components/primary/CustomSearch';
-import ActionIconWrapper from '../../../components/secondary/ActionIconWrapper';
 import { Badge, Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
 import WrapperData from '../../../components/secondary/WrapperData';
 import TextItemWrapper from '../../../components/tiny/TextItemWrapper';
 import NoData from '../../../components/tiny/NoData';
 import Loading from '../../../components/secondary/Loading';
-import ProjectApiService from '../../../services/ProjectApiService';
-<<<<<<< HEAD
-import { useParams } from 'react-router-dom';
-=======
 import { useNavigate, useParams } from 'react-router-dom';
-import CreateTermModal from '../../../components/secondary/CreateTermModal';
 import TermService from '../../../services/TermService';
->>>>>>> master
 
 const ProjectTerms: React.FC = React.memo(() => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
@@ -72,10 +64,7 @@ const ProjectTerms: React.FC = React.memo(() => {
             const res = await TermService.paginateAll({
                 params: {
                     project: param.projectId,
-<<<<<<< HEAD
-=======
                     ...params,
->>>>>>> master
                 },
             });
             setTermList((prevState) => {
