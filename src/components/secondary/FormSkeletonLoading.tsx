@@ -8,6 +8,7 @@ interface FormSkeletonLoadingProps {
     count?: number;
     fillRow?: boolean;
     width?: string;
+    height?: string | undefined;
 }
 
 const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = ({
@@ -16,6 +17,7 @@ const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = ({
     count = 10,
     fillRow = false,
     width,
+    height,
 }) => {
     const skeletonArray = Array.from({ length: count }, (_, index) => index);
 
@@ -28,6 +30,7 @@ const FormSkeletonLoading: React.FC<FormSkeletonLoadingProps> = ({
                             minWidth: width,
                             width: width,
                             maxWidth: width,
+                            height: height ? height : undefined,
                         }}
                         className={'w-100 m-2 ' + (fillRow ? '' : 'col-sm')}
                         key={el}
