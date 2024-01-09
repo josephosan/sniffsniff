@@ -1,4 +1,4 @@
-import {colors} from '../config/app.config';
+import { colors } from '../config/app.config';
 import moment from 'jalali-moment';
 
 const pathNamesMap = {
@@ -14,7 +14,7 @@ const pathNamesMap = {
     term: 'ترم',
     invite: 'دعوت',
     notifications: 'اعلان ها',
-    public: 'عمومی'
+    public: 'عمومی',
 };
 
 const pathIconsMap = {
@@ -38,7 +38,7 @@ const getPageNameByPath = (route: string) => {
     return route.split('/')[1];
 };
 
-const notClickableRouteNames = ['project', 'notifications'];
+const notClickableRouteNames = ['project', 'notifications', 'term'];
 
 const handleGetBreadcrump = (path) => {
     const pathNames = path
@@ -100,7 +100,7 @@ function hsvToHex(original) {
     if (/[0-9A-Fa-f]{6}/g.test(original)) {
         return original;
     } else {
-        let {h, s, v} = original;
+        let { h, s, v } = original;
 
         // Convert HSV to RGB
         let c = v * s;
@@ -132,7 +132,6 @@ function hsvToHex(original) {
             .slice(1)}`;
     }
 }
-
 
 export {
     getPageNameByPath,

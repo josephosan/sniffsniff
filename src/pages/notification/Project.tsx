@@ -5,12 +5,14 @@ import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading'
 import NoData from '../../components/tiny/NoData';
 import NotificationApiService from '../../services/NotificationApiService';
 import Loading from '../../components/secondary/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const ProjectNotifications = () => {
     const [projectNotifications, setProjectNotifications] =
         useState<never[]>(null);
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         async function fetchData() {
@@ -52,14 +54,20 @@ const ProjectNotifications = () => {
 
                 {(projectNotifications && projectNotifications.length > 0) ||
                 fetchMoreLoading
-                    ? projectNotifications.map((notif, index) => {
+                    ? (projectNotifications as any[]).map((notif, index) => {
                           return (
-                              <WrapperMessage
-                                  type={notif.type}
-                                  title={notif.title}
-                                  desc={notif.desc}
+                              <div
+                                  className="w-100"
                                   key={index}
-                              />
+                                  style={{ cursor: 'pointer' }}
+                                  onClick={() => navigate(`${notif.id}`)}
+                              >
+                                  <WrapperMessage
+                                      type={notif.type}
+                                      title={notif.title}
+                                      desc={notif.desc}
+                                  />
+                              </div>
                           );
                       })
                     : !pageFirstLoading && <NoData />}

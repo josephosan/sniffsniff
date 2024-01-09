@@ -4,12 +4,14 @@ interface ScrollWrapperProps {
     children: ReactNode;
     height?: string;
     reachedBottom?: () => void;
+    className?: string;
 }
 
 const WrapperScroll: React.FC<ScrollWrapperProps> = ({
     children,
     height = '85vh',
     reachedBottom,
+    className,
 }) => {
     const scrollWrapperRef = useRef(null);
 
@@ -26,7 +28,7 @@ const WrapperScroll: React.FC<ScrollWrapperProps> = ({
     return (
         <div
             ref={scrollWrapperRef}
-            className={'w-100'}
+            className={'w-100 ' + className}
             style={{
                 overflowY: 'auto',
                 overflowX: 'hidden',

@@ -63,7 +63,8 @@ const OrganizationList: React.FC = React.memo(() => {
         try {
             const res = await OrganizationApiService.paginateAll({ params });
             setOrganizationList((prevState) => {
-                if (prevState) return [...prevState, ...res.data.data.items];
+                if (prevState)
+                    return [...prevState, ...res.data.data.items] as any;
                 return [...res.data.data.items];
             });
             setPage(() => res.data.data.cursor);
@@ -77,7 +78,7 @@ const OrganizationList: React.FC = React.memo(() => {
 
     const handleReachedBottom = async () => {
         if (!pageFirstLoading && !fetchMoreLoading && page) {
-            await handleFetchMore(page, 'DESC', searchValue);
+            await handleFetchMore(page, 'DESC', searchValue as string);
         }
     };
 

@@ -9,7 +9,7 @@ interface SystemLogMessageProps {
 
 const SystemLogMessage: React.FC<SystemLogMessageProps> = ({ time, title }) => {
     return (
-        <div className="d-flex flex-column pb-3 gap-1">
+        <div className="d-flex flex-column gap-1">
             <div>{time}</div>
             <div style={{ fontSize: appConfig.largeFontSize }}>{title}</div>
             <div style={{ fontSize: appConfig.smallFontSize }}>

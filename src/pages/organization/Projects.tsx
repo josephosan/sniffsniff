@@ -178,7 +178,9 @@ const OrganizationProjects: React.FC = () => {
                                     `/organization/${route.organizationId}/project/${el.id}/term`,
                                 )
                             }
+                            key={index}
                             color={el.color}
+                            backgroundColor={theme.cardBg}
                         >
                             {isMobile ? (
                                 <div className="d-flex flex-column gap-3">

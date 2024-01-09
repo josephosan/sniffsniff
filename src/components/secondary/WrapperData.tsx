@@ -11,6 +11,7 @@ interface DataProps {
     padding?: string;
     handleClick?: () => void;
     wrapperCursor?: string;
+    backgroundColor?: string;
 }
 
 const WrapperData: React.FC<DataProps> = ({
@@ -21,6 +22,7 @@ const WrapperData: React.FC<DataProps> = ({
     padding = '15px',
     handleClick,
     wrapperCursor = 'pointer',
+    backgroundColor,
 }) => {
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
@@ -35,7 +37,9 @@ const WrapperData: React.FC<DataProps> = ({
                 <div
                     className="shadow-sm mb-3 px-4 py-3 rounded align-items-center"
                     style={{
-                        backgroundColor: theme.cardBgLighter,
+                        backgroundColor: backgroundColor
+                            ? backgroundColor
+                            : theme.cardBgLighter,
                     }}
                 >
                     {children}
@@ -45,7 +49,9 @@ const WrapperData: React.FC<DataProps> = ({
                     className="shadow-sm mb-4 rounded align-items-center"
                     style={{
                         borderRadius: appConfig.defaultBorderRadius,
-                        backgroundColor: theme.cardBgLighter,
+                        backgroundColor: backgroundColor
+                            ? backgroundColor
+                            : theme.cardBgLighter,
                         borderRight: displayBorder ? `4px solid ${color}` : '',
                         padding: padding,
                     }}
