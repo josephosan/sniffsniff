@@ -163,7 +163,11 @@ const ProjectTerms: React.FC = React.memo(() => {
                 (termList as any[]).map((el: any, index) => {
                     return (
                         <div className="px-2">
-                            <Badge.Ribbon text={el.type} color="red">
+                            <Badge.Ribbon
+                                text={el.type}
+                                color="red"
+                                key={index}
+                            >
                                 <WrapperData
                                     key={index}
                                     color={el.color}

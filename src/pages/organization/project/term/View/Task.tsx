@@ -12,7 +12,8 @@ import FormSkeletonLoading from '../../../../../components/secondary/FormSkeleto
 import CircleSkeletonLoading from '../../../../../components/secondary/CircleSkeletonLoading';
 
 const ViewTaskTerm: React.FC = () => {
-    const [loading, setLoading] = useState(false);
+    const [firstPageLoading, setFirstPageLoading] = useState(true);
+    const [termInfo, setTermInfo] = useState<any | null>(null);
     const params = useParams();
 
     useEffect(() => {
@@ -24,21 +25,23 @@ const ViewTaskTerm: React.FC = () => {
     }, []);
 
     const fetchData = async () => {
-        setLoading(true);
-
         try {
-            const res = await TermService.getOne(params.termId);
-            console.log(res);
+            const { data } = await TermService.getOne(params.termId);
+            setTermInfo(data.data);
         } catch (err) {
             console.log(err);
         } finally {
-            setLoading(false);
+            setFirstPageLoading(false);
         }
+    };
+
+    const handleInputBlur = (data: { [key: string]: string }) => {
+        console.log(data);
     };
 
     return (
         <>
-            {true ? (
+            {firstPageLoading ? (
                 <>
                     <FormSkeletonLoading count={1} width="200px" />
                     <FormSkeletonLoading count={1} height="20px" />
@@ -120,12 +123,17 @@ const ViewTaskTerm: React.FC = () => {
                                 fontSize: appConfig.hugeFontSize + 20,
                                 color: 'inherit',
                             }}
-                            value={'متن تایتل'}
+                            defaultValue={termInfo.title}
+                            onBlur={(e) =>
+                                e.target.value !== termInfo.title
+                                    ? handleInputBlur({ title: e.target.value })
+                                    : undefined
+                            }
                         />
                     </div>
                     <div className="d-flex flex-column gap-3">
                         <textarea
-                            className="view-input"
+                            className="view-input description"
                             rows={6}
                             style={{
                                 resize: 'none',
@@ -134,7 +142,14 @@ const ViewTaskTerm: React.FC = () => {
                                 fontSize: appConfig.defaultFontSize,
                                 color: 'inherit',
                             }}
-                            value={'desc value is here khi khi'}
+                            defaultValue={termInfo.description}
+                            onBlur={(e) =>
+                                e.target.value != termInfo.description
+                                    ? handleInputBlur({
+                                          description: e.target.value,
+                                      })
+                                    : undefined
+                            }
                         />
                     </div>
 
