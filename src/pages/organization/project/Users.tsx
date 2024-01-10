@@ -72,37 +72,39 @@ const ProjectUsers: React.FC = React.memo(() => {
     };
     return (
         <WrapperScroll height="70vh">
-            <div className={'row mb-3 mt-2'}>
-                <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
+            {!pageFirstLoading && (
+                <div className={'row mb-3 mt-2'}>
+                    <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
+                        <div
+                            className={
+                                'd-flex justify-content-between align-items-center'
+                            }
+                        >
+                            <CustomSearch
+                                inputMode={true}
+                                onSearch={handleSearch}
+                            />
+                        </div>
+                    </div>
                     <div
                         className={
-                            'd-flex justify-content-between align-items-center'
+                            'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
                         }
                     >
-                        <CustomSearch
-                            inputMode={true}
-                            onSearch={handleSearch}
-                        />
+                        <Button
+                            type={'primary'}
+                            icon={<i className={'bi bi-plus'}></i>}
+                            onClick={() =>
+                                navigate(
+                                    `/organization/${param.organizationId}/project/${param.projectId}/invite`,
+                                )
+                            }
+                        >
+                            افزودن
+                        </Button>
                     </div>
                 </div>
-                <div
-                    className={
-                        'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
-                    }
-                >
-                    <Button
-                        type={'primary'}
-                        icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() =>
-                            navigate(
-                                `/organization/${param.organizationId}/project/${param.projectId}/invite`,
-                            )
-                        }
-                    >
-                        افزودن
-                    </Button>
-                </div>
-            </div>
+            )}
             {pageFirstLoading && (
                 <div>
                     <FormSkeletonLoading fillRow={true} count={10} />
