@@ -13,22 +13,29 @@ interface LogsProps {
           }[]
         | undefined;
     pending?: boolean | undefined;
+    pendingDot?: ReactNode;
+    className?: string;
 }
 
 const Logs: React.FC<LogsProps> = ({
     mode = 'left',
     items,
     pending = false,
+    pendingDot,
+    className,
 }) => {
     const { theme } = useApp();
     return (
-        <Timeline
-            style={{ color: theme.fadeTextColor }}
-            mode={mode}
-            items={items}
-            pending={pending}
-            className="m-1"
-        />
+        <div className={className}>
+            <Timeline
+                style={{ color: theme.fadeTextColor }}
+                mode={mode}
+                items={items}
+                pending={pending}
+                className="m-1"
+                pendingDot={pendingDot}
+            />
+        </div>
     );
 };
 

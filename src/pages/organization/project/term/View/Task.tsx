@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../../../../styles/pages/view.task.scss';
 import { appConfig, statusColors } from '../../../../../config/app.config';
 import Logs from '../../../../../components/primary/Logs';
@@ -10,11 +10,16 @@ import { useParams } from 'react-router-dom';
 import { Divider } from 'antd';
 import FormSkeletonLoading from '../../../../../components/secondary/FormSkeletonLoading';
 import CircleSkeletonLoading from '../../../../../components/secondary/CircleSkeletonLoading';
+import { useNotify } from '../../../../../store/notify.store';
 
 const ViewTaskTerm: React.FC = () => {
     const [firstPageLoading, setFirstPageLoading] = useState(true);
     const [termInfo, setTermInfo] = useState<any | null>(null);
+    const [logList, setLogList] = useState<any[] | null>(null);
+    const [logsLoading, setLogsLoading] = useState<boolean>(false);
+    const theMessageComponent = useRef<null | any>(null);
     const params = useParams();
+    const notifyStore = useNotify();
 
     useEffect(() => {
         async function getData() {
@@ -26,8 +31,42 @@ const ViewTaskTerm: React.FC = () => {
 
     const fetchData = async () => {
         try {
+            theMessageComponent.current = {
+                dot: <LogIconWrapper icon="bi bi-person-check" />,
+                children: <LogComment onSubmit={handleMessageSubmit} />,
+            };
             const { data } = await TermService.getOne(params.termId);
             setTermInfo(data.data);
+            const logs = data.data.activities.map((el: any) => {
+                if (el.type === 'SYSTEM') {
+                    return {
+                        dot: <LogIconWrapper icon="bi bi-window" />,
+                        color: statusColors.info,
+                        children: (
+                            <LogMessage
+                                mode="system"
+                                title={el.text}
+                                time="14:49"
+                            />
+                        ),
+                    };
+                } else if (el.type === 'COMMENT') {
+                    return {
+                        dot: <LogIconWrapper icon="bi bi-chat-dots" />,
+                        color: statusColors.success,
+                        children: (
+                            <LogMessage
+                                mode="message"
+                                title={el.text}
+                                username={el.createdBy.name}
+                                time="13:49"
+                            />
+                        ),
+                    };
+                }
+            });
+            logs.push(theMessageComponent.current);
+            setLogList(() => logs);
         } catch (err) {
             console.log(err);
         } finally {
@@ -35,12 +74,37 @@ const ViewTaskTerm: React.FC = () => {
         }
     };
 
-    const handleInputBlur = (data: { [key: string]: string }) => {
-        console.log(data);
+    const handleInputBlur = async (data: { [key: string]: string }) => {
+        try {
+            const res = await TermService.updateOne(params.termId, data);
+            notifyStore.showMessage('success', 'با موفقیت ویرایش شد.');
+            fetchData();
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const handleMessageSubmit = async (value: string | null) => {
+        setLogList((prevState) => {
+            prevState?.pop();
+            return prevState;
+        });
+        setLogsLoading(true);
+        try {
+            const { data } = await TermService.comment(
+                params.termId as string,
+                { comment: value },
+            );
+            await fetchData();
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLogsLoading(false);
+        }
     };
 
     return (
-        <>
+        <div style={{ transform: 'all 0.5s ease' }}>
             {firstPageLoading ? (
                 <>
                     <FormSkeletonLoading count={1} width="200px" />
@@ -158,67 +222,15 @@ const ViewTaskTerm: React.FC = () => {
                     <div className="pt-3">
                         <div className="px-2">
                             <Logs
-                                items={[
-                                    {
-                                        dot: (
-                                            <LogIconWrapper icon="bi bi-cloud-plus" />
-                                        ),
-                                        color: statusColors.success,
-                                        children: (
-                                            <LogMessage
-                                                mode="user"
-                                                title="تسک ساخته شد."
-                                                username="joseph"
-                                                time="13:49"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <LogIconWrapper icon="bi bi-window" />
-                                        ),
-                                        color: statusColors.info,
-                                        children: (
-                                            <LogMessage
-                                                mode="system"
-                                                title="نام ویرایش شد."
-                                                time="14:49"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <LogIconWrapper icon="bi bi-chat-dots" />
-                                        ),
-                                        color: statusColors.warning,
-                                        children: (
-                                            <LogMessage
-                                                mode="user"
-                                                title="کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد."
-                                                time="19:49"
-                                                username="joseph"
-                                            />
-                                        ),
-                                    },
-                                    {
-                                        dot: (
-                                            <LogIconWrapper icon="bi bi-person-check" />
-                                        ),
-                                        children: (
-                                            <LogComment
-                                                onSubmit={(value) =>
-                                                    console.log(value)
-                                                }
-                                            />
-                                        ),
-                                    },
-                                ]}
+                                pending={logsLoading}
+                                items={logList as any}
+                                className="mb-5"
                             />
                         </div>
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
 

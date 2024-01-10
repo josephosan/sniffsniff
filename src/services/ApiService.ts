@@ -172,11 +172,11 @@ export default class ApiService {
         return this.post(this.baseUrl, data, config);
     }
 
-    public static async updateOne(id: string, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
+    public static async updateOne(id: string | undefined, config: AxiosRequestConfig = {}): Promise<AxiosResponse> {
         return this.patch(`${this.baseUrl}${id}`, config);
     }
 
-    public static async getOne(id: string) {
+    public static async getOne(id: string | undefined) {
         return this.get(`${this.baseUrl}${id}`);
     }
 
