@@ -7,8 +7,9 @@ import NotificationApiService from '../../services/NotificationApiService';
 import Loading from '../../components/secondary/Loading';
 
 const PublicNotifications = () => {
-    const [publicNotifications, setPublicNotifications] =
-        useState<never[]>(null);
+    const [publicNotifications, setPublicNotifications] = useState<
+        never[] | null
+    >(null);
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const [fetchMoreLoading, setFetchMoreLoading] = useState(false);
 
@@ -32,7 +33,8 @@ const PublicNotifications = () => {
             });
 
             setPublicNotifications((prevState) => {
-                if (prevState) return [...prevState, ...res.data.data.items];
+                if (prevState)
+                    return [...prevState, ...res.data.data.items] as any;
                 return [...res.data.data.items];
             });
         } catch (e) {
@@ -52,12 +54,12 @@ const PublicNotifications = () => {
 
                 {(publicNotifications && publicNotifications.length > 0) ||
                 fetchMoreLoading
-                    ? publicNotifications.map((notif) => {
+                    ? publicNotifications.map((notif: any) => {
                           return (
                               <WrapperMessage
                                   type={notif.type}
                                   title={notif.title}
-                                  desc={notif.desc}
+                                  desc={notif.message}
                               />
                           );
                       })

@@ -63,13 +63,12 @@ const NotificationModalMessages: React.FC = () => {
                                         cursor: 'pointer',
                                     }}
                                     key={index}
+                                    className="mb-1"
                                 >
                                     <WrapperMessage
                                         title={el.title}
-                                        desc={el.description}
-                                        type={
-                                            el.type === 0 ? 'info' : 'warning'
-                                        }
+                                        desc={el.message}
+                                        type={el.type}
                                     />
                                 </div>
                             );

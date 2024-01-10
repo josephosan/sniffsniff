@@ -85,6 +85,10 @@ const ViewTaskTerm: React.FC = () => {
     };
 
     const handleMessageSubmit = async (value: string | null) => {
+        if (value === '' || !value) {
+            notifyStore.showMessage('warning', 'لطفا متنی وارد کنید!');
+            return;
+        }
         setLogList((prevState) => {
             prevState?.pop();
             return prevState;

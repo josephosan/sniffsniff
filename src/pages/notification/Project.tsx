@@ -34,7 +34,8 @@ const ProjectNotifications = () => {
             });
 
             setProjectNotifications((prevState) => {
-                if (prevState) return [...prevState, ...res.data.data.items];
+                if (prevState)
+                    return [...prevState, ...res.data.data.items] as any;
                 return [...res.data.data.items];
             });
         } catch (e) {
@@ -65,7 +66,7 @@ const ProjectNotifications = () => {
                                   <WrapperMessage
                                       type={notif.type}
                                       title={notif.title}
-                                      desc={notif.desc}
+                                      desc={notif.message}
                                   />
                               </div>
                           );

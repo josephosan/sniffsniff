@@ -5,7 +5,7 @@ import { appConfig, statusColors } from '../../config/app.config';
 import { useApp } from '../../store/app.store';
 
 interface WrapperMessageProps {
-    type?: 'success' | 'info' | 'warning';
+    type?: 0 | 1;
     title?: string;
     desc?: string;
 }
@@ -24,17 +24,17 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo(
                 <div className={'d-flex flex-row gap-3 align-items-center'}>
                     <ActionIconWrapper
                         icon={
-                            type === 'success'
+                            type === 0
                                 ? 'bi bi-check-circle'
-                                : type === 'warning'
+                                : type === 1
                                 ? 'bi bi-cone-striped'
                                 : 'bi bi-info-circle'
                         }
                         size={appConfig.defaultIconSize}
                         color={
-                            type === 'success'
+                            type === 0
                                 ? statusColors.success
-                                : type === 'warning'
+                                : type === 1
                                 ? statusColors.warning
                                 : statusColors.info
                         }
