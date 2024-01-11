@@ -10,11 +10,13 @@ import NoData from '../../../components/tiny/NoData';
 import BigBoxSkeletonLoading from '../../../components/secondary/BigBoxSkeletonLoading';
 
 import { useParams } from 'react-router-dom';
+import { useNotify } from '../../../store/notify.store';
 
 const ViewProjectNotification: React.FC = () => {
     const params = useParams();
     const [status, setStatue] = useState('pending');
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
+    const notifyStore = useNotify();
 
     const [data, setData] = useState<never[] | null>(null);
 
@@ -36,7 +38,7 @@ const ViewProjectNotification: React.FC = () => {
             const res = await NotificationApiService.getOne(
                 params.id as string,
             );
-            setData(res.data);
+            setData(res.data.data);
             setStatue(res.data.projectInvite.status);
         } catch (e) {
             console.log(e);
@@ -45,12 +47,28 @@ const ViewProjectNotification: React.FC = () => {
         }
     };
     const handleChange = async (e: string) => {
-        if (e == 'reject') {
-            const res = await NotificationApiService.inviteReject(params.id);
-        } else if (e == 'accept') {
+        if (e == 'reject') await rejectRequest();
+        else if (e == 'accept') await acceptRequest();
+    };
+
+    const acceptRequest = async () => {
+        try {
             const res = await NotificationApiService.inviteAccept(params.id);
+            notifyStore.showMessage('success', 'با موفقیت انجام شد.');
+            setStatue('accept');
+        } catch (err) {
+            console.log(err);
         }
-        setStatue(e);
+    };
+
+    const rejectRequest = async () => {
+        try {
+            const res = await NotificationApiService.inviteReject(params.id);
+            notifyStore.showMessage('success', 'با موفقیت انجام شد.');
+            setStatue('reject');
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -122,7 +140,7 @@ const ViewProjectNotification: React.FC = () => {
                         </span>
                         <small
                             style={{
-                                fontSize: appConfig.smallFontSize,
+                                fontSize: appConfig.defaultFontSize,
                             }}
                             className="d-flex justify-content-end"
                         >
