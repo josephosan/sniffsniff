@@ -103,6 +103,8 @@ export interface TabItemProps {
     closable?: boolean,
     key: string,
     disabled?: boolean,
+    forceRender?: boolean,
+    destroyInactiveTabPane?: boolean,
 }
 
 export type SizeTypes = 'large' | 'middle' | 'small';

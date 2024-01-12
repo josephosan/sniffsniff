@@ -9,38 +9,38 @@ interface TabComponentProps {
     items: TabItemProps[];
     activeKey?: string;
     animation?: { inkBar: boolean; tabPane: boolean };
-    destroyInactiveTabPane?: boolean,
-    tabPos?: "right" | "left" | "top" | "bottom"
+    destroyInactiveTabPane?: boolean;
+    tabPos?: 'right' | 'left' | 'top' | 'bottom';
 }
 
-const TabComponent: React.FC<TabComponentProps> = React.memo((
-    {
+const TabComponent: React.FC<TabComponentProps> = React.memo(
+    ({
         onChange,
-        type = "card",
+        type = 'card',
         items,
         activeKey,
         animation = {
             inkBar: true,
-            tabPage: false
+            tabPage: false,
         },
         destroyInactiveTabPane = true,
-        tabPos = "top"
-    }
-) => {
-    const handleTabsChange = (e) => {
-        if (onChange) onChange(e);
-    };
+        tabPos = 'top',
+    }) => {
+        const handleTabsChange = (e) => {
+            if (onChange) onChange(e);
+        };
 
-    return (
-        <Tabs
-            onChange={handleTabsChange}
-            type={type}
-            items={items}
-            activeKey={activeKey}
-            animated={animation}
-            destroyInactiveTabPane={destroyInactiveTabPane}
-            tabPosition={tabPos}
-        />
-    );
-})
+        return (
+            <Tabs
+                onChange={handleTabsChange}
+                type={type}
+                items={items}
+                activeKey={activeKey}
+                animated={animation}
+                destroyInactiveTabPane={destroyInactiveTabPane}
+                tabPosition={tabPos}
+            />
+        );
+    },
+);
 export default TabComponent;

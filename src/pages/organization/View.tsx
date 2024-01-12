@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import TabComponent from '../../components/primary/TabComponent';
 import WrapperCard from '../../components/secondary/WrapperCard';
-import {useApp} from '../../store/app.store';
+import { useApp } from '../../store/app.store';
 import CollapsableWrapper from '../../components/primary/CollapsableWrapper';
 import FormSkeletonLoading from '../../components/secondary/FormSkeletonLoading';
 import BigBoxSkeletonLoading from '../../components/secondary/BigBoxSkeletonLoading';
-import {appConfig} from "../../config/app.config";
-import CustomImage from "../../components/secondary/CustomImage";
-import OrganizationApiService from "../../services/OrganizationApiService";
-import Emitter from "../../helpers/emitter.helper";
+import { appConfig } from '../../config/app.config';
+import CustomImage from '../../components/secondary/CustomImage';
+import OrganizationApiService from '../../services/OrganizationApiService';
+import Emitter from '../../helpers/emitter.helper';
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
     const params = useParams();
     const location = useLocation();
-    const {theme} = useApp();
+    const { theme } = useApp();
     const [activeTab, setActiveTab] = useState<string | null>(null);
     const [data, setData] = useState<never>(null);
 
@@ -26,55 +26,63 @@ const OrganizationView: React.FC = () => {
 
         fetchData();
 
-        return () => {
-            Emitter.off('organization:update');
-        }
-    }, []);
-
-    useEffect(() => {
         const tab =
             location.pathname.split('/')[
-            location.pathname.split('/').length - 1
-                ];
-        setActiveTab(prevState => {
+                location.pathname.split('/').length - 1
+            ];
+        setActiveTab((prevState) => {
             if (prevState !== tab) return tab;
         });
-    }, [location.pathname]);
+
+        return () => {
+            Emitter.off('organization:update');
+        };
+    }, []);
 
     const fetchData = async () => {
         try {
-            const {data} = await OrganizationApiService.getOne(params.organizationId);
+            const { data } = await OrganizationApiService.getOne(
+                params.organizationId,
+            );
             setData(data.data);
         } catch (e) {
             console.log(e);
         }
-    }
+    };
 
-    const handleTabItemClick = (e) => {
+    const handleTabItemClick = (e: string) => {
         navigate(`/organization/${params.organizationId}/${e}`);
+        setActiveTab(() => e);
     };
 
     return (
         <div>
             {!data ? (
                 <div className="d-flex flex-column gap-3">
-                    <FormSkeletonLoading count={1}/>
-                    <div className={"d-flex flex-row justify-content-center"} style={{width: '260px'}}>
-                        <FormSkeletonLoading count={1}/>
+                    <FormSkeletonLoading count={1} />
+                    <div
+                        className={'d-flex flex-row justify-content-center'}
+                        style={{ width: '260px' }}
+                    >
+                        <FormSkeletonLoading count={1} />
                     </div>
-                    <BigBoxSkeletonLoading count={1}/>
+                    <BigBoxSkeletonLoading count={1} />
                 </div>
             ) : (
                 <>
-                    <div className={"mb-2"}>
+                    <div className={'mb-2'}>
                         <CollapsableWrapper
                             items={[
                                 {
                                     key: 'title',
                                     label: (
                                         <div className="d-flex flex-row align-items-center gap-3 mb-3">
-                                            <CustomImage src={"/public/vite.svg"} width={"40px"} height={"40px"}/>
-                                            <h5 className={"mb-0"}>
+                                            <CustomImage
+                                                src={'/public/vite.svg'}
+                                                width={'40px'}
+                                                height={'40px'}
+                                            />
+                                            <h5 className={'mb-0'}>
                                                 {data.name}
                                             </h5>
                                         </div>
@@ -83,17 +91,21 @@ const OrganizationView: React.FC = () => {
                                         <div className="d-flex flex-column gap-3 px-md-5 px-xl-5 ">
                                             <span
                                                 style={{
-                                                    fontSize: appConfig.defaultFontSize,
+                                                    fontSize:
+                                                        appConfig.defaultFontSize,
                                                 }}
-                                                className={"description"}
+                                                className={'description'}
                                             >
                                                 {data.description}
                                             </span>
                                             <small
                                                 style={{
-                                                    fontSize: appConfig.smallFontSize,
+                                                    fontSize:
+                                                        appConfig.smallFontSize,
                                                 }}
-                                                className={"d-flex justify-content-end"}
+                                                className={
+                                                    'd-flex justify-content-end'
+                                                }
                                             >
                                                 {data.createdAt}
                                             </small>
@@ -105,7 +117,8 @@ const OrganizationView: React.FC = () => {
                         />
                     </div>
                     <TabComponent
-                        animation={{inkBar: true, tabPane: true}}
+                        key={location.pathname}
+                        animation={{ inkBar: true, tabPane: true }}
                         activeKey={activeTab}
                         onChange={handleTabItemClick}
                         destroyInactiveTabPane={true}
@@ -113,6 +126,7 @@ const OrganizationView: React.FC = () => {
                             {
                                 key: 'project',
                                 label: 'پروژه ها',
+                                destroyInactiveTabPane: true,
                                 children: (
                                     <WrapperCard
                                         shadowed={false}
@@ -120,13 +134,14 @@ const OrganizationView: React.FC = () => {
                                         width={'100%'}
                                         height={'auto'}
                                     >
-                                        <Outlet/>
+                                        <Outlet />
                                     </WrapperCard>
                                 ),
                             },
                             {
                                 key: 'setting',
                                 label: 'تنظیمات',
+                                destroyInactiveTabPane: true,
                                 children: (
                                     <WrapperCard
                                         shadowed={false}
@@ -134,7 +149,7 @@ const OrganizationView: React.FC = () => {
                                         width={'100%'}
                                         height={'auto'}
                                     >
-                                        <Outlet/>
+                                        <Outlet />
                                     </WrapperCard>
                                 ),
                             },

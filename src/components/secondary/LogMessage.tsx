@@ -3,7 +3,7 @@ import SystemLogMessage from '../tiny/SystemLogMessage';
 import UserLogMessage from '../tiny/UserLogMessage';
 
 interface LogMessageProps {
-    mode?: 'user' | 'system' | undefined;
+    mode?: 'message' | 'system' | undefined;
     title: string;
     time: string;
     username?: string;

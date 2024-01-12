@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 
@@ -17,17 +17,18 @@ const NotificationsList: React.FC = () => {
     const location = useLocation();
     const [activeTab, setActiveTab] = useState<string | null>(null);
 
-    useMemo(() => {
+    useEffect(() => {
         const tab =
             location.pathname.split('/')[
                 location.pathname.split('/').length - 1
             ];
 
         setActiveTab(() => tab);
-    }, [location.pathname]);
+    }, []);
 
-    const handleTabItemClick = (e) => {
+    const handleTabItemClick = (e: string) => {
         navigate(`/notifications/${e}`);
+        setActiveTab(() => e);
     };
 
     return (
@@ -37,6 +38,7 @@ const NotificationsList: React.FC = () => {
             ) : (
                 <div>
                     <TabComponent
+                        key={location.pathname}
                         type="card"
                         activeKey={activeTab}
                         tabPos="top"

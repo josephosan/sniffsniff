@@ -118,7 +118,7 @@ const OrganizationProjects: React.FC = () => {
                 </div>
             )}
 
-            <div className={'row mb-3 mt-2'}>
+            <div className={'row mb-5 mt-2'}>
                 <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
                     <div
                         className={

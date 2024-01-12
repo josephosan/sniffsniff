@@ -23,18 +23,16 @@ const ViewProject: React.FC = React.memo(() => {
 
         fetchData();
 
-        return () => {
-            Emitter.off('project:update');
-        };
-    }, []);
-
-    useEffect(() => {
         const tab =
             location.pathname.split('/')[
                 location.pathname.split('/').length - 1
             ];
         setActiveTab(() => tab);
-    }, [location.pathname]);
+
+        return () => {
+            Emitter.off('project:update');
+        };
+    }, []);
 
     const fetchData = async () => {
         try {
@@ -45,10 +43,11 @@ const ViewProject: React.FC = React.memo(() => {
         }
     };
 
-    const handleTabItemClick = (e) => {
+    const handleTabItemClick = (e: string) => {
         navigate(
             `/organization/${params.organizationId}/project/${params.projectId}/${e}`,
         );
+        setActiveTab(() => e);
     };
 
     return (
@@ -109,6 +108,7 @@ const ViewProject: React.FC = React.memo(() => {
                     </div>
 
                     <TabComponent
+                        key={location.pathname}
                         animation={{ inkBar: true, tabPane: true }}
                         activeKey={activeTab}
                         onChange={handleTabItemClick}
