@@ -61,6 +61,7 @@ const statusColors = {
     'success': '#65B741',
     'warning': '#FB8B24',
     'info': '#6DB9EF',
+    'danger': '#BF3131'
 }
 
 const colors = [

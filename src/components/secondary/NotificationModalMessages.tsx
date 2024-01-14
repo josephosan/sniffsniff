@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import WrapperMessage from './WrapperMessage';
-import UnderlinedLink from './UnderlinedLink';
+import { Badge } from 'antd';
 import NotificationApiService from '../../services/NotificationApiService';
 import NoData from '../tiny/NoData';
 import Loading from './Loading';
 import { useNavigate } from 'react-router-dom';
+import { statusColors } from '../../config/app.config';
 
 const NotificationModalMessages: React.FC = () => {
     const [loading, setLoading] = useState(true);
@@ -47,29 +48,55 @@ const NotificationModalMessages: React.FC = () => {
             ) : (
                 <div className={'p-1 gap-1'}>
                     {notifList &&
-                        notifList.map((el, index) => {
+                        notifList.map((notif: any, index) => {
                             return (
                                 <div
-                                    onClick={() =>
-                                        navigate(
-                                            `/notifications/${
-                                                el.type === 0
-                                                    ? 'public'
-                                                    : 'project'
-                                            }/${el.id}`,
-                                        )
-                                    }
-                                    style={{
-                                        cursor: 'pointer',
-                                    }}
+                                    className="w-100 px-2 py-1"
                                     key={index}
-                                    className="mb-1"
+                                    style={{
+                                        cursor:
+                                            notif.projectInvite.status ===
+                                            'PENDING'
+                                                ? 'pointer'
+                                                : undefined,
+                                    }}
+                                    onClick={
+                                        notif.projectInvite.status === 'PENDING'
+                                            ? () =>
+                                                  navigate(
+                                                      `/notifications/project/${notif.id}`,
+                                                  )
+                                            : undefined
+                                    }
                                 >
-                                    <WrapperMessage
-                                        title={el.title}
-                                        desc={el.message}
-                                        type={el.type}
-                                    />
+                                    <Badge.Ribbon
+                                        text={
+                                            notif.projectInvite.status ===
+                                            'JOINED'
+                                                ? 'تایید شده'
+                                                : notif.projectInvite.status ===
+                                                  'REJECTED'
+                                                ? 'رد شده'
+                                                : 'در انتظار'
+                                        }
+                                        color={
+                                            notif.projectInvite.status ===
+                                            'JOINED'
+                                                ? statusColors.success
+                                                : notif.projectInvite.status ===
+                                                  'REJECTED'
+                                                ? statusColors.danger
+                                                : statusColors.info
+                                        }
+                                    >
+                                        <div>
+                                            <WrapperMessage
+                                                type={notif.type}
+                                                title={notif.title}
+                                                desc={notif.message}
+                                            />
+                                        </div>
+                                    </Badge.Ribbon>
                                 </div>
                             );
                         })}

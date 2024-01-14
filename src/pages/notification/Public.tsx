@@ -49,7 +49,11 @@ const PublicNotifications = () => {
         <WrapperScroll>
             <div className=" h-100 d-flex flex-column gap-3 align-items-center ">
                 {pageFirstLoading && (
-                    <FormSkeletonLoading fillRow={true} count={10} />
+                    <FormSkeletonLoading
+                        height="70px"
+                        fillRow={true}
+                        count={10}
+                    />
                 )}
 
                 {(publicNotifications && publicNotifications.length > 0) ||

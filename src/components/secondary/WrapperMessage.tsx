@@ -11,15 +11,15 @@ interface WrapperMessageProps {
 }
 
 const WrapperMessage: React.FC<WrapperMessageProps> = React.memo(
-    ({ type = 'success', title = 'title', desc = 'desc' }) => {
+    ({ type = 'success', title = 'title', desc }) => {
         const { theme } = useApp();
 
         return (
             <WrapperCard
                 width={'100%'}
                 height={'auto'}
-                shadowed={false}
-                backgroundColor={theme.mainBackgroundColor}
+                shadowed={true}
+                backgroundColor={theme.cardBgLighter}
             >
                 <div className={'d-flex flex-row gap-3 align-items-center'}>
                     <ActionIconWrapper

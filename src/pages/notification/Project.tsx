@@ -6,6 +6,8 @@ import NoData from '../../components/tiny/NoData';
 import NotificationApiService from '../../services/NotificationApiService';
 import Loading from '../../components/secondary/Loading';
 import { useNavigate } from 'react-router-dom';
+import { Badge } from 'antd';
+import { statusColors } from '../../config/app.config';
 
 const ProjectNotifications = () => {
     const [projectNotifications, setProjectNotifications] =
@@ -50,7 +52,11 @@ const ProjectNotifications = () => {
         <WrapperScroll>
             <div className=" h-100 d-flex flex-column gap-3 align-items-center">
                 {pageFirstLoading && (
-                    <FormSkeletonLoading fillRow={true} count={10} />
+                    <FormSkeletonLoading
+                        height="70px"
+                        fillRow={true}
+                        count={10}
+                    />
                 )}
 
                 {(projectNotifications && projectNotifications.length > 0) ||
@@ -58,19 +64,49 @@ const ProjectNotifications = () => {
                     ? (projectNotifications as any[]).map((notif, index) => {
                           return (
                               <div
-                                  className="w-100"
+                                  className="w-100 px-2"
                                   key={index}
-                                  style={{ cursor: 'pointer' }}
-                                  onClick={() => navigate(`${notif.id}`)}
+                                  style={{
+                                      cursor:
+                                          notif.projectInvite.status ===
+                                          'PENDING'
+                                              ? 'pointer'
+                                              : undefined,
+                                  }}
+                                  onClick={
+                                      notif.projectInvite.status === 'PENDING'
+                                          ? () => navigate(`${notif.id}`)
+                                          : undefined
+                                  }
                               >
-                                  {notif.projectInvite.status !==
-                                      'REJECTED' && (
-                                      <WrapperMessage
-                                          type={notif.type}
-                                          title={`دعوت به پروژه ${notif.projectInvite?.project.name}`}
-                                          desc={`شما توسط ${notif.projectInvite?.by.name} به پروژه ${notif.projectInvite?.project.name} دعوت شده اید.`}
-                                      />
-                                  )}
+                                  <Badge.Ribbon
+                                      text={
+                                          notif.projectInvite.status ===
+                                          'JOINED'
+                                              ? 'تایید شده'
+                                              : notif.projectInvite.status ===
+                                                'REJECTED'
+                                              ? 'رد شده'
+                                              : 'در انتظار'
+                                      }
+                                      color={
+                                          notif.projectInvite.status ===
+                                          'JOINED'
+                                              ? statusColors.success
+                                              : notif.projectInvite.status ===
+                                                'REJECTED'
+                                              ? statusColors.danger
+                                              : statusColors.info
+                                      }
+                                  >
+                                      <div>
+                                          <WrapperMessage
+                                              type={notif.type}
+                                              title={`دعوت به پروژه ${notif.projectInvite?.project.name}`}
+                                              desc={`شما توسط ${notif.projectInvite?.by.name} به پروژه ${notif.projectInvite?.project.name} دعوت شده اید.`}
+                                          />
+                                      </div>
+                                  </Badge.Ribbon>
                               </div>
                           );
                       })

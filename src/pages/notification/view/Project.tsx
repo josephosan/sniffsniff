@@ -18,7 +18,7 @@ const ViewProjectNotification: React.FC = () => {
     const [pageFirstLoading, setPageFirstLoading] = useState(true);
     const notifyStore = useNotify();
 
-    const [data, setData] = useState<never[] | null>(null);
+    const [data, setData] = useState<any | null>(null);
 
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
@@ -98,7 +98,8 @@ const ViewProjectNotification: React.FC = () => {
                                         fontWeight: 600,
                                     }}
                                 >
-                                    {data.title}
+                                    دعوت به پروژه{' '}
+                                    {data.projectInvite.project.name}
                                 </span>
                                 <div style={{ width: '200px' }}>
                                     <SegmentedWrapper
@@ -136,7 +137,11 @@ const ViewProjectNotification: React.FC = () => {
                             }}
                             className={'description'}
                         >
-                            {data.message}
+                            شما توسط {data.projectInvite.by.name} به پروژه{' '}
+                            {data.projectInvite.project.name} دعوت شده اید.
+                            <br />
+                            توضیحات پروژه:{' '}
+                            {data.projectInvite.project.description}
                         </span>
                         <small
                             style={{
