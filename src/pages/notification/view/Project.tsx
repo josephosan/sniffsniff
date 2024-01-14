@@ -25,13 +25,13 @@ const ViewProjectNotification: React.FC = () => {
     });
     useEffect(() => {
         async function fetchData() {
-            await handleFetchMore();
+            await handleGetData();
         }
 
         fetchData();
     }, []);
 
-    const handleFetchMore = async () => {
+    const handleGetData = async () => {
         if (data) setPageFirstLoading(() => false);
 
         try {
@@ -39,7 +39,7 @@ const ViewProjectNotification: React.FC = () => {
                 params.id as string,
             );
             setData(res.data.data);
-            setStatue(res.data.projectInvite.status);
+            setStatue(res.data.data.projectInvite.status);
         } catch (e) {
             console.log(e);
         } finally {
@@ -47,15 +47,15 @@ const ViewProjectNotification: React.FC = () => {
         }
     };
     const handleChange = async (e: string) => {
-        if (e == 'reject') await rejectRequest();
-        else if (e == 'accept') await acceptRequest();
+        if (e == 'REJECTED') await rejectRequest();
+        else if (e == 'ACCEPTED') await acceptRequest();
     };
 
     const acceptRequest = async () => {
         try {
             const res = await NotificationApiService.inviteAccept(params.id);
             notifyStore.showMessage('success', 'با موفقیت انجام شد.');
-            setStatue('accept');
+            setStatue('ACCEPTED');
         } catch (err) {
             console.log(err);
         }
@@ -65,7 +65,7 @@ const ViewProjectNotification: React.FC = () => {
         try {
             const res = await NotificationApiService.inviteReject(params.id);
             notifyStore.showMessage('success', 'با موفقیت انجام شد.');
-            setStatue('reject');
+            setStatue('REJECTED');
         } catch (err) {
             console.log(err);
         }
@@ -105,23 +105,23 @@ const ViewProjectNotification: React.FC = () => {
                                         options={[
                                             {
                                                 label: 'رد',
-                                                value: 'reject',
+                                                value: 'REJECTED',
                                                 className: 'reject',
                                             },
                                             {
                                                 label: 'انتظار',
-                                                value: 'pending',
+                                                value: 'PENDING',
                                                 className: 'pending',
                                             },
                                             {
                                                 label: 'تایید',
-                                                value: 'accept',
+                                                value: 'ACCEPTED',
                                                 className: 'accept',
                                             },
                                         ]}
                                         value={status}
                                         disabled={
-                                            status == 'pending' ? false : true
+                                            status == 'PENDING' ? false : true
                                         }
                                         onChange={handleChange}
                                     />

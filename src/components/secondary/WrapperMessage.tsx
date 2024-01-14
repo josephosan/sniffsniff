@@ -53,7 +53,7 @@ const WrapperMessage: React.FC<WrapperMessageProps> = React.memo(
 
                 <div
                     className={'mt-2 px-2'}
-                    style={{ fontSize: appConfig.smallFontSize }}
+                    style={{ fontSize: appConfig.smallFontSize + 5 }}
                 >
                     {desc}
                 </div>

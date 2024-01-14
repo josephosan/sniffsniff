@@ -63,11 +63,14 @@ const ProjectNotifications = () => {
                                   style={{ cursor: 'pointer' }}
                                   onClick={() => navigate(`${notif.id}`)}
                               >
-                                  <WrapperMessage
-                                      type={notif.type}
-                                      title={notif.title}
-                                      desc={notif.message}
-                                  />
+                                  {notif.projectInvite.status !==
+                                      'REJECTED' && (
+                                      <WrapperMessage
+                                          type={notif.type}
+                                          title={`دعوت به پروژه ${notif.projectInvite?.project.name}`}
+                                          desc={`شما توسط ${notif.projectInvite?.by.name} به پروژه ${notif.projectInvite?.project.name} دعوت شده اید.`}
+                                      />
+                                  )}
                               </div>
                           );
                       })

@@ -8,6 +8,6 @@ export default class NotificationApiService extends ApiService {
     }
 
     public static inviteAccept(id: string | undefined) {
-        return this.put(`${this.baseUrl}invite/reject`, {id});
+        return this.put(`${this.baseUrl}invite/accept`, {id});
     }   
 }
