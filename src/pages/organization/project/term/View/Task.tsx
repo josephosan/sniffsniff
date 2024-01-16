@@ -11,6 +11,8 @@ import { Divider } from 'antd';
 import FormSkeletonLoading from '../../../../../components/secondary/FormSkeletonLoading';
 import CircleSkeletonLoading from '../../../../../components/secondary/CircleSkeletonLoading';
 import { useNotify } from '../../../../../store/notify.store';
+import { TopBarIconWrapper } from '../../../../../components/secondary/TopBarIconWrapper';
+import TaskStatus from '../../../../../components/tiny/TaskStatus';
 
 const ViewTaskTerm: React.FC = () => {
     const [firstPageLoading, setFirstPageLoading] = useState(true);
@@ -181,7 +183,7 @@ const ViewTaskTerm: React.FC = () => {
                 </>
             ) : (
                 <div className="p-xl-3 view-task">
-                    <div className="mb-3 d-flex flex-row align-items-center">
+                    <div className="mb-3 d-flex flex-row">
                         <input
                             className="view-input"
                             style={{
@@ -198,6 +200,7 @@ const ViewTaskTerm: React.FC = () => {
                                     : undefined
                             }
                         />
+                        <TaskStatus />
                     </div>
                     <div className="d-flex flex-column gap-3">
                         <textarea
