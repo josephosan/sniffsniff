@@ -4,6 +4,7 @@ import { FormBuilderField } from '../../../../../@types/app';
 import TermService from '../../../../../services/TermService';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useNotify } from '../../../../../store/notify.store';
+import { taskIconMapper } from '../../../../../config/app.config';
 
 const CreateTaskTerm: React.FC = () => {
     const [loading, setLoading] = useState(false);
@@ -32,27 +33,32 @@ const CreateTaskTerm: React.FC = () => {
                 {
                     label: 'TODO',
                     value: 'TODO',
-                    icon: 'bi bi-list-task mt-1',
+                    icon: `bi bi-${taskIconMapper.TODO.icon} mt-1`,
+                    iconColor: taskIconMapper.TODO.color,
                 },
                 {
                     label: 'IN PROGRESS',
                     value: 'IN_PROGRESS',
-                    icon: 'bi bi-arrow-clockwise mt-1',
+                    icon: `bi bi-${taskIconMapper.IN_PROGRESS.icon} mt-1`,
+                    iconColor: taskIconMapper.IN_PROGRESS.color,
                 },
                 {
                     label: 'IN REVIEW',
                     value: 'IN_REVIEW',
-                    icon: 'bi bi-eyeglasses mt-1',
+                    icon: `bi bi-${taskIconMapper.IN_REVIEW.icon} mt-1`,
+                    iconColor: taskIconMapper.IN_REVIEW.color,
                 },
                 {
                     label: 'DONE',
                     value: 'DONE',
-                    icon: 'bi bi-check-circle mt-1',
+                    icon: `bi bi-${taskIconMapper.DONE.icon} mt-1`,
+                    iconColor: taskIconMapper.DONE.color,
                 },
                 {
                     label: 'CANCELLED',
                     value: 'CANCELLED',
-                    icon: 'bi bi-x-circle mt-1',
+                    icon: `bi bi-${taskIconMapper.CANCELLED.icon} mt-1`,
+                    iconColor: taskIconMapper.CANCELLED.color,
                 },
             ],
         },

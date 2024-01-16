@@ -77,7 +77,8 @@ export interface SelectOption {
     icon?: string,
     children?: string[],
     title?: string,
-    id?: string | number
+    id?: string | number,
+    iconColor?: string
 }
 
 

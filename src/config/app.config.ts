@@ -116,7 +116,7 @@ const taskIconMapper: { [key: string]: { [key: string]: string } } = {
         },
         DONE: {
             icon: 'check-circle',
-            color: colors[4],
+            color: statusColors.success,
         },
         CANCELLED: {
             icon: 'x-circle',
