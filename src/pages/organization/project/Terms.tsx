@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useApp } from '../../../store/app.store';
 import { useMediaQuery } from 'react-responsive';
-import { appConfig } from '../../../config/app.config';
+import { appConfig, statusColors } from '../../../config/app.config';
 import WrapperScroll from '../../../components/secondary/WrapperScroll';
 import { Badge, Button } from 'antd';
 import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoading';
@@ -172,7 +172,11 @@ const ProjectTerms: React.FC = React.memo(() => {
                 (termList as any[]).map((el: any, index) => {
                     return (
                         <div className="px-2" key={index}>
-                            <Badge.Ribbon text={el.type} color="red">
+                            <Badge.Ribbon
+                                text={`${el.type}${
+                                    el.task ? ' - ' + el.task.status : undefined
+                                }`}
+                            >
                                 <WrapperData
                                     color={el.color}
                                     backgroundColor={(theme as any).cardBg}

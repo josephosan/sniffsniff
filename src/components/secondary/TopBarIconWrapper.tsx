@@ -8,10 +8,11 @@ interface TopBarIconWrapperProps {
     onClick?: () => void;
     shadow?: boolean;
     backgroundColor?: string | undefined;
+    color?: string;
 }
 
 export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = React.memo(
-    ({ iconClasses, size, onClick, shadow = true, backgroundColor }) => {
+    ({ iconClasses, size, onClick, shadow = true, backgroundColor, color }) => {
         const { theme } = useApp();
         return (
             <div
@@ -38,6 +39,7 @@ export const TopBarIconWrapper: React.FC<TopBarIconWrapperProps> = React.memo(
                             (size ? size : appConfig.defaultIconSize) + 'px',
                         marginTop: '6.5px',
                         marginRight: '1.5px',
+                        color: color ? color : undefined,
                     }}
                 ></i>
             </div>

@@ -18,7 +18,7 @@ export const DefaultLayout: React.FC = React.memo(() => {
     const { theme, sidebarCollapsed, handleSetSidebarCollapsed } = useApp();
 
     useEffect(() => {
-        if (location.pathname === '/') navigate('/dashboard');
+        if (location.pathname === '/') navigate('/organization');
     }, []);
 
     return (

@@ -11,7 +11,6 @@ import { Divider } from 'antd';
 import FormSkeletonLoading from '../../../../../components/secondary/FormSkeletonLoading';
 import CircleSkeletonLoading from '../../../../../components/secondary/CircleSkeletonLoading';
 import { useNotify } from '../../../../../store/notify.store';
-import { TopBarIconWrapper } from '../../../../../components/secondary/TopBarIconWrapper';
 import TaskStatus from '../../../../../components/tiny/TaskStatus';
 
 const ViewTaskTerm: React.FC = () => {
@@ -47,7 +46,10 @@ const ViewTaskTerm: React.FC = () => {
                         children: (
                             <LogMessage
                                 mode="system"
-                                title={el.text}
+                                title={(el.text as string).replace(
+                                    '$',
+                                    el.userReferences[0].name,
+                                )}
                                 time="14:49"
                             />
                         ),
@@ -200,7 +202,10 @@ const ViewTaskTerm: React.FC = () => {
                                     : undefined
                             }
                         />
-                        <TaskStatus />
+                        <TaskStatus
+                            changed={fetchData}
+                            status={termInfo.task.status}
+                        />
                     </div>
                     <div className="d-flex flex-column gap-3">
                         <textarea

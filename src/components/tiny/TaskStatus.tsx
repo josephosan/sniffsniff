@@ -1,15 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TopBarIconWrapper } from '../secondary/TopBarIconWrapper';
 import WrapperDropDown from '../secondary/WrapperDropDown';
+import TermService from '../../services/TermService';
+import { useParams } from 'react-router-dom';
+import Loading from '../secondary/Loading';
+import { useNotify } from '../../store/notify.store';
+import { taskIconMapper as iconMapper } from '../../config/app.config';
 
-const TaskStatus: React.FC = () => {
-    const [selectedStatusIcon, setIcon] = useState<string | null>('list-task');
-    const iconMapper = {
-        TODO: 'list-task',
-        IN_PROGRESS: 'arrow-clockwise',
-        IN_REVIEW: 'eyeglasses',
-        DONE: 'check-circle',
-        CANCELLED: 'x-circle',
+interface TaskStatusProps {
+    status: string;
+    changed?: () => void;
+}
+
+const TaskStatus: React.FC<TaskStatusProps> = ({ status, changed }) => {
+    const [loading, setLoading] = useState(false);
+    const params = useParams();
+    const notify = useNotify();
+    const [selectedStatusIcon, setIcon] = useState<{
+        [key: string]: string;
+    } | null>(null);
+
+    useEffect(() => {
+        setIcon(() => iconMapper[status]);
+    }, [status]);
+
+    const handleItemClick = async (key: string) => {
+        setLoading(true);
+        try {
+            const { data } = await TermService.updateTask(params.termId, {
+                status: key,
+            });
+            if (changed) changed();
+            notify.showMessage('success', 'با موفقیت انجام شد.');
+            setIcon(() => iconMapper[key]);
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -18,8 +46,13 @@ const TaskStatus: React.FC = () => {
                 {
                     key: 'TODO',
                     label: (
-                        <div>
-                            <i className={`bi bi-${iconMapper.TODO} ms-1`}></i>
+                        <div onClick={() => handleItemClick('TODO')}>
+                            <i
+                                style={{
+                                    color: iconMapper.TODO.color,
+                                }}
+                                className={`bi bi-${iconMapper.TODO.icon} ms-1`}
+                            ></i>
                             <span>TODO</span>
                         </div>
                     ),
@@ -27,9 +60,12 @@ const TaskStatus: React.FC = () => {
                 {
                     key: 'IN_PROGRESS',
                     label: (
-                        <div>
+                        <div onClick={() => handleItemClick('IN_PROGRESS')}>
                             <i
-                                className={`bi bi-${iconMapper.IN_PROGRESS} ms-1`}
+                                style={{
+                                    color: iconMapper.IN_PROGRESS.color,
+                                }}
+                                className={`bi bi-${iconMapper.IN_PROGRESS.icon} ms-1`}
                             ></i>
                             <span>IN PROGRESS</span>
                         </div>
@@ -38,9 +74,12 @@ const TaskStatus: React.FC = () => {
                 {
                     key: 'IN_REVIEW',
                     label: (
-                        <div>
+                        <div onClick={() => handleItemClick('IN_REVIEW')}>
                             <i
-                                className={`bi bi-${iconMapper.IN_REVIEW} ms-1`}
+                                style={{
+                                    color: iconMapper.IN_REVIEW.color,
+                                }}
+                                className={`bi bi-${iconMapper.IN_REVIEW.icon} ms-1`}
                             ></i>
                             <span>IN REVIEW</span>
                         </div>
@@ -49,8 +88,13 @@ const TaskStatus: React.FC = () => {
                 {
                     key: 'DONE',
                     label: (
-                        <div>
-                            <i className={`bi bi-${iconMapper.DONE} ms-1`}></i>
+                        <div onClick={() => handleItemClick('DONE')}>
+                            <i
+                                style={{
+                                    color: iconMapper.DONE.color,
+                                }}
+                                className={`bi bi-${iconMapper.DONE.icon} ms-1`}
+                            ></i>
                             <span>DONE</span>
                         </div>
                     ),
@@ -58,9 +102,12 @@ const TaskStatus: React.FC = () => {
                 {
                     key: 'CANCELLED',
                     label: (
-                        <div>
+                        <div onClick={() => handleItemClick('CANCELLED')}>
                             <i
-                                className={`bi bi-${iconMapper.CANCELLED} ms-1`}
+                                style={{
+                                    color: iconMapper.CANCELLED.color,
+                                }}
+                                className={`bi bi-${iconMapper.CANCELLED.icon} ms-1`}
                             ></i>
                             <span>CANCELLED</span>
                         </div>
@@ -68,7 +115,16 @@ const TaskStatus: React.FC = () => {
                 },
             ]}
         >
-            <TopBarIconWrapper iconClasses={`bi bi-${selectedStatusIcon}`} />
+            <div>
+                {loading ? (
+                    <Loading />
+                ) : (
+                    <TopBarIconWrapper
+                        color={selectedStatusIcon?.color}
+                        iconClasses={`bi bi-${selectedStatusIcon?.icon}`}
+                    />
+                )}
+            </div>
         </WrapperDropDown>
     );
 };

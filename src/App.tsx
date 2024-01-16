@@ -29,10 +29,10 @@ function App() {
         algorithm: antdTheme.defaultAlgorithm,
         token: {
             motion: true,
-            colorPrimary: lightConfig.primaryColor,
+            colorPrimary: theme.primaryColor,
             fontFamily: 'IRAN-sans',
             borderRadius: appConfig.defaultBorderRadius,
-            colorBgBase: lightConfig.mainBackgroundColor,
+            colorBgBase: theme.mainBackgroundColor,
             colorText: theme.defaultTextColor,
             colorTextBase: theme.defaultTextColor,
         },

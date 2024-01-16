@@ -52,7 +52,7 @@ const darkConfig = {
     mainBackgroundColor: '#1F1E24',
     defaultTextColor: '#FFFFFF',
     fadeTextColor: '#C3C5CA',
-    primaryColor: '#F0B86E',
+    primaryColor: '#3282B8',
 
     itemHoverColor: '#3B435B',
 };
@@ -101,6 +101,29 @@ const defaultFilterFields: FormBuilderField[] = [
     },
 ];
 
+const taskIconMapper: { [key: string]: { [key: string]: string } } = {
+        TODO: {
+            icon: 'list-task',
+            color: colors[0],
+        },
+        IN_PROGRESS: {
+            icon: 'arrow-clockwise',
+            color: colors[3],
+        },
+        IN_REVIEW: {
+            icon: 'eyeglasses',
+            color: colors[2],
+        },
+        DONE: {
+            icon: 'check-circle',
+            color: colors[4],
+        },
+        CANCELLED: {
+            icon: 'x-circle',
+            color: colors[1],
+        },
+    };
+
 export {
     appConfig,
     lightConfig,
@@ -108,5 +131,6 @@ export {
     colors,
     apiConfig,
     statusColors,
-    defaultFilterFields
+    defaultFilterFields,
+    taskIconMapper
 };
