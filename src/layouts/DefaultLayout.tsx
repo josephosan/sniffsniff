@@ -1,28 +1,33 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
-import {Outlet} from "react-router-dom";
-import {Drawer, Layout} from "antd";
-import {Sidebar} from "../components/primary/Sidebar";
-import {appConfig} from "../config/app.config";
-import {useMediaQuery} from "react-responsive";
-import {useApp} from "../store/app.store";
-import {AppHeader} from "../components/primary/AppHeader";
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Drawer, Layout } from 'antd';
+import { Sidebar } from '../components/primary/Sidebar';
+import { appConfig } from '../config/app.config';
+import { useMediaQuery } from 'react-responsive';
+import { useApp } from '../store/app.store';
+import { AppHeader } from '../components/primary/AppHeader';
 
-const {Sider, Header, Content} = Layout;
+const { Sider, Header, Content } = Layout;
 export const DefaultLayout: React.FC = React.memo(() => {
+    const location = useLocation();
+    const navigate = useNavigate();
     const isMobile = useMediaQuery({
         query: `(max-width: ${appConfig.appBreakPoint}px)`,
     });
-    const {theme, sidebarCollapsed, handleSetSidebarCollapsed} = useApp();
+    const { theme, sidebarCollapsed, handleSetSidebarCollapsed } = useApp();
 
+    useEffect(() => {
+        if (location.pathname === '/') navigate('/dashboard');
+    }, []);
 
     return (
         <Layout
             style={{
-                width: "100%",
-                height: "100vh",
+                width: '100%',
+                height: '100vh',
                 backgroundColor: theme.mainBackgroundColor,
-                color: theme.defaultTextColor
+                color: theme.defaultTextColor,
             }}
         >
             {isMobile ? (
@@ -33,7 +38,7 @@ export const DefaultLayout: React.FC = React.memo(() => {
                     width={appConfig.sidebarWidth}
                     maskClosable={true}
                     maskStyle={{
-                        opacity: "0",
+                        opacity: '0',
                     }}
                     keyboard={true}
                     onClose={() => handleSetSidebarCollapsed(false)}
@@ -42,65 +47,63 @@ export const DefaultLayout: React.FC = React.memo(() => {
                         borderRadius: theme.defaultBorderRadius,
                     }}
                 >
-                    <Sidebar/>
+                    <Sidebar />
                 </Drawer>
             ) : (
                 <Sider
                     className="sidebar"
-                    breakpoint={"lg"}
+                    breakpoint={'lg'}
                     collapsedWidth={0}
                     trigger={null}
                     style={{
                         padding: isMobile
                             ? 0
                             : `${appConfig.defaultPadding}px ${appConfig.defaultPadding}px ${appConfig.defaultPadding}px 0`,
-                        backgroundColor: "inherit",
+                        backgroundColor: 'inherit',
                     }}
                 >
                     <div
-                        className={"h-100 w-100 p-2 custom-shadow"}
+                        className={'h-100 w-100 p-2 custom-shadow'}
                         style={{
                             backgroundColor: theme.cardBg,
                             borderRadius: appConfig.defaultBorderRadius,
                         }}
                     >
-                        <Sidebar/>
+                        <Sidebar />
                     </div>
                 </Sider>
             )}
             <Layout
                 style={{
-                    overflowY: "auto",
+                    overflowY: 'auto',
                     backgroundColor: theme.mainBackgroundColor,
                 }}
             >
                 <Header
-                    className={"d-flex align-items-center mb-2"}
+                    className={'d-flex align-items-center mb-2'}
                     style={{
-                        backgroundColor: "inherit",
+                        backgroundColor: 'inherit',
                         padding: `0 ${appConfig.defaultPadding + 15}px 0 ${
                             appConfig.defaultPadding + 15
                         }px`,
                     }}
                 >
-                    <AppHeader
-                        isMobile={isMobile}
-                    />
+                    <AppHeader isMobile={isMobile} />
                 </Header>
                 <Content
-                    className={"d-flex justify-content-center"}
+                    className={'d-flex justify-content-center'}
                     style={{
-                        padding: appConfig.defaultPadding + "px",
-                        minHeight: "auto",
+                        padding: appConfig.defaultPadding + 'px',
+                        minHeight: 'auto',
                     }}
                 >
                     <div
-                        className={"w-100 h-100 p-3 custom-shadow"}
+                        className={'w-100 h-100 p-3 custom-shadow'}
                         style={{
                             backgroundColor: theme.cardBg,
                             borderRadius: appConfig.defaultBorderRadius,
-                            maxWidth: "1300px",
-                            height: "auto",
+                            maxWidth: '1300px',
+                            height: 'auto',
                         }}
                     >
                         <Outlet />
@@ -110,5 +113,3 @@ export const DefaultLayout: React.FC = React.memo(() => {
         </Layout>
     );
 });
-
-

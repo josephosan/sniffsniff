@@ -24,7 +24,7 @@ const CreateTaskTerm: React.FC = () => {
         {
             name: 'status',
             type: 'select',
-            label: 'نوع',
+            label: 'وضعیت',
             placeholder: 'اننتخاب کنید',
             required: true,
             rules: [{ required: true, message: 'وارد کردن نوع اجباری است' }],
@@ -33,6 +33,26 @@ const CreateTaskTerm: React.FC = () => {
                     label: 'TODO',
                     value: 'TODO',
                     icon: 'bi bi-list-task mt-1',
+                },
+                {
+                    label: 'IN PROGRESS',
+                    value: 'IN_PROGRESS',
+                    icon: 'bi bi-arrow-clockwise mt-1',
+                },
+                {
+                    label: 'IN REVIEW',
+                    value: 'IN_REVIEW',
+                    icon: 'bi bi-eyeglasses mt-1',
+                },
+                {
+                    label: 'DONE',
+                    value: 'DONE',
+                    icon: 'bi bi-check-circle mt-1',
+                },
+                {
+                    label: 'CANCELLED',
+                    value: 'CANCELLED',
+                    icon: 'bi bi-x-circle mt-1',
                 },
             ],
         },
