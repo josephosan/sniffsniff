@@ -104,23 +104,28 @@ const defaultFilterFields: FormBuilderField[] = [
 const taskIconMapper: { [key: string]: { [key: string]: string } } = {
         TODO: {
             icon: 'list-task',
-            color: colors[0],
+        color: colors[0],
+            text: 'TODO'
         },
         IN_PROGRESS: {
             icon: 'arrow-clockwise',
             color: colors[3],
+            text: 'IN PROGRESS'
         },
         IN_REVIEW: {
             icon: 'eyeglasses',
             color: colors[2],
+            text: 'IN REVIEW'
         },
         DONE: {
             icon: 'check-circle',
             color: statusColors.success,
+            text: 'DONE'
         },
         CANCELLED: {
             icon: 'x-circle',
             color: colors[1],
+            text: 'CANCELLED'
         },
     };
 

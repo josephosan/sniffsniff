@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import Loading from '../secondary/Loading';
 import { useNotify } from '../../store/notify.store';
 import { taskIconMapper as iconMapper } from '../../config/app.config';
+import ShowTaskStatus from './ShowTaskStatus';
 
 interface TaskStatusProps {
     status: string;
@@ -117,11 +118,14 @@ const TaskStatus: React.FC<TaskStatusProps> = ({ status, changed }) => {
         >
             <div>
                 {loading ? (
-                    <Loading />
+                    <div className="px-2">
+                        <Loading />
+                    </div>
                 ) : (
-                    <TopBarIconWrapper
-                        color={selectedStatusIcon?.color}
+                    <ShowTaskStatus
+                        text={selectedStatusIcon?.text}
                         iconClasses={`bi bi-${selectedStatusIcon?.icon}`}
+                        color={selectedStatusIcon?.color}
                     />
                 )}
             </div>
