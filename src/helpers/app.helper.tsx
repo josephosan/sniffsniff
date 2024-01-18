@@ -133,10 +133,20 @@ function hsvToHex(original) {
     }
 }
 
+const dateToPersian = (dateTime: string) => {
+    const _dateTime = dateTime.split(', ');
+    const date = _dateTime[0];
+    const time = _dateTime[1];
+
+    const itemDate = [...date.split('/'), ...time.split(':')];
+    return itemDate;
+};
+
 export {
     getPageNameByPath,
     handleGetBreadcrump,
     getRandomColor,
     getPersianDateAsText,
     hsvToHex,
+    dateToPersian,
 };
