@@ -133,14 +133,59 @@ function hsvToHex(original) {
     }
 }
 
-const dateToPersian = (dateTime: string) => {
+const dateSplitter = (dateTime: string) => {
     const _dateTime = dateTime.split(', ');
     const date = _dateTime[0];
     const time = _dateTime[1];
 
-    const itemDate = [...date.split('/'), ...time.split(':')];
-    return itemDate;
+    return [...date.split('/'), ...time.split(':')];
 };
+
+const gregorianToJalali = (date: Date) => {
+    if (!date) return undefined;
+    return new Intl.DateTimeFormat('fa-IR', {
+        dateStyle: 'short',
+        timeStyle: 'medium',
+    }).format(date);
+};
+
+const dateToPersian = (fetchedDate: string) => {
+    const timePeriods = ['سال', 'ماه', 'روز', 'ساعت', 'دقیقه', 'ثانیه'];
+    const _now = dateSplitter(gregorianToJalali(new Date()) as string).map(
+        (str) => parseInt(mapDigits(str)),
+    );
+    const _fetched = dateSplitter(fetchedDate).map((str) =>
+        parseInt(mapDigits(str)),
+    );
+
+    let persianText = '';
+    for (let i = 0; i < _now.length; i++) {
+        if (_now[i] > _fetched[i]) {
+            const gap = Math.abs(_now[i] - _fetched[i]);
+            persianText = `${gap} ${timePeriods[i]} قبل`;
+            break;
+        }
+    }
+
+    return persianText;
+};
+
+function mapDigits(persianNumber: string) {
+    const persianDigits = {
+        '۰': '0',
+        '۱': '1',
+        '۲': '2',
+        '۳': '3',
+        '۴': '4',
+        '۵': '5',
+        '۶': '6',
+        '۷': '7',
+        '۸': '8',
+        '۹': '9',
+    };
+
+    return persianNumber.replace(/[۰-۹]/g, (char) => persianDigits[char]);
+}
 
 export {
     getPageNameByPath,
