@@ -151,6 +151,7 @@ const gregorianToJalali = (date: Date) => {
 
 const dateToPersian = (fetchedDate: string) => {
     const timePeriods = ['سال', 'ماه', 'روز', 'ساعت', 'دقیقه', 'ثانیه'];
+    const timeChunks = [12, 31, 24, 60, 60];
     const _now = dateSplitter(gregorianToJalali(new Date()) as string).map(
         (str) => parseInt(mapDigits(str)),
     );
@@ -161,6 +162,12 @@ const dateToPersian = (fetchedDate: string) => {
     let persianText = '';
     for (let i = 0; i < _now.length; i++) {
         if (_now[i] > _fetched[i]) {
+            if (i !== 5 && Math.abs(_now[i] - _fetched[i]) <= 1) {
+                // solve 1
+                const gap = timeChunks[i] - _fetched[i + 1] + _now[i + 1]; // change the consant 31.
+                persianText = `${gap} ${timePeriods[i + 1]} قبل`;
+                break;
+            }
             const gap = Math.abs(_now[i] - _fetched[i]);
             persianText = `${gap} ${timePeriods[i]} قبل`;
             break;

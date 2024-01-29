@@ -9,6 +9,7 @@ import FormSkeletonLoading from '../../../components/secondary/FormSkeletonLoadi
 import BigBoxSkeletonLoading from '../../../components/secondary/BigBoxSkeletonLoading';
 import ProjectApiService from '../../../services/ProjectApiService';
 import Emitter from '../../../helpers/emitter.helper';
+import { dateToPersian } from '../../../helpers/app.helper';
 
 const ViewProject: React.FC = React.memo(() => {
     const navigate = useNavigate();
@@ -97,7 +98,7 @@ const ViewProject: React.FC = React.memo(() => {
                                                     'd-flex justify-content-end'
                                                 }
                                             >
-                                                {data.createdAt}
+                                                {dateToPersian(data.createdAt)}
                                             </small>
                                         </div>
                                     ),

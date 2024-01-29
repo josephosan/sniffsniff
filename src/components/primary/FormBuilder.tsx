@@ -33,140 +33,129 @@ interface FormBuilderProps {
     fieldsPaddingLevel?: string;
 }
 
-const FormBuilder: React.FC<FormBuilderProps> = React.memo(({
-    onFinish,
-    onFinishFailed,
-    fields,
-    submitButtonLabel = 'ارسال',
-    size = 'middle',
-    submitButtonFlex = 'start',
-    submitButtonClasses,
-    additionalElement,
-    colXS = 24,
-    colSM = 12,
-    colXL = 8,
-    submitButtonLoading = false,
-    loading = false,
-    initialValues,
-    showSubmitButton = true,
-    additionalFields,
-    valuesChange,
-    fieldsPaddingLevel = 3,
-}) => {
-    const [form] = Form.useForm();
-    const { errors, handleSetErrors } = useApp();
-    const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
-    const [_loading, setLoading] = useState(true);
+const FormBuilder: React.FC<FormBuilderProps> = React.memo(
+    ({
+        onFinish,
+        onFinishFailed,
+        fields,
+        submitButtonLabel = 'ارسال',
+        size = 'middle',
+        submitButtonFlex = 'start',
+        submitButtonClasses,
+        additionalElement,
+        colXS = 24,
+        colSM = 12,
+        colXL = 8,
+        submitButtonLoading = false,
+        loading = false,
+        initialValues,
+        showSubmitButton = true,
+        additionalFields,
+        valuesChange,
+        fieldsPaddingLevel = 3,
+    }) => {
+        const [form] = Form.useForm();
+        const { errors, handleSetErrors } = useApp();
+        const [_fields, setFields] = useState<FormBuilderField[] | null>(null);
+        const [_loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        setFields(() => fields);
-    }, [fields]);
+        useEffect(() => {
+            setFields(() => fields);
+        }, [fields]);
 
-    useEffect(() => {
-        setLoading(() => loading);
-    }, [loading]);
+        useEffect(() => {
+            setLoading(() => loading);
+        }, [loading]);
 
-    useEffect(() => {
-        if (errors && errors.formErrors) {
+        useEffect(() => {
+            if (errors && errors.formErrors) {
+                setFields((prevState) => {
+                    return prevState?.map((el) => {
+                        return {
+                            ...el,
+                            errors: errors.formErrors[el.name],
+                        };
+                    });
+                });
+            }
+        }, [errors]);
+
+        const handleClearElementErrors = () => {
             setFields((prevState) => {
                 return prevState?.map((el) => {
                     return {
                         ...el,
-                        errors: errors.formErrors[el.name],
+                        errors: null,
                     };
                 });
             });
-        }
-    }, [errors]);
+        };
 
-    const handleClearElementErrors = () => {
-        setFields((prevState) => {
-            return prevState?.map((el) => {
-                return {
-                    ...el,
-                    errors: null,
-                };
-            });
-        });
-    };
+        const convertToLatinDigits = (str) => {
+            const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
+            const latinDigits = '0123456789';
 
-    const convertToLatinDigits = (str) => {
-        const persianDigits = '۰۱۲۳۴۵۶۷۸۹';
-        const latinDigits = '0123456789';
-
-        for (let i = 0; i < 10; i++) {
-            str = str.replace(
-                new RegExp(persianDigits[i], 'g'),
-                latinDigits[i],
-            );
-        }
-        return str;
-    };
-
-    const handleSubmit = (data) => {
-        handleSetErrors(null);
-        handleClearElementErrors();
-
-        if (data['color']) {
-            if (/[0-9A-Fa-f]{6}/g.test(data.color)) {
-                data['color'] = hsvToHex(data.color);
-            } else {
-                data['color'] = hsvToHex(data?.color?.metaColor?.originalInput);
+            for (let i = 0; i < 10; i++) {
+                str = str.replace(
+                    new RegExp(persianDigits[i], 'g'),
+                    latinDigits[i],
+                );
             }
-        }
+            return str;
+        };
 
-        // for changing every date with Persian digits
-        Object.keys(data).forEach((key) => {
-            if (data[key] instanceof DateObject) {
-                data[key] = convertToLatinDigits(data[key].format());
+        const handleSubmit = (data) => {
+            handleSetErrors(null);
+            handleClearElementErrors();
+
+            if (data['color']) {
+                if (/[0-9A-Fa-f]{6}/g.test(data.color)) {
+                    data['color'] = hsvToHex(data.color);
+                } else {
+                    data['color'] = hsvToHex(
+                        data?.color?.metaColor?.originalInput,
+                    );
+                }
             }
-        });
 
-        onFinish(data);
-    };
-
-    const handleValuesChange = (data) => {
-        if (valuesChange) {
             // for changing every date with Persian digits
             Object.keys(data).forEach((key) => {
                 if (data[key] instanceof DateObject) {
                     data[key] = convertToLatinDigits(data[key].format());
                 }
             });
-            valuesChange(data);
-        }
-    };
 
-    return (
-        <>
-            <Form
-                name="basic"
-                labelCol={{ span: 8 }}
-                wrapperCol={{ span: 24 }}
-                initialValues={{ remember: true, ...initialValues }}
-                onFinish={handleSubmit}
-                onFinishFailed={onFinishFailed}
-                autoComplete="off"
-                layout={'vertical'}
-                form={form}
-                className={'position-relative'}
-                onValuesChange={handleValuesChange}
-            >
-                {_loading && (
-                    <div
-                        className={
-                            'd-flex justify-content-center align-items-center'
-                        }
-                        style={{
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            zIndex: 100,
-                            backdropFilter: 'blur(1px)',
-                        }}
-                    >
+            onFinish(data);
+        };
+
+        const handleValuesChange = (data) => {
+            if (valuesChange) {
+                // for changing every date with Persian digits
+                Object.keys(data).forEach((key) => {
+                    if (data[key] instanceof DateObject) {
+                        data[key] = convertToLatinDigits(data[key].format());
+                    }
+                });
+                valuesChange(data);
+            }
+        };
+
+        return (
+            <>
+                <Form
+                    name="basic"
+                    labelCol={{ span: 8 }}
+                    wrapperCol={{ span: 24 }}
+                    initialValues={{ remember: true, ...initialValues }}
+                    onFinish={handleSubmit}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                    layout={'vertical'}
+                    form={form}
+                    className={'position-relative'}
+                    onValuesChange={handleValuesChange}
+                >
+                    {_loading && (
                         <div
                             className={
                                 'd-flex justify-content-center align-items-center'
@@ -177,101 +166,120 @@ const FormBuilder: React.FC<FormBuilderProps> = React.memo(({
                                 left: 0,
                                 right: 0,
                                 bottom: 0,
-                                zIndex: 101,
+                                zIndex: 100,
+                                backdropFilter: 'blur(1px)',
                             }}
                         >
-                            <Loading />
-                        </div>
-                    </div>
-                )}
-                <Row gutter={16}>
-                    {_fields &&
-                        _fields.map((el, index) => (
-                            <Col
-                                xs={{ span: colXS }}
-                                sm={{ span: colSM }}
-                                xl={{ span: colXL }}
-                                key={index}
-                                className={'p-' + fieldsPaddingLevel}
+                            <div
+                                className={
+                                    'd-flex justify-content-center align-items-center'
+                                }
+                                style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    zIndex: 101,
+                                }}
                             >
-                                <FieldComponent
-                                    label={el.label}
-                                    name={el.name}
-                                    rules={el.rules}
-                                    required={!!el.required}
-                                    help={el.errors}
-                                    initialValue={el.initialValue}
-                                    type={el.type}
-                                    select_url={el.select_url}
-                                    options={el.options}
-                                    placeholder={el.placeholder}
-                                    size={size}
-                                    form={form}
-                                    minDate={el.minDate}
-                                    maxDate={el.maxDate}
-                                    colorPresets={el.colorPresets}
-                                    tag_create_url={el.tag_create_url}
-                                    onChange={(e) =>
-                                        handleValuesChange({ [el.name]: e })
-                                    }
-                                />
-                            </Col>
-                        ))}
-
-                    {additionalFields &&
-                        additionalFields?.map((el, index) => {
-                            return (
+                                <Loading />
+                            </div>
+                        </div>
+                    )}
+                    <Row gutter={16}>
+                        {_fields &&
+                            _fields.map((el, index) => (
                                 <Col
                                     xs={{ span: colXS }}
                                     sm={{ span: colSM }}
                                     xl={{ span: colXL }}
-                                    key={index * Math.random()}
+                                    key={index}
                                     className={'p-' + fieldsPaddingLevel}
                                 >
-                                    {el}
+                                    <FieldComponent
+                                        label={el.label}
+                                        name={el.name}
+                                        rules={el.rules}
+                                        required={!!el.required}
+                                        help={el.errors}
+                                        initialValue={el.initialValue}
+                                        type={el.type}
+                                        select_url={el.select_url}
+                                        options={el.options}
+                                        placeholder={el.placeholder}
+                                        size={size}
+                                        form={form}
+                                        minDate={el.minDate}
+                                        maxDate={el.maxDate}
+                                        colorPresets={el.colorPresets}
+                                        tag_create_url={el.tag_create_url}
+                                        onChange={(e) =>
+                                            handleValuesChange({ [el.name]: e })
+                                        }
+                                    />
                                 </Col>
-                            );
-                        })}
-                </Row>
+                            ))}
 
-                {additionalElement && (
-                    <div
-                        className={
-                            'w-100 mt-3 mb-4 d-flex justify-content-center align-items-center'
-                        }
-                    >
-                        {additionalElement}
-                    </div>
-                )}
+                        {additionalFields &&
+                            additionalFields?.map((el, index) => {
+                                return (
+                                    <Col
+                                        xs={{ span: colXS }}
+                                        sm={{ span: colSM }}
+                                        xl={{ span: colXL }}
+                                        key={index * Math.random()}
+                                        className={'p-' + fieldsPaddingLevel}
+                                    >
+                                        {el}
+                                    </Col>
+                                );
+                            })}
+                    </Row>
 
-                {showSubmitButton && (
-                    <Col xs={{ span: 24 }} sm={{ span: 24 }} xl={{ span: 24 }}>
-                        <Form.Item
+                    {additionalElement && (
+                        <div
                             className={
-                                'd-flex align-items-center justify-content-' +
-                                submitButtonFlex
+                                'w-100 mt-3 mb-4 d-flex justify-content-center align-items-center'
                             }
                         >
-                            <Button
-                                className={submitButtonClasses}
-                                size={size}
-                                type="primary"
-                                htmlType="submit"
-                                style={{
-                                    size: appConfig.defaultFontSize,
-                                }}
-                                disabled={submitButtonLoading}
+                            {additionalElement}
+                        </div>
+                    )}
+
+                    {showSubmitButton && (
+                        <Col
+                            xs={{ span: 24 }}
+                            sm={{ span: 24 }}
+                            xl={{ span: 24 }}
+                        >
+                            <Form.Item
+                                className={
+                                    'd-flex align-items-center justify-content-' +
+                                    submitButtonFlex
+                                }
                             >
-                                {submitButtonLoading
-                                    ? 'درحال ارسال ...'
-                                    : submitButtonLabel}
-                            </Button>
-                        </Form.Item>
-                    </Col>
-                )}
-            </Form>
-        </>
-    );
-});
+                                <Button
+                                    className={submitButtonClasses}
+                                    size={size}
+                                    type="primary"
+                                    htmlType="submit"
+                                    style={{
+                                        size: appConfig.defaultFontSize,
+                                    }}
+                                    disabled={submitButtonLoading}
+                                >
+                                    {submitButtonLoading
+                                        ? 'درحال ارسال'
+                                        : submitButtonLabel}
+                                </Button>
+                            </Form.Item>
+                        </Col>
+                    )}
+                </Form>
+            </>
+        );
+    },
+);
 
 export default FormBuilder;
