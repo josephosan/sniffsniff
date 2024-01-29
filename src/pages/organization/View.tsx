@@ -10,6 +10,7 @@ import { appConfig } from '../../config/app.config';
 import CustomImage from '../../components/secondary/CustomImage';
 import OrganizationApiService from '../../services/OrganizationApiService';
 import Emitter from '../../helpers/emitter.helper';
+import { dateToPersian } from '../../helpers/app.helper';
 
 const OrganizationView: React.FC = () => {
     const navigate = useNavigate();
@@ -107,7 +108,7 @@ const OrganizationView: React.FC = () => {
                                                     'd-flex justify-content-end'
                                                 }
                                             >
-                                                {data.createdAt}
+                                                {dateToPersian(data.createdAt)}
                                             </small>
                                         </div>
                                     ),
