@@ -122,51 +122,53 @@ const OrganizationList: React.FC = React.memo(() => {
                 </div>
             )}
 
-            <div className={'row mb-3 mt-2'}>
-                <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
-                    <div
-                        className={
-                            'd-flex justify-content-between align-items-center'
-                        }
-                    >
-                        <CustomSearch
-                            inputMode={true}
-                            asyncSearch={true}
-                            onSearch={handleSearch}
-                        />
+            {!pageFirstLoading && (
+                <div className={'row mb-3 mt-2'}>
+                    <div className={'col-sm-7 col-md-4 col-xl-4 col-7'}>
                         <div
-                            className={'h-100 me-2'}
-                            style={{
-                                border: '1.5px solid ' + theme.primaryColor,
-                                borderRadius: appConfig.defaultBorderRadius,
-                                padding: '3px',
-                            }}
+                            className={
+                                'd-flex justify-content-between align-items-center'
+                            }
                         >
-                            <ActionIconWrapper
-                                icon={
-                                    'bi bi-funnel d-flex justify-content-center align-items-center'
-                                }
-                                size={appConfig.defaultIconSize}
-                                iconClicked={handleFilterButtonClick}
+                            <CustomSearch
+                                inputMode={true}
+                                asyncSearch={true}
+                                onSearch={handleSearch}
                             />
+                            <div
+                                className={'h-100 me-2'}
+                                style={{
+                                    border: '1.5px solid ' + theme.primaryColor,
+                                    borderRadius: appConfig.defaultBorderRadius,
+                                    padding: '3px',
+                                }}
+                            >
+                                <ActionIconWrapper
+                                    icon={
+                                        'bi bi-funnel d-flex justify-content-center align-items-center'
+                                    }
+                                    size={appConfig.defaultIconSize}
+                                    iconClicked={handleFilterButtonClick}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div
-                    className={
-                        'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
-                    }
-                >
-                    <Button
-                        type={'primary'}
-                        icon={<i className={'bi bi-plus'}></i>}
-                        onClick={() => navigate(`/organization/create`)}
+                    <div
+                        className={
+                            'col-sm-5 col-md-8 col-xl-8 col-5 d-flex justify-content-end'
+                        }
                     >
-                        افزودن
-                    </Button>
+                        <Button
+                            type={'primary'}
+                            icon={<i className={'bi bi-plus'}></i>}
+                            onClick={() => navigate(`/organization/create`)}
+                        >
+                            افزودن
+                        </Button>
+                    </div>
                 </div>
-            </div>
+            )}
 
             {(organizationList && organizationList.length > 0) ||
             fetchMoreLoading ? (
@@ -219,7 +221,7 @@ const OrganizationList: React.FC = React.memo(() => {
                     ))}
                 </>
             ) : (
-                <NoData />
+                !pageFirstLoading && <NoData />
             )}
             {fetchMoreLoading && (
                 <div

@@ -1,6 +1,7 @@
 import React from 'react';
 import CreateTaskTerm from './Task';
 import { useLocation } from 'react-router-dom';
+import CreateReminderTerm from './Reminder';
 
 const CreateTerm: React.FC = () => {
     const location = useLocation();
@@ -11,7 +12,7 @@ const CreateTerm: React.FC = () => {
             {query.get('type') === 'task' ? (
                 <CreateTaskTerm />
             ) : (
-                <div>type not defined</div>
+                <CreateReminderTerm />
             )}
         </>
     );
