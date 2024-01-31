@@ -168,63 +168,63 @@ const ProjectTerms: React.FC = React.memo(() => {
                     <FormSkeletonLoading fillRow={true} count={10} />
                 </div>
             )}
-            {(termList && termList.length > 0) || fetchMoreLoading ? (
-                (termList as any[]).map((el: any, index) => {
-                    return (
-                        <div className="px-2" key={index}>
-                            <Badge.Ribbon
-                                text={`${el.type}${
-                                    el.task ? ' - ' + el.task.status : undefined
-                                }`}
-                            >
-                                <WrapperData
-                                    color={el.color}
-                                    backgroundColor={(theme as any).cardBg}
-                                    handleClick={() =>
-                                        navigate(
-                                            `${el.id}?type=${(
-                                                el.type as string
-                                            ).toLowerCase()}`,
-                                        )
-                                    }
-                                >
-                                    {isMobile ? (
-                                        <div className="d-flex flex-column gap-5">
-                                            <div className="d-flex justify-content-between align-items-center">
-                                                <TextItemWrapper
-                                                    fontSize={
-                                                        appConfig.defaultFontSize
-                                                    }
-                                                    text={el.title}
-                                                />
-                                            </div>
-                                            <div className="d-flex">
-                                                <TextItemWrapper
-                                                    text={el.description}
-                                                />
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="d-flex align-items-start gap-2 flex-column">
-                                            <TextItemWrapper
-                                                fontSize={
-                                                    appConfig.defaultFontSize
-                                                }
-                                                text={el.title}
-                                            />
-                                            <TextItemWrapper
-                                                text={el.description}
-                                            />
-                                        </div>
-                                    )}
-                                </WrapperData>
-                            </Badge.Ribbon>
-                        </div>
-                    );
-                })
-            ) : (
-                <NoData />
-            )}
+            {(termList && termList.length > 0) || fetchMoreLoading
+                ? (termList as any[]).map((el: any, index) => {
+                      return (
+                          <div className="px-2" key={index}>
+                              <Badge.Ribbon
+                                  text={`${el.type}${
+                                      el.task
+                                          ? ' - ' + el.task.status
+                                          : undefined
+                                  }`}
+                              >
+                                  <WrapperData
+                                      color={el.color}
+                                      backgroundColor={(theme as any).cardBg}
+                                      handleClick={() =>
+                                          navigate(
+                                              `${el.id}?type=${(
+                                                  el.type as string
+                                              ).toLowerCase()}`,
+                                          )
+                                      }
+                                  >
+                                      {isMobile ? (
+                                          <div className="d-flex flex-column gap-5">
+                                              <div className="d-flex justify-content-between align-items-center">
+                                                  <TextItemWrapper
+                                                      fontSize={
+                                                          appConfig.defaultFontSize
+                                                      }
+                                                      text={el.title}
+                                                  />
+                                              </div>
+                                              <div className="d-flex">
+                                                  <TextItemWrapper
+                                                      text={el.description}
+                                                  />
+                                              </div>
+                                          </div>
+                                      ) : (
+                                          <div className="d-flex align-items-start gap-2 flex-column">
+                                              <TextItemWrapper
+                                                  fontSize={
+                                                      appConfig.defaultFontSize
+                                                  }
+                                                  text={el.title}
+                                              />
+                                              <TextItemWrapper
+                                                  text={el.description}
+                                              />
+                                          </div>
+                                      )}
+                                  </WrapperData>
+                              </Badge.Ribbon>
+                          </div>
+                      );
+                  })
+                : !pageFirstLoading && <NoData />}
 
             {fetchMoreLoading && (
                 <div
