@@ -4,6 +4,7 @@ import { useRoutes, Outlet, useNavigate, Navigate } from 'react-router-dom';
 // Import pages
 import { Home } from '../pages/Home';
 import Login from '../pages/Login';
+import Register from '../pages/Register';
 import _404 from '../pages/_404';
 import ForgotPassword from '../pages/ForgotPassword';
 import CreateEvent from '../pages/timeline/event/Create';
@@ -216,6 +217,11 @@ export const AppRouter: React.FC = React.memo(() => {
                     ) : (
                         <Navigate to={'/dashboard'} />
                     ),
+                },
+                {
+                    path: 'sign-up',
+                    name: 'sign-up',
+                    element: <Register />,
                 },
             ],
         },
