@@ -6,13 +6,14 @@ import FormBuilder from '../components/primary/FormBuilder';
 import { FormBuilderField } from '../@types/app';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../services/AuthService';
-import { useAuth } from '../store/auth.store';
+import { useNotify } from '../store/notify.store';
+import UnderlinedLink from '../components/secondary/UnderlinedLink';
 
 const Register: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const { theme } = useApp();
     const navigate = useNavigate();
-    const authStore = useAuth();
+    const notify = useNotify();
     const registerFormFields: FormBuilderField[] = [
         {
             placeholder: 'نام',
@@ -40,10 +41,14 @@ const Register: React.FC = () => {
         name: string;
     }) => {
         setLoading(() => true);
-        console.log(formData);
         try {
             const registerRes = await AuthService.register(formData);
 
+            notify.showAlert(
+                'success',
+                'عملیات موفق',
+                'ثبت نام با موفقیت انجام شد. لطفا وارد شوید.',
+            );
             navigate('/login');
         } catch (err) {
             console.error(err);
@@ -85,6 +90,7 @@ const Register: React.FC = () => {
                             onFinish={handleRegisterSubmit}
                             submitButtonLoading={loading}
                             fieldsPaddingLevel={'0'}
+                            additionalElement={<div></div>}
                         />
                     </div>
                 </ConfigProvider>
@@ -102,6 +108,11 @@ const Register: React.FC = () => {
                 <i className="bi bi-google"></i>
                 <span className="mx-2">ورود با گوگل</span>
             </Button>
+
+            <UnderlinedLink
+                text={'ورود به حساب کاربری'}
+                onElementClick={() => navigate('/login')}
+            />
         </div>
     );
 };
