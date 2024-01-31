@@ -1,10 +1,12 @@
 // to define User interface. add more fields as needed.
 export interface User {
-    firstname: string,
-    lastname: string,
-    email: string,
-    createdAt: string,
-    updatedAt: string
+    firstname?: string,
+    lastname?: string,
+    email?: string,
+    createdAt?: string,
+    updatedAt?: string,
+    name?: string,
+    password?: string
 }
 
 // to define AuthContext provider type.
