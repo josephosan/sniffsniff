@@ -15,29 +15,31 @@ const Profile: React.FC = () => {
 
     return (
         <>
-            {console.log(theme.primaryFaded)}
             {loading && <p>loading</p>}
 
             {!loading && (
                 <div className="d-flex h-100 px-2 justify-content-center row gap-3  ">
                     <div
-                        className="col-sm col-md-4 col-xl-3 flex-column d-flex  py-5 justify-content-between align-items-center "
+                        className="col-sm col-md-4 col-xl-3 flex-column d-flex pb-3 pt-5 justify-content-between align-items-center "
                         style={{
                             borderRadius: appConfig.defaultBorderRadius,
                             backgroundColor: theme.primaryFaded2X, // why?
-                            minHeight: '700px',
+                            minHeight: '900px',
                         }}
                     >
                         <div className="d-flex flex-column gap-3 ">
                             <WrapperUserImage
-                                // bgColor={theme.pri}
-                                size="150px"
+                                bgColor={theme.primaryFaded}
+                                size="170px"
                                 url="/public/person.svg"
                             />
                             <div className="w-100 d-flex flex-column gap-3 align-items-center  ">
                                 <TextItemWrapper
                                     text="test"
-                                    fontSize={appConfig.hugeFontSize}
+                                    fontSize={appConfig.hugeFontSize + 10}
+                                    style={{
+                                        fontWeight: '900',
+                                    }}
                                 />
                                 <TextItemWrapper
                                     text="test@gmail.com"
@@ -61,12 +63,14 @@ const Profile: React.FC = () => {
                         <div className="d-flex flex-column align-items-center justify-content-center ">
                             <i
                                 className="bi bi-quote"
-                                style={{ fontSize: '50px' }}
+                                style={{ fontSize: '60px' }}
                             ></i>
-                            <TextItemWrapper
-                                text="
-                        زمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این"
-                            />
+                            <div className="px-4">
+                                <TextItemWrapper
+                                    text="
+                                                        زمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این"
+                                />
+                            </div>
                         </div>
 
                         <div
@@ -79,19 +83,22 @@ const Profile: React.FC = () => {
                         >
                             <div className="d-flex flex-column gap-3 ">
                                 <TextItemWrapper
-                                    text={`وضعیت:${status}`}
+                                    text={`وضعیت: ${status}`}
                                     fontSize={appConfig.largeFontSize}
+                                    style={{
+                                        fontWeight: '700',
+                                    }}
                                 />
                                 <TextItemWrapper
-                                    text={`سن:${status}`}
+                                    text={`سن: ${status}`}
                                     fontSize={appConfig.defaultFontSize}
                                 />
                                 <TextItemWrapper
-                                    text={`مکان:${status}`}
+                                    text={`مکان: ${status}`}
                                     fontSize={appConfig.defaultFontSize}
                                 />
                             </div>
-                            <div className="w-100 gap">
+                            <div className="w-100 gap-3">
                                 <Button type="primary">student</Button>
                                 <Button type="primary">student</Button>
                                 <Button type="primary">student</Button>
@@ -126,8 +133,8 @@ const Profile: React.FC = () => {
                                     backgroundColor: theme.primaryFaded2X,
                                 }}
                             >
-                                <div className="d-flex w-100 justify-content-between px-1 ">
-                                    <div className="d-flex flex-column align-items-center  ">
+                                <div className="d-flex row gap-3 h-100 align-items-center w-100 justify-content-between px-1 ">
+                                    <div className="d-flex col-sm flex-column align-items-center  ">
                                         <TextItemWrapper
                                             text="120"
                                             fontSize={appConfig.hugeFontSize}
@@ -137,7 +144,7 @@ const Profile: React.FC = () => {
                                             fontSize={appConfig.hugeFontSize}
                                         />
                                     </div>
-                                    <div className="d-flex flex-column align-items-center">
+                                    <div className="d-flex col-sm flex-column align-items-center">
                                         <TextItemWrapper
                                             text="134"
                                             fontSize={appConfig.hugeFontSize}
