@@ -40,7 +40,9 @@ const lightConfig = {
     mainBackgroundColor: '#f7f8fa',
     defaultTextColor: '#797979',
     fadeTextColor: '#808080',
-    primaryColor: '#F0B86E',
+    primaryColor: '#BB86FC',
+    primaryFaded: '#EDDFFF',
+    primaryFaded2X: '#FAF5FF',
 
     itemHoverColor: '#F6F6F6',
 };
@@ -52,7 +54,9 @@ const darkConfig = {
     mainBackgroundColor: '#1F1E24',
     defaultTextColor: '#FFFFFF',
     fadeTextColor: '#C3C5CA',
-    primaryColor: '#FC6736',
+    primaryColor: '#BB86FC',
+    primaryFaded: '#EDDFFF',
+    primaryFaded2X: '#FAF5FF',
 
     itemHoverColor: '#3B435B',
 };

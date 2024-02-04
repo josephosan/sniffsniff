@@ -6,18 +6,20 @@ interface WrapperUserImageProps {
     url?: string;
     size?: string;
     icon?: string;
+    bgColor?: string;
 }
 const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
     url,
     size = '50px',
     icon,
+    bgColor,
 }) => {
     const { theme } = useApp();
 
     return (
         <div
             style={{
-                backgroundColor: theme.mainBackgroundColor,
+                backgroundColor: bgColor ? bgColor : theme.mainBackgroundColor,
                 borderRadius: '50%',
                 width: size,
                 height: size,

@@ -28,6 +28,8 @@ import ProjectNotifications from '../pages/notification/Project';
 import ViewProjectNotification from '../pages/notification/view/Project';
 import ViewPublicNotification from '../pages/notification/view/Public';
 import ViewTerm from '../pages/organization/project/term/View/View';
+import Profile from '../pages/Profile';
+import Settings from '../pages/Settings';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -71,6 +73,20 @@ export const AppRouter: React.FC = React.memo(() => {
                     path: 'dashboard',
                     name: 'Dashboard',
                     element: <Home />,
+                },
+
+                // profile
+                {
+                    path: 'profile/:userId',
+                    name: 'Profile',
+                    element: <Profile />,
+                },
+
+                // settings
+                {
+                    path: 'settings',
+                    name: 'Settings',
+                    element: <Settings />,
                 },
 
                 // events

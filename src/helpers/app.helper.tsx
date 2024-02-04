@@ -9,12 +9,14 @@ const pathNamesMap = {
     edit: 'ویرایش',
     organization: 'سازمان',
     setting: 'تنظیمات',
+    settings: 'تنظیمات',
     project: 'پروژه',
     users: 'کاربران',
     term: 'ترم',
     invite: 'دعوت',
     notifications: 'اعلان ها',
     public: 'عمومی',
+    profile: 'پروفایل',
 };
 
 const pathIconsMap = {
@@ -25,12 +27,14 @@ const pathIconsMap = {
     edit: 'bi bi-pen',
     organization: 'bi bi-building',
     setting: 'bi bi-gear',
+    settings: 'bi bi-gear',
     project: 'bi bi-kanban',
     users: 'bi bi-people',
     term: 'bi bi-backpack',
     invite: 'bi bi-person-plus',
     notifications: 'bi bi-app-indicator',
     public: 'bi bi-globe',
+    profile: 'bi bi-person',
 };
 
 const getPageNameByPath = (route: string) => {

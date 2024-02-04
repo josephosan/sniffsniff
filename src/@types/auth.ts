@@ -6,7 +6,8 @@ export interface User {
     createdAt?: string,
     updatedAt?: string,
     name?: string,
-    password?: string
+    password?: string,
+    id?: string
 }
 
 // to define AuthContext provider type.
