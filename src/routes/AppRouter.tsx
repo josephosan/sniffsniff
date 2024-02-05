@@ -29,7 +29,9 @@ import ViewProjectNotification from '../pages/notification/view/Project';
 import ViewPublicNotification from '../pages/notification/view/Public';
 import ViewTerm from '../pages/organization/project/term/View/View';
 import Profile from '../pages/Profile';
-import Settings from '../pages/Settings';
+import Settings from '../pages/settings/Settings';
+import ProfileSettings from '../pages/settings/Profile';
+import PasswordSettigns from '../pages/settings/Password';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -87,6 +89,18 @@ export const AppRouter: React.FC = React.memo(() => {
                     path: 'settings',
                     name: 'Settings',
                     element: <Settings />,
+                    children: [
+                        {
+                            path: 'profile',
+                            name: 'ProfileSettings',
+                            element: <ProfileSettings />,
+                        },
+                        {
+                            path: 'password',
+                            name: 'PasswordSettings',
+                            element: <PasswordSettigns />,
+                        },
+                    ],
                 },
 
                 // events

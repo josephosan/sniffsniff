@@ -17,6 +17,7 @@ const pathNamesMap = {
     notifications: 'اعلان ها',
     public: 'عمومی',
     profile: 'پروفایل',
+    password: 'گذرواژه',
 };
 
 const pathIconsMap = {
@@ -35,6 +36,7 @@ const pathIconsMap = {
     notifications: 'bi bi-app-indicator',
     public: 'bi bi-globe',
     profile: 'bi bi-person',
+    password: 'bi bi-key',
 };
 
 const getPageNameByPath = (route: string) => {
@@ -42,7 +44,7 @@ const getPageNameByPath = (route: string) => {
     return route.split('/')[1];
 };
 
-const notClickableRouteNames = ['project', 'notifications', 'term'];
+const notClickableRouteNames = ['project', 'notifications', 'term', 'settings'];
 
 const handleGetBreadcrump = (path) => {
     const pathNames = path

@@ -153,7 +153,9 @@ export const AppHeader: React.FC<AppHeaderProps> = React.memo(
                                         label: (
                                             <div
                                                 onClick={() =>
-                                                    navigate(`/settings`)
+                                                    navigate(
+                                                        `/settings/profile`,
+                                                    )
                                                 }
                                             >
                                                 <i
