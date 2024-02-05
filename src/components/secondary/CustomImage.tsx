@@ -8,6 +8,7 @@ interface CustomImageProps {
     preview?: boolean;
     classes?: string;
     color?: string | undefined;
+    rounded?: boolean;
 }
 
 const CustomImage: React.FC<CustomImageProps> = ({
@@ -17,6 +18,7 @@ const CustomImage: React.FC<CustomImageProps> = ({
     preview = false,
     classes,
     color,
+    rounded = false,
 }) => {
     return (
         <Image
@@ -26,6 +28,9 @@ const CustomImage: React.FC<CustomImageProps> = ({
             preview={preview}
             className={classes}
             color={color}
+            style={{
+                borderRadius: rounded ? '50%' : undefined,
+            }}
         />
     );
 };

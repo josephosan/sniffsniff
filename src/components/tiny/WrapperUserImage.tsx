@@ -7,12 +7,14 @@ interface WrapperUserImageProps {
     size?: string;
     icon?: string;
     bgColor?: string;
+    rounded?: boolean;
 }
 const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
     url,
     size = '50px',
     icon,
     bgColor,
+    rounded = false,
 }) => {
     const { theme } = useApp();
 
@@ -27,7 +29,12 @@ const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
             className={'d-flex justify-content-center align-items-center'}
         >
             {url ? (
-                <CustomImage src={url} width={'90%'} height={'90%'} />
+                <CustomImage
+                    rounded={rounded}
+                    src={url}
+                    width={'100%'}
+                    height={'100%'}
+                />
             ) : (
                 <i className={icon}></i>
             )}

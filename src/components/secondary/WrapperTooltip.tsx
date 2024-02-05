@@ -1,27 +1,25 @@
-import React, {ReactNode} from "react";
-import {Tooltip} from "antd";
+import React, { ReactNode } from 'react';
+import { Tooltip } from 'antd';
 
 interface WrapperTooltipProps {
     trigger?: 'click' | 'hover' | 'focus' | 'contextMenu';
-    children: ReactNode,
-    open?: boolean,
+    children: ReactNode | any;
+    open?: boolean;
     destroyTooltipOnHide?: boolean;
-    content: string | number | ReactNode,
-    openChange?: () => void,
-    width?: string
+    content: string | number | ReactNode;
+    openChange?: () => void;
+    width?: string;
 }
 
-const WrapperTooltip: React.FC<WrapperTooltipProps> = (
-    {
-        trigger = 'hover',
-        children,
-        open,
-        destroyTooltipOnHide = false,
-        content,
-        openChange,
-        width
-    }
-) => {
+const WrapperTooltip: React.FC<WrapperTooltipProps> = ({
+    trigger = 'hover',
+    children,
+    open,
+    destroyTooltipOnHide = false,
+    content,
+    openChange,
+    width,
+}) => {
     return (
         <Tooltip
             trigger={trigger}
@@ -29,11 +27,11 @@ const WrapperTooltip: React.FC<WrapperTooltipProps> = (
             title={content}
             destroyTooltipOnHide={destroyTooltipOnHide}
             onOpenChange={openChange}
-            overlayStyle={{width: width}}
+            overlayStyle={{ width: width }}
         >
             {children}
         </Tooltip>
     );
-}
+};
 
 export default WrapperTooltip;

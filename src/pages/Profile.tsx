@@ -6,6 +6,7 @@ import TextItemWrapper from '../components/tiny/TextItemWrapper';
 import { TopBarIconWrapper } from '../components/secondary/TopBarIconWrapper';
 
 import { Button } from 'antd';
+import WrapperTooltip from '../components/secondary/WrapperTooltip';
 
 const Profile: React.FC = () => {
     const { theme } = useApp();
@@ -30,8 +31,9 @@ const Profile: React.FC = () => {
                         <div className="d-flex flex-column gap-3 ">
                             <WrapperUserImage
                                 bgColor={theme.primaryFaded}
+                                rounded={true}
                                 size="170px"
-                                url="/public/person.svg"
+                                url="/public/joseph.jpg"
                             />
                             <div className="w-100 d-flex flex-column gap-3 align-items-center  ">
                                 <TextItemWrapper
@@ -46,16 +48,32 @@ const Profile: React.FC = () => {
                                     fontSize={appConfig.smallFontSize}
                                 />
                                 <div className="d-flex gap-3">
-                                    <TopBarIconWrapper
-                                        iconClasses="bi bi-person-add"
-                                        shadow={false}
-                                        backgroundColor={theme.primaryFaded}
-                                    />
-                                    <TopBarIconWrapper
-                                        iconClasses="bi bi-plus-circle-dotted"
-                                        shadow={false}
-                                        backgroundColor={theme.primaryFaded}
-                                    />
+                                    <WrapperTooltip content="افزودن به دوستان">
+                                        <div>
+                                            <TopBarIconWrapper
+                                                iconClasses="bi bi-person-add"
+                                                shadow={false}
+                                                backgroundColor={
+                                                    theme.mode === 'dark'
+                                                        ? theme.primaryColor
+                                                        : theme.primaryFaded
+                                                }
+                                            />
+                                        </div>
+                                    </WrapperTooltip>
+                                    <WrapperTooltip content="دنبال کردن">
+                                        <div>
+                                            <TopBarIconWrapper
+                                                iconClasses="bi bi-plus-circle-dotted"
+                                                shadow={false}
+                                                backgroundColor={
+                                                    theme.mode === 'dark'
+                                                        ? theme.primaryColor
+                                                        : theme.primaryFaded
+                                                }
+                                            />
+                                        </div>
+                                    </WrapperTooltip>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +97,7 @@ const Profile: React.FC = () => {
                                 backgroundColor: theme.primaryFaded,
                                 padding: appConfig.defaultPadding,
                             }}
-                            className="w-100 d-flex flex-column gap-5 "
+                            className="w-100 d-flex flex-column gap-5 py-4 px-4 "
                         >
                             <div className="d-flex flex-column gap-3 ">
                                 <TextItemWrapper
@@ -98,7 +116,7 @@ const Profile: React.FC = () => {
                                     fontSize={appConfig.defaultFontSize}
                                 />
                             </div>
-                            <div className="w-100 gap-3">
+                            <div className="d-flex flex-wrap gap-2">
                                 <Button type="primary">student</Button>
                                 <Button type="primary">student</Button>
                                 <Button type="primary">student</Button>
@@ -137,7 +155,9 @@ const Profile: React.FC = () => {
                                     <div className="d-flex col-sm flex-column align-items-center  ">
                                         <TextItemWrapper
                                             text="120"
-                                            fontSize={appConfig.hugeFontSize}
+                                            fontSize={
+                                                appConfig.hugeFontSize + 10
+                                            }
                                         />
                                         <TextItemWrapper
                                             text="Following"
@@ -147,7 +167,9 @@ const Profile: React.FC = () => {
                                     <div className="d-flex col-sm flex-column align-items-center">
                                         <TextItemWrapper
                                             text="134"
-                                            fontSize={appConfig.hugeFontSize}
+                                            fontSize={
+                                                appConfig.hugeFontSize + 10
+                                            }
                                         />
                                         <TextItemWrapper
                                             text="Followers"

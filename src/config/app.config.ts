@@ -55,8 +55,8 @@ const darkConfig = {
     defaultTextColor: '#FFFFFF',
     fadeTextColor: '#C3C5CA',
     primaryColor: '#BB86FC',
-    primaryFaded: '#EDDFFF',
-    primaryFaded2X: '#FAF5FF',
+    primaryFaded: '#282E3F',
+    primaryFaded2X: '#2d3346',
 
     itemHoverColor: '#3B435B',
 };
