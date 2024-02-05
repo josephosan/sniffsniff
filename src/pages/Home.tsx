@@ -1,9 +1,19 @@
-import React, { useEffect } from 'react';
-import { dateToPersian } from '../helpers/app.helper';
+import React from 'react';
+import TagWrapper from '../components/primary/TagWrapper';
 
 export const Home: React.FC = () => {
-    useEffect(() => {
-        console.log(dateToPersian('۱۴۰۲/۱۰/۲۳, ۱۶:۲۰:۳۴'));
-    }, []);
-    return <>home</>;
+    return (
+        <>
+            <TagWrapper
+                tagList={[
+                    {
+                        text: 'hello',
+                        color: 'primary',
+                        closeIcon: <i className="bi bi-x-lg"></i>,
+                        onClose: (e: any) => console.log(e),
+                    },
+                ]}
+            />
+        </>
+    );
 };
