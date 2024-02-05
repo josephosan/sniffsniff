@@ -8,6 +8,7 @@ interface WrapperUserImageProps {
     icon?: string;
     bgColor?: string;
     rounded?: boolean;
+    preview?: boolean;
 }
 const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
     url,
@@ -15,6 +16,7 @@ const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
     icon,
     bgColor,
     rounded = false,
+    preview = false,
 }) => {
     const { theme } = useApp();
 
@@ -34,6 +36,7 @@ const WrapperUserImage: React.FC<WrapperUserImageProps> = ({
                     src={url}
                     width={'100%'}
                     height={'100%'}
+                    preview={preview}
                 />
             ) : (
                 <i className={icon}></i>
