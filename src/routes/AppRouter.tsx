@@ -31,7 +31,7 @@ import ViewTerm from '../pages/organization/project/term/View/View';
 import Profile from '../pages/Profile';
 import Settings from '../pages/settings/Settings';
 import ProfileSettings from '../pages/settings/Profile';
-import PasswordSettigns from '../pages/settings/Password';
+import PasswordSettings from '../pages/settings/Password';
 
 // Import layouts
 import AuthLayout from '../layouts/AuthLayout';
@@ -98,7 +98,7 @@ export const AppRouter: React.FC = React.memo(() => {
                         {
                             path: 'password',
                             name: 'PasswordSettings',
-                            element: <PasswordSettigns />,
+                            element: <PasswordSettings />,
                         },
                     ],
                 },
