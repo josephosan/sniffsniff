@@ -1,16 +1,33 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { useApp } from '../../store/app.store';
-import { appConfig } from '../../config/app.config';
+import { appConfig, darkConfig } from '../../config/app.config';
 import WrapperUserImage from '../../components/tiny/WrapperUserImage';
 import '../../styles/pages/view.task.scss';
 import TextItemWrapper from '../../components/tiny/TextItemWrapper';
+import { useMediaQuery } from 'react-responsive';
+
+import TagWrapper from '../../components/primary/TagWrapper';
 import { Upload, Button } from 'antd';
 
 const ProfileSettings: React.FC = () => {
     const { theme } = useApp();
 
+    const isMobile = useMediaQuery({
+        query: `(max-width: ${appConfig.appBreakPoint}px)`,
+    });
+
+    const [tags, setTags] = useState([
+        { text: 'توسعه دهنده' },
+        { text: 'دانشجو' },
+        { text: 'کاریرد' },
+    ]);
+
     const handleInputBlur = (value: string) => {
         console.log(value);
+    };
+
+    const handleTagChange = (newTags) => {
+        setTags(newTags); // TODO: change implementation as explained.
     };
 
     return (
@@ -45,9 +62,18 @@ const ProfileSettings: React.FC = () => {
                             defaultValue={'یوسف اصانلو'}
                             onBlur={(e) => handleInputBlur(e.target.value)}
                         />
-                        <TextItemWrapper
-                            text="test@gmail.com"
-                            fontSize={appConfig.largeFontSize}
+
+                        <input
+                            className="username-input"
+                            style={{
+                                backgroundColor: 'inherit',
+                                border: 'none',
+                                width: '100%',
+                                fontSize: appConfig.largeFontSize,
+                                color: 'inherit',
+                            }}
+                            defaultValue={'test@gmail.com'}
+                            onBlur={(e) => handleInputBlur(e.target.value)}
                         />
                     </div>
 
@@ -69,25 +95,82 @@ const ProfileSettings: React.FC = () => {
                             minWidth: '200px',
                         }}
                     >
-                        <div className="d-flex row gap-3 h-100 align-items-center w-100 justify-content-between px-1 ">
-                            <div className="d-flex col-sm flex-column align-items-center  ">
-                                <TextItemWrapper
-                                    text="120"
-                                    fontSize={appConfig.hugeFontSize + 10}
-                                />
-                                <TextItemWrapper
-                                    text="Following"
-                                    fontSize={appConfig.hugeFontSize}
-                                />
+                        <div
+                            className="d-flex gap-3 h-100 w-100   "
+                            style={{
+                                flexDirection: isMobile ? 'column' : 'row',
+                            }}
+                        >
+                            <div className="d-flex   flex-column justify-content-center gap-3 ">
+                                <div className="user d-flex flex-row">
+                                    <TextItemWrapper
+                                        text="وضعیت:"
+                                        fontSize={appConfig.hugeFontSize}
+                                    />
+                                    <input
+                                        className="username-input"
+                                        style={{
+                                            backgroundColor: 'inherit',
+                                            border: 'none',
+                                            color: 'inherit',
+                                            fontSize: appConfig.hugeFontSize,
+                                        }}
+                                        defaultValue={'فعال '}
+                                        onBlur={(e) =>
+                                            handleInputBlur(e.target.value)
+                                        }
+                                    />
+                                </div>
+
+                                <div className="user d-flex">
+                                    <TextItemWrapper
+                                        text="سن:"
+                                        fontSize={appConfig.largeFontSize}
+                                    />
+                                    <input
+                                        className="username-input"
+                                        style={{
+                                            backgroundColor: 'inherit',
+                                            border: 'none',
+                                            color: 'inherit',
+                                        }}
+                                        defaultValue={'۲۱'}
+                                        onBlur={(e) =>
+                                            handleInputBlur(e.target.value)
+                                        }
+                                    />
+                                </div>
+
+                                <div className="user d-flex">
+                                    <TextItemWrapper
+                                        text="مکان:"
+                                        fontSize={appConfig.largeFontSize}
+                                    />
+                                    <input
+                                        className="username-input"
+                                        style={{
+                                            backgroundColor: 'inherit',
+                                            border: 'none',
+                                            color: 'inherit',
+                                        }}
+                                        defaultValue={'تهران'}
+                                        onBlur={(e) =>
+                                            handleInputBlur(e.target.value)
+                                        }
+                                    />
+                                </div>
                             </div>
-                            <div className="d-flex col-sm flex-column align-items-center">
-                                <TextItemWrapper
-                                    text="134"
-                                    fontSize={appConfig.hugeFontSize + 10}
-                                />
-                                <TextItemWrapper
-                                    text="Followers"
-                                    fontSize={appConfig.hugeFontSize}
+                            <div className="  d-flex flex-column align-items-center  justify-content-center  ">
+                                <TagWrapper
+                                    tagList={tags}
+                                    onChange={handleTagChange}
+                                    removable={true}
+                                    addable={true}
+                                    style={{
+                                        background: theme.primaryColor,
+                                        color: 'primary',
+                                        borderRadius: theme.defaultBorderRadius,
+                                    }}
                                 />
                             </div>
                         </div>
