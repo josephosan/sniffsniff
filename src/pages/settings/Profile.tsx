@@ -27,7 +27,7 @@ const ProfileSettings: React.FC = () => {
     };
 
     const handleTagChange = (newTags) => {
-        setTags(newTags);
+        setTags(newTags); // TODO: change implementation as explained.
     };
 
     return (
