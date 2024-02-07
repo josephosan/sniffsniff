@@ -9,6 +9,7 @@ interface WrapperCardProps {
     children: ReactNode;
     shadowed?: boolean;
     backgroundColor?: string;
+    customPadding?: number;
 }
 
 const WrapperCard: React.FC<WrapperCardProps> = React.memo(
@@ -18,13 +19,17 @@ const WrapperCard: React.FC<WrapperCardProps> = React.memo(
         children,
         shadowed = true,
         backgroundColor,
+        customPadding,
     }) => {
         const { theme } = useApp();
 
         return (
             <Col
-                className={`${shadowed ? 'custom-shadow' : ''} p-3`}
+                className={`${shadowed ? 'custom-shadow' : ''}`}
                 style={{
+                    padding: customPadding
+                        ? customPadding
+                        : appConfig.defaultPadding,
                     width: width,
                     height: height,
                     borderRadius: appConfig.defaultBorderRadius,
