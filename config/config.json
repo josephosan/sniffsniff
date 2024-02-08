@@ -1,0 +1,6 @@
+{
+    "protocol": "mdns",
+    "mdnsIpDst": "224.0.0.251",
+    "resultInPcap": "true",
+    "detailed": "true" 
+}
