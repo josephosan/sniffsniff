@@ -58,16 +58,23 @@ const TagWrapper: React.FC<TagWrapperProps> = React.memo(
                                 style={style}
                                 bordered={bordered}
                                 key={index}
-                                closable={removable}
+                                // closable={removable}
                                 onClose={() => handleRemoveTag(tag)}
                                 className="d-flex justify-content-center align-items-center "
                             >
                                 <div
-                                    className="p-1 "
+                                    className="p-1 d-flex flex-row align-items-center "
                                     style={{ color: 'white' }}
                                 >
                                     {tag.text}
                                 </div>
+                                {removable && (
+                                    <i
+                                        style={{ color: 'white', fontSize: 14 }}
+                                        className="bi bi-x"
+                                        onClick={() => handleRemoveTag(tag)}
+                                    ></i>
+                                )}
                             </Tag>
                         );
                     })}
