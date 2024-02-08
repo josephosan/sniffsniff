@@ -15,7 +15,7 @@ class Device:
             self.get_more_info()
 
     def get_more_info(self):
-        r = self.ps.scan(self.ip, "21-443")
+        self.ps.scan(self.ip, "21-443")
 
 
         self.state = self.ps[self.ip].state()

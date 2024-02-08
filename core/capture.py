@@ -1,13 +1,9 @@
-from scapy.all import PcapWriter, rdpcap, IP, AsyncSniffer
+from scapy.all import Ether, IP, UDP, DNS, AsyncSniffer
 from core.device import Device
 from core.screen import Screen
 import keyboard as k
 from threading import Thread, Event
 import time
-import sys
-import os
-
-
 
 class Capture:
     def __init__(self, config):
@@ -62,9 +58,17 @@ class Capture:
         self.pkt_count += 1
         incomeSrc = pkt.getlayer(IP).src
         if not any(device.ip == incomeSrc for device in self.detected_devices):
-            self.detected_devices.append(Device([incomeSrc, "device name", "mac address"], self.detailed == 'true'))
-            self.screen.print_on_screen(f"New Device Found, IP: {incomeSrc}")
+            if self.detailed == 'true':
+                self.screen.print_on_screen(f"New Device Found, IP: {incomeSrc}, gathering data ...")
+                self.detected_devices.append(Device([incomeSrc, self.extract_device_name(pkt), "mac address"], True))
+                self.screen.print_on_screen('Fetched Data.')
+            else:
+                self.detected_devices.append(Device([incomeSrc, self.extract_device_name(pkt), "mac address"], False))
+                self.screen.print_on_screen(f"New Device Found, IP: {incomeSrc}")
+            
 
+    def extract_device_name(self, pkt):
+        return "Not Found"
 
     def init_hotkeys(self):
         k.add_hotkey("s", self.start_app)
@@ -109,6 +113,3 @@ class Capture:
             self.screen.print_on_screen("Done")
 
         
-        # my_pcap = PcapWriter('../capture.pcap')
-        # my_pcap.write(self.pkts)
-        # my_pcap.close()
