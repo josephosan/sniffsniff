@@ -21,7 +21,7 @@ source /venv/bin/activate
 And install libraries:
 
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 Finally, run the app:
