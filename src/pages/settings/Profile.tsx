@@ -39,7 +39,12 @@ const ProfileSettings: React.FC = () => {
                 }}
                 className="w-100 py-5 px-5 d-flex align-items-center row gap-4"
             >
-                <div className="col-sm col-md-4 col-xl-3 d-flex justify-content-center">
+                <div
+                    className="col-sm col-md-4 col-xl-3 d-flex justify-content-center"
+                    style={{
+                        minWidth: '230px',
+                    }}
+                >
                     <WrapperUserImage
                         preview={true}
                         url="/public/joseph.jpg"
@@ -85,10 +90,7 @@ const ProfileSettings: React.FC = () => {
                 </div>
             </div>
 
-            <div
-                className="flex-column d-flex px-0 align-items-center w-100"
-                // style={{ border: '2px solid black' }}
-            >
+            <div className="flex-column d-flex px-0 align-items-center w-100">
                 <div className="d-flex gap-3 row w-100">
                     <div
                         className="d-flex w-100 flex-column col-lg  justify-content-center px-xl-5 align-items-center py-2"
